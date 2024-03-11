@@ -33,8 +33,8 @@ jobs:
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
 
-      - name: Run tests
-        run: mvn test
-
-      - name: Run Coverage
-        run: mvn jacoco:report
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: jobs4u.app1/target/site/jacoco

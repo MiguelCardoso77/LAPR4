@@ -1,8 +1,7 @@
 # 1221194 - Diana Neves
 ## Developed Tasks
 
-| Sprint | Task     |
-|--------|--------------------|
-| **A**  | [US G002](../us_g002/readme.md) |
-| **B**  | [US 1001](../us_1001/readme.md) |
-| **C**  | [US 3004](../us_3004/readme.md) |
+| Sprint | Task                                    |
+|--------|-----------------------------------------|
+| **A**  | [US G002](../Sprint%20A/G002/readme.md) |
+| **A**  | [US G003](../Sprint%20A/G003/readme.md) |

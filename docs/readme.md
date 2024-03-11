@@ -4,8 +4,8 @@
 
 The members of the group:
 
-| Student Nr.	                     |      Name       |
-|----------------------------------|:---------------:|
+|           Student Nr.	           |      Name       |
+|:--------------------------------:|-----------------|
 | **[1220772](1220772/readme.md)** | Miguel Cardoso  |
 | **[1220812](1220812/readme.md)** |  Diogo Ribeiro  |
 | **[1220917](1220917/readme.md)** | Tomás Gonçalves |
@@ -16,15 +16,12 @@ The members of the group:
 
 The assignment of tasks (requirements/user stories/use cases) during the project.
 
-| Student Nr.	| Name | Sprint A | Sprint B | Sprint C |
-|------------|--------|----------|----------|----------|
-| [1170000](1220772/readme.md) | John Doe |  [US G002](us_g002/readme.md)| [US 1001](us_1001/readme.md)| [US 3004](us_3004/readme.md) |
-|          	|           |          |          |          |
-|          	|           |          |          |          |
-|          	|           |          |          |          |
-|          	|           |          |          |          |
-|          	|           |          |          |          |
-|          	|           |          |          |          |
+|                Student Nr.	                |      Name       |                                  Sprint A                                  | Sprint B | Sprint C |
+|:------------------------------------------:|:---------------:|:--------------------------------------------------------------------------:|:--------:|:--------:|
+|      **[1220772](1220772/readme.md)**      | Miguel Cardoso  | [US G001](Sprint A/G001/readme.md)<br/> [US G004](Sprint A/G004/readme.md) |          |          |
+| **[1220812](1220812/readme.md)**         	 |  Diogo Ribeiro  |                     [US G005](Sprint A/G005/readme.md)                     |          |          |
+|      **[1220917](1220917/readme.md)**      | Tomás Gonçalves |                     [US G006](Sprint A/G006/readme.md)                     |          |          |
+|     	**[1221194](1221194/readme.md)**      |   Diana Neves   | [US G002](Sprint A/G002/readme.md)<br/> [US G003](Sprint A/G003/readme.md) |          |          |
 
 
 ## 3. LAPR4 Self Assessment
@@ -32,21 +29,27 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 **This section is mandatory for students of LAPR4**
 ### Sprint A
 
-| Student Nr.	                 | Name     | Justification                                              | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
-|------------------------------|----------|------------------------------------------------------------|---------------------|----------------------------|-----------|------------|-------------|-------------------|
-| [1170000](1220772/readme.md) | John Doe | [1170000 - Justification](1220772/lapr4/sprinta/readme.md) | 3                   | 4                          | 5         | 4          | 5           | 2                 |
-| 	                            |          |                                                            |                     |                            |           |            |             |
+|         Student Nr.	          |      Name       |                         Justification                         | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
+|:-----------------------------:|:---------------:|:-------------------------------------------------------------:|:-------------------:|:--------------------------:|:---------:|:----------:|:-----------:|:-----------------:|
+| [1220772](1220772/readme.md)  | Miguel Cardoso  | [1220772 - Justification](1220772/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |
+| [1220812](1220812/readme.md)	 |  Diogo Ribeiro  | [1220812 - Justification](1220812/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |
+| [1220917](1220917/readme.md)  | Tomás Gonçalves | [1220917 - Justification](1220917/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |
+| [1221194](1221194/readme.md)  |   Diana Neves   | [1221194 - Justification](1221194/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |
 
 ### Sprint B
 
-| Student Nr.	| Name | Justification | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
-|------------|--------|-------|----------|----------|----------|--------|----------|----------|
-| [1170000](1220772/readme.md) | John Doe | | 3 | 4| 5 | 4 | 5 | 2 |
-|          	|           |          |          |          |        |          |          |
+|         Student Nr.	          |      Name       |                         Justification                         | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
+|:-----------------------------:|:---------------:|:-------------------------------------------------------------:|:-------------------:|:--------------------------:|:---------:|:----------:|:-----------:|:-----------------:|
+| [1220772](1220772/readme.md)  | Miguel Cardoso  | [1220772 - Justification](1220772/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |
+| [1220812](1220812/readme.md)	 |  Diogo Ribeiro  | [1220812 - Justification](1220812/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |
+| [1220917](1220917/readme.md)  | Tomás Gonçalves | [1220917 - Justification](1220917/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |
+| [1221194](1221194/readme.md)  |   Diana Neves   | [1221194 - Justification](1221194/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |
 
 ### Sprint C
 
-| Student Nr.	| Name | Justification | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
-|------------|--------|-------|----------|----------|----------|--------|----------|----------|
-| [1170000](1220772/readme.md) | John Doe | | 3 | 4| 5 | 4 | 5 | 2 |
-|          	|           |          |          |          |        |          |          |
+|         Student Nr.	          |      Name       |                         Justification                         | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
+|:-----------------------------:|:---------------:|:-------------------------------------------------------------:|:-------------------:|:--------------------------:|:---------:|:----------:|:-----------:|:-----------------:|
+| [1220772](1220772/readme.md)  | Miguel Cardoso  | [1220772 - Justification](1220772/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |
+| [1220812](1220812/readme.md)	 |  Diogo Ribeiro  | [1220812 - Justification](1220812/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |
+| [1220917](1220917/readme.md)  | Tomás Gonçalves | [1220917 - Justification](1220917/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |
+| [1221194](1221194/readme.md)  |   Diana Neves   | [1221194 - Justification](1221194/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   |

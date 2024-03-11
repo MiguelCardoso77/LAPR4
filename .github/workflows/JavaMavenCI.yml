@@ -34,7 +34,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: target/index.html
+          path: target
+          if-no-files-found: warn
+        env:
+          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.10-7/x64
+          JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.10-7/x64
+          ACTIONS_STEP_DEBUG: true
+
 
       - name: List contents of target directory
         run: ls -R target

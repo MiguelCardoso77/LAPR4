@@ -33,13 +33,13 @@ jobs:
         run: mvn -B clean verify jacoco:report -f jobs4u.app2/pom.xml
 
       - name: Upload code coverage report for jobs4u.app1
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report-app1
           path: jobs4u.app1/target/site/jacoco
 
       - name: Upload code coverage report for jobs4u.app2
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report-app2
           path: jobs4u.app2/target/site/jacoco

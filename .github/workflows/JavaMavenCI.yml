@@ -2,7 +2,7 @@
 # This workflow uses actions that are not certified by GitHub.
 
 name: Java CI with Maven
-run-name: ${{ github.actor }} committed at ${{ github.event.head_commit.timestamp }}
+run-name: ${{ github.actor }} committed at ${{ github.event_name }}
 
 on:
   push:

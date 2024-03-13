@@ -1,0 +1,121 @@
+@startuml
+hide methods
+left to right direction
+
+skinparam classAttributeIconSize 0
+
+skinparam class {
+    LifeLineBorderColor DodgerBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #D8F5FF
+    ArrowColor DodgerBlue
+    BorderColor DodgerBlue
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor DodgerBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #D8F5FF
+    ArrowColor DodgerBlue
+    BorderColor DodgerBlue
+}
+
+package "User Aggregate" {
+    entity User <<entity>><<root>>
+
+'User value objects
+
+    enum Roles <<Value Object>> {
+        Admin
+        Custom_Manager
+        Customer
+        Operator
+        Candidate
+    }
+    User --> Roles
+
+
+}
+
+package "Applications Aggregate" {
+    entity Application <<entity>><<root>>
+'Applications value objects
+        card ContentTextFile <<Value Object>>{
+            }
+        card PDFFiles <<Value Object>>{
+            }
+        card ContentEachTextFile <<Value Object>> {
+            }
+
+
+    entity ApplicationDataCandidate <<entity>> {
+        }
+'ApplicationsDataCandidate value objects
+
+        card JobReference <<Value Object>> {
+            }
+        card EmailCandidate <<Value Object>> {
+            }
+        card NameCandidate <<Value Object>> {
+            }
+        card PhoneNumberCandidate <<Value Object>> {
+            }
+
+
+    entity Interview <<entity>>
+'Interview value objects
+
+
+
+    Application --> ContentTextFile
+    Application --> PDFFiles
+    Application --> ContentEachTextFile
+    Application --> ApplicationDataCandidate
+
+    ApplicationDataCandidate --> JobReference
+    ApplicationDataCandidate --> EmailCandidate
+    ApplicationDataCandidate --> NameCandidate
+    ApplicationDataCandidate --> PhoneNumberCandidate
+
+
+}
+package "Job Opening Aggregate" {
+    entity JobOpening <<entity>><<root>>
+'Job Opening value objects
+        card JobReference <<Value Object>> {
+            }
+        card Function <<Value Object>> {
+            }
+        card ContractType <<Value Object>> {
+            }
+        card Mode <<Value Object>> {
+            }
+        card Address <<Value Object>> {
+            }
+        card Company <<Value Object>> {
+            }
+        card NumberOfVacancies <<Value Object>> {
+            }
+        card Description <<Value Object>> {
+            }
+        card Requirements <<Value Object>> {
+            }
+
+
+        JobOpening --> JobReference
+        JobOpening --> Function
+        JobOpening --> ContractType
+        JobOpening --> Mode
+        JobOpening --> Address
+        JobOpening --> Company
+        JobOpening --> NumberOfVacancies
+        JobOpening --> Description
+        JobOpening --> Requirements
+}
+
+User <-- Application
+User <-- JobOpening
+
+@enduml

@@ -6,7 +6,7 @@ run-name: ${{ github.actor }} committed at ${{ github.event_name }}
 
 on:
   schedule:
-    - cron: '10 9 * * *'  # The workflow will run every day at 10:10 UTC
+    - cron: "15 10 * * *"  # The workflow will run every day at 10:10 UTC
 
 jobs:
   build:

@@ -11,7 +11,6 @@
 		<module>jobs4u.app1</module>
 		<module>jobs4u.app2</module>
 		<module>jobs4u.util.ci</module>
-        <module>jobs4u.app3</module>
     </modules>
 	<version>0.1.0</version>
 

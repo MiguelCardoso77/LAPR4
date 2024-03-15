@@ -5,37 +5,41 @@ left to right direction
 skinparam classAttributeIconSize 0
 
 skinparam class {
-    LifeLineBorderColor DodgerBlue
+    LifeLineBorderColor DarkBlue
     LifeLineBackgroundColor APPLICATION
-    BackgroundColor #D8F5FF
-    ArrowColor DodgerBlue
-    BorderColor DodgerBlue
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
 }
 
 skinparam packageStyle rectangle
 
 skinparam card {
-    LifeLineBorderColor DodgerBlue
+    LifeLineBorderColor Green
     LifeLineBackgroundColor APPLICATION
-    BackgroundColor #D8F5FF
-    ArrowColor DodgerBlue
-    BorderColor DodgerBlue
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
 }
 
-package "User Aggregate" {
-    entity User <<entity>><<root>>
+package "Candidate Aggregate" {
+    entity Candidate <<entity>><<root>>
+        card EmailCandidate <<Value Object>> {
+            }
+        card NameCandidate <<Value Object>> {
+            }
+        card PhoneNumberCandidate <<Value Object>> {
+            }
+'Candidate value objects
+    Candidate --> EmailCandidate
+    Candidate --> NameCandidate
+    Candidate --> PhoneNumberCandidate
+}
 
-'User value objects
+package "Company Aggregate" {
+    entity Customer <<entity>><<root>>
 
-    enum Roles <<Value Object>> {
-        Admin
-        Custom_Manager
-        Customer
-        Operator
-        Candidate
-    }
-    User --> Roles
-
+'Customer value objects
 
 }
 
@@ -48,21 +52,8 @@ package "Applications Aggregate" {
             }
         card ContentEachTextFile <<Value Object>> {
             }
-
-
-    entity ApplicationDataCandidate <<entity>> {
-        }
-'ApplicationsDataCandidate value objects
-
         card JobReference <<Value Object>> {
             }
-        card EmailCandidate <<Value Object>> {
-            }
-        card NameCandidate <<Value Object>> {
-            }
-        card PhoneNumberCandidate <<Value Object>> {
-            }
-
 
     entity Interview <<entity>>
 'Interview value objects
@@ -72,12 +63,8 @@ package "Applications Aggregate" {
     Application --> ContentTextFile
     Application --> PDFFiles
     Application --> ContentEachTextFile
-    Application --> ApplicationDataCandidate
+    Application --> JobReference
 
-    ApplicationDataCandidate --> JobReference
-    ApplicationDataCandidate --> EmailCandidate
-    ApplicationDataCandidate --> NameCandidate
-    ApplicationDataCandidate --> PhoneNumberCandidate
 
 
 }
@@ -94,8 +81,6 @@ package "Job Opening Aggregate" {
             }
         card Address <<Value Object>> {
             }
-        card Company <<Value Object>> {
-            }
         card NumberOfVacancies <<Value Object>> {
             }
         card Description <<Value Object>> {
@@ -109,13 +94,12 @@ package "Job Opening Aggregate" {
         JobOpening --> ContractType
         JobOpening --> Mode
         JobOpening --> Address
-        JobOpening --> Company
         JobOpening --> NumberOfVacancies
         JobOpening --> Description
         JobOpening --> Requirements
 }
 
-User <-- Application
-User <-- JobOpening
-
+Candidate <-- Application
+Customer <-- JobOpening
+Application --> JobOpening
 @enduml

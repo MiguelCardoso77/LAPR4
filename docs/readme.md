@@ -18,10 +18,10 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 
 |                Student Nr.	                |      Name       |                                  Sprint A                                  | Sprint B | Sprint C |
 |:------------------------------------------:|:---------------:|:--------------------------------------------------------------------------:|:--------:|:--------:|
-|      **[1220772](1220772/readme.md)**      | Miguel Cardoso  | [US G001](Sprint A/G001/readme.md)<br/> [US G004](Sprint A/G004/readme.md) |          |          |
-| **[1220812](1220812/readme.md)**         	 |  Diogo Ribeiro  |                     [US G005](Sprint A/G005/readme.md)                     |          |          |
-|      **[1220917](1220917/readme.md)**      | Tomás Gonçalves |                     [US G006](Sprint A/G006/readme.md)                     |          |          |
-|     	**[1221194](1221194/readme.md)**      |   Diana Neves   | [US G002](Sprint A/G002/readme.md)<br/> [US G003](Sprint A/G003/readme.md) |          |          |
+|      **[1220772](1220772/readme.md)**      | Miguel Cardoso  | [US G001](SprintA/G001/readme.md)<br/> [US G004](SprintA/G004/readme.md) |          |          |
+| **[1220812](1220812/readme.md)**         	 |  Diogo Ribeiro  |                     [US G005](SprintA/G005/readme.md)                     |          |          |
+|      **[1220917](1220917/readme.md)**      | Tomás Gonçalves |                     [US G006](SprintA/G006/readme.md)                     |          |          |
+|     	**[1221194](1221194/readme.md)**      |   Diana Neves   | [US G002](SprintA/G002/readme.md)<br/> [US G003](SprintA/G003/readme.md) |          |          |
 
 
 ## 3. LAPR4 Self Assessment

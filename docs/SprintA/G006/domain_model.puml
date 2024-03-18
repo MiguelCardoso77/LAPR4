@@ -39,7 +39,10 @@ package "Candidate Aggregate" {
 package "Company Aggregate" {
     entity Customer <<entity>><<root>>
 
+
+
 'Customer value objects
+
 
 }
 
@@ -55,8 +58,6 @@ package "Applications Aggregate" {
         card JobReference <<Value Object>> {
             }
 
-    entity Interview <<entity>>
-'Interview value objects
 
 
 
@@ -66,6 +67,23 @@ package "Applications Aggregate" {
     Application --> JobReference
 
 
+
+
+}
+
+package "Interview Aggregate"{
+
+    entity Interview <<entity>>
+'Interview value objects
+
+    card InterviewModel <<Value Object>> {
+    }
+
+    card Results <<Value Object>> {
+        }
+
+Interview --> InterviewModel
+Interview --> Results
 
 }
 package "Job Opening Aggregate" {
@@ -102,4 +120,6 @@ package "Job Opening Aggregate" {
 Candidate <-- Application
 Customer <-- JobOpening
 Application --> JobOpening
+Application --> Interview
+
 @enduml

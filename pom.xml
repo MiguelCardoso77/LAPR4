@@ -212,7 +212,7 @@
 				</executions>
 			</plugin>
 
-			<!-- Build an executable JAR -->
+			<!-- Build an executable JAR for App1 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>

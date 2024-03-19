@@ -1,10 +1,6 @@
-@echo off
-ECHO Verifying if java is correctly installed and set
+@ECHO OFF
+ECHO Running app1...
+java -jar jobs4u.app1/target/jobs4u.app1-0.1.0.jar
 
-java -jar jobs4u.jar
-
-if %errorlevel% neq 0 (
-    echo Error: %errorlevel%.
-)
-
-exit /b %errorlevel%
+ECHO Running app2...
+java -jar jobs4u.app2/target/jobs4u.app2-0.1.0.jar

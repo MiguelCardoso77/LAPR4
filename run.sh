@@ -1,10 +1,7 @@
-ECHO OFF
-ECHO make sure Java is installed and correctly configurated
-java -jar jobs4u.jar
+#!/usr/bin/env bash
 
-exit_code=$S?
-if [ $exit_code -ne 0 ]; then
-    echo "Error: $exit_code."
-fi
+echo "Running app1..."
+java -jar jobs4u.app1/target/jobs4u.app1-0.1.0.jar
 
-exit $exit_code
+echo "Running app2..."
+java -jar jobs4u.app2/target/jobs4u.app2-0.1.0.jar

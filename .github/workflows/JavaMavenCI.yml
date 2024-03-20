@@ -26,20 +26,20 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven and run tests with coverage for jobs4u.app1
-        run: mvn -B clean verify jacoco:report -f jobs4u.app1/pom.xml
+      - name: Build with Maven and run tests with coverage for candidate.app
+        run: mvn -B clean verify jacoco:report -f jobs4u.candidate.app/pom.xml
 
-      - name: Build with Maven and run tests with coverage for jobs4u.app2
-        run: mvn -B clean verify jacoco:report -f jobs4u.app2/pom.xml
+      - name: Build with Maven and run tests with coverage for customer.app
+        run: mvn -B clean verify jacoco:report -f jobs4u.customer.app/pom.xml
 
-      - name: Upload code coverage report for jobs4u.app1
+      - name: Upload code coverage report for Candidate App
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-app1
-          path: jobs4u.app1/target/site/jacoco
+          path: jobs4u.candidate.app/target/site/jacoco
 
-      - name: Upload code coverage report for jobs4u.app2
+      - name: Upload code coverage report for Customer App
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-app2
-          path: jobs4u.app2/target/site/jacoco
+          path: jobs4u.customer.app/target/site/jacoco

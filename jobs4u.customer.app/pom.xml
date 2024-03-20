@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>lapr4</groupId>
-    <artifactId>jobs4u.app2</artifactId>
+    <artifactId>jobs4u.customer.app</artifactId>
     <packaging>jar</packaging>
 
-    <name>jobs4u.app2</name>
+    <name>jobs4u.customer.app</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,7 +32,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>hello2.HelloWorld</mainClass>
+                            <mainClass>hello.HelloWorld</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

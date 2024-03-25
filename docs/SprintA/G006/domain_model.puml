@@ -30,18 +30,40 @@ package "Candidate Aggregate" {
             }
         card PhoneNumberCandidate <<Value Object>> {
             }
+        card Password <<Value Object>> {
+        }
+
 'Candidate value objects
     Candidate --> EmailCandidate
     Candidate --> NameCandidate
     Candidate --> PhoneNumberCandidate
+        Candidate --> Password
+
 }
 
-package "Company Aggregate" {
-    entity Customer <<entity>><<root>>
+package "CustomerManager Aggregate" {
+    entity CustomerManager <<entity>><<root>>
 
 
 
-'Customer value objects
+'CustomerManager value objects
+
+
+}
+
+package "LanguageEngineer Aggregate" {
+    entity LanguageEngineer <<entity>><<root>>
+
+    entity JobRequirementSpecification <<entity>>
+
+    card RequirementsAnswers <<Value Object>> {
+                        }
+
+    JobRequirementSpecification --> RequirementsAnswers
+
+
+
+'LanguageEngineer value objects
 
 
 }
@@ -49,31 +71,18 @@ package "Company Aggregate" {
 package "Applications Aggregate" {
     entity Application <<entity>><<root>>
 'Applications value objects
+        card DataTextFile <<Value Object>> {
+                    }
         card ContentTextFile <<Value Object>>{
             }
         card PDFFiles <<Value Object>>{
             }
         card ContentEachTextFile <<Value Object>> {
             }
-        card JobReference <<Value Object>> {
-            }
 
 
 
-
-    Application --> ContentTextFile
-    Application --> PDFFiles
-    Application --> ContentEachTextFile
-    Application --> JobReference
-
-
-
-
-}
-
-package "Interview Aggregate"{
-
-    entity Interview <<entity>>
+    entity Interview <<entity>><<root>>
 'Interview value objects
 
     card InterviewModel <<Value Object>> {
@@ -82,10 +91,34 @@ package "Interview Aggregate"{
     card Results <<Value Object>> {
         }
 
-Interview --> InterviewModel
-Interview --> Results
+    card InterviewTime <<Value Object>> {
+           }
+    Application --> DataTextFile
+    Interview --> InterviewModel
+    Interview --> Results
+    Interview --> InterviewTime
+
+    Application --> ContentTextFile
+    Application --> PDFFiles
+    Application --> ContentEachTextFile
+
+
+
+
 
 }
+
+
+
+package "Admin Aggregate" {
+    entity Admin <<entity>><<root>>
+
+
+
+
+}
+
+
 package "Job Opening Aggregate" {
     entity JobOpening <<entity>><<root>>
 'Job Opening value objects
@@ -105,6 +138,9 @@ package "Job Opening Aggregate" {
             }
         card Requirements <<Value Object>> {
             }
+        card Company <<Value Object>> {
+                    }
+
 
 
         JobOpening --> JobReference
@@ -115,11 +151,17 @@ package "Job Opening Aggregate" {
         JobOpening --> NumberOfVacancies
         JobOpening --> Description
         JobOpening --> Requirements
+        JobOpening --> Company
+
 }
 
 Candidate <-- Application
-Customer <-- JobOpening
+CustomerManager <-- JobOpening
 Application --> JobOpening
 Application --> Interview
+Admin <-- CustomerManager
+LanguageEngineer --> CustomerManager
+JobRequirementSpecification <-- Interview
+JobRequirementSpecification --> LanguageEngineer
 
 @enduml

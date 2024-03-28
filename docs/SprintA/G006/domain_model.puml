@@ -2,7 +2,7 @@
 hide methods
 left to right direction
 
-skinparam classAttributeIconSize 0
+Title "Domain Model"
 
 skinparam class {
     LifeLineBorderColor DarkBlue
@@ -22,146 +22,224 @@ skinparam card {
     BorderColor Black
 }
 
-package "Candidate Aggregate" {
-    entity Candidate <<entity>><<root>>
-        card EmailCandidate <<Value Object>> {
-            }
-        card NameCandidate <<Value Object>> {
-            }
-        card PhoneNumberCandidate <<Value Object>> {
-            }
-        card Password <<Value Object>> {
-        }
+package "Admin Aggregate" {
+entity Admin <<entity>><<root>>
 
-'Candidate value objects
-    Candidate --> EmailCandidate
-    Candidate --> NameCandidate
-    Candidate --> PhoneNumberCandidate
-        Candidate --> Password
-
-}
-
-package "CustomerManager Aggregate" {
-    entity CustomerManager <<entity>><<root>>
-
-
-
-'CustomerManager value objects
-
-
-}
-
-package "LanguageEngineer Aggregate" {
-    entity LanguageEngineer <<entity>><<root>>
-
-    entity JobRequirementSpecification <<entity>>
-
-    card RequirementsAnswers <<Value Object>> {
-                        }
-
-    JobRequirementSpecification --> RequirementsAnswers
-
-
-
-'LanguageEngineer value objects
-
-
-}
-
-package "Applications Aggregate" {
-    entity Application <<entity>><<root>>
-'Applications value objects
-        card DataTextFile <<Value Object>> {
-                    }
-        card ContentTextFile <<Value Object>>{
-            }
-        card PDFFiles <<Value Object>>{
-            }
-        card ContentEachTextFile <<Value Object>> {
-            }
-
-
-
-    entity Interview <<entity>><<root>>
-'Interview value objects
-
-    card InterviewModel <<Value Object>> {
+    card AdminName <<Value Object>> {
+    }
+    card AdminEmail <<Value Object>> {
     }
 
-    card Results <<Value Object>> {
+        Admin --> AdminEmail
+        Admin --> AdminName
+}
+
+package "Customer Manager Aggregate"{
+entity CustomerManager <<entity>><<root>>
+
+    card ManagerName <<Value Object>> {
+    }
+    card ManagerEmail <<Value Object>> {
+    }
+
+        CustomerManager --> ManagerName
+        CustomerManager --> ManagerEmail
+
+}
+
+package "Customer Aggregate"{
+entity Customer <<entity>><<root>>
+
+    card CustomerName <<Value Object>> {
+    }
+    card CustomerEmail <<Value Object>> {
+    }
+    card CustomerPhoneNumber <<Value Object>> {
+    }
+    card CustomerPassword <<Value Object>> {
+    }
+
+        Customer --> CustomerEmail
+        Customer --> CustomerName
+        Customer --> CustomerPhoneNumber
+        Customer --> CustomerPassword
+}
+
+package "Operator Aggregate"{
+entity Operator <<entity>><<root>>
+
+    card OperatorName <<Value Object>> {
+    }
+    card OperatorEmail <<Value Object>> {
+    }
+
+        Operator --> OperatorEmail
+        Operator --> OperatorName
+
+}
+
+package "Candidate Aggregate"{
+entity Candidate <<entity>><<root>>
+
+    card CandidateName <<Value Object>> {
+    }
+    card CandidateEmail <<Value Object>> {
+    }
+    card CandidatePhoneNumber <<Value Object>> {
+    }
+    card CandidatePassword <<Value Object>> {
+    }
+    card Curriculum <<Value Object>> {
+    }
+
+        Candidate --> CandidateEmail
+        Candidate --> CandidateName
+        Candidate --> CandidatePhoneNumber
+        Candidate --> CandidatePassword
+        Candidate --> Curriculum
+
+}
+
+package "Language Engineer Aggregate"{
+entity LanguageEngineer <<entity>><<root>>
+
+    card EngineerName <<Value Object>> {
+    }
+    card EngineerEmail <<Value Object>> {
+    }
+
+        LanguageEngineer --> EngineerEmail
+        LanguageEngineer --> EngineerName
+
+entity JobRequirementsSpecification <<entity>><<root>>
+
+    card RequirementsAnswers <<Value Object>>{
+    }
+
+        JobRequirementsSpecification --> RequirementsAnswers
+
+}
+
+package "Job Opening Aggregate"{
+entity JobOpening <<entity>><<root>>
+
+    card JobReference <<Value Object>> {
+    }
+    card TitleOrFunction <<Value Object>> {
+    }
+    card ContractType <<Value Object>> {
+    }
+    card Mode <<Value Object>> {
+    }
+    card Address <<Value Object>> {
+    }
+    card Company <<Value Object>> {
+    }
+    card VacanciesNumber <<Value Object>> {
+    }
+    card Description <<Value Object>> {
+    }
+
+    JobOpening --> JobReference
+    JobOpening --> TitleOrFunction
+    JobOpening --> ContractType
+    JobOpening --> Mode
+    JobOpening --> Address
+    JobOpening --> Company
+    JobOpening --> VacanciesNumber
+    JobOpening --> Description
+
+    note right of ContractType
+        Can be one of the following:
+        - full-time
+        - part-time
+    end note
+
+    note right of Mode
+         Can be one of the following:
+         - remote
+         - hybrid
+         - onsite
+    end note
+}
+
+package "Application Aggregate"{
+entity Application <<entity>><<root>>
+
+    card EmailContentFile <<Value Object>> {
+    }
+    card EmailFilesAttached <<Value Object>>{
+    }
+    card FilesAttachedContent <<Value Object>>{
+    }
+    card ApplicationDataFile <<Value Object>>{
+    }
+    card Status <<Value Object>>{
+    }
+    card SubmissionDate <<Value Object>>{
+    }
+
+    Application --> EmailContentFile
+    Application --> EmailFilesAttached
+    Application --> FilesAttachedContent
+    Application --> ApplicationDataFile
+    Application --> Status
+    Application --> SubmissionDate
+
+    note right of Status
+        Can be one of the following:
+        - submitted
+        - pending
+        - accepted
+        - declined
+    end note
+
+    entity JobInterview <<entity>><<root>>
+
+        card InterviewModel <<Value Object>> {
+        }
+        card Result <<Value Object>> {
+        }
+        card InterviewTime <<Value Object>> {
         }
 
-    card InterviewTime <<Value Object>> {
-           }
-    Application --> DataTextFile
-    Interview --> InterviewModel
-    Interview --> Results
-    Interview --> InterviewTime
+        JobInterview --> InterviewModel
+        JobInterview --> Result
+        JobInterview --> InterviewTime
 
-    Application --> ContentTextFile
-    Application --> PDFFiles
-    Application --> ContentEachTextFile
-
-
-
-
-
+    note right of InterviewModel
+        At least the following type of questions should be supported:
+        - true/false
+        - short text answer
+        - choice (single answer)
+        - choice (multiple answer)
+        - integer number
+        - decimal number
+        - date
+        - time
+        - numeric scale
+    end note
 }
 
+    CustomerManager --> "N " JobOpening : manages
 
+    JobOpening --> "N " Application : has
+    JobOpening --> Customer : associated
 
-package "Admin Aggregate" {
-    entity Admin <<entity>><<root>>
+    Application --> Candidate
 
+    JobInterview --> "1" Candidate
 
+    Admin --> "N " Operator : manages
+    Admin --> "N     " CustomerManager : manages
+    Admin --> "N     " LanguageEngineer : manages
 
+    Candidate --> "  N" JobOpening : apply
 
-}
+    Operator --> "N   " Application : monitors
 
+    LanguageEngineer --> "N" JobRequirementsSpecification : create/manages
 
-package "Job Opening Aggregate" {
-    entity JobOpening <<entity>><<root>>
-'Job Opening value objects
-        card JobReference <<Value Object>> {
-            }
-        card Function <<Value Object>> {
-            }
-        card ContractType <<Value Object>> {
-            }
-        card Mode <<Value Object>> {
-            }
-        card Address <<Value Object>> {
-            }
-        card NumberOfVacancies <<Value Object>> {
-            }
-        card Description <<Value Object>> {
-            }
-        card Requirements <<Value Object>> {
-            }
-        card Company <<Value Object>> {
-                    }
-
-
-
-        JobOpening --> JobReference
-        JobOpening --> Function
-        JobOpening --> ContractType
-        JobOpening --> Mode
-        JobOpening --> Address
-        JobOpening --> NumberOfVacancies
-        JobOpening --> Description
-        JobOpening --> Requirements
-        JobOpening --> Company
-
-}
-
-Candidate <-- Application
-CustomerManager <-- JobOpening
-Application --> JobOpening
-Application --> Interview
-Admin <-- CustomerManager
-LanguageEngineer --> CustomerManager
-JobRequirementSpecification <-- Interview
-JobRequirementSpecification --> LanguageEngineer
+    JobRequirementsSpecification --> JobOpening : associated
 
 @enduml

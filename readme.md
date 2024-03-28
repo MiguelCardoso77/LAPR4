@@ -49,9 +49,33 @@ a) Ensure that Maven is installed on your system. If not, you can install it by 
 b) Navigate to the root directory of the project in the terminal.
 c) Execute the script (currently available for Linux/Unix/MacOS system):
 
-    ./run.sh
+    ./run-all.sh
         or
-    ./run.bat
+    ./run-all.bat
+
+### 5.1. How to Run the Customer app
+
+To run the Customer app, follow these steps:
+
+a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+b) Navigate to the root directory of the project in the terminal.
+c) Execute the script (currently available for Linux/Unix/MacOS system):
+    
+    ./run-customer-app.sh
+        or
+    ./run-customer-app.bat
+
+### 5.2. How to Run the Candidate app
+
+To run the Candidate app, follow these steps:
+
+a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+b) Navigate to the root directory of the project in the terminal.
+c) Execute the script (currently available for Linux/Unix/MacOS system):
+
+    ./run-ccandidate-app.sh
+        or
+    ./run-candidate-app.bat
 
 ## 6. How to Install/Deploy into Another Machine (or Virtual Machine)
 
@@ -70,3 +94,5 @@ c) Execute the script (currently available for Linux/Unix/MacOS system):
 To generate plantuml diagrams for documentation execute the script (for the moment, only for linux/unix/macos):
 
     ./generate-plantuml-diagrams.sh
+        or
+    ./generate-plantuml-diagrams.bat****

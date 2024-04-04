@@ -73,9 +73,21 @@ a) Ensure that Maven is installed on your system. If not, you can install it by 
 b) Navigate to the root directory of the project in the terminal.
 c) Execute the script (currently available for Linux/Unix/MacOS system):
 
-    ./run-ccandidate-app.sh
+    ./run-candidate-app.sh
         or
     ./run-candidate-app.bat
+
+### 5.3. How to Run the Backoffice app
+
+To run the Candidate app, follow these steps:
+
+a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+b) Navigate to the root directory of the project in the terminal.
+c) Execute the script (currently available for Linux/Unix/MacOS system):
+
+    ./run-backoffice-app.sh
+        or
+    ./run-backoffice-app.bat
 
 ## 6. How to Install/Deploy into Another Machine (or Virtual Machine)
 

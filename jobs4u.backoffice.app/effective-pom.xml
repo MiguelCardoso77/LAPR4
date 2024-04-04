@@ -7,7 +7,7 @@
 <!-- ====================================================================== -->
 <!-- ====================================================================== -->
 <!--                                                                        -->
-<!-- Effective POM for project 'hello3:jobs4u.app2:jar:0.1.0'                -->
+<!-- Effective POM for project 'hello3:jobs4u.app3:jar:0.1.0'                -->
 <!--                                                                        -->
 <!-- ====================================================================== -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -18,9 +18,9 @@
     <version>0.1.0</version>
   </parent>
   <groupId>lapr4</groupId>
-  <artifactId>jobs4u.app2</artifactId>
+  <artifactId>jobs4u.app3</artifactId>
   <version>0.1.0</version>
-  <name>jobs4u.app2</name>
+  <name>jobs4u.app3</name>
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
@@ -59,22 +59,22 @@
     </pluginRepository>
   </pluginRepositories>
   <build>
-    <sourceDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/src/main/java</sourceDirectory>
-    <scriptSourceDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/src/main/scripts</scriptSourceDirectory>
-    <testSourceDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/src/test/java</testSourceDirectory>
-    <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/target/classes</outputDirectory>
-    <testOutputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/target/test-classes</testOutputDirectory>
+    <sourceDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/src/main/java</sourceDirectory>
+    <scriptSourceDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/src/main/scripts</scriptSourceDirectory>
+    <testSourceDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/src/test/java</testSourceDirectory>
+    <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/target/classes</outputDirectory>
+    <testOutputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/target/test-classes</testOutputDirectory>
     <resources>
       <resource>
-        <directory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/src/main/resources</directory>
+        <directory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/src/main/resources</directory>
       </resource>
     </resources>
     <testResources>
       <testResource>
-        <directory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/src/test/resources</directory>
+        <directory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/src/test/resources</directory>
       </testResource>
     </testResources>
-    <directory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/target</directory>
+    <directory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/target</directory>
     <finalName>jobs4u.app2-0.1.0</finalName>
     <pluginManagement>
       <plugins>
@@ -246,7 +246,7 @@
               <goal>site</goal>
             </goals>
             <configuration>
-              <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/target/site</outputDirectory>
+              <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/target/site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -262,7 +262,7 @@
               <goal>deploy</goal>
             </goals>
             <configuration>
-              <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/target/site</outputDirectory>
+              <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/target/site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -273,7 +273,7 @@
           </execution>
         </executions>
         <configuration>
-          <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/target/site</outputDirectory>
+          <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/target/site</outputDirectory>
           <reportPlugins>
             <reportPlugin>
               <groupId>org.apache.maven.plugins</groupId>
@@ -285,6 +285,6 @@
     </plugins>
   </build>
   <reporting>
-    <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app2/target/site</outputDirectory>
+    <outputDirectory>/Users/alexandrebraganca/repositories/lapr4/repos-22-23/sem4pi-22-23-example/sem4pi-22-23-example/jobs4u.app3/target/site</outputDirectory>
   </reporting>
 </project>

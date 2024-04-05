@@ -20,9 +20,9 @@ the responsibility of the client.
 
 To build the Jobs4U program, follow these steps:
 
-a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
-b) Navigate to the root directory of the project in the terminal.
-c) Execute the one of the scripts (currently available for Linux/Unix/MacOS system):
+- a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+- b) Navigate to the root directory of the project in the terminal.
+- c) Execute the one of the scripts (currently available for Linux/Unix/macOS system):
 
     ./rebuild-all.bat
             or
@@ -32,9 +32,9 @@ c) Execute the one of the scripts (currently available for Linux/Unix/MacOS syst
 
 To execute the project Jobs4U tests, follow these steps:
 
-a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
-b) Navigate to the root directory of the project in the terminal.
-c) Execute the one of the scripts (currently available for Linux/Unix/MacOS system):
+- a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+- b) Navigate to the root directory of the project in the terminal.
+- c) Execute the one of the scripts (currently available for Linux/Unix/macOS system):
 
     ./run-tests.sh
             or
@@ -45,9 +45,9 @@ c) Execute the one of the scripts (currently available for Linux/Unix/MacOS syst
 
 To run the Jobs4U program, follow these steps:
 
-a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
-b) Navigate to the root directory of the project in the terminal.
-c) Execute the script (currently available for Linux/Unix/MacOS system):
+- a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+- b) Navigate to the root directory of the project in the terminal.
+- c) Execute the script (currently available for Linux/Unix/macOS system):
 
     ./run-all.sh
         or
@@ -57,9 +57,9 @@ c) Execute the script (currently available for Linux/Unix/MacOS system):
 
 To run the Customer app, follow these steps:
 
-a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
-b) Navigate to the root directory of the project in the terminal.
-c) Execute the script (currently available for Linux/Unix/MacOS system):
+- a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+- b) Navigate to the root directory of the project in the terminal.
+- c) Execute the script (currently available for Linux/Unix/macOS system):
     
     ./run-customer-app.sh
         or
@@ -69,9 +69,9 @@ c) Execute the script (currently available for Linux/Unix/MacOS system):
 
 To run the Candidate app, follow these steps:
 
-a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
-b) Navigate to the root directory of the project in the terminal.
-c) Execute the script (currently available for Linux/Unix/MacOS system):
+- a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+- b) Navigate to the root directory of the project in the terminal.
+- c) Execute the script (currently available for Linux/Unix/macOS system):
 
     ./run-candidate-app.sh
         or
@@ -81,9 +81,9 @@ c) Execute the script (currently available for Linux/Unix/MacOS system):
 
 To run the Candidate app, follow these steps:
 
-a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
-b) Navigate to the root directory of the project in the terminal.
-c) Execute the script (currently available for Linux/Unix/MacOS system):
+- a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+- b) Navigate to the root directory of the project in the terminal.
+- c) Execute the script (currently available for Linux/Unix/macOS system):
 
     ./run-backoffice-app.sh
         or
@@ -93,9 +93,9 @@ c) Execute the script (currently available for Linux/Unix/MacOS system):
 
 To install/deploy the Jobs4U program, follow these steps:
 
-a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
-b) Navigate to the root directory of the project in the terminal.
-c) Execute the script (currently available for Linux/Unix/MacOS system):
+- a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+- b) Navigate to the root directory of the project in the terminal.
+- c) Execute the script (currently available for Linux/Unix/macOS system):
 
     ./deploy.sh
         or
@@ -107,4 +107,4 @@ To generate plantuml diagrams for documentation execute the script (for the mome
 
     ./generate-plantuml-diagrams.sh
         or
-    ./generate-plantuml-diagrams.bat****
+    ./generate-plantuml-diagrams.bat

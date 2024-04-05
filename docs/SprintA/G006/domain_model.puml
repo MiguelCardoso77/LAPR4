@@ -1,6 +1,7 @@
 @startuml
 hide methods
 left to right direction
+'skinparam linetype ortho
 
 Title "Domain Model"
 
@@ -22,30 +23,6 @@ skinparam card {
     BorderColor Black
 }
 
-package "Admin Aggregate" {
-entity Admin <<entity>><<root>>
-
-    card AdminName <<Value Object>> {
-    }
-    card AdminEmail <<Value Object>> {
-    }
-
-        Admin --> AdminEmail
-        Admin --> AdminName
-}
-
-package "Customer Manager Aggregate"{
-entity CustomerManager <<entity>><<root>>
-
-    card ManagerName <<Value Object>> {
-    }
-    card ManagerEmail <<Value Object>> {
-    }
-
-        CustomerManager --> ManagerName
-        CustomerManager --> ManagerEmail
-
-}
 
 package "Customer Aggregate"{
 entity Customer <<entity>><<root>>
@@ -63,19 +40,6 @@ entity Customer <<entity>><<root>>
         Customer --> CustomerName
         Customer --> CustomerPhoneNumber
         Customer --> CustomerPassword
-}
-
-package "Operator Aggregate"{
-entity Operator <<entity>><<root>>
-
-    card OperatorName <<Value Object>> {
-    }
-    card OperatorEmail <<Value Object>> {
-    }
-
-        Operator --> OperatorEmail
-        Operator --> OperatorName
-
 }
 
 package "Candidate Aggregate"{
@@ -100,23 +64,13 @@ entity Candidate <<entity>><<root>>
 
 }
 
-package "Language Engineer Aggregate"{
-entity LanguageEngineer <<entity>><<root>>
-
-    card EngineerName <<Value Object>> {
-    }
-    card EngineerEmail <<Value Object>> {
-    }
-
-        LanguageEngineer --> EngineerEmail
-        LanguageEngineer --> EngineerName
-
+package "Job Requirements Specification Aggregate"{
 entity JobRequirementsSpecification <<entity>><<root>>
 
-    card RequirementsAnswers <<Value Object>>{
+    card Requirements <<Value Object>>{
     }
 
-        JobRequirementsSpecification --> RequirementsAnswers
+        JobRequirementsSpecification --> Requirements
 
 }
 
@@ -139,6 +93,8 @@ entity JobOpening <<entity>><<root>>
     }
     card Description <<Value Object>> {
     }
+    card ProcessState <<Value Object>> {
+    }
 
     JobOpening --> JobReference
     JobOpening --> TitleOrFunction
@@ -148,6 +104,7 @@ entity JobOpening <<entity>><<root>>
     JobOpening --> Company
     JobOpening --> VacanciesNumber
     JobOpening --> Description
+    JobOpening --> ProcessState
 
     note right of ContractType
         Can be one of the following:
@@ -161,6 +118,14 @@ entity JobOpening <<entity>><<root>>
          - hybrid
          - onsite
     end note
+    note right of ProcessState
+            Can be one of the following:
+            - Application
+            - Screening
+            - Interviews
+            - Analysis
+            - Result
+        end note
 }
 
 package "Application Aggregate"{
@@ -194,7 +159,7 @@ entity Application <<entity>><<root>>
         - declined
     end note
 
-    entity JobInterview <<entity>><<root>>
+    entity JobInterview <<entity>>
 
         card InterviewModel <<Value Object>> {
         }
@@ -221,25 +186,15 @@ entity Application <<entity>><<root>>
     end note
 }
 
-    CustomerManager --> "N " JobOpening : manages
-
-    JobOpening --> "N " Application : has
+    JobOpening <-- "N " Application : has
     JobOpening --> Customer : associated
 
     Application --> Candidate
+    Application --> JobInterview
 
-    JobInterview --> "1" Candidate
 
-    Admin --> "N " Operator : manages
-    Admin --> "N     " CustomerManager : manages
-    Admin --> "N     " LanguageEngineer : manages
 
-    Candidate --> "  N" JobOpening : apply
 
-    Operator --> "N   " Application : monitors
-
-    LanguageEngineer --> "N" JobRequirementsSpecification : create/manages
-
-    JobRequirementsSpecification --> JobOpening : associated
+    JobRequirementsSpecification <-- JobOpening : associated
 
 @enduml

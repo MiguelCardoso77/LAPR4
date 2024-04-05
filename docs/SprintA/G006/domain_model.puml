@@ -1,6 +1,7 @@
 @startuml
 hide methods
 left to right direction
+'skinparam linetype ortho
 
 Title "Domain Model"
 
@@ -111,7 +112,7 @@ entity LanguageEngineer <<entity>><<root>>
         LanguageEngineer --> EngineerEmail
         LanguageEngineer --> EngineerName
 
-entity JobRequirementsSpecification <<entity>><<root>>
+entity JobRequirementsSpecification <<entity>>
 
     card RequirementsAnswers <<Value Object>>{
     }
@@ -194,7 +195,7 @@ entity Application <<entity>><<root>>
         - declined
     end note
 
-    entity JobInterview <<entity>><<root>>
+    entity JobInterview <<entity>>
 
         card InterviewModel <<Value Object>> {
         }

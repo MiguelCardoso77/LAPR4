@@ -16,12 +16,12 @@ The members of the group:
 
 The assignment of tasks (requirements/user stories/use cases) during the project.
 
-|                Student Nr.	                |      Name       |                                  Sprint A                                  | Sprint B | Sprint C |
-|:------------------------------------------:|:---------------:|:--------------------------------------------------------------------------:|:--------:|:--------:|
-|      **[1220772](1220772/readme.md)**      | Miguel Cardoso  | [US G001](SprintA/G001/readme.md)<br/> [US G004](SprintA/G004/readme.md) |          |          |
-| **[1220812](1220812/readme.md)**         	 |  Diogo Ribeiro  |                     [US G005](SprintA/G005/readme.md)                     |          |          |
-|      **[1220917](1220917/readme.md)**      | Tomás Gonçalves |                     [US G006](SprintA/G006/readme.md)                     |          |          |
-|     	**[1221194](1221194/readme.md)**      |   Diana Neves   | [US G002](SprintA/G002/readme.md)<br/> [US G003](SprintA/G003/readme.md) |          |          |
+|                Student Nr.	                |      Name       |                                                                                  Sprint A                                                                                  | Sprint B | Sprint C |
+|:------------------------------------------:|:---------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------:|:--------:|
+|      **[1220772](1220772/readme.md)**      | Miguel Cardoso  | [US_G002](SprintA/G002/readme.md) [US_G003](SprintA/G003/readme.md) [US_G005](SprintA/G005/readme.md)  [US_G004](SprintA/G004/readme.md) [US_G006](SprintA/G006/readme.md) |          |          |
+| **[1220812](1220812/readme.md)**         	 |  Diogo Ribeiro  |                  [US_G002](SprintA/G002/readme.md) [US_G003](SprintA/G003/readme.md) [US_G005](SprintA/G005/readme.md)  [US_G006](SprintA/G006/readme.md)                  |          |          |
+|      **[1220917](1220917/readme.md)**      | Tomás Gonçalves |                  [US_G002](SprintA/G002/readme.md) [US_G003](SprintA/G003/readme.md) [US_G005](SprintA/G005/readme.md) [US_G006](SprintA/G006/readme.md)                   |          |          |
+|     	**[1221194](1221194/readme.md)**      |   Diana Neves   | [US_G001](SprintA/G001/readme.md) [US_G002](SprintA/G002/readme.md) [US_G003](SprintA/G003/readme.md) [US_G005](SprintA/G005/readme.md) [US_G006](SprintA/G006/readme.md)  |          |          |
 
 
 ## 3. LAPR4 Self Assessment

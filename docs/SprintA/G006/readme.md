@@ -18,29 +18,14 @@ The domain model is structured using UML notation. It consists of entities, aggr
 
 Entities represent distinct objects with unique identities and lifecycles within the domain. Aggregates are clusters of associated entities and value objects that are treated as a unit for data changes.
 
-- Admin
-
-        Represents system administrators responsible for managing customer entities and employees.
-
-- Customer Manager
-
-      Represents managers responsible for managing customers and job openings.
 
 - Customer
 
       Represents entities (other companies or entities) that need to recruit human resources.
 
-- Operator
-
-      Represents employees responsible for monitoring the application process.
-
 - Candidate
 
       Represents individuals applying for job openings.
-
-- Language Engineer
-
-      Represents engineers responsible for creating modules related to job requirements and interview models.
 
 - Job Opening
 
@@ -58,14 +43,6 @@ Entities represent distinct objects with unique identities and lifecycles within
 
 Value objects are immutable objects that represent attributes or characteristics within the domain. They do not have a unique identity and are defined by their attributes.
 
-AdminName
-
-AdminEmail
-
-ManagerName
-
-ManagerEmail
-
 CustomerName
 
 CustomerEmail
@@ -73,10 +50,6 @@ CustomerEmail
 CustomerPhoneNumber
 
 CustomerPassword
-
-OperatorName
-
-OperatorEmail
 
 CandidateName
 
@@ -88,11 +61,7 @@ CandidatePassword
 
 Curriculum
 
-EngineerName
-
-EngineerEmail
-
-RequirementsAnswers
+Requirements
 
 JobReference
 
@@ -109,6 +78,8 @@ Company
 VacanciesNumber
 
 Description
+
+ProcessState
 
 EmailContentFile
 
@@ -128,21 +99,10 @@ Results
 
 InterviewTime
 
-QuestionText
-
-QuestionType
 
 ## Associations
 
 Associations represent relationships between entities, aggregates, and value objects within the domain. They define how objects are connected and interact with each other.
-
-Admin -> AdminEmail
-
-Admin -> AdminName
-
-Customer Manager -> ManagerEmail
-
-Customer Manager -> ManagerName
 
 Customer -> CustomerEmail
 
@@ -152,9 +112,6 @@ Customer -> CustomerPhoneNumber
 
 Customer -> CustomerPassword
 
-Operator -> OperatorEmail
-
-Operator -> OperatorName
 
 Candidate -> CandidateEmail
 
@@ -166,11 +123,6 @@ Candidate -> CandidatePassword
 
 Candidate -> Curriculum
 
-Language Engineer -> EngineerEmail
-
-Language Engineer -> EngineerName
-
-Language Engineer -> RequirementsAnswers
 
 Job Opening -> JobReference
 
@@ -188,6 +140,14 @@ Job Opening -> VacanciesNumber
 
 Job Opening -> Description
 
+Job Opening --> JobRequirementsSpecifications
+
+Job Opening --> Customer
+
+Job Opening --> Application
+
+
+
 Application -> EmailContentFile
 
 Application -> EmailFilesAttached
@@ -200,19 +160,21 @@ Application -> Status
 
 Application -> SubmissionDate
 
+Application --> JobInterview
+
+Application --> Candidate
+
+
+
 Job Interview -> InterviewModel
 
 Job Interview -> Results
 
 Job Interview -> InterviewTime
 
-InterviewModel -> QuestionText
 
-InterviewModel -> QuestionType
+Job Requirements Specifications --> Requirements
 
-## Contributing
-
-Contributions to the domain model are welcome! If you identify any issues, inconsistencies, or improvements, feel free to open an issue or pull request.
 
 ## Domain Model
 

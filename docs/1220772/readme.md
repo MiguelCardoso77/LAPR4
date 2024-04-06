@@ -1,8 +1,9 @@
-# Student: Miguel Cardoso - 1220772
-
+# 1220772 - Miguel Cardoso
 ## Developed Tasks
 
-| Sprint |                  Task                   |
-|:------:|:---------------------------------------:|
-| **A**  | [US G001](../Sprint%20A/G001/readme.md) |
-| **A**  | [US G004](../Sprint%20A/G004/readme.md) |
+| Sprint |            Task             |
+|:------:|:---------------------------:|
+| **A**  | [G003](..%2FSprintA%2FG003) |
+| **A**  | [G004](..%2FSprintA%2FG004) |
+| **A**  | [G005](..%2FSprintA%2FG005) |
+| **A**  | [G006](..%2FSprintA%2FG006) |

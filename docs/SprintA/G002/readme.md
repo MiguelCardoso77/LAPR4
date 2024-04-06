@@ -1,7 +1,7 @@
 # US G002
 
 ## Context
-        Creation of the project repository and management tool. It is the firts time the task is assigned to be developed
+        Creation of the project repository and management tool. It is the firt time the task is assigned to be developed
 
 ## Requirements
     
@@ -16,11 +16,3 @@ project management
 
         1. Regarding this requirement we understand that it relates to the creation of the repository using GitHub and 
     set up of GitHub Projects as a managemen tool
-
-
-
-## Analysis
-
-## Design
-
-## Implementation

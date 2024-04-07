@@ -36,7 +36,7 @@
 
 **Justification and Evidences:**
 
-- Frequent Use of the Repository:
+    - Frequent Use of the Repository:
 
        1. Throughout the project, team members consistently utilized the Git repository for version control, committing changes regularly.
        2. Commits were made with meaningful messages that provided insight into the changes made, aiding in understanding the project's progression.
@@ -50,6 +50,9 @@
 
         1. Our team effectively utilized task/issue management boards, such as GitHub Issues, to track project tasks and monitor progress.
         2. Issues were appropriately categorized, assigned to team members, and regularly updated to reflect their current status.
+
+Team git repository available at :
+- https://github.com/Departamento-de-Engenharia-Informatica/sem4pi-23-24-2dd5/issues
 
 
 ## Team Work
@@ -166,7 +169,7 @@
 
 **Justification and Evidences:**
 
-- Full Fulfillment of Requirements:
+    - Full Fulfillment of Requirements:
 
        1. We have successfully met all requirements outlined for the project, ensuring that the delivered solution addresses the specified needs and objectives comprehensively.
 

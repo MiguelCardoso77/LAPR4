@@ -1,4 +1,4 @@
-# Domain Model elaboration using DDD - G006
+# G006 - Domain Model elaboration using DDD
 
 ## Overview
 

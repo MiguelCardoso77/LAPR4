@@ -1,4 +1,4 @@
-# Deployment and Scripts - G005
+# G005 - Deployment and Scripts
 
 This document describes the steps to execute the scripts so that build/execute/deploy/... can be executed effortlessly.
 

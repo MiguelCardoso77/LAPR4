@@ -186,15 +186,12 @@ entity Application <<entity>><<root>>
     end note
 }
 
-    JobOpening <-- "N " Application : has
-    JobOpening --> Customer : associated
+    JobOpening "1" <-- "N " Application : has
+    JobOpening "N" ---> "1" Customer : associated
 
-    Application --> Candidate
-    Application --> JobInterview
+    Application "N" --> "1" Candidate
+    Application "1" --> "N" JobInterview
 
-
-
-
-    JobRequirementsSpecification <-- JobOpening : associated
+    JobRequirementsSpecification "N" <-- "N" JobOpening : associated
 
 @enduml

@@ -1,4 +1,4 @@
-# US G002
+# G002 - GitHub Creation
 
 ## Context
 

@@ -35,7 +35,8 @@
             <version>5.10.1</version>
             <scope>test</scope>
         </dependency>
-        <!-- support junit5 -->
+
+        <!-- JUnit5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -49,7 +50,8 @@
             <version>5.10.1</version>
             <scope>test</scope>
         </dependency>
-        <!-- drivers for H2 -->
+
+        <!-- H2 Drivers -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -70,6 +72,13 @@
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
             <version>4.7.1</version>
+        </dependency>
+
+        <!-- EAPLI Framework -->
+        <dependency>
+            <groupId>org.bitbucket.pag_isep</groupId>
+            <artifactId>eapliframework</artifactId>
+            <version>v24.0.1_RELEASE</version>
         </dependency>
     </dependencies>
 
@@ -215,5 +224,11 @@
         </plugins>
     </build>
 
-
+    <repositories>
+        <!-- jitpack.io -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 </project>

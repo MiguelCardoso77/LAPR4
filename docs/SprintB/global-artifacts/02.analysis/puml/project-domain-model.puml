@@ -1,0 +1,110 @@
+@startuml
+skinparam monochrome false
+skinparam packageStyle rectangle
+skinparam shadowing true
+'skinparam linetype ortho
+'left to right direction
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor DodgerBlue
+    BorderColor DarkBlue
+}
+
+
+title Project Domain Model
+
+class User {
+    UserName
+    DateOfBirth
+    DateOfAdmission
+    Address
+    PhoneNumber
+    Email
+    IdentificationDocumentNumber
+    TaxPayerNumber
+}
+
+class UserType {
+    UserTypeName
+}
+
+class UserPortal {
+
+}
+class Feedback {
+    Comment
+    Report
+}
+
+class Job {
+    JobName
+    Description
+}
+
+class Task{
+    TaskDescription
+
+}
+
+class Skill{
+    SkillName
+}
+
+class Team{
+
+}
+class Entry{
+    Date
+}
+
+class Vehicle {
+    Brand
+    Model
+    Type
+    Tare
+    Gross Weight
+    Current Km
+    Register Date
+    Acquisition Date
+    MaintenanceCheckUpFrequency
+}
+class Machines{
+    MachineType
+}
+class Equipment{
+    EquipmentType
+}
+class GreenSpace{
+    GreenSpaceType
+}
+
+User "*" -- "1" Team : < belongs to
+User "*" -- "1" UserType : > has
+User "*" -- "1" UserPortal : > uses
+User "*" -- "*" Skill : > has
+User "*" -- "1" Job : > has a
+User "1" -- "*" Feedback : > sends
+
+UserPortal "1" -- "*" Feedback : > receives
+Skill "*" -- "*" Task : < requires
+Job "1" -- "*" Task : > has
+Team "1" -- "*" Task : > performs
+
+Entry "*" -- "1" Diary : < has
+Entry "1" -- "1" GreenSpace : > located
+Task "1" -- "1" Entry : < defines
+Task "1" -- "*" Vehicle : > needs
+Task "1" -- "*" Machines : > needs
+Task "1" -- "*" Equipment : > needs
+
+Vehicle -- Machines : > transports
+Vehicle -- Equipment : > transports
+
+
+@enduml

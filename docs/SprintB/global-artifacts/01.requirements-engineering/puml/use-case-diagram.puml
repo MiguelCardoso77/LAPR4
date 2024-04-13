@@ -1,0 +1,47 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+'skinparam shadowing false
+
+skinparam rectangle{
+    BorderColor black
+}
+
+'title Use Case Diagram Example
+
+left to right direction
+
+rectangle "System Actors" as actors {
+    actor "Human Resources Manager"
+    actor "Fleet Manager"
+    'actor "Organization\nEmployee" as Employee
+}
+
+
+'note right of User
+    'Actor identified but still
+    'no concrete use cases
+'end note
+
+rectangle "Use Cases" as usecases{
+    usecase "UC1: Register skills that may be appointed to a collaborator." as UC1
+    usecase "UC2: Register a job." as UC2
+    usecase "UC3: Register a collaborator with a job and fundamental characteristics." as UC3
+    usecase "UC4: Assign one or more skills to a collaborator." as UC4
+    usecase "UC5: Generate a team proposal automatically." as UC5
+    usecase "UC6: Register a vehicle." as UC6
+    usecase "UC7: Register a vehicle’s check-up." as UC7
+    usecase "UC8: List the vehicles needing the check-up." as UC8
+
+    "Human Resources Manager" --> UC1
+    "Human Resources Manager" --> UC2
+    "Human Resources Manager" --> UC3
+    "Human Resources Manager" --> UC4
+    "Human Resources Manager" --> UC5
+    "Fleet Manager" --> UC6
+    "Fleet Manager" --> UC7
+    "Fleet Manager" --> UC8
+
+}
+
+@enduml

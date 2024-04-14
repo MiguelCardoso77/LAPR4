@@ -1,0 +1,208 @@
+@startuml
+hide methods
+left to right direction
+'skinparam linetype ortho
+
+Title "Domain Model"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
+
+package "Customer Aggregate"{
+entity Customer <<entity>><<root>>
+
+    card CustomerName <<Value Object>> {
+    }
+    card CustomerEmail <<Value Object>> {
+    }
+    card CustomerPhoneNumber <<Value Object>> {
+    }
+    card CustomerPassword <<Value Object>> {
+    }
+    card Company <<Value Object>> {
+    }
+
+        Customer --> CustomerEmail
+        Customer --> CustomerName
+        Customer --> CustomerPhoneNumber
+        Customer --> CustomerPassword
+        Customer --> Company
+}
+
+package "Candidate Aggregate"{
+entity Candidate <<entity>><<root>>
+
+    card CandidateName <<Value Object>> {
+    }
+    card CandidateEmail <<Value Object>> {
+    }
+    card CandidatePhoneNumber <<Value Object>> {
+    }
+    card CandidatePassword <<Value Object>> {
+    }
+    card Curriculum <<Value Object>> {
+    }
+
+        Candidate --> CandidateEmail
+        Candidate --> CandidateName
+        Candidate --> CandidatePhoneNumber
+        Candidate --> CandidatePassword
+        Candidate --> Curriculum
+
+}
+
+package "Job Requirements Specification Aggregate"{
+entity JobRequirementsSpecification <<entity>><<root>>
+
+    card Requirements <<Value Object>>{
+    }
+
+        JobRequirementsSpecification --> Requirements
+
+}
+
+package "Job Opening Aggregate"{
+entity JobOpening <<entity>><<root>>
+
+    card JobReference <<Value Object>> {
+    }
+    card TitleOrFunction <<Value Object>> {
+    }
+    card ContractType <<Value Object>> {
+    }
+    card Mode <<Value Object>> {
+    }
+    card Address <<Value Object>> {
+    }
+    card VacanciesNumber <<Value Object>> {
+    }
+    card Description <<Value Object>> {
+    }
+    card ProcessState <<Value Object>> {
+    }
+
+    JobOpening --> JobReference
+    JobOpening --> TitleOrFunction
+    JobOpening --> ContractType
+    JobOpening --> Mode
+    JobOpening --> Address
+    JobOpening --> VacanciesNumber
+    JobOpening --> Description
+    JobOpening --> ProcessState
+
+    note right of ContractType
+        Can be one of the following:
+        - full-time
+        - part-time
+    end note
+
+    note right of Mode
+         Can be one of the following:
+         - remote
+         - hybrid
+         - onsite
+    end note
+
+    note right of ProcessState
+            Can be one of the following:
+            - Application
+            - Screening
+            - Interviews
+            - Analysis
+            - Result
+        end note
+}
+
+package "JobInterview Aggregate"{
+
+    entity JobInterview <<entity>><<root>>
+
+            card InterviewResults <<Value Object>> {
+            }
+            card Score <<Value Object>> {
+            }
+            card InterviewTime <<Value Object>> {
+            }
+
+            JobInterview --> InterviewResults
+            JobInterview --> Score
+            JobInterview --> InterviewTime
+
+        note right of InterviewResults
+            At least the following type of questions should be supported:
+            - true/false
+            - short text answer
+            - choice (single answer)
+            - choice (multiple answer)
+            - integer number
+            - decimal number
+            - date
+            - time
+            - numeric scale
+        end note
+
+}
+
+package "Application Aggregate"{
+entity Application <<entity>><<root>>
+
+    card EmailContentFile <<Value Object>> {
+    }
+    card EmailFilesAttached <<Value Object>>{
+    }
+    card FilesAttachedContent <<Value Object>>{
+    }
+    card ApplicationDataFile <<Value Object>>{
+    }
+    card Status <<Value Object>>{
+    }
+    card SubmissionDate <<Value Object>>{
+    }
+
+    Application --> EmailContentFile
+    Application --> EmailFilesAttached
+    Application --> FilesAttachedContent
+    Application --> ApplicationDataFile
+    Application --> Status
+    Application --> SubmissionDate
+
+    note right of Status
+        Can be one of the following:
+        - submitted
+        - pending
+        - accepted
+        - declined
+    end note
+}
+
+package "InterviewModel Aggregate"{
+entity InterviewModel <<entity>><<root>>
+
+
+}
+
+    JobOpening "1" <-- "N " Application : has
+    JobOpening "N" ---> "1" Customer : associated
+
+    Application "N" ---> "1" Candidate
+    Application "1" --> "1" JobInterview
+
+    JobRequirementsSpecification "1" <-- "N" JobOpening : associated
+
+@enduml

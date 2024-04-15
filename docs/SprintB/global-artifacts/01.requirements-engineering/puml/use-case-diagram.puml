@@ -1,0 +1,50 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+'skinparam shadowing false
+
+skinparam rectangle{
+    BorderColor black
+}
+
+left to right direction
+
+actor "Admin" as admin
+actor "Operator" as operator
+actor "Customer Manager" as customerManager
+actor "Language Engineer" as languageEngineer
+actor "Candidate" as candidate
+actor "Customer" as customer
+actor "Applications Email Bot" as applicationEmailBot
+
+rectangle "Backoffice" as backoffice {
+    usecase "Manage Customers and its Managers"
+    usecase "Register Application"
+    usecase "Manage Job Openings"
+    usecase "Deploy and Configure Terminal"
+
+    admin --> "Manage Customers and its Managers"
+    operator --> "Register Application"
+    customerManager --> "Manage Job Openings"
+    languageEngineer --> "Deploy and Configure Terminal"
+}
+
+rectangle "Candidate App" as candidateApp{
+    usecase "Follow Applications"
+
+    candidate --> "Follow Applications"
+}
+
+rectangle "Customer App" as customerApp{
+    usecase "Follow Job Openings"
+
+    customer --> "Follow Job Openings"
+}
+
+rectangle "Applications File Bot" as ApplicationsFileBotApp{
+    usecase "Import Application Files"
+
+    applicationEmailBot --> "Import Application Files"
+}
+
+@enduml

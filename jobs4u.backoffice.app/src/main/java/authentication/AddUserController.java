@@ -1,5 +1,6 @@
 package authentication;
 
+import domain.Jobs4uRoles;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
@@ -20,11 +21,11 @@ public class AddUserController {
      * @return an array of RoleTypes
      */
     public Role[] getRoleTypes() {
-        return UserRoles.getAllAssignableRoles();
+        return Jobs4uRoles.getAllAssignableRoles();
     }
 
     public SystemUser addUser(final String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
-        authz.ensureAuthenticatedUserHasAnyOf(UserRoles.CANDIDATE, UserRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4uRoles.CANDIDATE, Jobs4uRoles.ADMIN);
         return userSvc.registerNewUser(username, password, firstName, lastName, email, roles, createdOn);
     }
 

@@ -1,8 +1,12 @@
-package authentication;
+package domain;
 
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
-public class UserRoles {
+public class Jobs4uRoles {
+    /**
+     * User.
+     */
+    public static final Role JOBS4U_USER = Role.valueOf("JOBS4U_USER");
 
     /**
      * Role for application users.

@@ -1,5 +1,6 @@
 import app.Jobs4uBaseApplication;
 import authentication.AuthenticationCredentialHandler;
+import authentication.Jobs4uPasswordPolicy;
 import authentication.LoginUI;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
@@ -47,7 +48,7 @@ public class Jobs4uBackOffice extends Jobs4uBaseApplication {
 
     @Override
     protected void configureAuthz() {
-        AuthzRegistry.configure(PersistenceContext.repositories().users(), new CafeteriaPasswordPolicy(), new PlainTextEncoder());
+        AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4uPasswordPolicy(), new PlainTextEncoder());
     }
 
     @SuppressWarnings("unchecked")

@@ -1,0 +1,100 @@
+@startuml
+hide methods
+left to right direction
+'skinparam linetype ortho
+
+Title "Domain Model"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
+
+package "Customer Manager Aggregate"{
+entity CustomerManager <<entity>><<root>>
+
+    card loginManager <<Value Object>> {
+    }
+
+    CustomerManager --> loginManager
+
+}
+package "Job Requirements Specification Aggregate"{
+entity JobRequirementsSpecification <<entity>><<root>>
+
+    card Requirements <<Value Object>>{
+    }
+
+        JobRequirementsSpecification --> Requirements
+
+}
+
+package "Job Opening Aggregate"{
+entity JobOpening <<entity>><<root>>
+
+    card JobReference <<Value Object>> {
+    }
+    card TitleOrFunction <<Value Object>> {
+    }
+    card ContractType <<Value Object>> {
+    }
+    card Mode <<Value Object>> {
+    }
+    card Address <<Value Object>> {
+    }
+    card VacanciesNumber <<Value Object>> {
+    }
+    card Description <<Value Object>> {
+    }
+    card ProcessState <<Value Object>> {
+    }
+
+    JobOpening --> JobReference
+    JobOpening --> TitleOrFunction
+    JobOpening --> ContractType
+    JobOpening --> Mode
+    JobOpening --> Address
+    JobOpening --> VacanciesNumber
+    JobOpening --> Description
+    JobOpening --> ProcessState
+
+    note right of ContractType
+        Can be one of the following:
+        - full-time
+        - part-time
+    end note
+
+    note right of Mode
+         Can be one of the following:
+         - remote
+         - hybrid
+         - onsite
+    end note
+    note right of ProcessState
+            Can be one of the following:
+            - Application
+            - Screening
+            - Interviews
+            - Analysis
+            - Result
+        end note
+}
+
+    CustomerManager "1" --> "N" JobOpening : registers
+    JobRequirementsSpecification "1" <-- "N" JobOpening : associated
+
+@enduml

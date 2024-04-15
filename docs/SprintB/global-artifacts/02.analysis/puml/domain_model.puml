@@ -177,6 +177,8 @@ entity Application <<entity>><<root>>
     }
     card SubmissionDate <<Value Object>>{
     }
+    card Rank <<Value Object>>{
+    }
 
     Application --> EmailContentFile
     Application --> EmailFilesAttached
@@ -184,6 +186,7 @@ entity Application <<entity>><<root>>
     Application --> ApplicationDataFile
     Application --> Status
     Application --> SubmissionDate
+    Application --> Rank
 
     note right of Status
         Can be one of the following:

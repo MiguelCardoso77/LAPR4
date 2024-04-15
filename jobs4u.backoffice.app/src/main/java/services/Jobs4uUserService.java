@@ -30,15 +30,4 @@ public class Jobs4uUserService {
     private SystemUser myUser() {
         return authz.session().map(UserSession::authenticatedUser).orElseThrow(IllegalStateException::new);
     }
-
-    /**
-     * Returns the card balance of the authenticated cafeteria user.
-     *
-     * @return
-     */
-    public Money myBalance() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4uRoles.JOBS4U_USER);
-
-        return movementsRepo.balanceOf(myUser().identity());
-    }
 }

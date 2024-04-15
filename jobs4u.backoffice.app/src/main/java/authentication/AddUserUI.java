@@ -1,15 +1,10 @@
 package authentication;
 
-import eapli.framework.actions.Actions;
-import eapli.framework.actions.menu.Menu;
-import eapli.framework.actions.menu.MenuItem;
-import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class AddUserUI extends AbstractUI {
     private final AddUserController theController = new AddUserController();

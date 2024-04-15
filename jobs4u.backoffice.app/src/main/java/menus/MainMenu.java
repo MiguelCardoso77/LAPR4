@@ -8,6 +8,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.ListUI;
+import eapli.framework.presentation.console.ShowMessageAction;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
@@ -93,20 +94,6 @@ public class MainMenu extends Jobs4uUserBaseUI {
         });
         accountMenu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
         return accountMenu;
-    }
-
-    private Menu buildBookingsMenu() {
-        final Menu menu = new Menu("Bookings");
-        menu.addItem(BOOK_A_MEAL_OPTION, "Book a meal", () -> new RegisterBookingUI().show());
-
-        menu.addItem(LIST_MY_BOOKINGS_OPTION, "My Bookings", () -> {
-                    new ListUI<>(new MyBookingsController().myBookings(), new BookingPrinter(), "Booking",
-                    String.format("   %-40s %-15s %s", "TOKEN", "DAY", "STATUS"), "List My Bookings",
-                    "No data").show();
-            return true;
-        });
-        menu.addItem(EXIT_OPTION, RETURN, Actions.SUCCESS);
-        return menu;
     }
 
     private Menu buildAdminSettingsMenu() {

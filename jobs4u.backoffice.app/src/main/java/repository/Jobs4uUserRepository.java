@@ -1,6 +1,8 @@
 package repository;
 
 import domain.Jobs4uUser;
+import domain.MecanographicNumber;
+import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
 import java.util.Optional;

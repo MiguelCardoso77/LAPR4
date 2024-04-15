@@ -5,6 +5,10 @@ import authentication.LoginUI;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import events.NewUserRegisteredFromSignupEvent;
+import events.NewUserRegisteredFromSignupWatchDog;
+import events.SignupAcceptedEvent;
+import events.SignupAcceptedWatchDog;
 import menus.MainMenu;
 import persistence.PersistenceContext;
 
@@ -56,6 +60,5 @@ public class Jobs4uBackOffice extends Jobs4uBaseApplication {
     protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
         dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(), NewUserRegisteredFromSignupEvent.class);
         dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
-        dispatcher.subscribe(new MealBookedWatchDog(), BookedEvent.class);
     }
 }

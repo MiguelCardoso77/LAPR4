@@ -1,7 +1,16 @@
 package menus;
 
 import app.AppSettings;
+import authentication.AuthenticationCredentialHandler;
+import authentication.ChangePasswordUI;
+import authentication.LoginUI;
+import authentication.LogoutUI;
+import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
+import eapli.framework.actions.menu.MenuItem;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,72 +22,36 @@ import java.util.Map;
 import java.util.Properties;
 
 public class MyUserMenu extends Menu {
-    private static final Logger LOGGER = LogManager.getLogger(AppSettings.class);
+    private static final String MENU_TITLE = "My account >";
 
-    private static final String PROPERTIES_RESOURCE = "application.properties";
-    private static final String REPOSITORY_FACTORY_KEY = "persistence.repositoryFactory";
-    private static final String UI_MENU_LAYOUT_KEY = "ui.menu.layout";
-    private static final String PERSISTENCE_UNIT_KEY = "persistence.persistenceUnit";
-    private static final String SCHEMA_GENERATION_KEY = "jakarta.persistence.schema-generation.database.action";
-    private static final String HIGH_CALORIES_DISH_LIMIT = "HighCaloriesDishLimit";
-    private static final String USE_EVENTFUL_CONTROLLERS = "UseEventfulControllers";
+    private static final int EXIT_OPTION = 0;
 
-    private final Properties applicationProperties = new Properties();
+    // MY USER
+    private static final int CHANGE_PASSWORD_OPTION = 1;
+    private static final int LOGIN_OPTION = 2;
+    private static final int LOGOUT_OPTION = 3;
 
-    public AppSettings() {
-        loadProperties();
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+
+    public MyUserMenu() {
+        super(MENU_TITLE);
+        buildMyUserMenu(null);
     }
 
-    private void loadProperties() {
-        try (InputStream propertiesStream = this.getClass().getClassLoader().getResourceAsStream(PROPERTIES_RESOURCE)) {
-            if (propertiesStream == null) {
-                throw new FileNotFoundException(
-                        "Property file '" + PROPERTIES_RESOURCE + "' not found in the classpath");
-            }
-            applicationProperties.load(propertiesStream);
-        } catch (final IOException exio) {
-            setDefaultProperties();
+    public MyUserMenu(final Role onlyWithThis) {
+        super(MENU_TITLE);
+        buildMyUserMenu(onlyWithThis);
+    }
 
-            LOGGER.warn("Loading default properties", exio);
+    private void buildMyUserMenu(final Role onlyWithThis) {
+        if (authz.hasSession()) {
+            addItem(MenuItem.of(CHANGE_PASSWORD_OPTION, "Change password", new ChangePasswordUI()::show));
+            addItem(MenuItem.of(LOGIN_OPTION, "Change user", new LoginUI(new AuthenticationCredentialHandler(), onlyWithThis)::show));
+            addItem(MenuItem.of(LOGOUT_OPTION, "Logout", new LogoutUI()::show));
+        } else {
+            addItem(MenuItem.of(LOGIN_OPTION, "Login", new LoginUI(new AuthenticationCredentialHandler(), onlyWithThis)::show));
         }
-    }
 
-    private void setDefaultProperties() {
-        applicationProperties.setProperty(REPOSITORY_FACTORY_KEY,
-                "eapli.ecafeteria.persistence.jpa.JpaRepositoryFactory");
-        applicationProperties.setProperty(UI_MENU_LAYOUT_KEY, "horizontal");
-        applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli.eCafeteriaPU");
-        applicationProperties.setProperty(HIGH_CALORIES_DISH_LIMIT, "300");
-    }
-
-    public boolean isMenuLayoutHorizontal() {
-        return "horizontal".equalsIgnoreCase(this.applicationProperties.getProperty(UI_MENU_LAYOUT_KEY));
-    }
-
-    public String persistenceUnitName() {
-        return applicationProperties.getProperty(PERSISTENCE_UNIT_KEY);
-    }
-
-    public String repositoryFactory() {
-        return applicationProperties.getProperty(REPOSITORY_FACTORY_KEY);
-    }
-
-    public Integer highCaloriesDishLimit() {
-        return Integer.valueOf(this.applicationProperties.getProperty(HIGH_CALORIES_DISH_LIMIT));
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public Map extendedPersistenceProperties() {
-        final Map ret = new HashMap();
-        ret.put(SCHEMA_GENERATION_KEY, applicationProperties.getProperty(SCHEMA_GENERATION_KEY));
-        return ret;
-    }
-
-    public String getProperty(final String prop) {
-        return applicationProperties.getProperty(prop);
-    }
-
-    public boolean useEventfulControllers() {
-        return Boolean.parseBoolean(applicationProperties.getProperty(USE_EVENTFUL_CONTROLLERS));
+        addItem(MenuItem.of(EXIT_OPTION, "Return ", Actions.SUCCESS));
     }
 }

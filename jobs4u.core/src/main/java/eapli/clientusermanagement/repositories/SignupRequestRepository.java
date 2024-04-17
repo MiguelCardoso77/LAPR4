@@ -18,35 +18,17 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.bootstrapers;
+package eapli.clientusermanagement.repositories;
 
-import eapli.usermanagement.domain.BaseRoles;
-import eapli.framework.actions.Action;
-import eapli.framework.infrastructure.authz.domain.model.Role;
-
-import java.util.HashSet;
-import java.util.Set;
+import eapli.base.clientusermanagement.domain.SignupRequest;
+import eapli.framework.domain.repositories.DomainRepository;
+import eapli.framework.infrastructure.authz.domain.model.Username;
 
 /**
- * @author Paulo Gandra Sousa
+ *
+ * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Action {
+public interface SignupRequestRepository extends DomainRepository<Username, SignupRequest> {
 
-    @Override
-    public boolean execute() {
-        registerAdmin("admin", TestDataConstants.PASSWORD1, "Jane", "Doe Admin",
-                "jane.doe@email.local");
-        return true;
-    }
-
-    /**
-     *
-     */
-    private void registerAdmin(final String username, final String password, final String firstName,
-            final String lastName, final String email) {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.ADMIN);
-
-        registerUser(username, password, firstName, lastName, email, roles);
-    }
+    Iterable<SignupRequest> pendingSignupRequests();
 }

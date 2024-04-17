@@ -1,5 +1,6 @@
 package eapli.persistence;
 
+import eapli.Application;
 import eapli.framework.util.Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

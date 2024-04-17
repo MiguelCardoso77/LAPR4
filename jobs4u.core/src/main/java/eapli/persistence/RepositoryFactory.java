@@ -1,5 +1,7 @@
 package eapli.persistence;
 
+import eapli.clientusermanagement.repositories.ClientUserRepository;
+import eapli.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 

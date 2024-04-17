@@ -18,35 +18,40 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.bootstrapers;
+package eapli.clientusermanagement.repositories;
 
-import eapli.usermanagement.domain.BaseRoles;
-import eapli.framework.actions.Action;
-import eapli.framework.infrastructure.authz.domain.model.Role;
+import eapli.base.clientusermanagement.domain.ClientUser;
+import eapli.base.clientusermanagement.domain.MecanographicNumber;
+import eapli.framework.domain.repositories.DomainRepository;
+import eapli.framework.infrastructure.authz.domain.model.Username;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Optional;
 
 /**
- * @author Paulo Gandra Sousa
+ *
+ * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-public class MasterUsersBootstrapper extends UsersBootstrapperBase implements Action {
-
-    @Override
-    public boolean execute() {
-        registerAdmin("admin", TestDataConstants.PASSWORD1, "Jane", "Doe Admin",
-                "jane.doe@email.local");
-        return true;
-    }
+public interface ClientUserRepository
+        extends DomainRepository<MecanographicNumber, ClientUser> {
 
     /**
+     * returns the client user (utente) whose username is given
      *
+     * @param name
+     *            the username to search for
+     * @return
      */
-    private void registerAdmin(final String username, final String password, final String firstName,
-            final String lastName, final String email) {
-        final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.ADMIN);
+    Optional<ClientUser> findByUsername(Username name);
 
-        registerUser(username, password, firstName, lastName, email, roles);
+    /**
+     * returns the client user (utente) with the given mecanographic number
+     *
+     * @param number
+     * @return
+     */
+    default Optional<ClientUser> findByMecanographicNumber(final MecanographicNumber number) {
+        return ofIdentity(number);
     }
+
+    public Iterable<ClientUser> findAllActive();
 }

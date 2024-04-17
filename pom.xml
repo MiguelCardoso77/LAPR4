@@ -12,6 +12,7 @@
         <module>jobs4u.candidate.app</module>
         <module>jobs4u.util.ci</module>
         <module>jobs4u.backoffice.app</module>
+        <module>jobs4u.bootstrappers</module>
     </modules>
     <version>0.1.0</version>
 

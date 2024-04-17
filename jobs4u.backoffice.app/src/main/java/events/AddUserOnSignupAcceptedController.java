@@ -22,9 +22,6 @@ class AddUserOnSignupAcceptedController {
      * @param theSignupRequest
      *
      * @return
-     *
-     * @throws ConcurrencyException
-     * @throws IntegrityViolationException
      */
     public SystemUser addUser(final SignupAcceptedEvent theSignupRequest) {
 

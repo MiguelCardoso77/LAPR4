@@ -14,7 +14,7 @@ import repository.Jobs4uUserRepository;
 import java.util.Optional;
 
 @ApplicationService
-public class Jobs4uUserService {
+public class MyJobs4uUserService {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final Jobs4uUserRepository cafeteriaUsersRepo = PersistenceContext.repositories().cafeteriaUsers();
 

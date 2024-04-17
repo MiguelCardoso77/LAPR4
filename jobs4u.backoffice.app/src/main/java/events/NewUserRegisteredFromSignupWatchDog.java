@@ -19,6 +19,6 @@ public class NewUserRegisteredFromSignupWatchDog implements EventHandler {
         final NewUserRegisteredFromSignupEvent event = (NewUserRegisteredFromSignupEvent) domainevent;
 
         final var controller = new AddJobs4uUserOnSignupAcceptedController();
-        controller.addCafeteriaUser(event);
+        controller.addJobs4uUser(event);
     }
 }

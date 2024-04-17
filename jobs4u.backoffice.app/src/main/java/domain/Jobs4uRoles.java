@@ -19,11 +19,21 @@ public class Jobs4uRoles {
     public static final Role OPERATOR = Role.valueOf("OPERATOR");
 
     /**
-     * Get available role types for the application.
+     * Get available role types for cafeteria employees.
      *
-     * @return an array with the available role types
+     * @return employee roles
      */
-    public static Role[] getAllAssignableRoles() {
-        return new Role[]{ADMIN, CANDIDATE, CUSTOMER, CUSTOMER_MANAGER, LANGUAGE_ENGINEER, OPERATOR};
+    public static Role[] nonUserValues() {
+        return new Role[] { ADMIN, CANDIDATE, CUSTOMER, CUSTOMER_MANAGER, LANGUAGE_ENGINEER, OPERATOR };
+    }
+
+    /**
+     * Checks if a role is one of the employee roles.
+     *
+     * @param role
+     * @return {@code true} if a role is one of the employee roles
+     */
+    public boolean isCollaborator(final Role role) {
+        return role != JOBS4U_USER;
     }
 }

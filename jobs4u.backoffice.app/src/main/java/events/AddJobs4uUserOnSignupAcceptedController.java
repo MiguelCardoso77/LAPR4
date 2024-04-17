@@ -14,12 +14,12 @@ public class AddJobs4uUserOnSignupAcceptedController {
     private final UserRepository repo = PersistenceContext.repositories().users();
     private final Jobs4uUserRepository cafeteriaUserRepository = PersistenceContext.repositories().cafeteriaUsers();
 
-    public Jobs4uUser addCafeteriaUser(final NewUserRegisteredFromSignupEvent event) {
+    public Jobs4uUser addJobs4uUser(final NewUserRegisteredFromSignupEvent event) {
         final Optional<SystemUser> newUser = findUser(event);
-        return newUser.map(u -> createCafeteriaUser(event, u)).orElseThrow(IllegalStateException::new);
+        return newUser.map(u -> createJobs4uUser(event, u)).orElseThrow(IllegalStateException::new);
     }
 
-    private Jobs4uUser createCafeteriaUser(final NewUserRegisteredFromSignupEvent event, SystemUser u) {
+    private Jobs4uUser createJobs4uUser(final NewUserRegisteredFromSignupEvent event, SystemUser u) {
         final var cafeteriaUser = new Jobs4uUserBuilder().withMecanographicNumber(event.mecanographicNumber()).withSystemUser(u).build();
         return cafeteriaUserRepository.save(cafeteriaUser);
     }

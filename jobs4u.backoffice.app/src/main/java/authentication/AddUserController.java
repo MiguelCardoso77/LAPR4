@@ -18,18 +18,23 @@ public class AddUserController {
     /**
      * Get existing RoleTypes available to the user.
      *
-     * @return an array of RoleTypes
+     * @return a list of RoleTypes
      */
     public Role[] getRoleTypes() {
-        return Jobs4uRoles.getAllAssignableRoles();
+        return Jobs4uRoles.nonUserValues();
     }
 
-    public SystemUser addUser(final String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4uRoles.CANDIDATE, Jobs4uRoles.ADMIN);
-        return userSvc.registerNewUser(username, password, firstName, lastName, email, roles, createdOn);
+    public SystemUser addUser(final String username, final String password, final String firstName, final String lastName,
+                              final String email, final Set<Role> roles, final Calendar createdOn) {
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4uRoles.JOBS4U_USER, Jobs4uRoles.ADMIN);
+
+        return userSvc.registerNewUser(username, password, firstName, lastName, email, roles,
+                createdOn);
     }
 
-    public SystemUser addUser(final String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
+    public SystemUser addUser(final String username, final String password, final String firstName,
+                              final String lastName,
+                              final String email, final Set<Role> roles) {
         return addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
     }
 }

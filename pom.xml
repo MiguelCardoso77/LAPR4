@@ -15,6 +15,7 @@
         <module>jobs4u.bootstrap</module>
         <module>jobs4u.persistence</module>
         <module>jobs4u.core</module>
+        <module>jobs4u.bootstrappers</module>
     </modules>
     <version>0.1.0</version>
 

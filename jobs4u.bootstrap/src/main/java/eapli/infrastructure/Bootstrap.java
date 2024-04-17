@@ -1,9 +1,14 @@
 package eapli.infrastructure;
 
+import eapli.bootstrapers.BaseBootstrapper;
+import eapli.bootstrapers.demo.BaseDemoBootstrapper;
 import eapli.framework.collections.util.ArrayPredicates;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
+import eapli.persistence.PersistenceContext;
+import eapli.smoketests.BaseDemoSmokeTester;
+import eapli.usermanagement.domain.BasePasswordPolicy;
 
 public class Bootstrap {
     private Bootstrap() {

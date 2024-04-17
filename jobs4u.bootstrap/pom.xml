@@ -21,6 +21,16 @@
     <dependencies>
         <dependency>
             <groupId>eapli</groupId>
+            <artifactId>jobs4u.core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eapli</groupId>
+            <artifactId>jobs4u.bootstrappers</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eapli</groupId>
             <artifactId>jobs4u.persistence</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

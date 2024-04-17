@@ -20,8 +20,8 @@
  */
 package eapli.clientusermanagement.repositories;
 
-import eapli.base.clientusermanagement.domain.ClientUser;
-import eapli.base.clientusermanagement.domain.MecanographicNumber;
+import eapli.clientusermanagement.domain.ClientUser;
+import eapli.clientusermanagement.domain.MecanographicNumber;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 

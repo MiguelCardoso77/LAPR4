@@ -20,9 +20,9 @@
  */
 package eapli.persistence.jpa;
 
-import eapli.base.Application;
-import eapli.base.clientusermanagement.domain.SignupRequest;
-import eapli.base.clientusermanagement.repositories.SignupRequestRepository;
+import eapli.Application;
+import eapli.clientusermanagement.domain.SignupRequest;
+import eapli.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;

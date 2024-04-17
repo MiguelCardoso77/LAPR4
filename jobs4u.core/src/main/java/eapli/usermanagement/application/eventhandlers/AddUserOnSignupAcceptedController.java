@@ -23,11 +23,11 @@
  */
 package eapli.usermanagement.application.eventhandlers;
 
-import eapli.base.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
-import eapli.base.clientusermanagement.domain.events.SignupAcceptedEvent;
-import eapli.infrastructure.persistence.PersistenceContext;
-import eapli.base.usermanagement.domain.BaseRoles;
-import eapli.base.usermanagement.domain.UserBuilderHelper;
+import eapli.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
+import eapli.clientusermanagement.domain.events.SignupAcceptedEvent;
+import eapli.persistence.PersistenceContext;
+import eapli.usermanagement.domain.BaseRoles;
+import eapli.usermanagement.domain.UserBuilderHelper;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.repositories.ConcurrencyException;

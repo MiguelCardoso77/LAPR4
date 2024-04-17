@@ -20,7 +20,7 @@
  */
 package eapli.usermanagement.application.eventhandlers;
 
-import eapli.base.clientusermanagement.domain.events.SignupAcceptedEvent;
+import eapli.clientusermanagement.domain.events.SignupAcceptedEvent;
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.pubsub.EventHandler;

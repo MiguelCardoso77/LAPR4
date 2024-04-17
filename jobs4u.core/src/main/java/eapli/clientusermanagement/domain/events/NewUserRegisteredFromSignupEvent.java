@@ -23,7 +23,7 @@
  */
 package eapli.clientusermanagement.domain.events;
 
-import eapli.base.clientusermanagement.domain.MecanographicNumber;
+import eapli.clientusermanagement.domain.MecanographicNumber;
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.events.DomainEventBase;
 import eapli.framework.infrastructure.authz.domain.model.Username;

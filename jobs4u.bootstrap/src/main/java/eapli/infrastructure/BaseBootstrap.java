@@ -1,17 +1,22 @@
 package eapli.infrastructure;
 
+import console.BaseApplication;
 import eapli.bootstrapers.BaseBootstrapper;
 import eapli.bootstrapers.demo.BaseDemoBootstrapper;
+import eapli.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
+import eapli.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
+import eapli.clientusermanagement.domain.events.SignupAcceptedEvent;
 import eapli.framework.collections.util.ArrayPredicates;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
 import eapli.persistence.PersistenceContext;
 import eapli.smoketests.BaseDemoSmokeTester;
+import eapli.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
 import eapli.usermanagement.domain.BasePasswordPolicy;
 
-public class Bootstrap {
-    private Bootstrap() {
+public class BaseBootstrap extends BaseApplication {
+    private BaseBootstrap() {
     }
 
     private boolean isToBootstrapDemoData;
@@ -19,7 +24,7 @@ public class Bootstrap {
 
     public static void main(final String[] args) {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
-        new Bootstrap().run(args);
+        new BaseBootstrap().run(args);
     }
 
     @Override

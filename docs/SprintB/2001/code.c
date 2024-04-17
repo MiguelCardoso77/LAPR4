@@ -8,51 +8,49 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <time.h>
+#include <sys/inotify.h>
+
+#define BUF_LEN (1024 * (EVENT_SIZE + 16))
 #define BUFFER_SIZE 100;
 
-void handle_children(int signo){
+void handle_children(int signo,siginfo_t *sinfo, void *context){
   flagChildren=1;
 }
 
-void handle_father_usr2(int signo){
-  //criar array para verificar disponibilidade dos filhos
+void handle_father_usr2(int signo,siginfo_t *sinfo, void *context){
+  for (int i = 0; i < number_children; i++)
+  {
+    if(*(childrens_availability+i)==0){
+      *(childrens_availability+i)=sinfo->si_pid;
+    }
+  }
+  
+}
+
+void children_occupied(pid_t pid){
+  for (int i = 0; i < number_children; i++)
+  {
+    if(*(childrens_availability+i)==pid){
+      *(childrens_availability+i)=0;
+    }
+  }
 }
 
 volatile sig_atomic_t flagFather = 0; 
 volatile sig_atomic_t flagChildren = 0;
 volatile pid_t *childrens_availability;
+volatile int number_children;
+volatile int new_files=0;
 
-
-void handle_father_exit(int signo){
+void handle_father_exit(int signo,siginfo_t *sinfo, void *context){
   flagFather=1;
 }
 
-int get_number_of_files(char *directory){
-  int count = 0;
-  struct dirent *entry;
-  DIR *dir;
-
-  dir = opendir(directory);
-  if (dir == NULL) {
-    fprintf(stderr, "Could not open directory %s\n", directory);
-    continue;
-  }
-
-  while ((entry = readdir(dir)) != NULL) {
-    if(entry->d_type == DT_REG){ 
-      count++;
-    }
-  }
-  closedir(dir);
-
-  return count;
-}
-
-int available_process(int *available,int size){
-  for (int i = 0; i < size; i++)
+pid_t available_process(){
+  for (int i = 0; i < number_children; i++)
   {
-    if(*available == 0){
-      return i;
+    if(*(childrens_availability+i) != 0){
+      return *(childrens_availability+i);
     }
   }
 }
@@ -63,9 +61,8 @@ int available_process(int *available,int size){
 // 3 - number of childrens
 // 4 - time of check
 int main(int argc,char *argv[]){
-DIR *dir;
 pid_t pid_handler;
-int periodic_check,number_of_files,number_children;
+int periodic_check,number_of_files;
 char output_directory[BUFFER_SIZE];
 char input_directory[BUFFER_SIZE];
 
@@ -76,6 +73,7 @@ periodic_check=atoi(argv[4]);
 number_children=atoi(argv[3]);
 pid_t pid[number_children];
 int fd[number_children][2];
+int pipe_info[2];//pipe to send the new files
 childrens_availability=(pid_t *) calloc(number_children,sizeof(pid_t));
 
 for (int i = 0; i < number_children; i++)
@@ -86,21 +84,49 @@ for (int i = 0; i < number_children; i++)
   }
 }
 
+if(pipe(pipe_info) == -1){ 
+    perror("Pipe failed"); 
+    exit(1); 
+}
+
 
 pid_handler=fork();
 
 if(pid_handler==0){
-  while(flagChildren==0){
-    number_of_files=get_number_of_files(input_directory);
-    sleep(periodic_check);
-    int nfiles=get_number_of_files(input_directory);
-    if(number_of_files<nfiles){
-      kill(getppid(),SIGUSR1);
-      pause();
-      number_children=nfiles;
+    close(pipe_info[0]);
+    int fd_notify, wd;
+    char buffer[BUF_LEN];
+
+    fd_notify = inotify_init();
+    if (fd_notify < 0) {
+        perror("inotify_init");
+        exit(EXIT_FAILURE);
     }
-  }
-  exit(0);
+
+    wd = inotify_add_watch(fd_notify, input_directory, IN_CREATE);
+    if (wd == -1) {
+        perror("inotify_add_watch");
+        exit(EXIT_FAILURE);
+    }
+
+    while (flagChildren==0) {
+        int length = read(fd_notify, buffer, BUF_LEN);
+        if (length < 0) {
+            perror("read");
+            exit(EXIT_FAILURE);
+        }
+
+        while (char *ptr < buffer + length) {
+            struct inotify_event *event = (struct inotify_event *)ptr;
+
+            if (event->mask & IN_CREATE) {
+                write(pipe_info[1],event->name,sizeof(BUFFER_SIZE));
+            }
+            ptr += sizeof(struct inotify_event) + event->len;
+        }
+    }
+    close(pipe_info[1]);
+    exit(0);
 }
 
 for (int i = 0; i < number_children; i++)
@@ -110,21 +136,32 @@ for (int i = 0; i < number_children; i++)
     while(flagChildren==0){
       close(fd[i][1]);
       char name[BUFFER_SIZE];
-      while((n=read(fd[0],name,sizeof(BUFFER_SIZE)))!=0){
+      while((n=read(fd[i][0],name,sizeof(BUFFER_SIZE)))!=0){
         //criar pasta para o candidato no output directory
         //copiar os ficheiros para o directory criado
       }
       kill(getppid(),SIGUSR2);
     }
+    close(fd[i][0])
     exit(0);
   }
 }
-
-pause();
-while(flag==0){
-  //verificar disponibilidade dos filhos e distribuir os candidato pelos filhos
-
+close(pipe_info[1]);
+while(flagFather==0){
+    char file[BUFFER_SIZE];
+    while((n=read(pipe_info[0],file,sizeof(BUFFER_SIZE)))!=0){
+    pid_t pid_available=available_process();
+    for (int i = 0; i < number_children; i++)
+    {
+      if(pid[i]==pid_available){
+        children_occupied(pid_available);
+        write(fd[i][1],file,sizeof(BUFFER_SIZE));
+      }
+    }
+  }
 }
+
+close(pipe_info[0]);
 
 for (int i = 0; i < number_children; i++)
 {

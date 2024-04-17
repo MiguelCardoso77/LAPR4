@@ -158,6 +158,7 @@ while(flagFather==0){
         write(fd[i][1],file,sizeof(BUFFER_SIZE));
       }
     }
+  }
 }
 
 close(pipe_info[0]);

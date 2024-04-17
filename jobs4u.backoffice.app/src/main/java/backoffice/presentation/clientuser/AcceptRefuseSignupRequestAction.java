@@ -18,18 +18,17 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package presentation.authz;
+package backoffice.presentation.clientuser;
 
 import eapli.framework.actions.Action;
 
 /**
- *
- * @author losa
+ * Created by AJS on 08/04/2016.
  */
-public class ListUsersAction implements Action {
+public class AcceptRefuseSignupRequestAction implements Action {
 
     @Override
     public boolean execute() {
-        return new ListUsersUI().show();
+        return new AcceptRefuseSignupRequestUI().show();
     }
 }

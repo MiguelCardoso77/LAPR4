@@ -18,18 +18,18 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package presentation.authz;
+package backoffice.presentation.authz;
 
 import eapli.framework.actions.Action;
 
 /**
- *
- * @author Fernando
+ * Menu action for adding a new user to the application. Created by nuno on
+ * 22/03/16.
  */
-public class DeactivateUserAction implements Action {
+public class AddUserAction implements Action {
 
     @Override
     public boolean execute() {
-        return new DeactivateUserUI().show();
+        return new AddUserUI().show();
     }
 }

@@ -1,4 +1,6 @@
-import presentation.MainMenu;
+package backoffice;
+
+import backoffice.presentation.MainMenu;
 import console.BaseApplication;
 import console.presentation.authz.LoginUI;
 import eapli.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;

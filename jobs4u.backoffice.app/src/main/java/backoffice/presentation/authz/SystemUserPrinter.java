@@ -18,21 +18,21 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package presentation.clientuser;
+package backoffice.presentation.authz;
 
-import eapli.clientusermanagement.domain.SignupRequest;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.visitor.Visitor;
 
 /**
- * Created by AJS on 08/04/2016.
+ *
+ * @author Paulo Gandra de Sousa
  *
  */
-@SuppressWarnings("squid:S106")
-class SignupRequestPrinter implements Visitor<SignupRequest> {
+@SuppressWarnings({ "squid:S106" })
+public class SystemUserPrinter implements Visitor<SystemUser> {
 
     @Override
-    public void visit(final SignupRequest visitee) {
-        System.out.printf("%-10s%-20s%-10s%n", visitee.identity(), visitee.name(),
-                visitee.mecanographicNumber());
+    public void visit(final SystemUser visitee) {
+        System.out.printf("%-10s%-30s%-30s", visitee.username(), visitee.name().firstName(), visitee.name().lastName());
     }
 }

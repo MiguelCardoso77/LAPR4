@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package presentation.authz;
+package backoffice.presentation.authz;
 
 import eapli.usermanagement.application.AddUserController;
 import eapli.framework.actions.Actions;

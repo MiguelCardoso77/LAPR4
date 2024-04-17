@@ -72,5 +72,5 @@
 
 ### NFR15(LAPR4) - Presentation Requirements
 - **Concern 1:**
-    - *Description:* The project has specific requirements for communication and presentation of project results, particularly in the context of sprint reviews for LAPR4 TP classes.
-    - *Action Item:* Collaborate with LAPR4 to fulfill presentation requirements and ensure alignment with project goals and objectives.
+    - *Description:* The project has specific requirements for communication and backoffice.presentation of project results, particularly in the context of sprint reviews for LAPR4 TP classes.
+    - *Action Item:* Collaborate with LAPR4 to fulfill backoffice.presentation requirements and ensure alignment with project goals and objectives.

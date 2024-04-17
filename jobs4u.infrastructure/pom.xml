@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>eapli</groupId>
-    <artifactId>jobs4u.core</artifactId>
+    <artifactId>jobs4u.infrastructure</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -18,11 +18,4 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>eapli</groupId>
-            <artifactId>jobs4u.infrastructure</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-    </dependencies>
 </project>

@@ -23,7 +23,7 @@
  */
 package eapli.bootstrapers.demo;
 
-import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
+import eapli.infrastructure.bootstrapers.BaseBootstrapper;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.application.AuthenticationService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;

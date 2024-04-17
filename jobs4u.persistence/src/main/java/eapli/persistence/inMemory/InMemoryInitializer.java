@@ -20,7 +20,7 @@
  */
 package eapli.persistence.inMemory;
 
-import eapli.base.infrastructure.bootstrapers.BaseBootstrapper;
+import eapli.infrastructure.bootstrapers.BaseBootstrapper;
 
 final class InMemoryInitializer {
 

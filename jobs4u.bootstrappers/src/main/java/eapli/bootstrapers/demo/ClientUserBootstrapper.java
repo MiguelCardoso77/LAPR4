@@ -23,7 +23,7 @@ package eapli.bootstrapers.demo;
 import eapli.base.clientusermanagement.application.AcceptRefuseSignupFactory;
 import eapli.base.clientusermanagement.application.AcceptRefuseSignupRequestController;
 import eapli.base.clientusermanagement.domain.SignupRequest;
-import eapli.base.infrastructure.bootstrapers.TestDataConstants;
+import eapli.infrastructure.bootstrapers.TestDataConstants;
 import eapli.base.myclientuser.application.SignupController;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;

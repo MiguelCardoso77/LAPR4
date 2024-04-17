@@ -25,7 +25,7 @@ package eapli.usermanagement.application.eventhandlers;
 
 import eapli.base.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.base.clientusermanagement.domain.events.SignupAcceptedEvent;
-import eapli.base.infrastructure.persistence.PersistenceContext;
+import eapli.infrastructure.persistence.PersistenceContext;
 import eapli.base.usermanagement.domain.BaseRoles;
 import eapli.base.usermanagement.domain.UserBuilderHelper;
 import eapli.framework.application.UseCaseController;

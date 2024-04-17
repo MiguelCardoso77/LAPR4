@@ -9,7 +9,6 @@
         <version>0.1.0</version>
     </parent>
 
-    <groupId>lapr4</groupId>
     <artifactId>jobs4u.backoffice.app</artifactId>
     <packaging>jar</packaging>
 

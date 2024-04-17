@@ -78,8 +78,7 @@ public class SignupRequestBuilder implements DomainFactory<SignupRequest> {
     }
 
     public SignupRequestBuilder withPassword(final String rawPassword) {
-        password = Password.encodedAndValid(rawPassword, policy, encoder)
-                .orElseThrow(IllegalArgumentException::new);
+        password = Password.encodedAndValid(rawPassword, policy, encoder).orElseThrow(IllegalArgumentException::new);
         return this;
     }
 

@@ -1,4 +1,4 @@
-package eapli.persistence.jpa;
+package persistence.jpa;
 
 /**
  *

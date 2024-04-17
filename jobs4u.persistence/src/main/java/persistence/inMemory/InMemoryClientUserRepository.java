@@ -1,4 +1,4 @@
-package eapli.persistence.inMemory;
+package persistence.inMemory;
 
 import eapli.clientusermanagement.domain.ClientUser;
 import eapli.clientusermanagement.domain.MecanographicNumber;

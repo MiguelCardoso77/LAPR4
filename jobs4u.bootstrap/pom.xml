@@ -30,7 +30,7 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>eapli</groupId>
+            <groupId>persistence</groupId>
             <artifactId>jobs4u.persistence</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

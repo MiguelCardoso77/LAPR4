@@ -48,11 +48,9 @@ public class AppSettings {
     }
 
     private void setDefaultProperties() {
-        this.applicationProperties.setProperty(REPOSITORY_FACTORY_KEY,
-                "eapli.base.persistence.jpa.JpaRepositoryFactory");
+        this.applicationProperties.setProperty(REPOSITORY_FACTORY_KEY, "persistence.jpa.JpaRepositoryFactory");
         this.applicationProperties.setProperty(UI_MENU_LAYOUT_KEY, "horizontal");
-        this.applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli"
-                + ".base");
+        this.applicationProperties.setProperty(PERSISTENCE_UNIT_KEY, "eapli" + ".base");
         this.applicationProperties.setProperty(HIGH_CALORIES_DISH_LIMIT, "300");
     }
 
@@ -73,7 +71,7 @@ public class AppSettings {
         return Integer.valueOf(this.applicationProperties.getProperty(HIGH_CALORIES_DISH_LIMIT));
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public Map getExtendedPersistenceProperties() {
         final Map ret = new HashMap();
         ret.put(SCHEMA_GENERATION_KEY,

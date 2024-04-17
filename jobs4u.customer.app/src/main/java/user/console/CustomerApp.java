@@ -20,7 +20,7 @@ public final class CustomerApp {
 
     public static void main(final String[] args) {
         System.out.println("=====================================");
-        System.out.println("Candidate App");
+        System.out.println("Customer App");
         System.out.println("(C) 2024");
         System.out.println("=====================================");
 

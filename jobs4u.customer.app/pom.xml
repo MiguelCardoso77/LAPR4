@@ -23,8 +23,8 @@
     <dependencies>
         <!-- Bootstrap -->
         <dependency>
-            <groupId>gr</groupId>
-            <artifactId>jobs4u.bootstrappers</artifactId>
+            <groupId>eapli</groupId>
+            <artifactId>jobs4u.bootstrap</artifactId>
             <version>0.1.0</version>
         </dependency>
     </dependencies>

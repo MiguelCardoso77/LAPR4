@@ -96,6 +96,8 @@ entity JobOpening <<entity>><<root>>
     }
     card ProcessState <<Value Object>> {
     }
+    card ProcessDate <<Value Object>> {
+    }
 
     JobOpening --> JobReference
     JobOpening --> TitleOrFunction
@@ -105,6 +107,7 @@ entity JobOpening <<entity>><<root>>
     JobOpening --> VacanciesNumber
     JobOpening --> Description
     JobOpening --> ProcessState
+    JobOpening --> ProcessDate
 
     note right of ContractType
         Can be one of the following:
@@ -119,6 +122,17 @@ entity JobOpening <<entity>><<root>>
          - onsite
     end note
 
+    note right of ProcessDate
+                  Can be one of the following:
+                  - ScreeningStartDate
+                  - ScreeningEndDate
+                  - InterviewsStartDate
+                  - InterviewsEndDate
+                  - AnalysisStartDate
+                  - AnalysisEndDate
+                  - ResultDate
+    end note
+
     note right of ProcessState
             Can be one of the following:
             - Application
@@ -126,7 +140,7 @@ entity JobOpening <<entity>><<root>>
             - Interviews
             - Analysis
             - Result
-        end note
+    end note
 }
 
 package "JobInterview Aggregate"{
@@ -139,24 +153,13 @@ package "JobInterview Aggregate"{
             }
             card InterviewTime <<Value Object>> {
             }
+            card InterviewDate <<Value Object>> {
+            }
 
             JobInterview --> InterviewResults
             JobInterview --> Score
             JobInterview --> InterviewTime
-
-        note right of InterviewResults
-            At least the following type of questions should be supported:
-            - true/false
-            - short text answer
-            - choice (single answer)
-            - choice (multiple answer)
-            - integer number
-            - decimal number
-            - date
-            - time
-            - numeric scale
-        end note
-
+            JobInterview --> InterviewDate
 }
 
 package "Application Aggregate"{
@@ -174,6 +177,8 @@ entity Application <<entity>><<root>>
     }
     card SubmissionDate <<Value Object>>{
     }
+    card Rank <<Value Object>>{
+    }
 
     Application --> EmailContentFile
     Application --> EmailFilesAttached
@@ -181,6 +186,7 @@ entity Application <<entity>><<root>>
     Application --> ApplicationDataFile
     Application --> Status
     Application --> SubmissionDate
+    Application --> Rank
 
     note right of Status
         Can be one of the following:
@@ -191,18 +197,101 @@ entity Application <<entity>><<root>>
     end note
 }
 
-package "InterviewModel Aggregate"{
+package "Interview Model Aggregate"{
 entity InterviewModel <<entity>><<root>>
 
+    card InterviewQuestions <<Value Object>> {
+    }
 
+    InterviewModel --> InterviewQuestions
+
+    note right of InterviewQuestions
+                At least the following type of questions should be supported:
+                - true/false
+                - short text answer
+                - choice (single answer)
+                - choice (multiple answer)
+                - integer number
+                - decimal number
+                - date
+                - time
+                - numeric scale
+    end note
+}
+
+package "Language Engineer Aggregate"{
+entity LanguageEngineer <<entity>><<root>>
+
+    card LanguageEngineerEmail <<Value Object>> {
+    }
+    card LanguageEngineerName <<Value Object>> {
+    }
+
+    LanguageEngineer --> LanguageEngineerEmail
+    LanguageEngineer --> LanguageEngineerName
+}
+
+package "Admin Aggregate"{
+entity Admin <<entity>><<root>>
+
+    card AdminEmail <<Value Object>> {
+    }
+    card AdminName <<Value Object>> {
+    }
+
+    Admin --> AdminEmail
+    Admin --> AdminName
+}
+
+package "Customer Manager Aggregate"{
+entity CustomerManager <<entity>><<root>>
+
+    card CustomerManagerEmail <<Value Object>> {
+    }
+    card CustomerManagerName <<Value Object>> {
+    }
+
+    CustomerManager --> CustomerManagerEmail
+    CustomerManager --> CustomerManagerName
+}
+
+package "Operator Aggregate"{
+    entity Operator <<entity>><<root>>
+
+    card OperatorEmail <<Value Object>> {
+    }
+    card OperatorName <<Value Object>> {
+    }
+
+    Operator --> OperatorEmail
+    Operator --> OperatorName
+}
+
+package "ANTLR Service Aggregate"{
+    entity ANTLR <<entity>><<root>>
 }
 
     JobOpening "1" <-- "N " Application : has
     JobOpening "N" ---> "1" Customer : associated
 
-    Application "N" ---> "1" Candidate
+    Application "N" --> "1" Candidate
     Application "1" --> "1" JobInterview
 
     JobRequirementsSpecification "1" <-- "N" JobOpening : associated
 
+    Admin "1" --> "N" Customer : manages
+    Admin "1" --> "N" CustomerManager : manages
+
+    CustomerManager "1" --> "N" JobOpening : manages
+
+    Operator "1" --> "N" Application : registers
+
+    LanguageEngineer "1" --> "N" JobRequirementsSpecification : creates
+    LanguageEngineer "1" --> "N" InterviewModel : creates
+
+    InterviewModel "1" <-- "N" JobInterview : uses
+
+    ANTLR --> JobRequirementsSpecification : processes
+
+    ANTLR --> InterviewModel : processes
 @enduml

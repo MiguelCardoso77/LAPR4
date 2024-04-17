@@ -86,6 +86,13 @@
             <artifactId>eapliframework</artifactId>
             <version>v24.0.1_RELEASE</version>
         </dependency>
+
+        <!-- Jakarta -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -18,31 +18,18 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.persistence.jpa;
+package user.console.presentation.myuser;
 
-import eapli.Application;
-import eapli.clientusermanagement.domain.SignupRequest;
-import eapli.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.infrastructure.authz.domain.model.Username;
-import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
+import eapli.framework.actions.Action;
 
 /**
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ *
+ * @author Jorge Santos ajs@isep.ipp.pt
  */
-class JpaSignupRequestRepository extends JpaAutoTxRepository<SignupRequest, Username, Username>
-        implements SignupRequestRepository {
-
-    public JpaSignupRequestRepository(final TransactionalContext autoTx) {
-        super(autoTx, "username");
-    }
-
-    public JpaSignupRequestRepository(final String puname) {
-        super(puname, Application.settings().getExtendedPersistenceProperties(), "username");
-    }
+public class SignupRequestAction implements Action {
 
     @Override
-    public Iterable<SignupRequest> pendingSignupRequests() {
-        return match("e.approvalStatus=eapli.clientusermanagement.domain" + ".ApprovalStatus.PENDING");
+    public boolean execute() {
+        return new SignupRequestUI().show();
     }
 }

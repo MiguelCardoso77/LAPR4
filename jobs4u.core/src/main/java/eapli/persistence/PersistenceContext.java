@@ -23,7 +23,7 @@ public final class PersistenceContext {
             try {
                 theFactory = (RepositoryFactory) Class.forName(factoryClassName).getDeclaredConstructor().newInstance();
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-                    | IllegalArgumentException | InvocationTargetException | ClassNotFoundException ex) {
+                     | IllegalArgumentException | InvocationTargetException | ClassNotFoundException ex) {
                 LOGGER.error("Unable to dynamically load the Repository Factory", ex);
                 throw new IllegalStateException(
                         "Unable to dynamically load the Repository Factory: " + factoryClassName, ex);

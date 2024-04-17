@@ -18,27 +18,18 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.persistence.jpa;
+package user.console.presentation.myuser;
 
-import eapli.base.Application;
-import eapli.framework.infrastructure.repositories.impl.jpa.JpaTransactionalContext;
+import eapli.framework.actions.Action;
 
 /**
- * a base class for all reporting repositories to use the same persistence unit
  *
- * @param <T>
- * @param <K>
- *
- * @author Paulo Gandra de Sousa
+ * @author Jorge Santos ajs@isep.ipp.pt
  */
-/* package */ class BaseJpaReportingRepositoryBase extends JpaTransactionalContext {
+public class SignupRequestAction implements Action {
 
-    BaseJpaReportingRepositoryBase() {
-        super(Application.settings().getPersistenceUnitName(),
-                Application.settings().getExtendedPersistenceProperties());
-    }
-
-    BaseJpaReportingRepositoryBase(final String persistenceUnitName) {
-        super(persistenceUnitName, Application.settings().getExtendedPersistenceProperties());
+    @Override
+    public boolean execute() {
+        return new SignupRequestUI().show();
     }
 }

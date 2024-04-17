@@ -18,16 +18,18 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.persistence.jpa;
+package user.console.presentation.myuser;
+
+import eapli.framework.actions.Action;
 
 /**
  *
- * Created by nuno on 21/03/16.
+ * @author Jorge Santos ajs@isep.ipp.pt
  */
-class PersistenceSettings {
+public class SignupRequestAction implements Action {
 
-    public static final String PERSISTENCE_UNIT_NAME = "eapli.base";
-
-    private PersistenceSettings() {
+    @Override
+    public boolean execute() {
+        return new SignupRequestUI().show();
     }
 }

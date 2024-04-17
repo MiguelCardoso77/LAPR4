@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.persistence.jpa;
+package persistence.jpa;
 
 import eapli.Application;
 import eapli.clientusermanagement.domain.SignupRequest;
@@ -28,7 +28,6 @@ import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 /**
- *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
 class JpaSignupRequestRepository extends JpaAutoTxRepository<SignupRequest, Username, Username>
@@ -44,8 +43,6 @@ class JpaSignupRequestRepository extends JpaAutoTxRepository<SignupRequest, User
 
     @Override
     public Iterable<SignupRequest> pendingSignupRequests() {
-        return match(
-                "e.approvalStatus=eapli.base.clientusermanagement.domain"
-                        + ".ApprovalStatus.PENDING");
+        return match("e.approvalStatus=eapli.clientusermanagement.domain" + ".ApprovalStatus.PENDING");
     }
 }

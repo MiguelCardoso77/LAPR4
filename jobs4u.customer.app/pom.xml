@@ -21,10 +21,19 @@
     </properties>
 
     <dependencies>
-        <!-- Bootstrap -->
+        <dependency>
+            <groupId>console</groupId>
+            <artifactId>jobs4u.console</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>persistence</groupId>
+            <artifactId>jobs4u.persistence</artifactId>
+            <version>0.1.0</version>
+        </dependency>
         <dependency>
             <groupId>eapli</groupId>
-            <artifactId>jobs4u.bootstrap</artifactId>
+            <artifactId>jobs4u.core</artifactId>
             <version>0.1.0</version>
         </dependency>
     </dependencies>

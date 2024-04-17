@@ -18,30 +18,32 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.persistence.jpa;
+package user.console.presentation;
 
-import eapli.base.Application;
-import eapli.framework.infrastructure.repositories.impl.jpa.JpaTransactionalRepository;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.presentation.console.AbstractUI;
 
 /**
- * a base class for all transactional repositories to use the same persistence
- * unit
  *
- * @param <T>
- * @param <K>
- *
- * @author Paulo Gandra de Sousa
+ * @author mcn
  */
-/* package */ class BasepaRepositoryBase<T, K, I>
-        extends JpaTransactionalRepository<T, K, I> {
+@SuppressWarnings("squid:S106")
+public abstract class ClientUserBaseUI extends AbstractUI {
 
-    BasepaRepositoryBase(final String persistenceUnitName, final String identityFieldName) {
-        super(persistenceUnitName, Application.settings().getExtendedPersistenceProperties(),
-                identityFieldName);
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+
+    @Override
+    public String headline() {
+
+        return authz.session().map(s -> "Base [ @" + s.authenticatedUser().identity() + " ] ")
+                .orElse("Base [ ==Anonymous== ]");
     }
 
-    BasepaRepositoryBase(final String identityFieldName) {
-        super(Application.settings().getPersistenceUnitName(),
-                Application.settings().getExtendedPersistenceProperties(), identityFieldName);
+    @Override
+    protected void drawFormTitle(final String title) {
+        final String titleBorder = BORDER.substring(0, 2) + " " + title;
+        System.out.println(titleBorder);
+        drawFormBorder();
     }
 }

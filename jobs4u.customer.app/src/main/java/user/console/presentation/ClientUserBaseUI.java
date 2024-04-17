@@ -18,26 +18,32 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eapli.persistence.inMemory;
+package user.console.presentation;
 
-import eapli.clientusermanagement.domain.SignupRequest;
-import eapli.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.framework.infrastructure.authz.domain.model.Username;
-import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.presentation.console.AbstractUI;
 
 /**
  *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * @author mcn
  */
-public class InMemorySignupRequestRepository extends
-        InMemoryDomainRepository<SignupRequest, Username> implements SignupRequestRepository {
+@SuppressWarnings("squid:S106")
+public abstract class ClientUserBaseUI extends AbstractUI {
 
-    static {
-        InMemoryInitializer.init();
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+
+    @Override
+    public String headline() {
+
+        return authz.session().map(s -> "Base [ @" + s.authenticatedUser().identity() + " ] ")
+                .orElse("Base [ ==Anonymous== ]");
     }
 
     @Override
-    public Iterable<SignupRequest> pendingSignupRequests() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    protected void drawFormTitle(final String title) {
+        final String titleBorder = BORDER.substring(0, 2) + " " + title;
+        System.out.println(titleBorder);
+        drawFormBorder();
     }
 }

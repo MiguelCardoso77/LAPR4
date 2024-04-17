@@ -1,4 +1,4 @@
-package eapli.persistence.inMemory;
+package persistence.inMemory;
 
 import eapli.bootstrapers.BaseBootstrapper;
 

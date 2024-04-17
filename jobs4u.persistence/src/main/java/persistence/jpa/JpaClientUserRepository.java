@@ -1,4 +1,4 @@
-package eapli.persistence.jpa;
+package persistence.jpa;
 
 import eapli.Application;
 import eapli.clientusermanagement.domain.ClientUser;

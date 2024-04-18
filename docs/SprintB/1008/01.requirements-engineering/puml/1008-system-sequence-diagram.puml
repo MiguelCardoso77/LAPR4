@@ -1,0 +1,39 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD)
+
+autonumber
+
+actor "Language Engineer" as LE
+participant ": System" as System
+
+activate LE
+
+    LE -> System : asks to register a new Job Opening
+    activate System
+
+        System --> LE: requests job opening details (Description, VacanciesNumber, Company,\n Address, Mode, ContractType, TitleOrFunction, JobReference)
+    deactivate System
+
+    LE -> System : submits Job Opening details
+    activate System
+
+        System --> LE : requests list of requirements (JobRequirementsSpecification)
+    deactivate System
+
+    LE -> System : submits JobRequirementsSpecification
+    activate System
+
+        System --> LE : shows all details for the new job opening request and asks to confirm
+    deactivate System
+
+    LE -> System : confirms all the data
+    activate System
+
+        System --> LE : displays operation success
+    deactivate System
+
+@enduml

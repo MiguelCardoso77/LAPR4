@@ -14,17 +14,14 @@
     <class>eapli.clientusermanagement.domain.SignupRequest</class>
 
     <properties>
-      <!--<property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/base"/>-->
-      <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:~\base"/>
-
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
       <property name="jakarta.persistence.jdbc.user" value="sa"/>
       <property name="jakarta.persistence.jdbc.password" value=""/>
       <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
-      <!-- <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> -->
+      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
       <!-- <property name="eclipselink.logging.level" value="FINE"/> -->
       <!-- <property name = "hibernate.show_sql" value = "true" /> -->
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-
     </properties>
+
   </persistence-unit>
 </persistence>

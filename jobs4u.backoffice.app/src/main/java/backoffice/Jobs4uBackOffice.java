@@ -48,12 +48,12 @@ public final class Jobs4uBackOffice extends BaseApplication {
 
     @Override
     protected String appTitle() {
-        return "Base Back Office";
+        return "Jobs4u Back Office";
     }
 
     @Override
     protected String appGoodbye() {
-        return "Base Back Office";
+        return "Jobs4u Back Office";
     }
 
     @SuppressWarnings("unchecked")

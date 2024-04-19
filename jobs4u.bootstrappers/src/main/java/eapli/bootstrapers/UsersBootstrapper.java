@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
-public class UsersBootstrapperBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UsersBootstrapperBase.class);
+public class UsersBootstrapper {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UsersBootstrapper.class);
 
     final AddUserController userController = new AddUserController();
     final ListUsersController listUserController = new ListUsersController();
 
-    public UsersBootstrapperBase() {
+    public UsersBootstrapper() {
         super();
     }
 
@@ -30,9 +30,8 @@ public class UsersBootstrapperBase {
      * @param email
      * @param roles
      */
-    protected SystemUser registerUser(final String username, final String password, final String firstName,
-            final String lastName, final String email, final Set<Role> roles) {
-        SystemUser u = null;
+    protected SystemUser registerUser(final String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
+        SystemUser u;
         try {
             u = userController.addUser(username, password, firstName, lastName, email, roles);
             LOGGER.debug("»»» %s", username);

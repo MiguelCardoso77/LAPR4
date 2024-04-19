@@ -1,6 +1,6 @@
 package eapli.bootstrapers.demo;
 
-import eapli.bootstrapers.UsersBootstrapperBase;
+import eapli.bootstrapers.UsersBootstrapper;
 import eapli.usermanagement.domain.BaseRoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * @author Paulo Gandra Sousa
  */
-public class BackofficeUsersBootstrapper extends UsersBootstrapperBase implements Action {
+public class BackofficeUsersBootstrapper extends UsersBootstrapper implements Action {
 
     @SuppressWarnings("squid:S2068")
     private static final String PASSWORD1 = "Password1";

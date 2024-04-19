@@ -24,9 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("squid:S106")
 public class BaseBootstrapper implements Action {
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-            BaseBootstrapper.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseBootstrapper.class);
     private static final String POWERUSER_PWD = "poweruserA1";
     private static final String POWERUSER = "poweruser";
 

@@ -30,30 +30,19 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
  *
  */
 public final class BaseRoles {
-    /**
-     * poweruser
-     */
     public static final Role POWER_USER = Role.valueOf("POWER_USER");
-    /**
-     * Utente
-     */
     public static final Role CLIENT_USER = Role.valueOf("CLIENT_USER");
-    /**
-     * Base Administrator
-     */
-    public static final Role ADMIN = Role.valueOf("ADMIN");
-    /**
-     *
-     */
     public static final Role KITCHEN_MANAGER = Role.valueOf("KITCHEN_MANAGER");
-    /**
-     *
-     */
     public static final Role MENU_MANAGER = Role.valueOf("MENU_MANAGER");
-    /**
-     *
-     */
     public static final Role CASHIER = Role.valueOf("CASHIER");
+    // public static final Role GUEST = Role.valueOf("GUEST");
+
+    public static final Role ADMIN = Role.valueOf("ADMIN");
+    public static final Role CANDIDATE = Role.valueOf("CANDIDATE");
+    public static final Role CUSTOMER = Role.valueOf("CUSTOMER");
+    public static final Role CUSTOMER_MANAGER = Role.valueOf("CUSTOMER_MANAGER");
+    public static final Role LANGUAGE_ENGINEER = Role.valueOf("LANGUAGE_ENGINEER");
+    public static final Role OPERATOR = Role.valueOf("OPERATOR");
 
     /**
      * get available role types for adding new users

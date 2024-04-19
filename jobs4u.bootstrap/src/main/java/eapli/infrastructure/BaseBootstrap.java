@@ -55,7 +55,7 @@ public class BaseBootstrap extends BaseApplication {
 
     @Override
     protected String appTitle() {
-        return "Bootstrapping Base data ";
+        return "Bootstrapping Jobs4u data ";
     }
 
     @Override

@@ -1,0 +1,18 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class CustomerManager
+{
+}
+
+
+class  CandidateRepository
+{
+}
+
+class Candidate {
+}
+
+
+
+@enduml

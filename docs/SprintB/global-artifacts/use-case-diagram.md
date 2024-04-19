@@ -1,6 +1,6 @@
 # Use Case Diagram (UCD)
 
-![Use Case Diagram](svg/use-case-diagram.svg)
+![Use Case Diagram](use-case-diagram.svg)
 
 # Main Use Cases
 

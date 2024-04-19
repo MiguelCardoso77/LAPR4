@@ -186,4 +186,4 @@ ANTLR --> InterviewModel
 
 ## Domain Model
 
-![domain_model.svg](svg/domain_model.svg)
+![domain_model.svg](domain_model.svg)

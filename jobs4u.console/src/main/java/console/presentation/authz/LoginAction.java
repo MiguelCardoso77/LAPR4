@@ -1,6 +1,6 @@
 package console.presentation.authz;
 
-import eapli.infrastructure.authz.AuthenticationCredentialHandler;
+import infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 

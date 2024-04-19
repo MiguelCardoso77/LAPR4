@@ -1,6 +1,6 @@
 package console.presentation.authz;
 
-import eapli.infrastructure.authz.AuthenticationCredentialHandler;
+import infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;

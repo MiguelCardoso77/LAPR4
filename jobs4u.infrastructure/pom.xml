@@ -9,7 +9,7 @@
         <version>0.1.0</version>
     </parent>
 
-    <groupId>eapli</groupId>
+    <groupId>infrastructure</groupId>
     <artifactId>jobs4u.infrastructure</artifactId>
 
     <properties>

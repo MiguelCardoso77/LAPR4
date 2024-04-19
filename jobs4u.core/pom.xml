@@ -20,9 +20,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>eapli</groupId>
+            <groupId>infrastructure</groupId>
             <artifactId>jobs4u.infrastructure</artifactId>
-            <version>${project.parent.version}</version>
+            <version>0.1.0</version>
         </dependency>
     </dependencies>
 </project>

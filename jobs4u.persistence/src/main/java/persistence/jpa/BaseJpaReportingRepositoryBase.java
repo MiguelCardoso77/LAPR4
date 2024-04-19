@@ -1,6 +1,6 @@
 package persistence.jpa;
 
-import eapli.Application;
+import infrastructure.Application;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaTransactionalContext;
 
 /**

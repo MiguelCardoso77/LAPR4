@@ -1,6 +1,6 @@
 package console;
 
-import eapli.Application;
+import infrastructure.Application;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
 import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPubSub;
 import org.apache.logging.log4j.LogManager;

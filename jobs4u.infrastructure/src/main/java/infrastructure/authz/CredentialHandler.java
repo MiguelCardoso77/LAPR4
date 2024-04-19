@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package eapli.infrastructure.authz;
+package infrastructure.authz;
 
 import eapli.framework.infrastructure.authz.domain.model.Role;
 

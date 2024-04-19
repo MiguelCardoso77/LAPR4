@@ -1,4 +1,4 @@
-package eapli;
+package infrastructure;
 
 /**
  * A "global" static class with the application registry of well known objects

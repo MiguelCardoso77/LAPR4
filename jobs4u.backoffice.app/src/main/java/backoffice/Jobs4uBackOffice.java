@@ -6,7 +6,7 @@ import console.presentation.authz.LoginUI;
 import eapli.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import eapli.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.clientusermanagement.domain.events.SignupAcceptedEvent;
-import eapli.infrastructure.authz.AuthenticationCredentialHandler;
+import infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.persistence.PersistenceContext;
 import eapli.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
 import eapli.usermanagement.domain.BasePasswordPolicy;

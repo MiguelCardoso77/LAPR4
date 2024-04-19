@@ -1,6 +1,6 @@
 package persistence.jpa;
 
-import eapli.Application;
+import infrastructure.Application;
 import eapli.clientusermanagement.domain.ClientUser;
 import eapli.clientusermanagement.domain.MecanographicNumber;
 import eapli.clientusermanagement.repositories.ClientUserRepository;

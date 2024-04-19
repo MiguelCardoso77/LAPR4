@@ -1,6 +1,6 @@
 package backoffice.presentation;
 
-import eapli.Application;
+import infrastructure.Application;
 import backoffice.presentation.authz.AddUserUI;
 import backoffice.presentation.authz.DeactivateUserAction;
 import backoffice.presentation.authz.ListUsersAction;

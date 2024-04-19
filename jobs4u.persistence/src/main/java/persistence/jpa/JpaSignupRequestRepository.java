@@ -20,7 +20,7 @@
  */
 package persistence.jpa;
 
-import eapli.Application;
+import infrastructure.Application;
 import eapli.clientusermanagement.domain.SignupRequest;
 import eapli.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.framework.domain.repositories.TransactionalContext;

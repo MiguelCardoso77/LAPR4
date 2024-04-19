@@ -8,7 +8,7 @@ import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
-import eapli.infrastructure.authz.AuthenticationCredentialHandler;
+import infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.usermanagement.domain.BaseRoles;
 import user.console.presentation.myuser.SignupRequestAction;
 

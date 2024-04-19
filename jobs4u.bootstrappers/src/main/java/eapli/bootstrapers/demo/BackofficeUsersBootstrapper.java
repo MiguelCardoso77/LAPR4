@@ -1,7 +1,7 @@
 package eapli.bootstrapers.demo;
 
 import eapli.bootstrapers.UsersBootstrapper;
-import eapli.usermanagement.domain.BaseRoles;
+import eapli.usermanagement.domain.Jobs4URoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
@@ -27,7 +27,7 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapper implements Ac
     private void registerCashier(final String username, final String password,
             final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CASHIER);
+        roles.add(Jobs4URoles.CASHIER);
 
         registerUser(username, password, firstName, lastName, email, roles);
     }
@@ -35,7 +35,7 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapper implements Ac
     private void registerKitchenManager(final String username, final String password,
             final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.KITCHEN_MANAGER);
+        roles.add(Jobs4URoles.KITCHEN_MANAGER);
 
         registerUser(username, password, firstName, lastName, email, roles);
     }
@@ -43,7 +43,7 @@ public class BackofficeUsersBootstrapper extends UsersBootstrapper implements Ac
     private void registerMenuManager(final String username, final String password,
             final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.MENU_MANAGER);
+        roles.add(Jobs4URoles.MENU_MANAGER);
 
         registerUser(username, password, firstName, lastName, email, roles);
     }

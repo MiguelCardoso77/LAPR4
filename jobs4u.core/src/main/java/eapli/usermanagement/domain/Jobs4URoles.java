@@ -29,7 +29,7 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
  * @author Paulo Gandra Sousa
  *
  */
-public final class BaseRoles {
+public final class Jobs4URoles {
     public static final Role POWER_USER = Role.valueOf("POWER_USER");
     public static final Role CLIENT_USER = Role.valueOf("CLIENT_USER");
     public static final Role KITCHEN_MANAGER = Role.valueOf("KITCHEN_MANAGER");

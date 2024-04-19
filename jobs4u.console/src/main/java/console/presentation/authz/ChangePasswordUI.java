@@ -22,7 +22,7 @@ public class ChangePasswordUI extends AbstractUI {
 
         try {
             if (this.authenticationService.changePassword(oldPassword, newPassword)) {
-                System.out.println("Password Successfuly changed");
+                System.out.println("Password Successfully changed");
                 return true;
             } else {
                 System.out.println("Invalid authentication");

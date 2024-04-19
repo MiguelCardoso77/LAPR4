@@ -1,7 +1,7 @@
 package eapli.bootstrapers;
 
 import eapli.persistence.PersistenceContext;
-import eapli.usermanagement.domain.BaseRoles;
+import eapli.usermanagement.domain.Jobs4URoles;
 import eapli.usermanagement.domain.UserBuilderHelper;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -56,7 +56,7 @@ public class BaseBootstrapper implements Action {
     private boolean registerPowerUser() {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
         userBuilder.withUsername(POWERUSER).withPassword(POWERUSER_PWD).withName("joe", "power")
-                .withEmail("joe@email.org").withRoles(BaseRoles.POWER_USER);
+                .withEmail("joe@email.org").withRoles(Jobs4URoles.POWER_USER);
         final SystemUser newUser = userBuilder.build();
 
         SystemUser poweruser;

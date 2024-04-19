@@ -5,7 +5,7 @@ import eapli.clientusermanagement.domain.SignupRequest;
 import eapli.clientusermanagement.repositories.ClientUserRepository;
 import eapli.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.persistence.PersistenceContext;
-import eapli.usermanagement.domain.BaseRoles;
+import eapli.usermanagement.domain.Jobs4URoles;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -53,7 +53,7 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
      */
     @Override
     public SignupRequest acceptSignupRequest(SignupRequest theSignupRequest) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
 
         if (theSignupRequest == null) {
             throw new IllegalArgumentException();
@@ -90,7 +90,7 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
     //
     private SystemUser createSystemUserForClientUser(final SignupRequest theSignupRequest) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CLIENT_USER);
+        roles.add(Jobs4URoles.CLIENT_USER);
         return userService.registerUser(theSignupRequest.username(), theSignupRequest.password(),
                 theSignupRequest.name(), theSignupRequest.email(), roles);
     }
@@ -104,7 +104,7 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
      */
     @Override
     public SignupRequest refuseSignupRequest(SignupRequest theSignupRequest) {
-        authz.ensureAuthenticatedUserHasAnyOf(BaseRoles.POWER_USER, BaseRoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
 
         if (theSignupRequest == null) {
             throw new IllegalArgumentException();

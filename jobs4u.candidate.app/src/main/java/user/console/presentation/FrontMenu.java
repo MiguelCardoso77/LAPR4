@@ -3,7 +3,7 @@ package user.console.presentation;
 import console.presentation.authz.LoginUI;
 import user.console.presentation.myuser.SignupRequestAction;
 import infrastructure.authz.AuthenticationCredentialHandler;
-import eapli.usermanagement.domain.BaseRoles;
+import eapli.usermanagement.domain.Jobs4URoles;
 import eapli.framework.actions.ChainedAction;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
@@ -34,7 +34,7 @@ public class FrontMenu extends AbstractUI {
     @Override
     public boolean doShow() {
         final Menu menu = new Menu();
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(new AuthenticationCredentialHandler(), BaseRoles.CANDIDATE)::show, () -> {
+        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(new AuthenticationCredentialHandler(), Jobs4URoles.CANDIDATE)::show, () -> {
             new MainMenu().mainLoop();
             return true;
         }));

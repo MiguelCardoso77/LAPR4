@@ -15,7 +15,8 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
     @Override
     public boolean execute() {
         registerAdmin("admin", TestDataConstants.PASSWORD1, "Jane", "Doe Admin", "jane.doe@email.local");
-        registerAdmin("Miguel77", "Miguel2004", "Miguel", "Cardoso", "miguel7704@gmail.com");
+        registerCandidate("CandidateEx", "ExCandidate1", "Candidate", "Example", "excandidate@gmail.com");
+        registerCustomer("CustomerEx", "ExCustomer1", "Customer", "Example", "excustomer@gmail.com");
         return true;
     }
 
@@ -25,6 +26,18 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
     private void registerAdmin(final String username, final String password, final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
         roles.add(BaseRoles.ADMIN);
+        registerUser(username, password, firstName, lastName, email, roles);
+    }
+
+    private void registerCandidate(final String username, final String password, final String firstName, final String lastName, final String email) {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(BaseRoles.CANDIDATE);
+        registerUser(username, password, firstName, lastName, email, roles);
+    }
+
+    private void registerCustomer(final String username, final String password, final String firstName, final String lastName, final String email) {
+        final Set<Role> roles = new HashSet<>();
+        roles.add(BaseRoles.CUSTOMER);
         registerUser(username, password, firstName, lastName, email, roles);
     }
 }

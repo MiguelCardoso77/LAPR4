@@ -1,0 +1,37 @@
+ei @startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD)
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ":System" as System
+
+activate CM
+
+    CM -> System : asks to selects a candidate
+    activate System
+
+        System --> CM : shows the list of candidates
+    deactivate System
+
+    CM -> System : selects a candidate
+    activate System
+
+       System --> CM : shows candidate's data \n( name, phone number, \n email, curriculum )
+    deactivate System
+
+    CM -> System : confirms condidate's data
+    activate System
+
+        System --> CM :displays candidate data
+    deactivate System
+
+
+        deactivate System
+
+
+@enduml

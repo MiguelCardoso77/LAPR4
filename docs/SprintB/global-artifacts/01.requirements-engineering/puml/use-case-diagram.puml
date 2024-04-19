@@ -18,15 +18,33 @@ actor "Customer" as customer
 actor "Applications Email Bot" as applicationEmailBot
 
 rectangle "Backoffice" as backoffice {
-    usecase "Manage Customers and its Managers"
-    usecase "Register Application"
-    usecase "Manage Job Openings"
-    usecase "Deploy and Configure Terminal"
+    usecase "1000 - register, disable/enable, and list users of the backoffice" as 1000
+    usecase "1001 - register a customer and that the system automatically creates a user for that customer" as 1001
+    usecase "1002 - register a job opening" as 1002
+    usecase "2002 - register an application of a candidate for a job opening and import all files received" as 2002
+    usecase "2000a - register a candidate and create a corresponding user" as 2000a
+    usecase "2000 - register an application of a candidate for a job opening and import all files received" as 2000
+    usecase "1005 - list all applications for a job opening" as 1005
+    usecase "1006 - display all the personal data of a candidate" as 1006
+    usecase "1008 - deploy and configure a plugin (i.e., Job Requirement Specification or Interview Model) to be used by the system" as 1008
+    usecase "1009 - select the requirements specification to be used for a job opening" as 1009
+    usecase "1011 - select the interview model to use for the interviews of a job opening (for their evaluation/grading)" as 1011
+    usecase "1012 - generate and export a template text file to help collect the candidate answers during the interviews" as 1012
+    usecase "2003 - generate and export a template text file to help collect data fields for candidates of a job opening (so the data is used to verify the requirements of the job opening)" as 2003
 
-    admin --> "Manage Customers and its Managers"
-    operator --> "Register Application"
-    customerManager --> "Manage Job Openings"
-    languageEngineer --> "Deploy and Configure Terminal"
+    admin --> 1000
+    operator --> 2000a
+    operator --> 2000
+    operator --> 2002
+    operator --> 2003
+    customerManager --> 1001
+    customerManager --> 1002
+    customerManager --> 1005
+    customerManager --> 1006
+    customerManager --> 1009
+    customerManager --> 1011
+    customerManager --> 1012
+    languageEngineer --> 1008
 }
 
 rectangle "Candidate App" as candidateApp{

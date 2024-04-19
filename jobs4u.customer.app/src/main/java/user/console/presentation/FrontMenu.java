@@ -9,7 +9,7 @@ import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 import infrastructure.authz.AuthenticationCredentialHandler;
-import eapli.usermanagement.domain.BaseRoles;
+import eapli.usermanagement.domain.Jobs4URoles;
 import user.console.presentation.myuser.SignupRequestAction;
 
 /**
@@ -34,7 +34,7 @@ public class FrontMenu extends AbstractUI {
     @Override
     public boolean doShow() {
         final Menu menu = new Menu();
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(new AuthenticationCredentialHandler(), BaseRoles.CUSTOMER)::show, () -> {
+        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(new AuthenticationCredentialHandler(), Jobs4URoles.CUSTOMER)::show, () -> {
             new MainMenu().mainLoop();
             return true;
         }));

@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- *
  * @author Paulo Gandra Sousa
  */
 @SuppressWarnings("squid:S106")
@@ -22,8 +21,7 @@ public abstract class BaseApplication {
     private static final Logger LOGGER = LogManager.getLogger(BaseApplication.class);
 
     /**
-     * @param args
-     *            the command line arguments
+     * @param args the command line arguments
      */
     public void run(final String[] args) {
         printHeader();
@@ -35,8 +33,7 @@ public abstract class BaseApplication {
 
             printFooter();
         } catch (final Exception e) {
-            System.out.println(
-                    "Something unexpected has happened and the application will terminate. Please check the logs.\n");
+            System.out.println("Something unexpected has happened and the application will terminate. Please check the logs.\n");
             LOGGER.error(e);
         } finally {
             clearEventHandlers();
@@ -81,7 +78,6 @@ public abstract class BaseApplication {
     protected abstract String appGoodbye();
 
     protected void doClearEventHandlers(final EventDispatcher dispatcher) {
-        // nothing to do
     }
 
     protected abstract void doSetupEventHandlers(EventDispatcher dispatcher);

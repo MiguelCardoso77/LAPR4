@@ -1,6 +1,6 @@
 package eapli.bootstrapers;
 
-import eapli.usermanagement.domain.BaseRoles;
+import eapli.usermanagement.domain.Jobs4URoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 
@@ -25,19 +25,19 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
      */
     private void registerAdmin(final String username, final String password, final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.ADMIN);
+        roles.add(Jobs4URoles.ADMIN);
         registerUser(username, password, firstName, lastName, email, roles);
     }
 
     private void registerCandidate(final String username, final String password, final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CANDIDATE);
+        roles.add(Jobs4URoles.CANDIDATE);
         registerUser(username, password, firstName, lastName, email, roles);
     }
 
     private void registerCustomer(final String username, final String password, final String firstName, final String lastName, final String email) {
         final Set<Role> roles = new HashSet<>();
-        roles.add(BaseRoles.CUSTOMER);
+        roles.add(Jobs4URoles.CUSTOMER);
         registerUser(username, password, firstName, lastName, email, roles);
     }
 }

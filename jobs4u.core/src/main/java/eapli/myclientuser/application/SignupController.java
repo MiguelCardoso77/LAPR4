@@ -17,8 +17,7 @@ import java.util.Calendar;
 @UseCaseController
 public class SignupController {
 
-    private final SignupRequestRepository signupRequestRepository = PersistenceContext
-            .repositories().signupRequests();
+    private final SignupRequestRepository signupRequestRepository = PersistenceContext.repositories().signupRequests();
 
     public SignupRequest signup(final String username, final String password,
             final String firstName, final String lastName, final String email,

@@ -26,7 +26,7 @@ package eapli.usermanagement.application.eventhandlers;
 import eapli.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.clientusermanagement.domain.events.SignupAcceptedEvent;
 import eapli.persistence.PersistenceContext;
-import eapli.usermanagement.domain.BaseRoles;
+import eapli.usermanagement.domain.Jobs4URoles;
 import eapli.usermanagement.domain.UserBuilderHelper;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.domain.events.DomainEvent;
@@ -59,7 +59,7 @@ import eapli.framework.infrastructure.pubsub.impl.inprocess.service.InProcessPub
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
         userBuilder.withUsername(theSignupRequest.username())
                 .withPassword(theSignupRequest.password()).withName(theSignupRequest.name())
-                .withEmail(theSignupRequest.email()).withRoles(BaseRoles.CLIENT_USER);
+                .withEmail(theSignupRequest.email()).withRoles(Jobs4URoles.CLIENT_USER);
         final SystemUser newUser = userRepository.save(userBuilder.build());
 
         // notify interested parties

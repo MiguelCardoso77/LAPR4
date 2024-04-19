@@ -6,6 +6,7 @@ import console.presentation.authz.LoginUI;
 import eapli.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import eapli.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.clientusermanagement.domain.events.SignupAcceptedEvent;
+import eapli.usermanagement.domain.Jobs4URoles;
 import infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.persistence.PersistenceContext;
 import eapli.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
@@ -38,9 +39,15 @@ public final class Jobs4uBackOffice extends BaseApplication {
 
     @Override
     protected void doMain(final String[] args) {
-        // login and go to main menu
-        if (new LoginUI(new AuthenticationCredentialHandler()).show()) {
-            // go to main menu
+        // login and go to the main menu
+        LoginUI loginUI = new LoginUI(new AuthenticationCredentialHandler(),
+                Jobs4URoles.ADMIN,
+                Jobs4URoles.CUSTOMER_MANAGER,
+                Jobs4URoles.LANGUAGE_ENGINEER,
+                Jobs4URoles.OPERATOR);
+
+        if (loginUI.show()) {
+            // Go to the main menu
             final MainMenu menu = new MainMenu();
             menu.mainLoop();
         }
@@ -59,8 +66,7 @@ public final class Jobs4uBackOffice extends BaseApplication {
     @SuppressWarnings("unchecked")
     @Override
     protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
-        dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(),
-                NewUserRegisteredFromSignupEvent.class);
+        dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(), NewUserRegisteredFromSignupEvent.class);
         dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
     }
 }

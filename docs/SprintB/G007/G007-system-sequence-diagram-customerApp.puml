@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Customer Sign-Up/Login
+
+autonumber
+
+actor "Customer" as CUSTOMER
+participant ":System" as System
+
+activate CUSTOMER
+
+    CUSTOMER -> System : asks to sign-up/login as a customer
+    activate System
+
+    alt Sign-Up option is selected
+       System --> CUSTOMER : requests account opening details (Username, FirstName, LastName,\n Password, Email, CardNumber)
+
+    else Login option is selected
+        System --> CUSTOMER : requests account login details (Username, Password)
+
+    deactivate System
+    end
+
+    CUSTOMER -> System : inserts requested details
+    activate System
+
+        System --> CUSTOMER : displays operation success
+    deactivate System
+
+@enduml

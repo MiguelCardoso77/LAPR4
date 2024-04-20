@@ -13,7 +13,7 @@ import eapli.framework.infrastructure.pubsub.EventDispatcher;
 import eapli.persistence.PersistenceContext;
 import eapli.smoketests.BaseDemoSmokeTester;
 import eapli.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
-import eapli.usermanagement.domain.BasePasswordPolicy;
+import eapli.usermanagement.domain.Jobs4UPasswordPolicy;
 
 public class Jobs4UBootstrap extends BaseApplication {
     private Jobs4UBootstrap() {
@@ -23,7 +23,7 @@ public class Jobs4UBootstrap extends BaseApplication {
     private boolean isToRunSampleE2E;
 
     public static void main(final String[] args) {
-        AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
+        AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new Jobs4UBootstrap().run(args);
     }
 

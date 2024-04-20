@@ -1,8 +1,8 @@
 package user.console;
 
+import eapli.usermanagement.domain.Jobs4UPasswordPolicy;
 import user.console.presentation.FrontMenu;
 import eapli.persistence.PersistenceContext;
-import eapli.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
@@ -24,7 +24,7 @@ public final class CandidateApp {
         System.out.println("(C) 2024");
         System.out.println("=====================================");
 
-        AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
+        AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new FrontMenu().show();
 
         // exiting the application, closing all threads

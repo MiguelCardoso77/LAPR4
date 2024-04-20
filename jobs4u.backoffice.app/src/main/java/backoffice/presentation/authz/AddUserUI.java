@@ -29,10 +29,10 @@ public class AddUserUI extends AbstractUI {
     protected boolean doShow() {
         // FIXME avoid duplication with SignUpUI. reuse UserDataWidget from
         final String username = Console.readLine("Username");
-        final String password = Console.readLine("Password");
         final String firstName = Console.readLine("First Name");
         final String lastName = Console.readLine("Last Name");
         final String email = Console.readLine("E-Mail");
+        final String password = theController.passwordGenerator(firstName);
 
         final Set<Role> roleTypes = new HashSet<>();
         boolean show;

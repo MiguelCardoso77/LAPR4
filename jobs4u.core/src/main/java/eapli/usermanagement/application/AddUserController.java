@@ -1,5 +1,6 @@
 package eapli.usermanagement.application;
 
+import eapli.usermanagement.domain.Jobs4UPasswordPolicy;
 import eapli.usermanagement.domain.Jobs4URoles;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -33,6 +34,11 @@ public class AddUserController {
 
     public Role[] getAllRoles() {
         return Jobs4URoles.allValues();
+    }
+
+    public String passwordGenerator(String name) {
+        Jobs4UPasswordPolicy generator = new Jobs4UPasswordPolicy();
+        return generator.passwordGenerator(name);
     }
 
     public SystemUser addUser(final String username, final String password, final String firstName,

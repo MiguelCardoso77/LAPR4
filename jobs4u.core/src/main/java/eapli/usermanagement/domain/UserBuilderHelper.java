@@ -17,10 +17,10 @@ public class UserBuilderHelper {
     }
 
     public static SystemUserBuilder builder() {
-        return new SystemUserBuilder(new BasePasswordPolicy(), new PlainTextEncoder());
+        return new SystemUserBuilder(new Jobs4UPasswordPolicy(), new PlainTextEncoder());
     }
 
     public static SignupRequestBuilder signupBuilder() {
-        return new SignupRequestBuilder(new BasePasswordPolicy(), new PlainTextEncoder());
+        return new SignupRequestBuilder(new Jobs4UPasswordPolicy(), new PlainTextEncoder());
     }
 }

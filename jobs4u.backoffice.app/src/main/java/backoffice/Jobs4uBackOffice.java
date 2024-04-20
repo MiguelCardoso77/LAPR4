@@ -6,11 +6,11 @@ import console.presentation.authz.LoginUI;
 import eapli.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import eapli.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
 import eapli.clientusermanagement.domain.events.SignupAcceptedEvent;
+import eapli.usermanagement.domain.Jobs4UPasswordPolicy;
 import eapli.usermanagement.domain.Jobs4URoles;
 import infrastructure.authz.AuthenticationCredentialHandler;
 import eapli.persistence.PersistenceContext;
 import eapli.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
-import eapli.usermanagement.domain.BasePasswordPolicy;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
@@ -26,7 +26,7 @@ public final class Jobs4uBackOffice extends BaseApplication {
     }
 
     public static void main(final String[] args) {
-        AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
+        AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new Jobs4uBackOffice().run(args);
     }
 

@@ -3,6 +3,8 @@ package eapli.usermanagement.domain;
 import eapli.framework.infrastructure.authz.application.PasswordPolicy;
 import eapli.framework.strings.util.StringPredicates;
 
+import java.util.Random;
+
 /**
  * Enforces that passwords must be at least 6 characters long and have at least
  * one digit and one capital letter.
@@ -15,14 +17,8 @@ import eapli.framework.strings.util.StringPredicates;
  * @author Paulo Gandra de Sousa 24/05/2019
  *
  */
-public class BasePasswordPolicy implements PasswordPolicy {
+public class Jobs4UPasswordPolicy implements PasswordPolicy {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see eapli.framework.infrastructure.authz.domain.model.PasswordPolicy#
-     * meetsRequeriments(java.lang.String)
-     */
     @Override
     public boolean isSatisfiedBy(final String rawPassword) {
         // sanity check
@@ -44,6 +40,15 @@ public class BasePasswordPolicy implements PasswordPolicy {
         return StringPredicates.containsCapital(rawPassword);
     }
 
+    public String passwordGenerator(String name) {
+        String initials = name.substring(0, 1).toUpperCase() + name.substring(1, Math.min(name.length(), 4));
+
+        Random random = new Random();
+        int randomNumber = 1000 + random.nextInt(9000);
+
+        return initials + randomNumber;
+    }
+
     /**
      * Check how strong a password is. just for demo purposes.
      *
@@ -59,18 +64,17 @@ public class BasePasswordPolicy implements PasswordPolicy {
      */
     public PasswordStrength strength(final String rawPassword) {
         PasswordStrength passwordStrength = PasswordStrength.WEAK;
-        if (rawPassword.length() >= 12 || (rawPassword.length() >= 8
-                && StringPredicates.containsAny(rawPassword, "$#!%&?"))) {
-            passwordStrength = PasswordStrength.EXCELENT;
+
+        if (rawPassword.length() >= 12 || (rawPassword.length() >= 8 && StringPredicates.containsAny(rawPassword, "$#!%&?"))) {
+            passwordStrength = PasswordStrength.EXCELLENT;
         } else if (rawPassword.length() >= 8) {
             passwordStrength = PasswordStrength.GOOD;
-        } else if (rawPassword.length() >= 6) {
-            passwordStrength = PasswordStrength.WEAK;
         }
+
         return passwordStrength;
     }
 
     public enum PasswordStrength {
-        WEAK, GOOD, EXCELENT,
+        WEAK, GOOD, EXCELLENT,
     }
 }

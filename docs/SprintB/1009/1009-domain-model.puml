@@ -3,7 +3,7 @@ hide methods
 left to right direction
 'skinparam linetype ortho
 
-Title "Domain Model"
+Title "Domain Model - 1009"
 
 skinparam class {
     LifeLineBorderColor DarkBlue
@@ -23,24 +23,16 @@ skinparam card {
     BorderColor Black
 }
 
-
 package "Customer Manager Aggregate"{
 entity CustomerManager <<entity>><<root>>
 
-    card loginManager <<Value Object>> {
+    card CustomerManagerEmail <<Value Object>> {
+    }
+    card CustomerManagerName <<Value Object>> {
     }
 
-    CustomerManager --> loginManager
-
-}
-package "Job Requirements Specification Aggregate"{
-entity JobRequirementsSpecification <<entity>><<root>>
-
-    card Requirements <<Value Object>>{
-    }
-
-        JobRequirementsSpecification --> Requirements
-
+    CustomerManager --> CustomerManagerEmail
+    CustomerManager --> CustomerManagerName
 }
 
 package "Job Opening Aggregate"{
@@ -62,6 +54,8 @@ entity JobOpening <<entity>><<root>>
     }
     card ProcessState <<Value Object>> {
     }
+    card ProcessDate <<Value Object>> {
+    }
 
     JobOpening --> JobReference
     JobOpening --> TitleOrFunction
@@ -71,6 +65,7 @@ entity JobOpening <<entity>><<root>>
     JobOpening --> VacanciesNumber
     JobOpening --> Description
     JobOpening --> ProcessState
+    JobOpening --> ProcessDate
 
     note right of ContractType
         Can be one of the following:
@@ -84,6 +79,18 @@ entity JobOpening <<entity>><<root>>
          - hybrid
          - onsite
     end note
+
+    note right of ProcessDate
+                  Can be one of the following:
+                  - ScreeningStartDate
+                  - ScreeningEndDate
+                  - InterviewsStartDate
+                  - InterviewsEndDate
+                  - AnalysisStartDate
+                  - AnalysisEndDate
+                  - ResultDate
+    end note
+
     note right of ProcessState
             Can be one of the following:
             - Application
@@ -91,10 +98,20 @@ entity JobOpening <<entity>><<root>>
             - Interviews
             - Analysis
             - Result
-        end note
+    end note
 }
 
-    CustomerManager "1" --> "N" JobOpening : registers
-    JobRequirementsSpecification "1" <-- "N" JobOpening : associated
+package "Job Requirements Specification Aggregate"{
+entity JobRequirementsSpecification <<entity>><<root>>
+
+    card Requirements <<Value Object>>{
+    }
+
+        JobRequirementsSpecification --> Requirements
+
+}
+
+JobRequirementsSpecification "1" <-- "N" JobOpening : associated
+CustomerManager "1" --> "N" JobOpening : manages
 
 @enduml

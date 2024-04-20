@@ -26,14 +26,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build Core with Maven
-        run: mvn clean package -f jobs4u.core/pom.xml
-
-      - name: Build Console with Maven
-        run: mvn clean package -f jobs4u.console/pom.xml
-
-      - name: Build Bootstrappers with Maven
-        run: mvn clean package -f jobs4u.bootstrappers/pom.xml
+      - name: Build all modules with Maven
+        run: mvn clean install
 
       - name: Build with Maven and run tests with coverage for candidate app
         run: mvn -B clean verify jacoco:report -f jobs4u.candidate.app/pom.xml

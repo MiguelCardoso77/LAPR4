@@ -1,26 +1,3 @@
-/*
- * Copyright (c) 2013-2024 the original author or authors.
- *
- * MIT License
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package backoffice.presentation.authz;
 
 import eapli.usermanagement.application.AddUserController;
@@ -51,7 +28,6 @@ public class AddUserUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         // FIXME avoid duplication with SignUpUI. reuse UserDataWidget from
-        // UtenteApp
         final String username = Console.readLine("Username");
         final String password = Console.readLine("Password");
         final String firstName = Console.readLine("First Name");
@@ -74,7 +50,6 @@ public class AddUserUI extends AbstractUI {
     }
 
     private boolean showRoles(final Set<Role> roleTypes) {
-        // TODO we could also use the "widget" classes from the framework...
         final Menu rolesMenu = buildRolesMenu(roleTypes);
         final MenuRenderer renderer = new VerticalMenuRenderer(rolesMenu, MenuItemRenderer.DEFAULT);
         return renderer.render();
@@ -84,9 +59,11 @@ public class AddUserUI extends AbstractUI {
         final Menu rolesMenu = new Menu();
         int counter = 0;
         rolesMenu.addItem(MenuItem.of(counter++, "No Role", Actions.SUCCESS));
-        for (final Role roleType : theController.getRoleTypes()) {
+
+        for (final Role roleType : theController.getAllRoles()) {
             rolesMenu.addItem(MenuItem.of(counter++, roleType.toString(), () -> roleTypes.add(roleType)));
         }
+
         return rolesMenu;
     }
 

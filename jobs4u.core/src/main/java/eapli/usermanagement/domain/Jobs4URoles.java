@@ -44,6 +44,15 @@ public final class Jobs4URoles {
     public static Role[] nonUserValues() {
         return new Role[] { ADMIN, CUSTOMER_MANAGER, LANGUAGE_ENGINEER, OPERATOR };
     }
+
+    public static Role[] userValues() {
+        return new Role[] { CANDIDATE, CUSTOMER };
+    }
+
+    public static Role[] allValues() {
+        return new Role[] { ADMIN, CANDIDATE, CUSTOMER, CUSTOMER_MANAGER, LANGUAGE_ENGINEER, OPERATOR };
+    }
+
     public boolean isCollaborator(final Role role) {
         return role != CLIENT_USER;
     }

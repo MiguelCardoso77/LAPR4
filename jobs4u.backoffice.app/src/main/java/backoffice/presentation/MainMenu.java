@@ -88,10 +88,15 @@ public class MainMenu extends AbstractUI {
         }
 
         if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN)) {
-            final Menu usersMenu = buildUsersMenu();
+            final Menu usersMenu = buildUserManagementMenu();
             mainMenu.addSubMenu(USERS_OPTION, usersMenu);
             final Menu settingsMenu = buildAdminSettingsMenu();
             mainMenu.addSubMenu(SETTINGS_OPTION, settingsMenu);
+        }
+
+        if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.OPERATOR)) {
+            final Menu usersMenu = buildUserManagementMenu();
+            mainMenu.addSubMenu(USERS_OPTION, usersMenu);
         }
 
         if (!Application.settings().isMenuLayoutHorizontal()) {
@@ -113,14 +118,13 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
-    private Menu buildUsersMenu() {
-        final Menu menu = new Menu("Users >");
+    private Menu buildUserManagementMenu() {
+        final Menu menu = new Menu("User Management >");
 
         menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
         menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
-        menu.addItem(ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION, "Accept/Refuse Signup Request",
-                new AcceptRefuseSignupRequestAction());
+        menu.addItem(ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION, "Accept/Refuse Signup Request", new AcceptRefuseSignupRequestAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

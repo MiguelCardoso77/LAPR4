@@ -31,18 +31,19 @@ public class AddUserController {
         return Jobs4URoles.nonUserValues();
     }
 
-    public SystemUser addUser(final String username, final String password, final String firstName,
-            final String lastName,
-            final String email, final Set<Role> roles, final Calendar createdOn) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
-
-        return userSvc.registerNewUser(username, password, firstName, lastName, email, roles,
-                createdOn);
+    public Role[] getAllRoles() {
+        return Jobs4URoles.allValues();
     }
 
     public SystemUser addUser(final String username, final String password, final String firstName,
-            final String lastName,
-            final String email, final Set<Role> roles) {
+                              final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN, Jobs4URoles.OPERATOR);
+
+        return userSvc.registerNewUser(username, password, firstName, lastName, email, roles, createdOn);
+    }
+
+    public SystemUser addUser(final String username, final String password, final String firstName,
+                              final String lastName, final String email, final Set<Role> roles) {
         return addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
     }
 }

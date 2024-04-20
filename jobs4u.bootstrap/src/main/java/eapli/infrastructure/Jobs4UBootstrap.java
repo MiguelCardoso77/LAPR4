@@ -15,8 +15,8 @@ import eapli.smoketests.BaseDemoSmokeTester;
 import eapli.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
 import eapli.usermanagement.domain.BasePasswordPolicy;
 
-public class BaseBootstrap extends BaseApplication {
-    private BaseBootstrap() {
+public class Jobs4UBootstrap extends BaseApplication {
+    private Jobs4UBootstrap() {
     }
 
     private boolean isToBootstrapDemoData;
@@ -24,7 +24,7 @@ public class BaseBootstrap extends BaseApplication {
 
     public static void main(final String[] args) {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
-        new BaseBootstrap().run(args);
+        new Jobs4UBootstrap().run(args);
     }
 
     @Override

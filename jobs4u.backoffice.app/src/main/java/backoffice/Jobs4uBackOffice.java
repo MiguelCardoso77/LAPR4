@@ -22,16 +22,9 @@ import eapli.framework.infrastructure.pubsub.EventDispatcher;
 @SuppressWarnings("squid:S106")
 public final class Jobs4uBackOffice extends BaseApplication {
 
-    /**
-     * avoid instantiation of this class.
-     */
     private Jobs4uBackOffice() {
     }
 
-    /**
-     * @param args
-     *            the command line arguments
-     */
     public static void main(final String[] args) {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new BasePasswordPolicy(), new PlainTextEncoder());
         new Jobs4uBackOffice().run(args);
@@ -39,15 +32,13 @@ public final class Jobs4uBackOffice extends BaseApplication {
 
     @Override
     protected void doMain(final String[] args) {
-        // login and go to the main menu
         LoginUI loginUI = new LoginUI(new AuthenticationCredentialHandler(),
-                Jobs4URoles.ADMIN,
-                Jobs4URoles.CUSTOMER_MANAGER,
-                Jobs4URoles.LANGUAGE_ENGINEER,
-                Jobs4URoles.OPERATOR);
+                          Jobs4URoles.ADMIN,
+                          Jobs4URoles.CUSTOMER_MANAGER,
+                          Jobs4URoles.LANGUAGE_ENGINEER,
+                          Jobs4URoles.OPERATOR);
 
         if (loginUI.show()) {
-            // Go to the main menu
             final MainMenu menu = new MainMenu();
             menu.mainLoop();
         }

@@ -1,6 +1,6 @@
 package persistence.inMemory;
 
-import eapli.bootstrapers.BaseBootstrapper;
+import eapli.bootstrapers.Jobs4UBootstrapper;
 
 final class InMemoryInitializer {
 
@@ -14,7 +14,7 @@ final class InMemoryInitializer {
     private InMemoryInitializer() {
         // to ensure some default test data is available, specially when using
         // in memory persistence
-        new BaseBootstrapper().execute();
+        new Jobs4UBootstrapper().execute();
     }
 
     private void initialize() {

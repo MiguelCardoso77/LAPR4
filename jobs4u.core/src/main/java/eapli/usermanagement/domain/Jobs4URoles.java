@@ -32,9 +32,7 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
 public final class Jobs4URoles {
     public static final Role POWER_USER = Role.valueOf("POWER_USER");
     public static final Role CLIENT_USER = Role.valueOf("CLIENT_USER");
-    public static final Role KITCHEN_MANAGER = Role.valueOf("KITCHEN_MANAGER");
-    public static final Role MENU_MANAGER = Role.valueOf("MENU_MANAGER");
-    public static final Role CASHIER = Role.valueOf("CASHIER");
+
 
     public static final Role ADMIN = Role.valueOf("ADMIN");
     public static final Role CANDIDATE = Role.valueOf("CANDIDATE");
@@ -43,15 +41,9 @@ public final class Jobs4URoles {
     public static final Role LANGUAGE_ENGINEER = Role.valueOf("LANGUAGE_ENGINEER");
     public static final Role OPERATOR = Role.valueOf("OPERATOR");
 
-    /**
-     * get available role types for adding new users
-     *
-     * @return
-     */
     public static Role[] nonUserValues() {
-        return new Role[] { ADMIN, KITCHEN_MANAGER, MENU_MANAGER, CASHIER };
+        return new Role[] { ADMIN, CUSTOMER_MANAGER, LANGUAGE_ENGINEER, OPERATOR };
     }
-
     public boolean isCollaborator(final Role role) {
         return role != CLIENT_USER;
     }

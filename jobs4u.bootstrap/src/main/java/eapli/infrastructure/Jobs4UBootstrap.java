@@ -1,7 +1,7 @@
 package eapli.infrastructure;
 
 import console.BaseApplication;
-import eapli.bootstrapers.BaseBootstrapper;
+import eapli.bootstrapers.Jobs4UBootstrapper;
 import eapli.bootstrapers.demo.BaseDemoBootstrapper;
 import eapli.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import eapli.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
@@ -32,7 +32,7 @@ public class Jobs4UBootstrap extends BaseApplication {
         handleArgs(args);
 
         System.out.println("\n\n------- MASTER DATA -------");
-        new BaseBootstrapper().execute();
+        new Jobs4UBootstrapper().execute();
 
         if (isToBootstrapDemoData) {
             System.out.println("\n\n------- DEMO DATA -------");

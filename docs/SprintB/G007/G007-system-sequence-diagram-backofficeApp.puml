@@ -1,0 +1,29 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - BackOffice User Login
+
+autonumber
+
+actor "BackOffice User" as BACKOFFICE
+participant ":System" as System
+
+activate BACKOFFICE
+
+    BACKOFFICE -> System : asks to log in into the app being a BackOffice User\n(Admin, Customer Manager, Language Engineer, Operator)
+    activate System
+
+        System --> BACKOFFICE : requests account login details (Username, Password)
+    deactivate System
+
+    BACKOFFICE -> System : inserts requested details
+    activate System
+
+        System --> BACKOFFICE : displays user menu
+    deactivate System
+
+deactivate BACKOFFICE
+
+@enduml

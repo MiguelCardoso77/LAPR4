@@ -1,6 +1,6 @@
 package eapli.bootstrapers.demo;
 
-import eapli.bootstrapers.BaseBootstrapper;
+import eapli.bootstrapers.Jobs4UBootstrapper;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.application.AuthenticationService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -11,7 +11,7 @@ import eapli.framework.validations.Invariants;
 /**
  * Base Bootstrapping data app
  *
- * @todo avoid duplication with {@link BaseBootstrapper}
+ * @todo avoid duplication with {@link Jobs4UBootstrapper}
  * @author Paulo Gandra de Sousa
  */
 @SuppressWarnings("squid:S106")
@@ -26,9 +26,7 @@ public class BaseDemoBootstrapper implements Action {
     @Override
     public boolean execute() {
         // declare bootstrap actions
-        final Action[] actions = { new BackofficeUsersBootstrapper(),
-                new ClientUserBootstrapper(), };
-
+        final Action[] actions = {new ClientUserBootstrapper(), };
         authenticateForBootstrapping();
 
         // execute all bootstrapping

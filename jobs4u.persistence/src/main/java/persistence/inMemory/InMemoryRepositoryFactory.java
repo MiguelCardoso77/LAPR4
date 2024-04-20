@@ -2,7 +2,7 @@ package persistence.inMemory;
 
 import eapli.clientusermanagement.repositories.ClientUserRepository;
 import eapli.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.bootstrapers.BaseBootstrapper;
+import eapli.bootstrapers.Jobs4UBootstrapper;
 import eapli.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -16,7 +16,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     static {
         // only needed because of the in memory persistence
-        new BaseBootstrapper().execute();
+        new Jobs4UBootstrapper().execute();
     }
 
     @Override

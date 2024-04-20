@@ -1,0 +1,135 @@
+@startuml
+hide methods
+left to right direction
+
+Title "G007 - Domain Model"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
+package "Application Aggregate"{
+entity Application <<entity>><<root>>
+
+    card EmailContentFile <<Value Object>> {
+    }
+    card EmailFilesAttached <<Value Object>>{
+    }
+    card FilesAttachedContent <<Value Object>>{
+    }
+    card ApplicationDataFile <<Value Object>>{
+    }
+    card Status <<Value Object>>{
+    }
+    card SubmissionDate <<Value Object>>{
+    }
+    card Rank <<Value Object>>{
+    }
+
+    Application --> EmailContentFile
+    Application --> EmailFilesAttached
+    Application --> FilesAttachedContent
+    Application --> ApplicationDataFile
+    Application --> Status
+    Application --> SubmissionDate
+    Application --> Rank
+
+    note right of Status
+        Can be one of the following:
+        - submitted
+        - pending
+        - accepted
+        - declined
+    end note
+}
+
+
+package "Language Engineer Aggregate"{
+entity LanguageEngineer <<entity>><<root>>
+
+    card LanguageEngineerEmail <<Value Object>> {
+    }
+    card LanguageEngineerName <<Value Object>> {
+    }
+
+    LanguageEngineer --> LanguageEngineerEmail
+    LanguageEngineer --> LanguageEngineerName
+}
+
+package "Admin Aggregate"{
+entity Admin <<entity>><<root>>
+
+    card AdminEmail <<Value Object>> {
+    }
+    card AdminName <<Value Object>> {
+    }
+
+    Admin --> AdminEmail
+    Admin --> AdminName
+}
+
+package "Candidate Aggregate"{
+entity Candidate <<entity>><<root>>
+
+    card CandidateName <<Value Object>> {
+    }
+    card CandidateEmail <<Value Object>> {
+    }
+    card CandidatePhoneNumber <<Value Object>> {
+    }
+    card CandidatePassword <<Value Object>> {
+    }
+    card Curriculum <<Value Object>> {
+    }
+
+    Candidate --> CandidateEmail
+    Candidate --> CandidateName
+    Candidate --> CandidatePhoneNumber
+    Candidate --> CandidatePassword
+    Candidate --> Curriculum
+}
+
+package "Customer Manager Aggregate"{
+entity CustomerManager <<entity>><<root>>
+
+    card CustomerManagerEmail <<Value Object>> {
+    }
+    card CustomerManagerName <<Value Object>> {
+    }
+
+    CustomerManager --> CustomerManagerEmail
+    CustomerManager --> CustomerManagerName
+}
+
+package "Operator Aggregate"{
+    entity Operator <<entity>><<root>>
+
+    card OperatorEmail <<Value Object>> {
+    }
+    card OperatorName <<Value Object>> {
+    }
+
+    Operator --> OperatorEmail
+    Operator --> OperatorName
+}
+
+    Application "N" --> "1" Candidate
+    Operator "1" --> "N" Application : registers
+    Admin "1" --> "N" Customer : manages
+    Admin "1" --> "N" CustomerManager : manages
+
+@enduml

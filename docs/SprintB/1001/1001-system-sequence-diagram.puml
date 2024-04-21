@@ -12,53 +12,40 @@ participant ": System" as System
 
 activate CM    
 
-    CM -> System : Requests selection of requirement specification
+    CM -> System : Requests to register a customer
     activate System
 
-        System --> CM : Displays all job openings registered in the system and asks to select one
+        System --> CM : Asks for the customer's first name
     deactivate System
 
-    CM -> System : Selects the job opening
+    CM -> System : Provides the name
     activate System
 
-    alt The job opening has no requirement specification associated
-
-        System --> CM : Displays all requirement specifications registered in the system and asks to select one
+        System --> CM : Asks for the customer's last name
     deactivate System
 
-    CM -> System : Selects the requirement specification
-
-    else The job opening has already a requirement specification associated
-
+    CM -> System : Provides the name
     activate System
 
-        System --> CM : Displays the requirement specification associated to the job opening \nand asks if the customer manager wants to change it
-
-    alt The customer wants to change the requirement specification
-
+        System --> CM : Asks for the customer's Email
     deactivate System
 
-    CM --> System : asks to change the requirement specification associated
-
+    CM -> System : Provides the email
     activate System
 
-        System --> CM : Displays all requirement specifications registered in the system and asks to select one
+        System --> CM : Shows all the inputted data and asks for confirmation
     deactivate System
 
-    CM --> System : Selects the requirement specification
-
+    CM -> System : Provides the email
     activate System
 
-    end
-
-    end
-        System --> CM : Displays all chosen details and asks to confirm
+         System --> CM : Shows all the inputted data and asks for confirmation
     deactivate System
 
-    CM -> System : Confirms all the data
+    CM -> System : Confirms the data
     activate System
 
-        System --> CM : Displays operation success
+         System --> CM : Creates the user for the registered \ncostumer and displays operation success
     deactivate System
 
 @enduml

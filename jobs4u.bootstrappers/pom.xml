@@ -9,7 +9,7 @@
         <version>0.1.0</version>
     </parent>
 
-    <groupId>eapli</groupId>
+    <groupId>bootstrappers</groupId>
     <artifactId>jobs4u.bootstrappers</artifactId>
 
     <properties>
@@ -20,7 +20,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>eapli</groupId>
+            <groupId>core</groupId>
             <artifactId>jobs4u.core</artifactId>
             <version>0.1.0</version>
         </dependency>

@@ -20,7 +20,7 @@
  */
 package backoffice.presentation.authz;
 
-import eapli.usermanagement.application.DeactivateUserController;
+import core.usermanagement.application.DeactivateUserController;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;

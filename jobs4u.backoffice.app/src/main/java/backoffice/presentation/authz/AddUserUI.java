@@ -2,7 +2,7 @@ package backoffice.presentation.authz;
 
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.usermanagement.application.AddUserController;
+import core.usermanagement.application.AddUserController;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -14,7 +14,7 @@ import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
-import eapli.usermanagement.domain.Jobs4URoles;
+import core.usermanagement.domain.Jobs4URoles;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -56,8 +56,10 @@ public class AddUserUI extends AbstractUI {
 
         if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.OPERATOR)) {
             rolesMenu = buildOperatorAvailableRoles(roleTypes);
-        } else {
-            rolesMenu =buildRolesMenu(roleTypes);
+        } else if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.CUSTOMER_MANAGER)) {
+            rolesMenu = buildCustomerManagerAvailableRoles(roleTypes);
+        } else{
+            rolesMenu = buildRolesMenu(roleTypes);
         }
 
         final MenuRenderer renderer = new VerticalMenuRenderer(rolesMenu, MenuItemRenderer.DEFAULT);
@@ -72,6 +74,16 @@ public class AddUserUI extends AbstractUI {
         for (final Role roleType : theController.getAllRoles()) {
             rolesMenu.addItem(MenuItem.of(counter++, roleType.toString(), () -> roleTypes.add(roleType)));
         }
+
+        return rolesMenu;
+    }
+
+    private Menu buildCustomerManagerAvailableRoles(final Set<Role> roleTypes) {
+        final Menu rolesMenu = new Menu();
+        int counter = 0;
+
+        rolesMenu.addItem(MenuItem.of(counter++, "No Role", Actions.SUCCESS));
+        rolesMenu.addItem(MenuItem.of(counter, Jobs4URoles.CUSTOMER.toString(), () -> roleTypes.add(Jobs4URoles.CUSTOMER)));
 
         return rolesMenu;
     }

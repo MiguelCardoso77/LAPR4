@@ -1,9 +1,9 @@
 package persistence.jpa;
 
 import infrastructure.Application;
-import eapli.clientusermanagement.domain.ClientUser;
-import eapli.clientusermanagement.domain.MecanographicNumber;
-import eapli.clientusermanagement.repositories.ClientUserRepository;
+import core.clientusermanagement.domain.ClientUser;
+import core.clientusermanagement.domain.MecanographicNumber;
+import core.clientusermanagement.repositories.ClientUserRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;

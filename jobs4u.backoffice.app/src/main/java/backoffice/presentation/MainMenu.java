@@ -7,7 +7,7 @@ import backoffice.presentation.authz.DeactivateUserAction;
 import backoffice.presentation.authz.ListUsersAction;
 import backoffice.presentation.clientuser.AcceptRefuseSignupRequestAction;
 import console.presentation.authz.MyUserMenu;
-import eapli.usermanagement.domain.Jobs4URoles;
+import core.usermanagement.domain.Jobs4URoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -91,6 +91,11 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, adminMenu);
         }
 
+        if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.CUSTOMER_MANAGER)) {
+            final Menu customerManagerMenu = buildCustomerManagerMenu();
+            mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, customerManagerMenu);
+        }
+
         if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.OPERATOR)) {
             final Menu operatorMenu = buildOperatorMenu();
             mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, operatorMenu);
@@ -108,8 +113,8 @@ public class MainMenu extends AbstractUI {
     private Menu buildAdminMenu() {
         final Menu menu = new Menu("Admin Actions >");
 
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
         menu.addItem(LIST_BACKOFFICE_USERS_OPTION, "List all Backoffice Users", new ListBackofficeUsersAction());
         menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
         menu.addItem(ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION, "Accept/Refuse Signup Request", new AcceptRefuseSignupRequestAction());
@@ -118,11 +123,21 @@ public class MainMenu extends AbstractUI {
         return menu;
     }
 
+    private Menu buildCustomerManagerMenu() {
+        final Menu menu = new Menu("Customer Manager Actions >");
+
+        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
+        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
+
+        return menu;
+    }
+
     private Menu buildOperatorMenu() {
         final Menu menu = new Menu("Operator Actions >");
 
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
+        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

@@ -21,8 +21,8 @@
 package persistence.jpa;
 
 import infrastructure.Application;
-import eapli.clientusermanagement.domain.SignupRequest;
-import eapli.clientusermanagement.repositories.SignupRequestRepository;
+import core.clientusermanagement.domain.SignupRequest;
+import core.clientusermanagement.repositories.SignupRequestRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;

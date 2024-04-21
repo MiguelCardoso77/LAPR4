@@ -27,14 +27,8 @@ skinparam card {
 package "Customer Manager Aggregate"{
 entity CustomerManager <<entity>><<root>>
 
-    card CustomerManagerEmail <<Value Object>> {
-    }
-    card CustomerManagerName <<Value Object>> {
-    }
-
-    CustomerManager --> CustomerManagerEmail
-    CustomerManager --> CustomerManagerName
 }
+
 package "Candidate Aggregate"{
 entity Candidate <<entity>><<root>>
 
@@ -56,10 +50,28 @@ entity Candidate <<entity>><<root>>
         Candidate --> Curriculum
 }
 
+package "User Aggregate"{
+entity User <<entity>><<root>>
+
+    card UserEmail <<Value Object>> {
+    }
+    card UserName <<Value Object>> {
+    }
+    card UserPassword <<Value Object>> {
+    }
+    card UserTelephoneNumber <<Value Object>> {
+    }
+
+    User --> UserEmail
+    User --> UserName
+    User --> UserTelephoneNumber
+    User --> UserPassword
+
+}
 
 
-CustomerManager --> Candidate
-
+CustomerManager ---> User
+Candidate --> User
 }
 
 

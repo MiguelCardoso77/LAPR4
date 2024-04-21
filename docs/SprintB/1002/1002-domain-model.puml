@@ -23,17 +23,6 @@ skinparam card {
     BorderColor Black
 }
 
-
-package "Job Requirements Specification Aggregate"{
-entity JobRequirementsSpecification <<entity>><<root>>
-
-    card Requirements <<Value Object>>{
-    }
-
-        JobRequirementsSpecification --> Requirements
-
-}
-
 package "Job Opening Aggregate"{
 entity JobOpening <<entity>><<root>>
 
@@ -51,10 +40,6 @@ entity JobOpening <<entity>><<root>>
     }
     card Description <<Value Object>> {
     }
-    card ProcessState <<Value Object>> {
-    }
-    card ProcessDate <<Value Object>> {
-    }
 
     JobOpening --> JobReference
     JobOpening --> TitleOrFunction
@@ -63,8 +48,6 @@ entity JobOpening <<entity>><<root>>
     JobOpening --> Address
     JobOpening --> VacanciesNumber
     JobOpening --> Description
-    JobOpening --> ProcessState
-    JobOpening --> ProcessDate
 
     note right of ContractType
         Can be one of the following:
@@ -79,24 +62,37 @@ entity JobOpening <<entity>><<root>>
          - onsite
     end note
 
+}
+
+package "Process Aggregate"{
+entity Process <<entity>><<root>>
+
+    card ProcessState <<Value Object>> {
+    }
+    card ProcessDate <<Value Object>> {
+    }
+
+    Process --> ProcessState
+    Process --> ProcessDate
+
     note right of ProcessDate
-                  Can be one of the following:
-                  - ScreeningStartDate
-                  - ScreeningEndDate
-                  - InterviewsStartDate
-                  - InterviewsEndDate
-                  - AnalysisStartDate
-                  - AnalysisEndDate
-                  - ResultDate
+        Can be one of the following:
+        - ScreeningStartDate
+        - ScreeningEndDate
+        - InterviewsStartDate
+        - InterviewsEndDate
+        - AnalysisStartDate
+        - AnalysisEndDate
+        - ResultDate
     end note
 
     note right of ProcessState
-            Can be one of the following:
-            - Application
-            - Screening
-            - Interviews
-            - Analysis
-            - Result
+        Can be one of the following:
+        - Application
+        - Screening
+        - Interviews
+        - Analysis
+        - Result
     end note
 }
 
@@ -113,8 +109,7 @@ entity CustomerManager <<entity>><<root>>
     CustomerManager --> CustomerManagerName
 }
 
-    JobRequirementsSpecification "1" <-- "N" JobOpening : associated
-
+    JobOpening  --> Process
     CustomerManager "1" --> "N" JobOpening : manages
 
 @enduml

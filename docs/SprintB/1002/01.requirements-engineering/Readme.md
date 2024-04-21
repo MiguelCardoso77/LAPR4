@@ -54,7 +54,7 @@ be adequately addressed.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![1002 - System Sequence Diagram](svg/1008-system-sequence-diagram.svg)
+![1002 - System Sequence Diagram](svg/1002-system-sequence-diagram.svg)
 
 ### 1.7 Other Relevant Remarks
 

@@ -25,25 +25,51 @@ aceitar esse login.
 
 ### 1.3. Acceptance Criteria
 
+* AC1: User Creation:
+
+      Upon successful registration of a new user, the system should automatically create a corresponding user account.
+
+      The user account should include the essential details provided earlier.
+
+      The system should generate a unique password for the account.
+
 ### 1.4. Found out Dependencies
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-    * Selection of Job Opening.
-    * Selection of Requirement Specification.
-    * Data Confirmation.
+    While registering, the user must provide the following data:
+    * Email,
+    * First Name,
+    * Last Name,
+    * Phone Number,
+    * Curriculum (only for candidates).
+
+    While logging in, the user must provide the following data:
+    * Email,
+    * Password.
 
 **Output Data:**
 
-    * List of all job openings registered in the system
-    * List of all requirement specification registered in the system
-    * Chosen details
     * (In)Success of the operation
 
 ### 1.6. System Sequence Diagrams (SSD)
 
+![G007-system-sequence-diagram-backofficeApp.svg](G007-system-sequence-diagram-backofficeApp.svg)
+
+![G007-system-sequence-diagram-candidateApp.svg](G007-system-sequence-diagram-candidateApp.svg)
+
+![G007-system-sequence-diagram-customerApp.svg](G007-system-sequence-diagram-customerApp.svg)
+
 ### 1.7 Other Relevant Remarks
 
 *  None to specify
+
+## 2.0. Domain Model
+
+----------------
+
+### 2.1. Relevant Domain Model Excerpt
+
+![G007-domain-model.svg](G007-domain-model.svg)

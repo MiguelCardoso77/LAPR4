@@ -16,10 +16,10 @@ activate CUSTOMER
     activate System
 
     alt Sign-Up option is selected
-       System --> CUSTOMER : requests account opening details (Username, FirstName, LastName,\n Password, Email, CardNumber)
+       System --> CUSTOMER : requests account opening details (FirstName, LastName,\n Password, Email, PhoneNumber)
 
     else Login option is selected
-        System --> CUSTOMER : requests account login details (Username, Password)
+        System --> CUSTOMER : requests account login details (Email, Password)
 
     deactivate System
     end

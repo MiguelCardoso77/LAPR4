@@ -48,7 +48,7 @@ Entities represent distinct objects with unique identities and lifecycles within
 
 * Customer
 
-        Represents entities (other companies or entities) that need to recruit human resources.
+      Represents entities (other companies or entities) that need to recruit human resources.
 
 * Candidate
 

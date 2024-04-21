@@ -250,6 +250,7 @@ package "ANTLR Service Aggregate"{
     Admin "1" ---> "N" CustomerManager : manages
 
     CustomerManager "1" ---> "N" JobOpening : manages
+    CustomerManager "1" ---> "N" Customer : registers
 
     Operator "1" ---> "N" Application : registers
 
@@ -265,5 +266,6 @@ package "ANTLR Service Aggregate"{
     CustomerManager ---> User
     Operator --> User
     LanguageEngineer ---> User
+    Customer ---> User
 
 @enduml

@@ -1,75 +1,87 @@
 @startuml
-skinparam monochrome true
-skinparam packageStyle rectangle
-skinparam shadowing false
-
 autonumber
 
-'hide footbox
-actor "User" as USER
-participant ":{MenuX}UI" as MENU
-participant ":{NameOfUC}UI" as UCNAMEUI
-participant ":{NameOfUC}Controller" as CTRL
-participant "ApplicationSession" as APPSESSIONC
-participant "appSession\n:ApplicationSession" as APPSESSIONI
-participant "currentSession\n:UserSession" as CURSESSION
 
-activate USER
+actor "Customer Manager" as CM
+participant CreateJobOpeningUI <<presentation>>
+participant CreateJobOpeningController<<application>>
+participant PersistenceContext<<persistence>>
+participant RepositoryFactory<<factory>>
+participant CustomerRepository <<repository>>
+participant Customer <<Company>>
+participant JobOpening <<JobOpening>>
+database JobOpeningRepository <<repository>>
 
-    USER -> MENU : selects an option
-    activate MENU
-        MENU --> UCNAMEUI** : create
-        activate UCNAMEUI
-
-            UCNAMEUI --> CTRL** : create
-        deactivate UCNAMEUI
-
-        activate CTRL
-            CTRL -> APPSESSIONC : getinstance()
-            note right
-                static method
-                (Singleton pattern)
-            end note
-            activate APPSESSIONC
-                APPSESSIONC --> CTRL : appSession 
-            deactivate APPSESSIONC
-
-            CTRL -> APPSESSIONI : getCurrentSession()
-            activate APPSESSIONI
-                APPSESSIONI --> CTRL : currentSession
-            deactivate APPSESSIONI
-        deactivate CTRL
-
-        MENU -> UCNAMEUI : run()
-        activate UCNAMEUI
-    deactivate MENU
-
-            UCNAMEUI --> USER : requests something
-            |||
-        deactivate UCNAMEUI
-
-    loop
-        USER -> UCNAMEUI : does something
-        activate UCNAMEUI
-            UCNAMEUI -> CTRL : methodX(...)
-            activate CTRL
-                CTRL -> APPSESSIONC : methodY(...)
-                activate APPSESSIONC
-                    ref over APPSESSIONC,APPSESSIONI,CURSESSION
+activate CM
 
 
-                    end ref
-                    APPSESSIONC --> CTRL : answer
-                deactivate APPSESSIONC
+    CM -> CreateJobOpeningUI: Add JobOpening
 
-                CTRL --> UCNAMEUI : answer
-            deactivate CTRL
+        activate CreateJobOpeningUI
 
-            UCNAMEUI --> USER : answers/requests another thing
-            |||
-        deactivate UCNAMEUI
-    end loop
+    CreateJobOpeningUI --> CM: asks for the JobOpening's information
 
-deactivate USER
+        deactivate CreateJobOpeningUI
+
+    CM -> CreateJobOpeningUI : Description, VacanciesNumber, Address, \nMode, ContractType, TitleOrFunction, JobReference, ProcessDate
+
+        activate CreateJobOpeningUI
+
+    CreateJobOpeningUI -> CreateJobOpeningController: createJobOpening(description, vacanciesNumber, \n address, mode, contractType, titleOrFunction, \n jobReference, processDate)
+
+        activate CreateJobOpeningController
+
+    CreateJobOpeningController -> PersistenceContext : repositories()
+
+        activate PersistenceContext
+
+    PersistenceContext -> CreateJobOpeningController : factory
+
+        deactivate PersistenceContext
+
+    CreateJobOpeningController -> RepositoryFactory : companies()
+
+        activate RepositoryFactory
+
+    RepositoryFactory -> CreateJobOpeningController : companies
+
+        deactivate RepositoryFactory
+
+alt companyExists() return true
+
+    CreateJobOpeningController -> CustomerRepository : findCompanyByCode(companyName)
+        activate CustomerRepository
+
+    CustomerRepository -> CreateJobOpeningController : company
+        deactivate CustomerRepository
+end alt
+
+
+alt companyExists() return false
+    CreateJobOpeningController -> Customer: create(code, name)
+        activate Customer
+
+    Customer -> CreateJobOpeningController: company
+        deactivate Customer
+end alt
+
+    CreateJobOpeningController -> JobOpening: create(description, vacanciesNumber, address, mode, contractType, titleOrFunction, \n jobReference, processDate, company)
+
+        activate JobOpening
+
+    JobOpening -> CreateJobOpeningController: jobOpening
+        deactivate JobOpening
+
+    CreateJobOpeningController -> JobOpeningRepository : save(JobOpening)
+
+    CreateJobOpeningController -> CreateJobOpeningUI : JobOpening
+
+        deactivate CreateJobOpeningController
+
+    CreateJobOpeningUI --> CM : shows operation's success
+
+        deactivate CreateJobOpeningUI
+
+        deactivate CM
 
 @enduml

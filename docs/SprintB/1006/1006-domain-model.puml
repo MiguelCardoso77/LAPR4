@@ -24,15 +24,17 @@ skinparam card {
 }
 
 
-package "Customer  Manager Aggregate"{
+package "Customer Manager Aggregate"{
 entity CustomerManager <<entity>><<root>>
 
-    card LoginManager <<Value Object>> {
+    card CustomerManagerEmail <<Value Object>> {
+    }
+    card CustomerManagerName <<Value Object>> {
     }
 
-    CustomerManager --> LoginManager
+    CustomerManager --> CustomerManagerEmail
+    CustomerManager --> CustomerManagerName
 }
-
 package "Candidate Aggregate"{
 entity Candidate <<entity>><<root>>
 

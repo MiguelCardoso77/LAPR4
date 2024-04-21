@@ -1,0 +1,147 @@
+@startuml
+hide methods
+left to right direction
+'skinparam linetype ortho
+
+Title "Domain Model"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
+
+
+package "Job Opening Aggregate"{
+entity JobOpening <<entity>><<root>>
+
+    card JobReference <<Value Object>> {
+    }
+    card TitleOrFunction <<Value Object>> {
+    }
+    card ContractType <<Value Object>> {
+    }
+    card Mode <<Value Object>> {
+    }
+    card Address <<Value Object>> {
+    }
+    card VacanciesNumber <<Value Object>> {
+    }
+    card Description <<Value Object>> {
+    }
+    card ProcessState <<Value Object>> {
+    }
+    card ProcessDate <<Value Object>> {
+    }
+
+    JobOpening --> JobReference
+    JobOpening --> TitleOrFunction
+    JobOpening --> ContractType
+    JobOpening --> Mode
+    JobOpening --> Address
+    JobOpening --> VacanciesNumber
+    JobOpening --> Description
+    JobOpening --> ProcessState
+    JobOpening --> ProcessDate
+
+    note right of ContractType
+        Can be one of the following:
+        - full-time
+        - part-time
+    end note
+
+    note right of Mode
+         Can be one of the following:
+         - remote
+         - hybrid
+         - onsite
+    end note
+
+    note right of ProcessDate
+                  Can be one of the following:
+                  - ScreeningStartDate
+                  - ScreeningEndDate
+                  - InterviewsStartDate
+                  - InterviewsEndDate
+                  - AnalysisStartDate
+                  - AnalysisEndDate
+                  - ResultDate
+    end note
+
+    note right of ProcessState
+            Can be one of the following:
+            - Application
+            - Screening
+            - Interviews
+            - Analysis
+            - Result
+    end note
+}
+
+
+package "Application Aggregate"{
+entity Application <<entity>><<root>>
+
+    card EmailContentFile <<Value Object>> {
+    }
+    card EmailFilesAttached <<Value Object>>{
+    }
+    card FilesAttachedContent <<Value Object>>{
+    }
+    card ApplicationDataFile <<Value Object>>{
+    }
+    card Status <<Value Object>>{
+    }
+    card SubmissionDate <<Value Object>>{
+    }
+    card Rank <<Value Object>>{
+    }
+
+    Application --> EmailContentFile
+    Application --> EmailFilesAttached
+    Application --> FilesAttachedContent
+    Application --> ApplicationDataFile
+    Application --> Status
+    Application --> SubmissionDate
+    Application --> Rank
+
+    note right of Status
+        Can be one of the following:
+        - submitted
+        - pending
+        - accepted
+        - declined
+    end note
+}
+
+
+package "Customer Manager Aggregate"{
+entity CustomerManager <<entity>><<root>>
+
+    card CustomerManagerEmail <<Value Object>> {
+    }
+    card CustomerManagerName <<Value Object>> {
+    }
+
+    CustomerManager --> CustomerManagerEmail
+    CustomerManager --> CustomerManagerName
+}
+
+CustomerManager "1" --> "N" JobOpening : manages
+
+    JobOpening "1" <-- "N " Application : has
+
+@enduml

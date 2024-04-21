@@ -1,4 +1,4 @@
-# US05 - Generate a team proposal automatically
+# 1006 - Display all personal data of a candidate
 
 
 ## 1. Requirements Engineering
@@ -35,7 +35,7 @@ As Customer Manager, I want to display all the personal data of a candidate.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/1006-system-sequence-diagram.svg)
+![System Sequence Diagram](1006-system-sequence-diagram.svg)
 
 ### 1.7 Other Relevant Remarks
 

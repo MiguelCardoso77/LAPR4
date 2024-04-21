@@ -144,6 +144,10 @@ Operator --> User
 
 LanguageEngineer ---> "1" User
 
+Customer ---> User
+
+Candidate --> User
+
 ### 2.5. Domain Model
 
 ![domain_model.svg](domain_model.svg)

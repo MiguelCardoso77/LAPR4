@@ -87,15 +87,14 @@ As Customer Manager I want to register a customer and that the system automatica
 
 * Input Data:
 
-      - Selection of Job Opening.
-      - Selection of Requirement Specification.
+      - Customer´s first name
+      - Customer's last name
+      - Customer's email
       - Data Confirmation.
 
 * Output Data:
 
-      - List of all job openings registered in the system
-      - List of all requirement specification registered in the system
-      - Chosen details
+      - All the inputed data
       - (In)Success of the operation
 
 ## 1.6. System Sequence Diagram (SSD)

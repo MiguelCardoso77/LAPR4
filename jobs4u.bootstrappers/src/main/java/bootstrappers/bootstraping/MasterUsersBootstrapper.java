@@ -17,7 +17,9 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
         registerAdmin("admin", TestDataConstants.PASSWORD1, "Jane", "Doe Admin", "jane.doe@email.local");
 
         registerAdmin("AdminEx", "ExAdmin1", "Admin", "Example", "exadmin@gmail.com");
-        registerCandidate("CandidateEx", "ExCandidate1", "Candidate", "Example", "excandidate@gmail.com");
+        registerCandidate("CandidateEx", "ExCandidate1", "CandidateOne", "ExampleOne", "excandidate1@gmail.com");
+        registerCandidate("CandidateEx2", "ExCandidate2", "CandidateTwo", "ExampleTwo", "excandidate2@gmail.com");
+        registerCandidate("CandidateEx3", "ExCandidate3", "CandidateThree", "ExampleThree", "excandidate3@gmail.com");
         registerCustomer("CustomerEx", "ExCustomer1", "Customer", "Example", "excustomer@gmail.com");
         registerCustomerManager("CustomerManagerEx", "ExCustomerManager1", "CustomerManager", "Example", "excustomermanager@gmail.com");
         registerLanguageEngineer("LanguageEngineerEx", "ExLanguageEngineer1", "LanguageEngineer", "Example", "exlanguageengineer@gmail.com");

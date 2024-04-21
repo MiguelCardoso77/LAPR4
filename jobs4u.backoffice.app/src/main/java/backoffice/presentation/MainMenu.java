@@ -1,10 +1,7 @@
 package backoffice.presentation;
 
-import backoffice.presentation.authz.ListBackofficeUsersAction;
+import backoffice.presentation.authz.*;
 import infrastructure.Application;
-import backoffice.presentation.authz.AddUserUI;
-import backoffice.presentation.authz.DeactivateUserAction;
-import backoffice.presentation.authz.ListUsersAction;
 import backoffice.presentation.clientuser.AcceptRefuseSignupRequestAction;
 import console.presentation.authz.MyUserMenu;
 import core.usermanagement.domain.Jobs4URoles;
@@ -72,8 +69,7 @@ public class MainMenu extends AbstractUI {
     @Override
     public String headline() {
 
-        return authz.session().map(s -> "Base [ @" + s.authenticatedUser().identity() + " ]")
-                .orElse("Base [ ==Anonymous== ]");
+        return authz.session().map(s -> "BackOffice [ @" + s.authenticatedUser().identity() + " ]").orElse("BackOffice [ ==Anonymous== ]");
     }
 
     private Menu buildMainMenu() {
@@ -128,6 +124,7 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
         menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
+        menu.addItem(LIST_BACKOFFICE_USERS_OPTION, "List all Candidate's data", new ListCandidatesAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

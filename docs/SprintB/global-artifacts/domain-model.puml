@@ -267,5 +267,6 @@ package "ANTLR Service Aggregate"{
     Operator --> User
     LanguageEngineer ---> User
     Customer ---> User
+    Candidate --> User
 
 @enduml

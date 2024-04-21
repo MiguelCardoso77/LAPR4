@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:S106")
 public class Jobs4UBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(Jobs4UBootstrapper.class);
-    private static final String POWERUSER_PWD = "poweruserA1";
-    private static final String POWERUSER = "poweruser";
+    private static final String POWERUSER_PWD = "ExPowerUser1";
+    private static final String POWERUSER = "expoweruser@gmail.com";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();
@@ -53,23 +53,20 @@ public class Jobs4UBootstrapper implements Action {
      * register a power user directly in the persistence layer as we need to
      * circumvent authorisations in the Application Layer
      */
-    private boolean registerPowerUser() {
+    private void registerPowerUser() {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
-        userBuilder.withUsername(POWERUSER).withPassword(POWERUSER_PWD).withName("joe", "power")
-                .withEmail("joe@email.org").withRoles(Jobs4URoles.POWER_USER);
+        userBuilder.withUsername(POWERUSER).withPassword(POWERUSER_PWD).withName("PowerUser", "Example").withEmail("expoweruser@gmail.com").withRoles(Jobs4URoles.POWER_USER);
         final SystemUser newUser = userBuilder.build();
 
-        SystemUser poweruser;
+        SystemUser powerUser;
         try {
-            poweruser = userRepository.save(newUser);
-            assert poweruser != null;
-            return true;
+            powerUser = userRepository.save(newUser);
+            assert powerUser != null;
         } catch (ConcurrencyException | IntegrityViolationException e) {
             // ignoring exception. assuming it is just a primary key violation
             // due to the tentative of inserting a duplicated user
             LOGGER.warn("Assuming {} already exists (activate trace log for details)", newUser.username());
             LOGGER.trace("Assuming existing record", e);
-            return false;
         }
     }
 

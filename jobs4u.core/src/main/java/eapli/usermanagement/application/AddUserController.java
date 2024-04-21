@@ -41,15 +41,14 @@ public class AddUserController {
         return generator.passwordGenerator(name);
     }
 
-    public SystemUser addUser(final String username, final String password, final String firstName,
-                              final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
+    public SystemUser addUser(String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
+        username = email;
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN, Jobs4URoles.OPERATOR);
 
         return userSvc.registerNewUser(username, password, firstName, lastName, email, roles, createdOn);
     }
 
-    public SystemUser addUser(final String username, final String password, final String firstName,
-                              final String lastName, final String email, final Set<Role> roles) {
+    public SystemUser addUser(final String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
         return addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
     }
 }

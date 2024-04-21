@@ -57,7 +57,7 @@ public class LoginUI extends AbstractUI {
 	protected boolean doShow() {
 		var attempt = 1;
 		while (attempt <= maxAttempts) {
-			final String userName = Console.readNonEmptyLine("Username:", "Please provide a username");
+			final String userName = Console.readNonEmptyLine("Email:", "Please provide an email address.");
 			final String password = Console.readLine("Password:");
 
 			if (credentialHandler.authenticated(userName, password, onlyWithThis)) {

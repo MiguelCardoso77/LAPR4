@@ -23,7 +23,7 @@ Quanto aos utilizadores (representante da empresa que acede à Customer App) eu 
 Quando aos funcionários da empresa, eu diria que é importante garantir que é usado o email para identificar qualquer utilizador 
 do sistema. Penso que será importante para cada utilizador termos o nome completo assim como um short user name (que deverá ser 
 único). O Product Owner reconsiderou e decidiu que o short user name é dispensável uma vez que para autenticação dos utilizadores 
-se deve usar apenas o email e a password
+se deve usar apenas o email e a password.
 
 > **Question 19:**
 > 
@@ -70,10 +70,24 @@ the admin or made by the operator.
 > 
 > **Answer:**
 > See Q74. US2000a is for the Operator to manually register a candidate and his/her user in the system. US2002 is for import 
-of the applications from the data iin the files produced by the application file bot. If the candidate does not exist, it 
+of the applications from the data in the files produced by the application file bot. If the candidate does not exist, it 
 should be created. I think there is no registration of a candidate by the admin.
 
 ### 1.3. Acceptance Criteria
+
+* AC1: Candidate Registration:
+  
+      The system should allow the Operator to initiate the registration process for a new candidate.
+      
+      Upon registration, the system should prompt the Operator to provide necessary information such as the candidate's first name, last name, and email.
+
+* AC2: User Creation:
+  
+      Upon successful registration of a candidate, the system should automatically create a corresponding user account.
+  
+      The user account should include the essential details provided earlier.
+  
+      The system should generate a unique password for the candidate account.
 
 ### 1.4. Found out Dependencies
 
@@ -84,7 +98,6 @@ should be created. I think there is no registration of a candidate by the admin.
     * First Name
     * Last Name
     * Email
-    * Username
 
 **Selected Data:**
 
@@ -95,6 +108,8 @@ should be created. I think there is no registration of a candidate by the admin.
     * (In)Success of the operation
 
 ### 1.6. System Sequence Diagrams (SSD)
+
+![2000a-system-sequence-diagram.svg](2000a-system-sequence-diagram.svg)
 
 ### 1.7 Other Relevant Remarks
 

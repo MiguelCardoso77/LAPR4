@@ -1,5 +1,7 @@
 # 1009 - select the requirements specification to be used for a job opening.
 
+--------
+
 ## 1.1. User Story Description
    
 As Customer Manager, I want to select the requirements specification to be used for a job opening.
@@ -86,65 +88,59 @@ As Customer Manager, I want to select the requirements specification to be used 
 
 ![1009-system-sequence-diagram.svg](1009-system-sequence-diagram.svg)
 
-## 1.7 Other Relevant Remarks
+## 1.7. System Diagram (SD)
+
+![1009-sequence-diagram.svg](1009-sequence-diagram.svg)
+
+## 1.8 Other Relevant Remarks
 
 None to specify
 
-## 2.1. Relevant Domain Model Excerpt
+## 2.0. Domain Model
+
+----------------
+
+### 2.1. Relevant Domain Model Excerpt
 
 ![1009-domain-model.svg](1009-domain-model.svg)
 
-## 2.2. Entities and Aggregates
+### 2.2. Entities and Aggregates
 
 Entities represent distinct objects with unique identities and lifecycles within the domain. Aggregates are clusters of associated entities and value objects that are treated as a unit for data changes.
 
-- Job Opening
+* Job Opening
 
       Represents job openings created by customers.
 
-- JobRequirementsSpecification
+* JobRequirementsSpecification
 
       Represents a set of application requirements that candidates must meet for a specific job opening. These specifications are designed and implemented by Language Engineers and used in the candidate screening process.
 
-- CustomerManager:
+* CustomerManager:
 
       Represents employees of the Jobs4U company who manage relationships with customer entities. Customer Managers are responsible for registering job openings, setting up recruitment processes, and overseeing the selection of candidates for their assigned customers.
+* User
 
-## Value Objects
+        Represents all the users that are registered in the system.
 
-Value objects are immutable objects that represent attributes or characteristics within the domain. They do not have a unique identity and are defined by their attributes.
+* Process
 
-Description
+        Represents the different stages in which a job offer can be found.
 
-VacanciesNumber
+### Associations
 
-Address
+JobOpening "N" --> "1" JobRequirementsSpecification
 
-Mode
+CustomerManager "1" --> "N" JobOpening : manages
 
-ContractType
+CustomerManager ---> User
 
-TitleOrFunction
+JobOpening --> Process
 
-JobReference
+## 3.0. Class Diagram
 
-ProcessDate
+------------------
 
-ProcessState
+### 3.1. Relevant Class Diagram Excerpt
 
-Requirements
-
-CustomerManagerName
-
-CustomerManagerEmail
-
-
-## Associations
-
-Associations represent relationships between entities, aggregates, and value objects within the domain. They define how objects are connected and interact with each other.
-
-JobOpening -->  Customer
-
-JobOpening --> JobRequirementSpecifications
-
-CustomerManager --> JobOpening
+![1009-class-diagram.svg](1009-class-diagram.svg)

@@ -23,16 +23,28 @@ skinparam card {
     BorderColor Black
 }
 
+package "User Aggregate"{
+entity User <<entity>><<root>>
+
+    card UserEmail <<Value Object>> {
+    }
+    card UserName <<Value Object>> {
+    }
+    card UserPassword <<Value Object>> {
+    }
+    card UserTelephoneNumber <<Value Object>> {
+    }
+
+    User --> UserEmail
+    User --> UserName
+    User --> UserTelephoneNumber
+    User --> UserPassword
+
+}
+
 package "Customer Manager Aggregate"{
 entity CustomerManager <<entity>><<root>>
 
-    card CustomerManagerEmail <<Value Object>> {
-    }
-    card CustomerManagerName <<Value Object>> {
-    }
-
-    CustomerManager --> CustomerManagerEmail
-    CustomerManager --> CustomerManagerName
 }
 
 package "Job Opening Aggregate"{
@@ -52,10 +64,6 @@ entity JobOpening <<entity>><<root>>
     }
     card Description <<Value Object>> {
     }
-    card ProcessState <<Value Object>> {
-    }
-    card ProcessDate <<Value Object>> {
-    }
 
     JobOpening --> JobReference
     JobOpening --> TitleOrFunction
@@ -64,8 +72,6 @@ entity JobOpening <<entity>><<root>>
     JobOpening --> Address
     JobOpening --> VacanciesNumber
     JobOpening --> Description
-    JobOpening --> ProcessState
-    JobOpening --> ProcessDate
 
     note right of ContractType
         Can be one of the following:
@@ -80,25 +86,39 @@ entity JobOpening <<entity>><<root>>
          - onsite
     end note
 
+}
+
+package "Process Aggregate"{
+entity Process <<entity>><<root>>
+
+    card ProcessState <<Value Object>> {
+    }
+    card ProcessDate <<Value Object>> {
+    }
+
+    Process --> ProcessState
+    Process --> ProcessDate
+
     note right of ProcessDate
-                  Can be one of the following:
-                  - ScreeningStartDate
-                  - ScreeningEndDate
-                  - InterviewsStartDate
-                  - InterviewsEndDate
-                  - AnalysisStartDate
-                  - AnalysisEndDate
-                  - ResultDate
+        Can be one of the following:
+        - ScreeningStartDate
+        - ScreeningEndDate
+        - InterviewsStartDate
+        - InterviewsEndDate
+        - AnalysisStartDate
+        - AnalysisEndDate
+        - ResultDate
     end note
 
     note right of ProcessState
-            Can be one of the following:
-            - Application
-            - Screening
-            - Interviews
-            - Analysis
-            - Result
+        Can be one of the following:
+        - Application
+        - Screening
+        - Interviews
+        - Analysis
+        - Result
     end note
+
 }
 
 package "Job Requirements Specification Aggregate"{
@@ -112,6 +132,10 @@ entity JobRequirementsSpecification <<entity>><<root>>
 }
 
 JobRequirementsSpecification "1" <-- "N" JobOpening : associated
+
 CustomerManager "1" --> "N" JobOpening : manages
+CustomerManager ---> User
+
+JobOpening --> Process
 
 @enduml

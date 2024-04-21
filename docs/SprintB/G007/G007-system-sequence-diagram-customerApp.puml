@@ -30,6 +30,6 @@ activate CUSTOMER
         System --> CUSTOMER : displays operation success
     deactivate System
 
-deactivate BACKOFFICE
+deactivate CUSTOMER
 
 @enduml

@@ -20,7 +20,7 @@
  */
 package user.console.presentation.myuser;
 
-import eapli.myclientuser.application.SignupController;
+import core.myclientuser.application.SignupController;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;

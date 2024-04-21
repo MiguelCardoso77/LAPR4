@@ -32,13 +32,17 @@
         <dependency>
             <version>0.1.0</version>
             <groupId>lapr4</groupId>
-            <artifactId>jobs4u.candidate.app</artifactId>
+            <artifactId>jobs4u.customer.app</artifactId>
+        </dependency>
+        <dependency>
+            <version>0.1.0</version>
+            <groupId>lapr4</groupId>
+            <artifactId>jobs4u.backoffice.app</artifactId>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -52,7 +56,6 @@
             </plugin>
 
             <plugin>
-
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <executions>
@@ -82,10 +85,8 @@
                             <destFile>${code.coverage.overall.data.folder}/aggregate.exec</destFile>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
-
 
         </plugins>
     </build>

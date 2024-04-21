@@ -30,6 +30,6 @@ activate CANDIDATE
         System --> CANDIDATE : displays operation success
     deactivate System
 
-deactivate BACKOFFICE
+deactivate CANDIDATE
 
 @enduml

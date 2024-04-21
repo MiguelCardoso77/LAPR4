@@ -1,9 +1,9 @@
 package persistence.inMemory;
 
-import eapli.clientusermanagement.repositories.ClientUserRepository;
-import eapli.clientusermanagement.repositories.SignupRequestRepository;
-import eapli.bootstrapers.Jobs4UBootstrapper;
-import eapli.persistence.RepositoryFactory;
+import core.clientusermanagement.repositories.ClientUserRepository;
+import core.clientusermanagement.repositories.SignupRequestRepository;
+import bootstrappers.bootstraping.Jobs4UBootstrapper;
+import core.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.inmemory.InMemoryUserRepository;

@@ -1,0 +1,51 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - 1001
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ": System" as System
+
+activate CM    
+
+    CM -> System : Requests to register a customer
+    activate System
+
+        System --> CM : Asks for the customer's first name
+    deactivate System
+
+    CM -> System : Provides the name
+    activate System
+
+        System --> CM : Asks for the customer's last name
+    deactivate System
+
+    CM -> System : Provides the name
+    activate System
+
+        System --> CM : Asks for the customer's Email
+    deactivate System
+
+    CM -> System : Provides the email
+    activate System
+
+        System --> CM : Shows all the inputted data and asks for confirmation
+    deactivate System
+
+    CM -> System : Provides the email
+    activate System
+
+         System --> CM : Shows all the inputted data and asks for confirmation
+    deactivate System
+
+    CM -> System : Confirms the data
+    activate System
+
+         System --> CM : Creates the user for the registered \ncostumer and displays operation success
+    deactivate System
+
+@enduml

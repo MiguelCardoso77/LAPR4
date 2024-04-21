@@ -48,7 +48,8 @@ public class AddUserController {
         return userSvc.registerNewUser(username, password, firstName, lastName, email, roles, createdOn);
     }
 
-    public SystemUser addUser(final String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
+    public SystemUser addUser(String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
+        username = email;
         return addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
     }
 }

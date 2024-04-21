@@ -15,7 +15,6 @@ import java.util.Random;
  * for example rules of password strength
  *
  * @author Paulo Gandra de Sousa 24/05/2019
- *
  */
 public class Jobs4UPasswordPolicy implements PasswordPolicy {
 
@@ -44,7 +43,13 @@ public class Jobs4UPasswordPolicy implements PasswordPolicy {
         String initials = name.substring(0, 1).toUpperCase() + name.substring(1, Math.min(name.length(), 4));
 
         Random random = new Random();
-        int randomNumber = 1000 + random.nextInt(9000);
+        int randomNumber;
+
+        if (name.length() < 4) {
+            randomNumber = 100000 + random.nextInt(900000);
+        } else {
+            randomNumber = 1000 + random.nextInt(9000);
+        }
 
         return initials + randomNumber;
     }
@@ -57,9 +62,7 @@ public class Jobs4UPasswordPolicy implements PasswordPolicy {
      * https://documentation.cpanel.net/display/CKB/How+to+Determine+Password+Strength
      * for example rules of password strength
      *
-     * @param rawPassword
-     *            the string to check
-     *
+     * @param rawPassword the string to check
      * @return how strong a password is
      */
     public PasswordStrength strength(final String rawPassword) {

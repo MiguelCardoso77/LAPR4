@@ -31,6 +31,8 @@ import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -47,6 +49,19 @@ public class ListUsersController{
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
 
         return userSvc.allUsers();
+    }
+
+    public Iterable<SystemUser> allBackofficeUsers() {
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
+        List<SystemUser> backofficeUsers = new ArrayList<>();
+
+        for (SystemUser u : userSvc.allUsers()) {
+            if (u.hasAny(Jobs4URoles.ADMIN, Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.LANGUAGE_ENGINEER, Jobs4URoles.OPERATOR)) {
+                backofficeUsers.add(u);
+            }
+        }
+
+        return backofficeUsers;
     }
 
     public Optional<SystemUser> find(final Username u) {

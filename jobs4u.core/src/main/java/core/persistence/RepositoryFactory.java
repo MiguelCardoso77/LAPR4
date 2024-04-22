@@ -2,6 +2,7 @@ package core.persistence;
 
 import core.clientusermanagement.repositories.ClientUserRepository;
 import core.clientusermanagement.repositories.SignupRequestRepository;
+import core.jobOpening.repositories.JobOpeningRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -62,5 +63,14 @@ public interface RepositoryFactory {
      * @return
      */
     SignupRequestRepository signupRequests();
+
+    /**
+     *
+     * @param autoTx
+     * @return
+     */
+
+    JobOpeningRepository jobOpenings(TransactionalContext autoTx);
+    JobOpeningRepository jobOpenings();
 
 }

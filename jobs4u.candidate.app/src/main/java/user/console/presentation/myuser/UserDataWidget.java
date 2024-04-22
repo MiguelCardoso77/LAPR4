@@ -20,6 +20,7 @@
  */
 package user.console.presentation.myuser;
 
+import core.usermanagement.domain.Jobs4UPasswordPolicy;
 import eapli.framework.io.util.Console;
 
 /**
@@ -29,6 +30,7 @@ import eapli.framework.io.util.Console;
  */
 class UserDataWidget {
 
+    private final Jobs4UPasswordPolicy passwordPolicy = new Jobs4UPasswordPolicy();
     private String username;
     private String password;
     private String firstName;
@@ -36,11 +38,11 @@ class UserDataWidget {
     private String email;
 
     public void show() {
-        this.username = Console.readLine("Username");
-        this.password = Console.readLine("Password");
         this.firstName = Console.readLine("First Name");
         this.lastName = Console.readLine("Last Name");
         this.email = Console.readLine("E-Mail");
+        this.username = email;
+        this.password = passwordPolicy.passwordGenerator(firstName);
     }
 
     public String username() {

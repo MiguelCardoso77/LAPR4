@@ -53,6 +53,14 @@ username and password?
 > You may assume the candidate will be informed of his/her password by means that are outside the scope of what is to 
 > be developed for this version of the system.
 
+> **Question 57:** 
+> 
+> Quais as politicas de negócio para registar um candidato, quais as caracteristicas da password, email, telemóvel?
+>
+> **Answer:**
+> Sobre o telemóvel, seguir o Q56. Sobre email, seria qualquer email válido. Sobre a password, podemos seguir algo como: 
+ter no mínimo 8 caracteres, letras maiúsculas e minúsculas, dígitos e pelo menos, um caracter não alfanumérico.
+
 > **Question 74:**
 > 
 > Relativamente ao registo dos candidatos, os dados devem ser inseridos manualmente ou importados do ficheiro com os dados do candidato?

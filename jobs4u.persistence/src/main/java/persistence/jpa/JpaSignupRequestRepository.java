@@ -43,6 +43,6 @@ class JpaSignupRequestRepository extends JpaAutoTxRepository<SignupRequest, User
 
     @Override
     public Iterable<SignupRequest> pendingSignupRequests() {
-        return match("e.approvalStatus=eapli.clientusermanagement.domain" + ".ApprovalStatus.PENDING");
+        return match("e.approvalStatus=core.clientusermanagement.domain" + ".ApprovalStatus.PENDING");
     }
 }

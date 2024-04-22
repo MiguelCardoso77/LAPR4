@@ -23,7 +23,7 @@
  */
 package core.clientusermanagement.domain.events;
 
-import core.clientusermanagement.domain.MecanographicNumber;
+import core.clientusermanagement.domain.TelephoneNumber;
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.events.DomainEventBase;
 import eapli.framework.infrastructure.authz.domain.model.Username;
@@ -36,17 +36,17 @@ public class NewUserRegisteredFromSignupEvent extends DomainEventBase implements
 
     private static final long serialVersionUID = 1L;
 
-    private final MecanographicNumber mecanographicNumber;
+    private final TelephoneNumber telephoneNumber;
     private final Username newUser;
 
-    public NewUserRegisteredFromSignupEvent(final MecanographicNumber mecanographicNumber,
+    public NewUserRegisteredFromSignupEvent(final TelephoneNumber telephoneNumber,
             final Username newUser) {
-        this.mecanographicNumber = mecanographicNumber;
+        this.telephoneNumber = telephoneNumber;
         this.newUser = newUser;
     }
 
-    public MecanographicNumber mecanographicNumber() {
-        return mecanographicNumber;
+    public TelephoneNumber mecanographicNumber() {
+        return telephoneNumber;
     }
 
     public Username username() {

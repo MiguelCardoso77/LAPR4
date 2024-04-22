@@ -19,12 +19,10 @@ public class SignupController {
 
     private final SignupRequestRepository signupRequestRepository = PersistenceContext.repositories().signupRequests();
 
-    public SignupRequest signup(final String password, final String firstName, final String lastName, final String email, String mecanographicNumber, final Calendar createdOn) {
+    public SignupRequest signup(final String password, final String firstName, final String lastName, final String email, String telephoneNumber, final Calendar createdOn) {
 
         final SignupRequestBuilder signupRequestBuilder = UserBuilderHelper.signupBuilder();
-        signupRequestBuilder.withUsername(email).withPassword(password)
-                .withName(firstName, lastName).withEmail(email).createdOn(createdOn)
-                .withMecanographicNumber(mecanographicNumber);
+        signupRequestBuilder.withUsername(email).withPassword(password).withName(firstName, lastName).withEmail(email).createdOn(createdOn).withMecanographicNumber(telephoneNumber);
 
         final SignupRequest newSignupRequest = signupRequestBuilder.build();
         return this.signupRequestRepository.save(newSignupRequest);

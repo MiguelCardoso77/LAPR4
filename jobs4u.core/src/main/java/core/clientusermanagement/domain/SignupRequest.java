@@ -61,7 +61,7 @@ public class SignupRequest implements AggregateRoot<Username> {
     private Name name;
     private EmailAddress email;
 
-    private MecanographicNumber mecanographicNumber;
+    private TelephoneNumber telephoneNumber;
 
     @Enumerated(EnumType.STRING)
     private ApprovalStatus approvalStatus;
@@ -69,15 +69,15 @@ public class SignupRequest implements AggregateRoot<Username> {
     private Calendar createdOn;
 
     /* package */ SignupRequest(final Username username, final Password password, final Name name,
-            final EmailAddress email, final MecanographicNumber mecanographicNumber,
+            final EmailAddress email, final TelephoneNumber telephoneNumber,
             final Calendar createdOn) {
-        Preconditions.noneNull(username, password, name, email, mecanographicNumber);
+        Preconditions.noneNull(username, password, name, email, telephoneNumber);
 
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
-        this.mecanographicNumber = mecanographicNumber;
+        this.telephoneNumber = telephoneNumber;
         // by default
         approvalStatus = ApprovalStatus.PENDING;
         this.createdOn = createdOn;
@@ -118,11 +118,11 @@ public class SignupRequest implements AggregateRoot<Username> {
 
         return username.equals(that.username) && password.equals(that.password)
                 && name.equals(that.name) && email.equals(that.email)
-                && mecanographicNumber.equals(that.mecanographicNumber);
+                && telephoneNumber.equals(that.telephoneNumber);
     }
 
-    public MecanographicNumber mecanographicNumber() {
-        return mecanographicNumber;
+    public TelephoneNumber telephoneNumber() {
+        return telephoneNumber;
     }
 
     @Override

@@ -112,6 +112,6 @@ public class SignupRequestBuilder implements DomainFactory<SignupRequest> {
         }
         return new SignupRequest(Username.valueOf(username), password,
                 Name.valueOf(firstName, lastName), EmailAddress.valueOf(email),
-                MecanographicNumber.valueOf(mecanographicNumber), createdOn);
+                TelephoneNumber.valueOf(mecanographicNumber), createdOn);
     }
 }

@@ -80,7 +80,7 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
     private void createClientUser(final SignupRequest theSignupRequest,
                                   final SystemUser newUser) {
         final ClientUserBuilder clientUserBuilder = new ClientUserBuilder();
-        clientUserBuilder.withMecanographicNumber(theSignupRequest.mecanographicNumber())
+        clientUserBuilder.withMecanographicNumber(theSignupRequest.telephoneNumber())
                 .withSystemUser(newUser);
         this.clientUserRepository.save(clientUserBuilder.build());
     }

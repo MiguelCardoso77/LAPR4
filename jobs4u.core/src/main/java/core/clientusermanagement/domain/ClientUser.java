@@ -43,7 +43,7 @@ import jakarta.persistence.Version;
  * @author Jorge Santos ajs@isep.ipp.pt
  */
 @Entity
-public class ClientUser implements AggregateRoot<MecanographicNumber> {
+public class ClientUser implements AggregateRoot<TelephoneNumber> {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class ClientUser implements AggregateRoot<MecanographicNumber> {
     private Long version;
 
     @EmbeddedId
-    private MecanographicNumber mecanographicNumber;
+    private TelephoneNumber telephoneNumber;
 
     /**
      * cascade = CascadeType.NONE as the systemUser is part of another aggregate
@@ -59,12 +59,12 @@ public class ClientUser implements AggregateRoot<MecanographicNumber> {
     @OneToOne()
     private SystemUser systemUser;
 
-    public ClientUser(final SystemUser user, final MecanographicNumber mecanographicNumber) {
-        if (mecanographicNumber == null || user == null) {
+    public ClientUser(final SystemUser user, final TelephoneNumber telephoneNumber) {
+        if (telephoneNumber == null || user == null) {
             throw new IllegalArgumentException();
         }
         this.systemUser = user;
-        this.mecanographicNumber = mecanographicNumber;
+        this.telephoneNumber = telephoneNumber;
     }
 
     protected ClientUser() {
@@ -90,12 +90,12 @@ public class ClientUser implements AggregateRoot<MecanographicNumber> {
         return DomainEntities.areEqual(this, other);
     }
 
-    public MecanographicNumber mecanographicNumber() {
+    public TelephoneNumber mecanographicNumber() {
         return identity();
     }
 
     @Override
-    public MecanographicNumber identity() {
-        return this.mecanographicNumber;
+    public TelephoneNumber identity() {
+        return this.telephoneNumber;
     }
 }

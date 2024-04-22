@@ -1,0 +1,202 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Customer Manager" as CM
+participant DisplaysCandidatesDataUI <<presentation>>
+participant DisplaysCandidatesDataController <<controller>>
+participant PersistenceContext <<persistence>>
+participant RepositoryFactory <<factory>>
+database JobOpeningRepository <<repository>>
+database ApplicationRepository <<repository>>
+database CandidateRepository <<repository>>
+
+activate CM
+
+        CM -> DisplaysCandidatesDataUI : display all candidate's data
+
+        activate DisplaysCandidatesDataUI
+
+        DisplaysCandidatesDataUI -> DisplaysCandidatesDataController : display all candidate's data
+
+        activate DisplaysCandidatesDataController
+
+        DisplaysCandidatesDataController -> PersistenceContext : repositories()
+
+        activate PersistenceContext
+
+
+        PersistenceContext -> DisplaysCandidatesDataController : factory
+
+        deactivate PersistenceContext
+
+
+        DisplaysCandidatesDataController -> RepositoryFactory: jobOpenings()
+
+        activate RepositoryFactory
+
+
+        RepositoryFactory -> DisplaysCandidatesDataController : jobOpenings
+
+        deactivate RepositoryFactory
+
+        DisplaysCandidatesDataController -> JobOpeningRepository : findAllJobOpenings()
+
+        activate JobOpeningRepository
+
+        JobOpeningRepository -> DisplaysCandidatesDataController : jobOpenings
+
+        deactivate JobOpeningRepository
+
+        DisplaysCandidatesDataController -> DisplaysCandidatesDataUI : jobOpenings
+
+        deactivate DisplaysCandidatesDataController
+
+        DisplaysCandidatesDataUI --> CM : asks to select a  jobOpening
+
+        deactivate DisplaysCandidatesDataUI
+
+        CM -> DisplaysCandidatesDataUI : selects a jobOpening
+
+        activate DisplaysCandidatesDataUI
+
+        DisplaysCandidatesDataUI -> DisplaysCandidatesDataController : selects a jobOpening
+
+        activate DisplaysCandidatesDataController
+
+
+    DisplaysCandidatesDataController -> PersistenceContext : repositories()
+
+           activate PersistenceContext
+
+
+           PersistenceContext -> DisplaysCandidatesDataController : factory
+
+           deactivate PersistenceContext
+
+
+           DisplaysCandidatesDataController -> RepositoryFactory: applications()
+
+           activate RepositoryFactory
+
+
+           RepositoryFactory -> DisplaysCandidatesDataController : applications
+
+           deactivate RepositoryFactory
+
+           DisplaysCandidatesDataController -> ApplicationRepository : findApplications(jobOpening)
+
+           activate ApplicationRepository
+
+           ApplicationRepository -> DisplaysCandidatesDataController : applications
+
+           deactivate ApplicationRepository
+
+           DisplaysCandidatesDataController -> DisplaysCandidatesDataUI : applications
+
+           deactivate DisplaysCandidatesDataController
+
+        DisplaysCandidatesDataUI --> CM : asks to select an application
+
+        deactivate DisplaysCandidatesDataUI
+
+        CM -> DisplaysCandidatesDataUI : selects an application
+
+        activate DisplaysCandidatesDataUI
+
+        DisplaysCandidatesDataUI -> DisplaysCandidatesDataController : selects an application
+
+        activate DisplaysCandidatesDataController
+
+         DisplaysCandidatesDataController -> PersistenceContext : repositories()
+
+                   activate PersistenceContext
+
+
+                   PersistenceContext -> DisplaysCandidatesDataController : factory
+
+                   deactivate PersistenceContext
+
+
+                   DisplaysCandidatesDataController -> RepositoryFactory:candidates()
+
+                   activate RepositoryFactory
+
+
+                   RepositoryFactory -> DisplaysCandidatesDataController : candidates
+
+                   deactivate RepositoryFactory
+
+                   DisplaysCandidatesDataController -> CandidateRepository : findAllCandidates(application)
+
+                   activate CandidateRepository
+
+                   CandidateRepository -> DisplaysCandidatesDataController : candidates
+
+                   deactivate CandidateRepository
+
+                   DisplaysCandidatesDataController -> DisplaysCandidatesDataUI : candidates
+
+
+                   deactivate DisplaysCandidatesDataController
+
+        DisplaysCandidatesDataUI --> CM :  asks to select a candidate
+
+deactivate DisplaysCandidatesDataUI
+
+
+       CM -> DisplaysCandidatesDataUI : selects a candidate
+
+       activate DisplaysCandidatesDataUI
+
+       DisplaysCandidatesDataUI -> DisplaysCandidatesDataController : selects a candidate
+
+       activate DisplaysCandidatesDataController
+
+       DisplaysCandidatesDataController -> PersistenceContext : repositories()
+
+                          activate PersistenceContext
+
+
+                          PersistenceContext -> DisplaysCandidatesDataController : factory
+
+                          deactivate PersistenceContext
+
+
+                          DisplaysCandidatesDataController -> RepositoryFactory:candidates()
+
+                          activate RepositoryFactory
+
+
+                          RepositoryFactory -> DisplaysCandidatesDataController : candidates
+
+                          deactivate RepositoryFactory
+
+                          DisplaysCandidatesDataController -> CandidateRepository : findAllData(candidate)
+
+                          activate CandidateRepository
+
+                          CandidateRepository -> DisplaysCandidatesDataController : candidateData
+
+                          deactivate CandidateRepository
+
+       DisplaysCandidatesDataController -> DisplaysCandidatesDataUI : candidateData
+
+       deactivate DisplaysCandidatesDataController
+
+       DisplaysCandidatesDataUI --> CM : shows candidateData
+
+       deactivate DisplaysCandidatesDataUI
+
+
+
+
+
+
+deactivate CM
+
+@enduml

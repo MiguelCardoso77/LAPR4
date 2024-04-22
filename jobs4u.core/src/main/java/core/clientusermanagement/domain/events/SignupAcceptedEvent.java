@@ -20,7 +20,7 @@
  */
 package core.clientusermanagement.domain.events;
 
-import core.clientusermanagement.domain.MecanographicNumber;
+import core.clientusermanagement.domain.TelephoneNumber;
 import core.clientusermanagement.domain.SignupRequest;
 import eapli.framework.domain.events.DomainEventBase;
 import eapli.framework.general.domain.model.EmailAddress;
@@ -58,8 +58,8 @@ public class SignupAcceptedEvent extends DomainEventBase {
         return theSignupRequest.email();
     }
 
-    public MecanographicNumber mecanographicNumber() {
-        return theSignupRequest.mecanographicNumber();
+    public TelephoneNumber mecanographicNumber() {
+        return theSignupRequest.telephoneNumber();
     }
 
     @Override

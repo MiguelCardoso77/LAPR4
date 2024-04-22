@@ -1,7 +1,7 @@
 package core.clientusermanagement.application;
 
 import core.clientusermanagement.domain.ClientUser;
-import core.clientusermanagement.domain.MecanographicNumber;
+import core.clientusermanagement.domain.TelephoneNumber;
 import core.persistence.PersistenceContext;
 import core.usermanagement.domain.Jobs4URoles;
 import core.clientusermanagement.repositories.ClientUserRepository;
@@ -25,7 +25,7 @@ public class ClientUserService {
             final String mecNumber) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER,
                 Jobs4URoles.ADMIN);
-        return repo.ofIdentity(MecanographicNumber.valueOf(mecNumber));
+        return repo.ofIdentity(TelephoneNumber.valueOf(mecNumber));
     }
 
     public Optional<ClientUser> findClientUserByUsername(

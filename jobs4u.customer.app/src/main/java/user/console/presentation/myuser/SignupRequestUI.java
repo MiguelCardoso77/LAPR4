@@ -44,7 +44,7 @@ public class SignupRequestUI extends AbstractUI {
 
         userData.show();
 
-        final String mecanographicNumber = Console.readLine("Mecanographic Number");
+        final String mecanographicNumber = Console.readLine("Telephone Number");
 
         try {
             this.theController.signup(userData.username(), userData.password(),
@@ -52,8 +52,7 @@ public class SignupRequestUI extends AbstractUI {
                     mecanographicNumber);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             LOGGER.error("Error performing the operation", e);
-            System.out.println(
-                    "Unfortunatelly there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
+            System.out.println("Unfortunatelly there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
         }
 
         return true;

@@ -39,8 +39,7 @@ import org.slf4j.LoggerFactory;
 public class AcceptRefuseSignupRequestUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(AcceptRefuseSignupRequestUI.class);
 
-    private final AcceptRefuseSignupRequestController theController = AcceptRefuseSignupFactory
-            .build();
+    private final AcceptRefuseSignupRequestController theController = AcceptRefuseSignupFactory.build();
 
     @Override
     protected boolean doShow() {
@@ -68,8 +67,7 @@ public class AcceptRefuseSignupRequestUI extends AbstractUI {
                 }
             } catch (IntegrityViolationException | ConcurrencyException ex) {
                 LOGGER.error("Error performing the operation", ex);
-                System.out.println(
-                        "Unfortunatelly there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
+                System.out.println("Unfortunatelly there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
             }
         }
         return false;

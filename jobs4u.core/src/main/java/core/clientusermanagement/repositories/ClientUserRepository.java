@@ -21,7 +21,7 @@
 package core.clientusermanagement.repositories;
 
 import core.clientusermanagement.domain.ClientUser;
-import core.clientusermanagement.domain.MecanographicNumber;
+import core.clientusermanagement.domain.TelephoneNumber;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
@@ -32,7 +32,7 @@ import java.util.Optional;
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
 public interface ClientUserRepository
-        extends DomainRepository<MecanographicNumber, ClientUser> {
+        extends DomainRepository<TelephoneNumber, ClientUser> {
 
     /**
      * returns the client user (utente) whose username is given
@@ -49,7 +49,7 @@ public interface ClientUserRepository
      * @param number
      * @return
      */
-    default Optional<ClientUser> findByMecanographicNumber(final MecanographicNumber number) {
+    default Optional<ClientUser> findByMecanographicNumber(final TelephoneNumber number) {
         return ofIdentity(number);
     }
 

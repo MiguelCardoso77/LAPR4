@@ -56,26 +56,19 @@ Import the data from the file that was processed by the Application File Bot in 
 
 
 ## 1.3. Acceptance Criteria
-* AC1: Customer Registration:
 
-      The system should allow the Customer Manager to initiate the registration process for a new customer.
-      
-      Upon registration, the system should prompt the Customer Manager to provide necessary information such as the company name.
-  
-* AC2: User Creation:
-  
-      Upon successful registration of a customer, the system should automatically create a corresponding user account.
-  
-      The user account should include essential details such as email, username, password, and telephone number.
-  
-      The system should generate a unique username and password for the user account.
+* AC1: Import all files received:
 
-* AC3: Data Integrity:
+      The system should provide functionality to import all files received along with the application.
   
-      The system should ensure that the user account is linked accurately to the registered customer.
+* AC2: Ensure data integrity:
+  
+      The system should ensure the integrity of imported data and file references.
 
-      Data consistency checks should be performed to verify the correctness of the user information entered during registration.
-  
+* AC3: Notify Operator of successful import:
+
+      Upon successful import, the system should notify the Operator that the files have been successfully imported.
+
 * AC4: Notification:
 
       After the user account is created successfully, the system should notify the Customer Manager of the successful registration and user creation.
@@ -85,22 +78,8 @@ Import the data from the file that was processed by the Application File Bot in 
       If any errors occur during the registration or user creation process, the system should provide informative error messages to the Customer Manager.
   
       Error messages should include guidance on resolving the issue and retrying the operation if necessary.
-  
-* AC6: User Access:
 
-       The newly created user account should be accessible for authentication and use in the system.
-
-       The Customer Manager should be able to view and manage the created user accounts within the system's user management interface.
-  
-* AC7: Logging:
-
-      The system should log all registration and user creation activities, including timestamps and the identities of the Customer Managers involved.
-  
-* AC8: Security:
-
-      User passwords should be securely stored using encryption techniques to protect sensitive information.
-
-      Access controls should be enforced to ensure that only authorized personnel, such as Customer Managers, can perform customer registrations and user creations.
+* AC6: Register new candidates in the system
 
 ## 1.4. Found out Dependencies
 

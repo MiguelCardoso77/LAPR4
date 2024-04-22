@@ -18,12 +18,15 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
 
         registerAdmin("AdminEx", "ExAdmin1", "Admin", "Example", "exadmin@gmail.com");
         registerCandidate("CandidateEx", "ExCandidate1", "CandidateOne", "ExampleOne", "excandidate1@gmail.com");
-        registerCandidate("CandidateEx2", "ExCandidate2", "CandidateTwo", "ExampleTwo", "excandidate2@gmail.com");
-        registerCandidate("CandidateEx3", "ExCandidate3", "CandidateThree", "ExampleThree", "excandidate3@gmail.com");
-        registerCustomer("CustomerEx", "ExCustomer1", "Customer", "Example", "excustomer@gmail.com");
+        registerCustomer("CustomerEx", "ExCustomer1", "CustomerOne", "ExampleOne", "excustomer1@gmail.com");
         registerCustomerManager("CustomerManagerEx", "ExCustomerManager1", "CustomerManager", "Example", "excustomermanager@gmail.com");
         registerLanguageEngineer("LanguageEngineerEx", "ExLanguageEngineer1", "LanguageEngineer", "Example", "exlanguageengineer@gmail.com");
         registerOperator("OperatorEx", "ExOperator1", "Operator", "Example", "exoperator@gmail.com");
+
+        addSignUpRequest("excandidate2@gmail.com", "ExCandidate2", "CandidateTwo", "ExampleTwo",  "912345999");
+        addSignUpRequest("excandidate3@gmail.com", "ExCandidate3", "CandidateThree", "ExampleThree", "912345000");
+        addSignUpRequest("excustomer2@gmail.com", "ExCustomer2", "CustomerTwo", "ExampleTwo", "922000888");
+
         return true;
     }
 
@@ -64,5 +67,9 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
         final Set<Role> roles = new HashSet<>();
         roles.add(Jobs4URoles.OPERATOR);
         registerUser(username, password, firstName, lastName, email, roles);
+    }
+
+    private void addSignUpRequest(final String email, final String password, final String firstName, final String lastName, final String telephoneNumber) {
+        signupUser(password, firstName, lastName, email, telephoneNumber);
     }
 }

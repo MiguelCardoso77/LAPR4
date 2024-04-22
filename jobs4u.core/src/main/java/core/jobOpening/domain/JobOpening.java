@@ -16,7 +16,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     private ContractType contractType;
     private TitleOrFunction titleOrFunction;
 
-    JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber, Adress adress, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction) {
+    public JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber, Adress adress, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction) {
         this.jobReference = jobReference;
         this.description = description;
         this.vacanciesNumber = vacanciesNumber;

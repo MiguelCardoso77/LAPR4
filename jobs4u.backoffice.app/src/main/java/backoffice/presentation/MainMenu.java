@@ -1,6 +1,7 @@
 package backoffice.presentation;
 
 import backoffice.presentation.authz.*;
+import backoffice.presentation.jobs.AddJobOpeningAction;
 import infrastructure.Application;
 import backoffice.presentation.clientuser.AcceptRefuseSignupRequestAction;
 import console.presentation.authz.MyUserMenu;
@@ -125,6 +126,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
         menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
         menu.addItem(LIST_BACKOFFICE_USERS_OPTION, "List all Candidate's data", new ListCandidatesAction());
+        menu.addItem(4, "Add Job Opening", new AddJobOpeningAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

@@ -19,7 +19,7 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
         // for ORM
     }
 
-    private int buildJobReference(final int companyNumber) {
+    public int buildJobReference(final int companyNumber) {
         Random rand = new Random(); // Generate random 5 digit code
         int randomPart = rand.nextInt(90000) + 10000;
 

@@ -26,7 +26,7 @@ public class Jobs4UPasswordPolicy implements PasswordPolicy {
         }
 
         // at least 6 characters long
-        if (rawPassword.length() < 6) {
+        if (rawPassword.length() < 8) {
             return false;
         }
 
@@ -45,10 +45,10 @@ public class Jobs4UPasswordPolicy implements PasswordPolicy {
         Random random = new Random();
         int randomNumber;
 
-        if (name.length() < 4) {
-            randomNumber = 100000 + random.nextInt(900000);
+        if (name.length() < 3) {
+            randomNumber = 10000000 + random.nextInt(9000000);
         } else {
-            randomNumber = 1000 + random.nextInt(9000);
+            randomNumber = 100000 + random.nextInt(90000);
         }
 
         return initials + randomNumber;

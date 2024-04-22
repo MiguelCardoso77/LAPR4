@@ -15,14 +15,14 @@ public class AddJobOpeningController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final JobOpeningService jobOpeningService = new JobOpeningService();
 
-    public int buildJobReference(int companyNumber) {
+    public String buildJobReference(String companyNumber) {
         JobReference jobReference = new JobReference(companyNumber);
-        return jobReference.buildJobReference(companyNumber);
+        return jobReference.toString();
     }
 
-    public JobOpening addJobOpening(int jobReference, String description, int vacanciesNumber, String adress, Mode mode, ContractType contractType, String titleOrFunction) {
+    public JobOpening addJobOpening(String jobReference, String description, int vacanciesNumber, String address, Mode mode, ContractType contractType, String titleOrFunction) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER);
 
-        return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, adress, mode, contractType, titleOrFunction);
+        return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction);
     }
 }

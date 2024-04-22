@@ -2,10 +2,10 @@ package core.jobOpening.domain;
 
 import eapli.framework.domain.model.ValueObject;
 
-public class Adress implements ValueObject {
+public class Address implements ValueObject {
     private String adress;
 
-    public Adress(final String adress) {
+    public Address(final String adress) {
         if (adress == null || adress.isEmpty()) {
             throw new IllegalArgumentException("Adress should neither be null nor empty");
         }
@@ -13,12 +13,12 @@ public class Adress implements ValueObject {
         this.adress = adress;
     }
 
-    protected Adress() {
+    protected Address() {
         // for ORM
     }
 
-    public static Adress valueOf(final String adress) {
-        return new Adress(adress);
+    public static Address valueOf(final String adress) {
+        return new Address(adress);
     }
 
     @Override
@@ -26,11 +26,11 @@ public class Adress implements ValueObject {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Adress)) {
+        if (!(o instanceof Address)) {
             return false;
         }
 
-        final Adress that = (Adress) o;
+        final Address that = (Address) o;
         return this.adress.equals(that.adress);
     }
 

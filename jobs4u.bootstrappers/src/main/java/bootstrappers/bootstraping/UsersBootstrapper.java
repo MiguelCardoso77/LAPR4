@@ -1,11 +1,8 @@
 package bootstrappers.bootstraping;
 
-import core.clientusermanagement.domain.SignupRequest;
-import core.clientusermanagement.domain.SignupRequestBuilder;
-import core.myclientuser.application.SignupController;
-import core.usermanagement.application.AddUserController;
-import core.usermanagement.application.ListUsersController;
-import core.usermanagement.domain.UserBuilderHelper;
+import core.application.controllers.SignupController;
+import core.application.controllers.AddUserController;
+import core.application.controllers.ListUsersController;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.domain.model.Role;

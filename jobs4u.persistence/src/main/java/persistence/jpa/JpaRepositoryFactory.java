@@ -1,7 +1,7 @@
 package persistence.jpa;
 
 import infrastructure.Application;
-import core.clientusermanagement.repositories.SignupRequestRepository;
+import core.repositories.SignupRequestRepository;
 import core.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;

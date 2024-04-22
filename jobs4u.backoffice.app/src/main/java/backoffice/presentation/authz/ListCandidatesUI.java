@@ -1,6 +1,6 @@
 package backoffice.presentation.authz;
 
-import core.usermanagement.application.ListUsersController;
+import core.application.controllers.ListUsersController;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;

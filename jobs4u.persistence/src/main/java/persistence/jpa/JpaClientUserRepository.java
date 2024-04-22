@@ -1,9 +1,9 @@
 package persistence.jpa;
 
-import core.clientusermanagement.domain.TelephoneNumber;
+import core.domain.client.TelephoneNumber;
 import infrastructure.Application;
-import core.clientusermanagement.domain.ClientUser;
-import core.clientusermanagement.repositories.ClientUserRepository;
+import core.domain.client.ClientUser;
+import core.repositories.ClientUserRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;

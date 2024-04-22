@@ -1,8 +1,8 @@
 package backoffice.presentation.jobs;
 
-import core.jobOpening.application.AddJobOpeningController;
-import core.jobOpening.domain.ContractType;
-import core.jobOpening.domain.Mode;
+import core.application.controllers.AddJobOpeningController;
+import core.domain.jobOpening.ContractType;
+import core.domain.jobOpening.Mode;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;

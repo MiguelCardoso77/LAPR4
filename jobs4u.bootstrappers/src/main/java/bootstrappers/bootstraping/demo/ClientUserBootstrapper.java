@@ -1,10 +1,10 @@
 package bootstrappers.bootstraping.demo;
 
-import core.clientusermanagement.application.AcceptRefuseSignupFactory;
-import core.clientusermanagement.application.AcceptRefuseSignupRequestController;
-import core.clientusermanagement.domain.SignupRequest;
+import core.application.AcceptRefuseSignupFactory;
+import core.application.AcceptRefuseSignupRequestController;
+import core.domain.client.SignupRequest;
 import bootstrappers.bootstraping.TestDataConstants;
-import core.myclientuser.application.SignupController;
+import core.application.controllers.SignupController;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;

@@ -1,8 +1,8 @@
 package persistence.jpa;
 
-import core.jobOpening.domain.JobOpening;
-import core.jobOpening.domain.JobReference;
-import core.jobOpening.repositories.JobOpeningRepository;
+import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobReference;
+import core.repositories.JobOpeningRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 

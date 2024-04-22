@@ -2,7 +2,7 @@ package backoffice.presentation.authz;
 
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import core.usermanagement.application.AddUserController;
+import core.application.controllers.AddUserController;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
@@ -14,7 +14,7 @@ import eapli.framework.presentation.console.AbstractUI;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
-import core.usermanagement.domain.Jobs4URoles;
+import core.domain.user.Jobs4URoles;
 
 import java.util.HashSet;
 import java.util.Set;

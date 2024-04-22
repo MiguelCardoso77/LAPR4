@@ -20,7 +20,7 @@
  */
 package user.console.presentation.myuser;
 
-import core.usermanagement.domain.Jobs4UPasswordPolicy;
+import core.domain.user.Jobs4UPasswordPolicy;
 import eapli.framework.io.util.Console;
 
 /**

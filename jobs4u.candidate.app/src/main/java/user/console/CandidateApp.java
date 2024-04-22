@@ -1,6 +1,6 @@
 package user.console;
 
-import core.usermanagement.domain.Jobs4UPasswordPolicy;
+import core.domain.user.Jobs4UPasswordPolicy;
 import user.console.presentation.FrontMenu;
 import core.persistence.PersistenceContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;

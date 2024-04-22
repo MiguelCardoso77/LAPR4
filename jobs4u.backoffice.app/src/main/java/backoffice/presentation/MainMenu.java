@@ -5,7 +5,7 @@ import backoffice.presentation.jobs.AddJobOpeningAction;
 import infrastructure.Application;
 import backoffice.presentation.clientuser.AcceptRefuseSignupRequestAction;
 import console.presentation.authz.MyUserMenu;
-import core.usermanagement.domain.Jobs4URoles;
+import core.domain.user.Jobs4URoles;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;

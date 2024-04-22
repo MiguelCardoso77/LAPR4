@@ -10,9 +10,9 @@
     <class>eapli.framework.infrastructure.authz.domain.model.Role</class>
     <class>eapli.framework.infrastructure.authz.domain.model.RoleSet</class>
     <class>eapli.framework.infrastructure.authz.domain.model.RoleAssignment</class>
-    <class>core.clientusermanagement.domain.ClientUser</class>
-    <class>core.clientusermanagement.domain.SignupRequest</class>
-    <class>core.jobOpening.domain.JobOpening</class>
+    <class>core.domain.client.ClientUser</class>
+    <class>core.domain.client.SignupRequest</class>
+    <class>core.domain.jobOpening.JobOpening</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>

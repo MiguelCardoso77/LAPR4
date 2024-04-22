@@ -3,17 +3,17 @@ package bootstrap.infrastructure;
 import console.BaseApplication;
 import bootstrappers.bootstraping.Jobs4UBootstrapper;
 import bootstrappers.bootstraping.demo.BaseDemoBootstrapper;
-import core.clientusermanagement.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
-import core.clientusermanagement.domain.events.NewUserRegisteredFromSignupEvent;
-import core.clientusermanagement.domain.events.SignupAcceptedEvent;
+import core.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
+import core.domain.events.NewUserRegisteredFromSignupEvent;
+import core.domain.events.SignupAcceptedEvent;
 import eapli.framework.collections.util.ArrayPredicates;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
 import core.persistence.PersistenceContext;
 import bootstrappers.smoketests.BaseDemoSmokeTester;
-import core.usermanagement.application.eventhandlers.SignupAcceptedWatchDog;
-import core.usermanagement.domain.Jobs4UPasswordPolicy;
+import core.application.eventhandlers.SignupAcceptedWatchDog;
+import core.domain.user.Jobs4UPasswordPolicy;
 
 public class Jobs4UBootstrap extends BaseApplication {
     private Jobs4UBootstrap() {

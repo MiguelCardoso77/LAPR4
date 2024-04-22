@@ -20,8 +20,8 @@
  */
 package persistence.inMemory;
 
-import core.clientusermanagement.domain.SignupRequest;
-import core.clientusermanagement.repositories.SignupRequestRepository;
+import core.domain.client.SignupRequest;
+import core.repositories.SignupRequestRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 

@@ -1,6 +1,6 @@
 package bootstrappers.bootstraping;
 
-import core.usermanagement.domain.Jobs4URoles;
+import core.domain.user.Jobs4URoles;
 import eapli.framework.actions.Action;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 

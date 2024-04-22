@@ -1,8 +1,8 @@
 package core.persistence;
 
-import core.clientusermanagement.repositories.ClientUserRepository;
-import core.clientusermanagement.repositories.SignupRequestRepository;
-import core.jobOpening.repositories.JobOpeningRepository;
+import core.repositories.ClientUserRepository;
+import core.repositories.SignupRequestRepository;
+import core.repositories.JobOpeningRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 

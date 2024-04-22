@@ -23,7 +23,7 @@
  */
 package backoffice.presentation.authz;
 
-import core.usermanagement.application.ListUsersController;
+import core.application.controllers.ListUsersController;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.visitor.Visitor;

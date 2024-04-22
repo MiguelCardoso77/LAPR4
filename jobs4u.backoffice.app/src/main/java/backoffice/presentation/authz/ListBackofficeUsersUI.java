@@ -3,7 +3,7 @@ package backoffice.presentation.authz;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.visitor.Visitor;
-import core.usermanagement.application.ListUsersController;
+import core.application.controllers.ListUsersController;
 
 public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
     private final ListUsersController theController = new ListUsersController();

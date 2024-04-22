@@ -3,7 +3,7 @@ package user.console.presentation;
 import console.presentation.authz.LoginUI;
 import user.console.presentation.myuser.SignupRequestAction;
 import infrastructure.authz.AuthenticationCredentialHandler;
-import core.usermanagement.domain.Jobs4URoles;
+import core.domain.user.Jobs4URoles;
 import eapli.framework.actions.ChainedAction;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;

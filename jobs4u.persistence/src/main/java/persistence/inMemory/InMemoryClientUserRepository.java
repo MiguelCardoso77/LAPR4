@@ -1,8 +1,8 @@
 package persistence.inMemory;
 
-import core.clientusermanagement.domain.ClientUser;
-import core.clientusermanagement.domain.TelephoneNumber;
-import core.clientusermanagement.repositories.ClientUserRepository;
+import core.domain.client.ClientUser;
+import core.domain.client.TelephoneNumber;
+import core.repositories.ClientUserRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 

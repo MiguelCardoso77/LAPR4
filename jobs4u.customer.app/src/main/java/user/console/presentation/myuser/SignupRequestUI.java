@@ -24,7 +24,7 @@ import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import core.myclientuser.application.SignupController;
+import core.application.controllers.SignupController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

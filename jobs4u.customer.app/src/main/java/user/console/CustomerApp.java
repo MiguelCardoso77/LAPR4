@@ -3,7 +3,7 @@ package user.console;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import core.persistence.PersistenceContext;
-import core.usermanagement.domain.Jobs4UPasswordPolicy;
+import core.domain.user.Jobs4UPasswordPolicy;
 import user.console.presentation.FrontMenu;
 
 /**

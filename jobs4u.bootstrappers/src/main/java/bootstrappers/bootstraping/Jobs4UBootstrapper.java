@@ -1,8 +1,8 @@
 package bootstrappers.bootstraping;
 
 import core.persistence.PersistenceContext;
-import core.usermanagement.domain.Jobs4URoles;
-import core.usermanagement.domain.UserBuilderHelper;
+import core.domain.user.Jobs4URoles;
+import core.domain.user.UserBuilderHelper;
 import eapli.framework.actions.Action;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;

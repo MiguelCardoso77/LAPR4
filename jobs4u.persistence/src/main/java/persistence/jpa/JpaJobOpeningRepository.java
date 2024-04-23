@@ -21,4 +21,9 @@ class JpaJobOpeningRepository extends JpaAutoTxRepository<JobOpening, JobReferen
         return findAll();
     }
 
+    @Override
+    public JobOpening findJobOpening() {
+        return null;
+    }
+
 }

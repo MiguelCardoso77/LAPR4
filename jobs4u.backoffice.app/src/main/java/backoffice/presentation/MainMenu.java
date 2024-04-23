@@ -1,5 +1,6 @@
 package backoffice.presentation;
 
+import backoffice.presentation.applications.ListJobOpeningApplicationsAction;
 import backoffice.presentation.authz.*;
 import backoffice.presentation.jobs.AddJobOpeningAction;
 import infrastructure.Application;
@@ -36,6 +37,8 @@ public class MainMenu extends AbstractUI {
     private static final int ACTIVATE_USER_OPTION = 4;
     private static final int DEACTIVATE_USER_OPTION = 5;
     private static final int ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION = 6;
+
+    private static final int LIST_ALL_APPLICATIONS_OF_A_JOBOPENING = 7;
 
 
     // MAIN MENU
@@ -129,6 +132,7 @@ public class MainMenu extends AbstractUI {
         menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
         menu.addItem(LIST_BACKOFFICE_USERS_OPTION, "List all Candidate's data", new ListCandidatesAction());
         menu.addItem(4, "Add Job Opening", new AddJobOpeningAction());
+        menu.addItem(LIST_ALL_APPLICATIONS_OF_A_JOBOPENING , "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

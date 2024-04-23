@@ -77,6 +77,73 @@ public class Application implements AggregateRoot<IdApplication> {
     public boolean hasIdentity(IdApplication id) {
         return AggregateRoot.super.hasIdentity(id);
     }
+
+
+    public IdApplication idApplication() {
+        return idApplication;
+    }
+
+    public void changeIdApplication(IdApplication idApplication) {
+        this.idApplication = idApplication;
+    }
+
+    public Rank rank() {
+        return rank;
+    }
+
+    public void changeRank(Rank rank) {
+        this.rank = rank;
+    }
+
+    public SubmissionDate submissionDate() {
+        return submissionDate;
+    }
+
+    public void changeSubmissionDate(SubmissionDate submissionDate) {
+        this.submissionDate = submissionDate;
+    }
+
+    public Status status() {
+        return status;
+    }
+
+    public void changeStatus(Status status) {
+        this.status = status;
+    }
+
+    public ApplicationDataFile applicationDataFile() {
+        return applicationDataFile;
+    }
+
+    public void changeApplicationDataFile(ApplicationDataFile applicationDataFile) {
+        this.applicationDataFile = applicationDataFile;
+    }
+
+    public FilesAttachedContent filesAttachedContent() {
+        return filesAttachedContent;
+    }
+
+    public void changeFilesAttachedContent(FilesAttachedContent filesAttachedContent) {
+        this.filesAttachedContent = filesAttachedContent;
+    }
+
+    public EmailFilesAttached emailFilesAttached() {
+        return emailFilesAttached;
+    }
+
+    public void changeEmailFilesAttached(EmailFilesAttached emailFilesAttached) {
+        this.emailFilesAttached = emailFilesAttached;
+    }
+
+    public EmailContentFile emailContentFile() {
+        return emailContentFile;
+    }
+
+    public void changeEmailContentFile(EmailContentFile emailContentFile) {
+        this.emailContentFile = emailContentFile;
+    }
 }
+
+
 
 

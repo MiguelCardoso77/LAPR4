@@ -21,6 +21,8 @@ public class ClientUserService {
     private final ClientUserRepository repo =
             PersistenceContext.repositories().clientUsers();
 
+    //private final JobOpeningService jobserv=
+
     public Optional<ClientUser> findClientUserByMecNumber(
             final String mecNumber) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER,

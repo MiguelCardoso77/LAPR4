@@ -24,4 +24,9 @@ public class JobOpeningService {
     public Iterable<JobOpening> allJobOpenings() {
         return jobOpeningRepository.findAll();
     }
+
+    public JobOpening findJobOpening(){
+        return jobOpeningRepository.findJobOpening();
+    }
+
 }

@@ -13,6 +13,8 @@
     <class>core.domain.client.ClientUser</class>
     <class>core.domain.client.SignupRequest</class>
     <class>core.domain.jobOpening.JobOpening</class>
+    <class>core.domain.application.Application</class>
+
 
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>

@@ -21,12 +21,6 @@ activate CM
     CM -> System : submits Job Opening details
     activate System
 
-        System --> CM : requests list of requirements (JobRequirementsSpecification)
-    deactivate System
-
-    CM -> System : submits JobRequirementsSpecification
-    activate System
-
         System --> CM : shows all details for the new job opening request and asks to confirm
     deactivate System
 

@@ -10,6 +10,11 @@ As a Project Manager, I want the system to support and apply authentication and 
 
 **From the specifications document:**
 
+> **NFR08 - Authentication and Authorization :**
+>
+> The system must support and apply authentication and authorization for all its users and functionalities.
+
+
 **From the client clarifications:**
 
 > **Question 11:**
@@ -53,7 +58,7 @@ aceitar esse login.
 
 ### 1.3. Acceptance Criteria
 
-* AC1: User Creation:
+* AC1: User Creation
 
       Upon successful registration of a new user, the system should automatically create a corresponding user account.
 
@@ -98,10 +103,20 @@ aceitar esse login.
 
 *  None to specify
 
-## 2.0. Domain Model
+## 2. Analysis and Design
 
-----------------
+The authentication and authorization system in our framework leverages a pre-existing base implementation, sparing us 
+from building it anew. At its core lies the AuthenticationService, a pivotal component offering the authenticate method 
+for user identity verification. This service relies on ancillary elements like the AuthorizationService, responsible for 
+managing user sessions, and the PasswordPolicy, which ensures password adherence to system-defined rules.
 
-### 2.1. Relevant Domain Model Excerpt
+Within this ecosystem, the SystemUser entity embodies a user within our system, while the Role value object delineates 
+the user's role, dictating their permissions and access levels.
+
+### 2.1. Domain Model
 
 ![G007-domain-model.svg](G007-domain-model.svg)
+
+## 3. Testing
+
+## 4. Implementation

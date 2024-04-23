@@ -5,9 +5,6 @@ import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.visitor.Visitor;
 import core.application.controllers.ListUsersController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
     private final ListUsersController theController = new ListUsersController();
 
@@ -43,8 +40,15 @@ public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
 
     @Override
     protected boolean doShow(){
-        final List<SystemUser> list = new ArrayList<>();
+        final Iterable<SystemUser> iterable = elements();
 
+        if(!iterable.iterator().hasNext()) {
+            System.out.println("There is no Backoffice User");
+        } else {
+            for (SystemUser user : iterable) {
+                System.out.println(user.username() +  user.name().firstName() + user.name().lastName());
+            }
+        }
         return false;
     }
 

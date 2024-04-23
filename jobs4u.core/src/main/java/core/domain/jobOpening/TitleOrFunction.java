@@ -1,7 +1,9 @@
 package core.domain.jobOpening;
 
 import eapli.framework.domain.model.ValueObject;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public class TitleOrFunction implements ValueObject {
     private String titleOrFunction;
 

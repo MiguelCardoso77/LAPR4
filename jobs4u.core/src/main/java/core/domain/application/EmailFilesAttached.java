@@ -1,8 +1,10 @@
 package core.domain.application;
 
 import eapli.framework.domain.model.ValueObject;
+import jakarta.persistence.Embeddable;
 
-public class EmailFilesAttached  implements ValueObject {
+@Embeddable
+public class EmailFilesAttached implements ValueObject {
     private String emailFilesAttached;
 
     public EmailFilesAttached(final String EmailFilesAttached) {

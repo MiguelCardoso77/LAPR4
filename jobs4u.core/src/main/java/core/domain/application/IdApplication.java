@@ -6,17 +6,22 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class IdApplication implements ValueObject, Comparable<IdApplication> {
+    private long idApplication;
 
-    private static final AtomicLong idApplication = new AtomicLong(0);
+    public IdApplication(final long idApplication) {
+        if (idApplication <= 0) {
+            throw new IllegalArgumentException("IdApplication should not be empty");
+        }
 
-    private final long value;
-
-    public IdApplication() {
-        this.value = idApplication.incrementAndGet();
+        this.idApplication = idApplication + 1;
     }
 
-    public long getValue() {
-        return value;
+    protected IdApplication() {
+        // for ORM
+    }
+
+    public static IdApplication valueOf(final long idApplication) {
+        return new IdApplication(idApplication);
     }
 
     @Override
@@ -24,11 +29,21 @@ public class IdApplication implements ValueObject, Comparable<IdApplication> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IdApplication that = (IdApplication) o;
-        return value == that.value;
+        return idApplication == that.idApplication;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(idApplication);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(idApplication);
+    }
+
+    @Override
+    public int compareTo(IdApplication o) {
+        return Long.compare(idApplication, o.idApplication);
     }
 }

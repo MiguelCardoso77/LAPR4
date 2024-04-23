@@ -2,25 +2,26 @@ package core.domain.application;
 
 import eapli.framework.domain.model.ValueObject;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class SubmissionDate implements ValueObject, Comparable<SubmissionDate> {
 
-    private Date submissionDate;
+    private Calendar submissionDate;
 
-    public SubmissionDate(final Date submissionDate) {
+    public SubmissionDate(final Calendar submissionDate) {
         if (submissionDate == null) {
             throw new IllegalArgumentException("Submission date cannot be null");
         }
 
-        this.submissionDate = new Date(submissionDate.getTime()); // Clone the date to avoid mutability issues
+        this.submissionDate = submissionDate;
     }
 
     protected SubmissionDate() {
         // for ORM
     }
 
-    public static SubmissionDate valueOf(final Date submissionDate) {
+    public static SubmissionDate valueOf(final Calendar submissionDate) {
         return new SubmissionDate(submissionDate);
     }
 

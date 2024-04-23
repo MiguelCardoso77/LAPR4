@@ -10,7 +10,7 @@ participant AuthorizationService <<service>>
 participant UserManagementService <<service>>
 participant SystemUser <<systemUser>>
 database UserRepository <<repository>>
-participant SystemUser <<systemUser>>
+
 
 activate Administrator
 

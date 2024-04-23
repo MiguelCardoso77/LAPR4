@@ -3,8 +3,8 @@ autonumber
 
 
 actor "Customer Manager" as CM
-participant CreateJobOpeningUI <<presentation>>
-participant CreateJobOpeningController <<application>>
+participant AddJobOpeningUI <<presentation>>
+participant AddJobOpeningController <<application>>
 participant PersistenceContext <<persistence>>
 participant RepositoryFactory <<factory>>
 database CustomerRepository <<repository>>
@@ -15,79 +15,79 @@ database JobOpeningRepository <<repository>>
 activate CM
 
 
-    CM -> CreateJobOpeningUI: create new JobOpening
+    CM -> AddJobOpeningUI: add new JobOpening
 
-        activate CreateJobOpeningUI
+        activate AddJobOpeningUI
 
-    CreateJobOpeningUI --> CM: asks for the JobOpening's information
+    AddJobOpeningUI --> CM: asks for the JobOpening's information
 
-        deactivate CreateJobOpeningUI
+        deactivate AddJobOpeningUI
 
-    CM -> CreateJobOpeningUI : Description, VacanciesNumber, Address, \nMode, ContractType, TitleOrFunction, JobReference, ProcessDate
+    CM -> AddJobOpeningUI : Description, VacanciesNumber, Address, \nMode, ContractType, TitleOrFunction, JobReference, ProcessDate
 
-        activate CreateJobOpeningUI
+        activate AddJobOpeningUI
 
-    CreateJobOpeningUI -> CreateJobOpeningController: createJobOpening(description, vacanciesNumber, \n address, mode, contractType, titleOrFunction, \n jobReference, processDate)
+    AddJobOpeningUI -> AddJobOpeningController: createJobOpening(description, vacanciesNumber, \n address, mode, contractType, titleOrFunction, \n jobReference, processDate)
 
-        activate CreateJobOpeningController
+        activate AddJobOpeningController
 
-    CreateJobOpeningController -> PersistenceContext : repositories()
+    AddJobOpeningController -> PersistenceContext : repositories()
 
         activate PersistenceContext
 
-    PersistenceContext --> CreateJobOpeningController : factory
+    PersistenceContext --> AddJobOpeningController : factory
 
         deactivate PersistenceContext
 
-    CreateJobOpeningController -> RepositoryFactory : companies()
+    AddJobOpeningController -> RepositoryFactory : companies()
 
         activate RepositoryFactory
 
-    RepositoryFactory --> CreateJobOpeningController : companies
+    RepositoryFactory --> AddJobOpeningController : companies
 
         deactivate RepositoryFactory
 
 alt companyExists() return true
 
-    CreateJobOpeningController -> CustomerRepository : findCompanyByCode(companyName)
+    AddJobOpeningController -> CustomerRepository : findCompanyByCode(companyName)
         activate CustomerRepository
 
-    CustomerRepository --> CreateJobOpeningController : company
+    CustomerRepository --> AddJobOpeningController : company
         deactivate CustomerRepository
 end alt
 
 
 alt companyExists() return false
-    CreateJobOpeningController -> Customer: create(code, name)
+    AddJobOpeningController -> Customer: create(code, name)
         activate Customer
 
-    Customer --> CreateJobOpeningController: company
+    Customer --> AddJobOpeningController: company
         deactivate Customer
 end alt
 
-    CreateJobOpeningController -> JobOpening: create(description, vacanciesNumber, address, mode, contractType, titleOrFunction, \n jobReference, processDate, company)
+    AddJobOpeningController -> JobOpening: create(description, vacanciesNumber, address, mode, contractType, titleOrFunction, \n jobReference, processDate, company)
 
         activate JobOpening
 
-    JobOpening --> CreateJobOpeningController: jobOpening
+    JobOpening --> AddJobOpeningController: jobOpening
 
         deactivate JobOpening
 
-    CreateJobOpeningController -> JobOpeningRepository : save(JobOpening)
+    AddJobOpeningController -> JobOpeningRepository : save(JobOpening)
 
         activate JobOpeningRepository
 
-    JobOpeningRepository --> CreateJobOpeningController: return success
+    JobOpeningRepository --> AddJobOpeningController: return success
 
         deactivate JobOpeningRepository
 
-    CreateJobOpeningController --> CreateJobOpeningUI : JobOpening
+    AddJobOpeningController --> AddJobOpeningUI : JobOpening
 
-        deactivate CreateJobOpeningController
+        deactivate AddJobOpeningController
 
-    CreateJobOpeningUI --> CM : shows operation's success
+    AddJobOpeningUI --> CM : shows operation's success
 
-        deactivate CreateJobOpeningUI
+        deactivate AddJobOpeningUI
 
         deactivate CM
 

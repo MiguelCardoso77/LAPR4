@@ -1,0 +1,94 @@
+@startuml
+autonumber
+
+
+actor Administrator
+
+participant AddUserUI <<presentation>>
+participant AddUserController<<application>>
+participant Jobs4UPasswordPolicy <<password generator>>
+participant AuthorizationService <<service>>
+participant UserManagementService <<service>>
+participant SystemUserBuilder <<userBuilder>>
+participant UserRepository <<repository>>
+
+
+
+
+activate Administrator
+
+
+    Administrator -> AddUserUI: Add SystemUser
+
+        activate AddUserUI
+
+    AddUserUI --> Administrator: asks for SystemUser's information
+
+        deactivate AddUserUI
+
+    Administrator -> AddUserUI: Name, TelephoneNumber, Email, Role
+
+        activate AddUserUI
+
+    AddUserUI -> AddUserController: passwordGenerator(name)
+
+        activate AddUserController
+
+    AddUserController -> Jobs4UPasswordPolicy: passwordGenerator(name)
+
+        activate Jobs4UPasswordPolicy
+
+    Jobs4UPasswordPolicy --> AddUserController: password
+
+        deactivate Jobs4UPasswordPolicy
+
+    AddUserController --> AddUserUI: password
+
+        deactivate AddUserController
+
+    AddUserUI -> AddUserController: addUser()
+
+        activate AddUserController
+
+    AddUserController -> AuthorizationService: ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+    AuthorizationService --> AddUserController: true
+
+        deactivate AuthorizationService
+
+    AddUserController -> UserManagementService: registerNewUser(name,password,email,role)
+
+        activate UserManagementService
+
+    UserManagementService -> SystemUserBuilder: build()
+        activate SystemUserBuilder
+
+    SystemUserBuilder --> UserManagementService: systemUser
+
+        deactivate SystemUserBuilder
+
+    UserManagementService -> UserRepository: save(systemUser)
+
+        activate UserRepository
+
+    UserRepository --> UserManagementService: systemUser
+
+        deactivate UserRepository
+
+    UserManagementService --> AddUserController: systemUser
+
+        deactivate UserManagementService
+
+    AddUserController --> AddUserUI: systemUser
+
+        deactivate AddUserController
+
+    AddUserUI --> Administrator : shows operation's success
+
+        deactivate AddUserUI
+
+        deactivate Administrator
+
+@enduml

@@ -1,0 +1,160 @@
+@startuml
+autonumber
+
+
+actor Administrator
+
+participant AddUserUI <<presentation>>
+participant AddUserController<<application>>
+participant UserManagementService <<service>>
+participant SystemUserBuilder <<userBuilder>>
+participant UserRepository <<repository>>
+participant SystemUser <<systemUser>>
+participant PersistenceContext<<persistence>>
+participant RepositoryFactory<<factory>>
+
+participant DeactivateUserUI <<presentation>>
+participant ActivateUserUI <<presentation>>
+participant ListBackofficeUsersUI <<presentation>>
+
+participant DeactivateUserController<<application>>
+participant ActivateUserController<<application>>
+participant ListUsersController<<application>>
+
+
+
+
+activate Administrator
+
+
+    Administrator -> AddUserUI: Add SystemUser
+
+        activate AddUserUI
+
+    AddUserUI --> Administrator: asks for SystemUser's information
+
+        deactivate AddUserUI
+
+    Administrator -> AddUserUI: Name, TelephoneNumber, Email, Role
+
+        activate AddUserUI
+
+    AddUserUI -> AddUserController: passwordGenerator(name)
+
+        activate AddUserController
+
+    AddUserController -> Jobs4UPasswordPolicy: passwordGenerator(name)
+
+        activate Jobs4UPasswordPolicy
+
+    Jobs4UPasswordPolicy --> AddUserController: password
+
+        deactivate Jobs4UPasswordPolicy
+
+    AddUserController --> AddUserUI: password
+
+        deactivate AddUserController
+
+    AddUserUI -> AddUserController: addUser()
+
+        activate AddUserController
+
+    AddUserController -> AuthorizationService: ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+    AuthorizationService --> AddUserController: true
+
+        deactivate AuthorizationService
+
+    AddUserController -> UserManagementService: registerNewUser(name,password,email,role)
+
+        activate UserManagementService
+
+    UserManagementService -> SystemUserBuilder: build()
+        activate SystemUserBuilder
+
+    SystemUserBuilder --> UserManagementService: systemUser
+
+        deactivate SystemUserBuilder
+
+    UserManagementService -> UserRepository: save(systemUser)
+
+        activate UserRepository
+
+    UserRepository --> UserManagementService: systemUser
+
+        deactivate UserRepository
+
+    UserManagementService --> AddUserController: systemUser
+
+        deactivate UserManagementService
+
+    AddUserController --> AddUserUI: systemUser
+
+        deactivate AddUserController
+
+    AddUserUI --> Administrator : shows operation's success
+
+        deactivate AddUserUI
+
+
+
+    Administrator -> DeactivateUserUI: deactivate systemUser
+
+        activate DeactivateUserUI
+
+    DeactivateUserUI --> Administrator: asks to select which systemUser to deactivate
+
+        deactivate DeactivateUserUI
+
+    Administrator -> DeactivateUserUI: selects systemUser
+
+        activate DeactivateUserUI
+
+    DeactivateUserUI -> DeactivateUserController: deactivateUser(systemUser)
+
+        activate DeactivateUserController
+
+    DeactivateUserController -> AuthorizationService: ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+    AuthorizationService --> DeactivateUserController: true
+
+        deactivate AuthorizationService
+
+    DeactivateUserController -> UserManagementService: deactivateUser(systemUser)
+
+        activate UserManagementService
+
+    UserManagementService -> SystemUser: deactivate(currentTime)
+        activate SystemUser
+
+    SystemUser --> UserManagementService: return success
+
+        deactivate SystemUser
+
+    UserManagementService -> UserRepository: save(systemUser)
+
+        activate UserRepository
+
+    UserRepository --> UserManagementService: systemUser
+
+        deactivate UserRepository
+
+    UserManagementService --> DeactivateUserController: systemUser
+
+        deactivate UserManagementService
+
+    DeactivateUserController --> DeactivateUserUI: systemUser
+
+        deactivate DeactivateUserController
+
+    DeactivateUserUI --> Administrator : shows operation's success
+
+        deactivate DeactivateUserUI
+
+        deactivate Administrator
+
+@enduml

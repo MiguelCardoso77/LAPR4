@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 ECHO OFF
-ECHO Make sure JAVA_HOME is set to JDK folder
-ECHO Make sure maven is on the system PATH
-mvn $1 dependency:copy-dependencies package
+ECHO Make sure 'JAVA_HOME' is set to the JDK folder.
+ECHO Make sure 'Maven' is on the System Path.
+ECHO Building all modules...
+mvn clean install

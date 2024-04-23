@@ -1,1 +1,2 @@
-./build-all.sh clean
+./clean.sh
+./build-all.sh

@@ -1,0 +1,76 @@
+@startuml
+autonumber
+
+
+actor Administrator
+
+participant ActivateUserUI <<presentation>>
+participant ActivateUserController<<application>>
+participant AuthorizationService <<service>>
+participant UserManagementService <<service>>
+participant SystemUser <<systemUser>>
+database UserRepository <<repository>>
+
+
+activate Administrator
+
+
+    Administrator -> ActivateUserUI: activate systemUser
+
+        activate ActivateUserUI
+
+    ActivateUserUI --> Administrator: asks to select which systemUser to activate
+
+        deactivate ActivateUserUI
+
+    Administrator -> ActivateUserUI: selects systemUser
+
+        activate ActivateUserUI
+
+    ActivateUserUI -> ActivateUserController: activateUser(systemUser)
+
+        activate ActivateUserController
+
+    ActivateUserController -> AuthorizationService: ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+    AuthorizationService --> ActivateUserController: true
+
+        deactivate AuthorizationService
+
+    ActivateUserController -> UserManagementService: activateUser(systemUser)
+
+        activate UserManagementService
+
+    UserManagementService -> SystemUser: activate(currentTime)
+
+        activate SystemUser
+
+    SystemUser --> UserManagementService: return success
+
+        deactivate SystemUser
+
+    UserManagementService -> UserRepository: save(systemUser)
+
+        activate UserRepository
+
+    UserRepository --> UserManagementService: systemUser
+
+        deactivate UserRepository
+
+    UserManagementService --> ActivateUserController: systemUser
+
+        deactivate UserManagementService
+
+    ActivateUserController --> ActivateUserUI: systemUser
+
+        deactivate ActivateUserController
+
+    ActivateUserUI --> Administrator : shows operation's success
+
+        deactivate ActivateUserUI
+
+        deactivate Administrator
+
+@enduml

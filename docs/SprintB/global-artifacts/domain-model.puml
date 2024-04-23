@@ -262,7 +262,7 @@ package "ANTLR Service Aggregate"{
     ANTLR ---> JobRequirementsSpecification : processes
     ANTLR ---> InterviewModel : processes
 
-    Admin ---> User
+    Admin ---> User: manages
     CustomerManager ---> User
     Operator --> User
     LanguageEngineer ---> User

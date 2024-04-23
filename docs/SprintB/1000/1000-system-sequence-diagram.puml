@@ -1,0 +1,69 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ": System" as System
+
+activate CM
+
+alt option add user
+    CM -> System : asks to register a new user
+    activate System
+
+       System --> CM : requests user's information (Name, TelephoneNumber, Email, Role)
+    deactivate System
+
+    CM -> System : submits user's information
+    activate System
+
+        System --> CM : displays operation success
+        deactivate System
+end alt
+
+
+alt option activate user
+    CM -> System : asks to activate a user
+    activate System
+
+       System --> CM : asks to select a user to activate
+    deactivate System
+
+    CM -> System : selects user
+    activate System
+
+        System --> CM : displays operation success
+        deactivate System
+end alt
+
+
+alt option deactivate user
+    CM -> System : asks to deactivate a user
+    activate System
+
+       System --> CM : asks to select a user to deactivate
+    deactivate System
+
+    CM -> System : selects user
+    activate System
+
+        System --> CM : displays operation success
+        deactivate System
+end alt
+
+
+alt option list backOffice users
+    CM -> System : asks to list all backOffice users
+    activate System
+
+        System --> CM : displays backOffice users
+        deactivate System
+end alt
+
+
+@enduml

@@ -90,7 +90,11 @@ aceitar esse login.
 
 ![G007-system-sequence-diagram-customerApp.svg](G007-system-sequence-diagram-customerApp.svg)
 
-### 1.7 Other Relevant Remarks
+## 1.7. Sequence Diagrams (SD)
+
+![G007-sequence-diagram-login.svg](G007-sequence-diagram-login.svg)
+
+### 1.8 Other Relevant Remarks
 
 *  None to specify
 

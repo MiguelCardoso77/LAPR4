@@ -22,8 +22,6 @@ participant SystemUserBuilder <<userBuilder>>
 database UserRepository <<repository>>
 participant SystemUser <<systemUser>>
 
-participant PersistenceContext <<persistence>>
-participant RepositoryFactory <<factory>>
 
 
 activate Administrator
@@ -99,7 +97,74 @@ alt option add user
     AddUserUI --> Administrator : shows operation's success
 
         deactivate AddUserUI
+
+        deactivate Administrator
 end alt
+
+
+
+
+
+alt option activate user
+    Administrator -> ActivateUserUI: activate systemUser
+
+        activate ActivateUserUI
+
+    ActivateUserUI --> Administrator: asks to select which systemUser to activate
+
+        deactivate ActivateUserUI
+
+    Administrator -> ActivateUserUI: selects systemUser
+
+        activate ActivateUserUI
+
+    ActivateUserUI -> ActivateUserController: activateUser(systemUser)
+
+        activate ActivateUserController
+
+    ActivateUserController -> AuthorizationService: ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+    AuthorizationService --> ActivateUserController: true
+
+        deactivate AuthorizationService
+
+    ActivateUserController -> UserManagementService: activateUser(systemUser)
+
+        activate UserManagementService
+
+    UserManagementService -> SystemUser: activate(currentTime)
+
+        activate SystemUser
+
+    SystemUser --> UserManagementService: return success
+
+        deactivate SystemUser
+
+    UserManagementService -> UserRepository: save(systemUser)
+
+        activate UserRepository
+
+    UserRepository --> UserManagementService: systemUser
+
+        deactivate UserRepository
+
+    UserManagementService --> ActivateUserController: systemUser
+
+        deactivate UserManagementService
+
+    ActivateUserController --> ActivateUserUI: systemUser
+
+        deactivate ActivateUserController
+
+    ActivateUserUI --> Administrator : shows operation's success
+
+        deactivate ActivateUserUI
+
+        deactivate Administrator
+end alt
+
 
 
 
@@ -161,6 +226,7 @@ alt option deactivate user
 
         deactivate DeactivateUserUI
 
+        deactivate Administrator
 end alt
 
 
@@ -210,7 +276,8 @@ alt option list backOffice users
         deactivate ListBackofficeUsersUI
 
         deactivate Administrator
-
 end alt
+
+
 
 @enduml

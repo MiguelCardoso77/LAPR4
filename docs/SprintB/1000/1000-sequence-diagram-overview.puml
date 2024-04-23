@@ -97,8 +97,6 @@ alt option add user
     AddUserUI --> Administrator : shows operation's success
 
         deactivate AddUserUI
-
-        deactivate Administrator
 end alt
 
 
@@ -161,8 +159,6 @@ alt option activate user
     ActivateUserUI --> Administrator : shows operation's success
 
         deactivate ActivateUserUI
-
-        deactivate Administrator
 end alt
 
 
@@ -225,8 +221,6 @@ alt option deactivate user
     DeactivateUserUI --> Administrator : shows operation's success
 
         deactivate DeactivateUserUI
-
-        deactivate Administrator
 end alt
 
 

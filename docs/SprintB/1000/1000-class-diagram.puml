@@ -1,0 +1,102 @@
+@startuml
+skinparam linetype ortho
+'left to right direction
+
+class AddUserUI {
+    +passwordGenerator(name)
+    +addUser()
+}
+
+class ActivateUserUI {
+    +activateUser(systemUser)
+}
+
+class DeactivateUserUI {
+    +deactivateUser(systemUser)
+}
+
+class ListBackofficeUsersUI {
+    +elements()
+}
+
+class AddUserController {
+    +passwordGenerator(name)
+    +ensureAuthenticatedUserHasAnyOf(roles)
+    +registerNewUser(name,password,email,role)
+}
+
+class ActivateUserController {
+    +ensureAuthenticatedUserHasAnyOf(roles)
+    +activateUser(systemUser)
+}
+
+class DeactivateController {
+    +ensureAuthenticatedUserHasAnyOf(roles)
+    +deactivateUser(systemUser)
+}
+
+class ListUsersController {
+    +ensureAuthenticatedUserHasAnyOf(roles)
+    +allUsers()
+}
+
+class Jobs4UPasswordPolicy {}
+
+class AuthorizationService {}
+
+class UserManagementService {
+    +build()
+    +save(systemUser)
+    +activate(currentTime)
+    +deactivate(currentTime)
+    +findAll()
+}
+
+class SystemUserBuilder {}
+
+class UserRepository {}
+
+class SystemUser {}
+
+AddUserUI ---> AddUserController
+
+AddUserController ----> Jobs4UPasswordPolicy
+
+AddUserController ----> AuthorizationService
+
+AddUserController ----> UserManagementService
+
+
+
+ActivateUserUI ---> ActivateUserController
+
+ActivateUserController ----> AuthorizationService
+
+ActivateUserController ----> UserManagementService
+
+
+
+DeactivateUserUI ---> DeactivateController
+
+DeactivateController ----> AuthorizationService
+
+DeactivateController ----> UserManagementService
+
+
+
+ListBackofficeUsersUI ---> ListUsersController
+
+ListUsersController ----> AuthorizationService
+
+ListUsersController ----> UserManagementService
+
+
+
+UserManagementService ---> SystemUserBuilder
+
+UserManagementService ---> UserRepository
+
+UserManagementService ---> SystemUser
+
+
+@enduml

@@ -4,10 +4,10 @@ autonumber
 
 actor "Customer Manager" as CM
 participant CreateJobOpeningUI <<presentation>>
-participant CreateJobOpeningController<<application>>
-participant PersistenceContext<<persistence>>
-participant RepositoryFactory<<factory>>
-participant CustomerRepository <<repository>>
+participant CreateJobOpeningController <<application>>
+participant PersistenceContext <<persistence>>
+participant RepositoryFactory <<factory>>
+database CustomerRepository <<repository>>
 participant Customer <<Company>>
 participant JobOpening <<JobOpening>>
 database JobOpeningRepository <<repository>>

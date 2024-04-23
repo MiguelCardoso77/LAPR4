@@ -1,22 +1,25 @@
 @startuml
+'skinparam linetype ortho
+'left to right direction
 
+class Customer
+
+class CustomerRepository
+
+class CreateJobOpeningController
 class CustomerManager {
     - CustomerManagerName
     - CustomerManagerEmail
 }
 
-class CustomerManagerRepository {
-}
+class CustomerManagerFactory {}
 
 class JobRequirementsSpecification {
    - String Requirements
 }
-class JobRequirementsSpecificationRepository {
-}
+class JobRequirementsSpecificationFactory {}
 
 class JobOpening {
-   - String ProcessDate
-   - String ProcessState
    - String Description
    - String VacanciesNumber
    - String Address
@@ -25,35 +28,21 @@ class JobOpening {
    - TitleOrFunction
    - JobReference
 }
-class JobOpeningRepository {
-}
+class JobOpeningFactory {}
+class RepositoryFactory {}
+
+
+
+RepositoryFactory "\lCustomerManagerFactory           " ---> "1" CustomerManagerFactory
+RepositoryFactory "\n\n\n\n\nJobOpeningFactory" ---> "1" JobOpeningFactory
+RepositoryFactory "\n\n\nJobRequirements\nSpecification\nFactory" ---> "1" JobRequirementsSpecificationFactory
+
+CustomerManagerFactory "\nCustomerManagers" --> "*" CustomerManager
+JobOpeningFactory "\nJobOpenings" --> "*" JobOpening
+JobRequirementsSpecificationFactory "\nJobRequirementsSpecification" --> "*" JobRequirementsSpecification
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-abstract class UserPortal {
-    - static <List>String feedback
-    + static void addFeedback(String feedback)
-}
-
-
-enum VehicleTypeWeight {
-    Light, Heavy
-}
-
-Repositories "\nskillRepository" -> "1" SkillRepository
-User ---|> Collaborator
-User .> UserPortal
-SkillRepository "skills" --> "*" Skill
 
 @enduml

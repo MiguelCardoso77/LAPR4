@@ -15,7 +15,7 @@ database JobOpeningRepository <<repository>>
 activate CM
 
 
-    CM -> CreateJobOpeningUI: Add JobOpening
+    CM -> CreateJobOpeningUI: create new JobOpening
 
         activate CreateJobOpeningUI
 
@@ -35,7 +35,7 @@ activate CM
 
         activate PersistenceContext
 
-    PersistenceContext -> CreateJobOpeningController : factory
+    PersistenceContext --> CreateJobOpeningController : factory
 
         deactivate PersistenceContext
 
@@ -43,7 +43,7 @@ activate CM
 
         activate RepositoryFactory
 
-    RepositoryFactory -> CreateJobOpeningController : companies
+    RepositoryFactory --> CreateJobOpeningController : companies
 
         deactivate RepositoryFactory
 
@@ -52,7 +52,7 @@ alt companyExists() return true
     CreateJobOpeningController -> CustomerRepository : findCompanyByCode(companyName)
         activate CustomerRepository
 
-    CustomerRepository -> CreateJobOpeningController : company
+    CustomerRepository --> CreateJobOpeningController : company
         deactivate CustomerRepository
 end alt
 
@@ -61,7 +61,7 @@ alt companyExists() return false
     CreateJobOpeningController -> Customer: create(code, name)
         activate Customer
 
-    Customer -> CreateJobOpeningController: company
+    Customer --> CreateJobOpeningController: company
         deactivate Customer
 end alt
 
@@ -69,12 +69,19 @@ end alt
 
         activate JobOpening
 
-    JobOpening -> CreateJobOpeningController: jobOpening
+    JobOpening --> CreateJobOpeningController: jobOpening
+
         deactivate JobOpening
 
     CreateJobOpeningController -> JobOpeningRepository : save(JobOpening)
 
-    CreateJobOpeningController -> CreateJobOpeningUI : JobOpening
+        activate JobOpeningRepository
+
+    JobOpeningRepository --> CreateJobOpeningController: return success
+
+        deactivate JobOpeningRepository
+
+    CreateJobOpeningController --> CreateJobOpeningUI : JobOpening
 
         deactivate CreateJobOpeningController
 

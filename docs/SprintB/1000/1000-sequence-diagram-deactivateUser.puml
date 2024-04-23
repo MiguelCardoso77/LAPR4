@@ -9,7 +9,7 @@ participant DeactivateUserController<<application>>
 participant AuthorizationService <<service>>
 participant UserManagementService <<service>>
 participant SystemUser <<systemUser>>
-participant UserRepository <<repository>>
+database UserRepository <<repository>>
 participant SystemUser <<systemUser>>
 
 activate Administrator

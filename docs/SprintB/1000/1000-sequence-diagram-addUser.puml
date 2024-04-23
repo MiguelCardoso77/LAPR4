@@ -1,7 +1,6 @@
 @startuml
 autonumber
 
-
 actor Administrator
 
 participant AddUserUI <<presentation>>
@@ -10,7 +9,7 @@ participant Jobs4UPasswordPolicy <<password generator>>
 participant AuthorizationService <<service>>
 participant UserManagementService <<service>>
 participant SystemUserBuilder <<userBuilder>>
-participant UserRepository <<repository>>
+database UserRepository <<repository>>
 
 
 

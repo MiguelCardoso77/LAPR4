@@ -5,11 +5,11 @@ autonumber
 actor Administrator
 
 participant ListBackofficeUsersUI <<presentation>>
-participant ListBackofficeUsersController<<application>>
+participant ListUsersController <<application>>
 participant AuthorizationService <<service>>
 participant UserManagementService <<service>>
 participant SystemUserBuilder <<userBuilder>>
-participant UserRepository <<repository>>
+database UserRepository <<repository>>
 
 
 activate Administrator
@@ -18,19 +18,19 @@ activate Administrator
 
         activate ListBackofficeUsersUI
 
-    ListBackofficeUsersUI -> ListBackofficeUsersController: elements()
+    ListBackofficeUsersUI -> ListUsersController: elements()
 
-        activate ListBackofficeUsersController
+        activate ListUsersController
 
-    ListBackofficeUsersController -> AuthorizationService: ensureAuthenticatedUserHasAnyOf(roles)
+    ListUsersController -> AuthorizationService: ensureAuthenticatedUserHasAnyOf(roles)
 
         activate AuthorizationService
 
-    AuthorizationService --> ListBackofficeUsersController: return true
+    AuthorizationService --> ListUsersController: return true
 
         deactivate AuthorizationService
 
-    ListBackofficeUsersController -> UserManagementService: allUsers()
+    ListUsersController -> UserManagementService: allUsers()
 
         activate UserManagementService
 
@@ -42,13 +42,13 @@ activate Administrator
 
         deactivate UserRepository
 
-    UserManagementService --> ListBackofficeUsersController: listBackofficeUsers
+    UserManagementService --> ListUsersController: listBackofficeUsers
 
         deactivate UserManagementService
 
-    ListBackofficeUsersController --> ListBackofficeUsersUI: listBackofficeUsers
+    ListUsersController --> ListBackofficeUsersUI: listBackofficeUsers
 
-        deactivate ListBackofficeUsersController
+        deactivate ListUsersController
 
     ListBackofficeUsersUI --> Administrator : shows operation's success
 

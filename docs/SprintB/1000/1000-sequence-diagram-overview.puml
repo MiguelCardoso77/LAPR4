@@ -5,28 +5,30 @@ autonumber
 actor Administrator
 
 participant AddUserUI <<presentation>>
-participant AddUserController<<application>>
-participant UserManagementService <<service>>
-participant SystemUserBuilder <<userBuilder>>
-participant UserRepository <<repository>>
-participant SystemUser <<systemUser>>
-participant PersistenceContext<<persistence>>
-participant RepositoryFactory<<factory>>
-
-participant DeactivateUserUI <<presentation>>
 participant ActivateUserUI <<presentation>>
+participant DeactivateUserUI <<presentation>>
 participant ListBackofficeUsersUI <<presentation>>
 
-participant DeactivateUserController<<application>>
-participant ActivateUserController<<application>>
-participant ListUsersController<<application>>
 
+participant AddUserController <<application>>
+participant ActivateUserController <<application>>
+participant DeactivateUserController <<application>>
+participant ListUsersController <<application>>
 
+participant Jobs4UPasswordPolicy <<password generator>>
+participant AuthorizationService <<service>>
+participant UserManagementService <<service>>
+participant SystemUserBuilder <<userBuilder>>
+database UserRepository <<repository>>
+participant SystemUser <<systemUser>>
+
+participant PersistenceContext <<persistence>>
+participant RepositoryFactory <<factory>>
 
 
 activate Administrator
 
-
+alt option add user
     Administrator -> AddUserUI: Add SystemUser
 
         activate AddUserUI
@@ -97,9 +99,13 @@ activate Administrator
     AddUserUI --> Administrator : shows operation's success
 
         deactivate AddUserUI
+end alt
 
 
 
+
+
+alt option deactivate user
     Administrator -> DeactivateUserUI: deactivate systemUser
 
         activate DeactivateUserUI
@@ -155,6 +161,56 @@ activate Administrator
 
         deactivate DeactivateUserUI
 
+end alt
+
+
+
+
+
+
+alt option list backOffice users
+    Administrator -> ListBackofficeUsersUI: list backoffice users
+
+        activate ListBackofficeUsersUI
+
+    ListBackofficeUsersUI -> ListUsersController: elements()
+
+        activate ListUsersController
+
+    ListUsersController -> AuthorizationService: ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+    AuthorizationService --> ListUsersController: return true
+
+        deactivate AuthorizationService
+
+    ListUsersController -> UserManagementService: allUsers()
+
+        activate UserManagementService
+
+    UserManagementService -> UserRepository: findAll()
+
+        activate UserRepository
+
+    UserRepository --> UserManagementService: listSystemUsers
+
+        deactivate UserRepository
+
+    UserManagementService --> ListUsersController: listBackofficeUsers
+
+        deactivate UserManagementService
+
+    ListUsersController --> ListBackofficeUsersUI: listBackofficeUsers
+
+        deactivate ListUsersController
+
+    ListBackofficeUsersUI --> Administrator : shows operation's success
+
+        deactivate ListBackofficeUsersUI
+
         deactivate Administrator
+
+end alt
 
 @enduml

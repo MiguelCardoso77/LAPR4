@@ -1,7 +1,6 @@
 package backoffice.presentation.applications;
 
-import backoffice.presentation.authz.DeactivateUserUI;
-import core.application.controllers.ListAllApplicationsofJobOpeningController;
+import core.application.controllers.ListJobOpeningApplicationsController;
 import core.domain.application.Application;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
@@ -18,7 +17,7 @@ import java.util.List;
 
 
 public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
-    private final ListAllApplicationsofJobOpeningController theController = new ListAllApplicationsofJobOpeningController();
+    private final ListJobOpeningApplicationsController theController = new ListJobOpeningApplicationsController();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ListJobOpeningApplicationsUI.class);
 
@@ -32,8 +31,8 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         return "No applications found for this job opening.";
     }
 
-    protected Iterable<Application> elementsApp() {
-        return theController.allApplicationsOfJobOpening();
+    protected Iterable<Application> elementsApp(JobReference jobReference) {
+        return theController.allApplicationsOfJobOpening(jobReference);
     }
 
     @Override
@@ -46,7 +45,6 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         return null;
     }
 
-
     @Override
     protected String elementName() {
         return "Application";
@@ -54,13 +52,14 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
 
     @Override
     protected String listHeader() {
-        // Define o cabeçalho da lista de candidaturas
         return String.format("#  %-30s%-30s%-30s", "ID", "Submission Date", "Rank");
     }
 
+    @Override
     public boolean doShow() {
         final List<JobOpening> list = new ArrayList<>();
         final Iterable<JobOpening> iterable = elements();
+        JobOpening jobOpeningApplication = null;
         if (!iterable.iterator().hasNext()) {
             System.out.println("There is no job openings ");
         } else {
@@ -69,7 +68,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
             System.out.printf("%-30s%-30s%-30s%-%-30s%-30s%-30s%-30s%n", "Job Reference:", "Description:", "Vacancies number", "Address:", "Mode:", "Contract Type:", "Title or function:");
             for (JobOpening jobOpening : iterable) {
                 list.add(jobOpening);
-                //System.out.println("%-30s%-30s%-30s%-%-30s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.description(), jobOpening.vacanciesNumber(), jobOpening.address(), jobOpening.mode(), jobOpening.contractType(), jobOpening.titleOrFunction());
+                System.out.printf("%-30s%-30s%-30s%-%-30s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.description(), jobOpening.vacanciesNumber(), jobOpening.address(), jobOpening.mode(), jobOpening.contractType(), jobOpening.titleOrFunction());
                 cont++;
             }
             final int option = Console.readInteger("Enter the number of job opening");
@@ -77,7 +76,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
                 System.out.println("No job opening selected");
             } else {
                 try {
-                    this.theController.findJobOpening(list.get(option - 1).jobReference());
+                    jobOpeningApplication = this.theController.findJobOpening(list.get(option - 1).jobReference());
                 } catch (IntegrityViolationException | ConcurrencyException ex) {
                     LOGGER.error("Error performing the operation", ex);
                     System.out.println(
@@ -86,22 +85,12 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
             }
         }
 
+        final Iterable<Application> iterable1 = elementsApp(jobOpeningApplication.jobReference());
+        for (Application application : iterable1) {
+            System.out.printf("%-30s%-30s%-%-30s%-30s%-30s%-30s%n", application.idApplication(), application.rank(), application.submissionDate(), application.status(), application.applicationDataFile(),
+                    application.filesAttachedContent(), application.emailFilesAttached(), application.emailContentFile(), application.jobReference());
+        }
 
-        final Iterable<Application> iterable1 = elementsApp();
-        if (!iterable1.iterator().hasNext()) {
-            System.out.println("There is no applications for this job opening ");
-        } else {
-
-            //for (Application application : iterable) {
-                //System.out.println(application.idApplication() + application.rank() + application.submissionDate() + application.status(), application.applicationDataFile(), application.filesAttachedContent(), application.emailFilesAttached(), application.emailContentFile());
-            }
-        return false;
+        return true;
     }
-
-    }
-
-
-
-
-
-
+}

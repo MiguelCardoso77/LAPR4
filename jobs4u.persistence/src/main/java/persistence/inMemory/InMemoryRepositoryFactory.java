@@ -1,5 +1,6 @@
 package persistence.inMemory;
 
+import core.repositories.ApplicationRepository;
 import core.repositories.ClientUserRepository;
 import core.repositories.SignupRequestRepository;
 import bootstrappers.bootstraping.Jobs4UBootstrapper;
@@ -9,10 +10,7 @@ import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.infrastructure.authz.repositories.impl.inmemory.InMemoryUserRepository;
 
-/**
- *
- * Created by nuno on 20/03/16.
- */
+
 public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     static {
@@ -58,6 +56,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public JobOpeningRepository jobOpenings() {
         return jobOpenings(null);
+    }
+
+    @Override
+    public ApplicationRepository applications(TransactionalContext autoTx) {
+        return new InMemoryApplicationRepository();
+    }
+
+    @Override
+    public ApplicationRepository applications() {
+        return null;
     }
 
     @Override

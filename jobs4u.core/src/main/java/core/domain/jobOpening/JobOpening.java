@@ -1,7 +1,10 @@
 package core.domain.jobOpening;
 
+import core.domain.application.Application;
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "JOBOPENING")
@@ -75,47 +78,24 @@ public class JobOpening implements AggregateRoot<JobReference> {
         return description;
     }
 
-    public void changeDescription(Description description) {
-        this.description = description;
-    }
-
     public VacanciesNumber vacanciesNumber() {
         return vacanciesNumber;
-    }
-
-    public void changeVacanciesNumber(VacanciesNumber vacanciesNumber) {
-        this.vacanciesNumber = vacanciesNumber;
     }
 
     public Address address() {
         return address;
     }
 
-    public void changeAddress(Address address) {
-        this.address = address;
-    }
-
     public Mode mode() {
         return mode;
-    }
-
-    public void changeMode(Mode mode) {
-        this.mode = mode;
     }
 
     public ContractType contractType() {
         return contractType;
     }
 
-    public void changeContractType(ContractType contractType) {
-        this.contractType = contractType;
-    }
-
     public TitleOrFunction titleOrFunction() {
         return titleOrFunction;
     }
 
-    public void changeTitleOrFunction(TitleOrFunction titleOrFunction) {
-        this.titleOrFunction = titleOrFunction;
-    }
 }

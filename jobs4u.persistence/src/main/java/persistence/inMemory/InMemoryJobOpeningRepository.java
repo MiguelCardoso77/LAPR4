@@ -14,12 +14,6 @@ public class InMemoryJobOpeningRepository extends InMemoryDomainRepository<JobOp
     public Iterable<JobOpening> allJobOpenings() {
         return match(e -> true);
     }
-
-    @Override
-    public JobOpening findJobOpening() {
-        return null;
-    }
-
     public Iterable<JobOpening> activeJobOpenings() {
         // Implement the method to return active job openings
         throw new UnsupportedOperationException("Not supported yet.");

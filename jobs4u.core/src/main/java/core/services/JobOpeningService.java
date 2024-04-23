@@ -1,9 +1,6 @@
 package core.services;
 
-import core.domain.jobOpening.ContractType;
-import core.domain.jobOpening.JobOpening;
-import core.domain.jobOpening.Mode;
-import core.domain.jobOpening.JobOpeningBuilder;
+import core.domain.jobOpening.*;
 import core.repositories.JobOpeningRepository;
 import core.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -23,10 +20,6 @@ public class JobOpeningService {
 
     public Iterable<JobOpening> allJobOpenings() {
         return jobOpeningRepository.findAll();
-    }
-
-    public JobOpening findJobOpening(){
-        return jobOpeningRepository.findJobOpening();
     }
 
 }

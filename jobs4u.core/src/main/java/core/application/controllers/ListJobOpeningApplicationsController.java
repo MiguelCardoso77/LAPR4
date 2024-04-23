@@ -7,16 +7,16 @@ import core.domain.jobOpening.JobReference;
 import core.domain.user.Jobs4URoles;
 import core.persistence.PersistenceContext;
 import core.repositories.ClientUserRepository;
+import core.services.ApplicationService;
 import core.services.JobOpeningService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
-import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAllApplicationsofJobOpeningController {
+public class ListJobOpeningApplicationsController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
@@ -24,7 +24,9 @@ public class ListAllApplicationsofJobOpeningController {
 
     private final ClientUserRepository repo = PersistenceContext.repositories().clientUsers();
 
-    //private final JobOpeningService jobserv = AuthzRegistry.jobService();
+    private final JobOpeningService jobserv = new JobOpeningService();
+    private final ApplicationService appServ = new ApplicationService();
+
 
     public Iterable<ClientUser> activeClientUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
@@ -32,52 +34,36 @@ public class ListAllApplicationsofJobOpeningController {
         return this.repo.findAllActive();
     }
 
-    public Iterable<Application> allApplicationsOfJobOpening() {
+    public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER);
-        List<Application> applicationOfJobOpening = new ArrayList<>();
+        Iterable<Application> allApplications = appServ.allApplication();
 
-        for (SystemUser u : userSvc.allUsers()) {
-            if (u.hasAny(Jobs4URoles.ADMIN, Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.LANGUAGE_ENGINEER, Jobs4URoles.OPERATOR)) {
-
-                for (Application a : applicationOfJobOpening) {
-
-                }
+        List<Application> allApplicationsJobOpening = new ArrayList<>();
+        for (Application a : allApplications) {
+            if (a.jobReference().equals(jobReference)) {
+                allApplicationsJobOpening.add(a);
             }
-
-            return null;
         }
-        return null;
+        return  allApplicationsJobOpening;
     }
+
 
     public Iterable<JobOpening> allJobOpening() {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER);
-        List<JobOpening> jobOpenings = new ArrayList<>();
+        return jobserv.allJobOpenings();
+    }
 
-        for (SystemUser u : userSvc.allUsers()) {
-            if (u.hasAny(Jobs4URoles.ADMIN, Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.LANGUAGE_ENGINEER, Jobs4URoles.OPERATOR)) {
 
-                for (JobOpening j : jobOpenings) {
-
-                }
+    public JobOpening findJobOpening(JobReference jobReference) {
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER);
+        Iterable<JobOpening> allJobOpenings = jobserv.allJobOpenings();
+        for (JobOpening j : allJobOpenings) {
+            if (j.jobReference().equals(jobReference)) {
+                return j;
             }
-
-            return null;
         }
         return null;
     }
-
-
-    public JobOpening findJobOpening(JobReference jobReference){
-         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER);
-
-
-
-
-
-
-        return null;
-    }
-
 
 
 }

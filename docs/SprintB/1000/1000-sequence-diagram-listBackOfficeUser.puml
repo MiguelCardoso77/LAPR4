@@ -8,7 +8,6 @@ participant ListBackofficeUsersUI <<presentation>>
 participant ListUsersController <<application>>
 participant AuthorizationService <<service>>
 participant UserManagementService <<service>>
-participant SystemUserBuilder <<userBuilder>>
 database UserRepository <<repository>>
 
 

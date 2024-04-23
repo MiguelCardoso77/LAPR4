@@ -1,7 +1,9 @@
 package core.domain.jobOpening;
 
 import eapli.framework.domain.model.ValueObject;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public class VacanciesNumber implements ValueObject, Comparable<VacanciesNumber> {
     private int number;
 

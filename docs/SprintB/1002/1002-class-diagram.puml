@@ -1,23 +1,24 @@
 @startuml
-'skinparam linetype ortho
+skinparam linetype ortho
 'left to right direction
 
-class Customer
+class Customer {}
 
-class CustomerRepository
+class CustomerRepository {}
 
-class CreateJobOpeningController
-class CustomerManager {
-    - CustomerManagerName
-    - CustomerManagerEmail
+class CreateJobOpeningUI {
+    +createJobOpening(description, vacanciesNumber,address,
+    mode, contractType,titleOrFunction, jobReference, processDate)
 }
 
-class CustomerManagerFactory {}
-
-class JobRequirementsSpecification {
-   - String Requirements
+class CreateJobOpeningController {
+    + repositories()
+    + companies()
+    + findCompanyByCode(companyName)
+    + create(description, vacanciesNumber, address,
+    mode, contractType,titleOrFunction, jobReference)
+    + save(jobOpening)
 }
-class JobRequirementsSpecificationFactory {}
 
 class JobOpening {
    - String Description
@@ -28,18 +29,29 @@ class JobOpening {
    - TitleOrFunction
    - JobReference
 }
-class JobOpeningFactory {}
+
+class JobOpeningRepository {
+}
+
+class PersistenceContext {}
+
 class RepositoryFactory {}
 
 
 
-RepositoryFactory "\lCustomerManagerFactory           " ---> "1" CustomerManagerFactory
-RepositoryFactory "\n\n\n\n\nJobOpeningFactory" ---> "1" JobOpeningFactory
-RepositoryFactory "\n\n\nJobRequirements\nSpecification\nFactory" ---> "1" JobRequirementsSpecificationFactory
+CreateJobOpeningUI -> CreateJobOpeningController
 
-CustomerManagerFactory "\nCustomerManagers" --> "*" CustomerManager
-JobOpeningFactory "\nJobOpenings" --> "*" JobOpening
-JobRequirementsSpecificationFactory "\nJobRequirementsSpecification" --> "*" JobRequirementsSpecification
+CreateJobOpeningController --> PersistenceContext
+
+CreateJobOpeningController --> RepositoryFactory
+
+CreateJobOpeningController --> CustomerRepository
+
+CreateJobOpeningController --> Customer
+
+CreateJobOpeningController --> JobOpening
+
+CreateJobOpeningController --> JobOpeningRepository
 
 
 

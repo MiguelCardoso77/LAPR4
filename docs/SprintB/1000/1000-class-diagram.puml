@@ -3,93 +3,142 @@ skinparam linetype ortho
 'left to right direction
 
 class AddUserUI {
-    +passwordGenerator(name)
-    +addUser()
+    + doShow()
+    + showRoles(roleTypes)
+    + buildRolesMenu(roleTypes)
+    + buildCustomerManagerAvailableRoles(roleTypes)
+    + buildOperatorAvailableRoles(roleTypes)
+    +  headline()
 }
 
 class ActivateUserUI {
-    +activateUser(systemUser)
+    + doShow()
+    + headline()
 }
 
 class DeactivateUserUI {
-    +deactivateUser(systemUser)
+    + doShow()
+    + headline()
 }
 
 class ListBackofficeUsersUI {
-    +elements()
+    + elements()
+    + headline()
+    + emptyMessage()
+    + elementPrinter()
+    + elementName()
+    + listHeader()
+    + doShow()
 }
 
 class AddUserController {
-    +passwordGenerator(name)
-    +ensureAuthenticatedUserHasAnyOf(roles)
-    +registerNewUser(name,password,email,role)
+    + passwordGenerator(name)
+    + addUser(username, password, firstName,
+    lastName, email, roles, CurrentTimeCalendars.now())
+    + addUser(username, password,
+    firstName, lastName, email, roles)
+    + registerNewUser(name,password,email,role)
+    + getRoleTypes()
+    + getAllRoles()
 }
 
 class ActivateUserController {
-    +ensureAuthenticatedUserHasAnyOf(roles)
-    +activateUser(systemUser)
+    + deactivatedUsers()
+    + activateUser(systemUser)
 }
 
 class DeactivateController {
-    +ensureAuthenticatedUserHasAnyOf(roles)
-    +deactivateUser(systemUser)
+    + activeUsers()
+    + deactivateUser(systemUser)
 }
 
 class ListUsersController {
-    +ensureAuthenticatedUserHasAnyOf(roles)
-    +allUsers()
+    + allUsers()
+    + allBackofficeUsers()
 }
 
-class Jobs4UPasswordPolicy {}
+class Jobs4UPasswordPolicy {
+    + isSatisfiedBy(rawPassword)
+    + passwordGenerator(name)
+    + strength(rawPassword)
+}
 
-class AuthorizationService {}
+class AuthorizationService {
+    + authorizationService()
+    + ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
+}
+
+class RepositoryFactory {
+    + newTransactionalContext()
+    + users(TransactionalContext autoTx)
+    + users()
+    + customerUsers(TransactionalContext autoTx)
+    + customerUsers()
+    + signupRequests(TransactionalContext autoTx)
+    + signupRequests()
+    + jobOpenings(TransactionalContext autoTx)
+    + jobOpenings()
+    + applications(TransactionalContext autoTx)
+    + applications()
+}
+
+class PersistenceContext {
+    + repositories()
+    + PersistenceContext()
+}
 
 class UserManagementService {
-    +build()
-    +save(systemUser)
-    +activate(currentTime)
-    +deactivate(currentTime)
-    +findAll()
+    + UserManagementService(userRepo, policy, encoder)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles, createdOn)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles)
+    + registerUser(username, password, name, email, roles)
+    + activeUsers()
+    + deactivatedUsers()
+    + allUsers()
+    + userOfIdentity(id)
+    + deactivateUser(user)
+    + activateUser(user)
 }
 
-class SystemUserBuilder {}
-
-class UserRepository {}
-
-class SystemUser {}
 
 AddUserUI ---> AddUserController
 
-AddUserController ----> Jobs4UPasswordPolicy
+AddUserController ---> Jobs4UPasswordPolicy
 
-AddUserController ----> AuthorizationService
+AddUserController ---> AuthorizationService
 
-AddUserController ----> UserManagementService
+AddUserController ---> UserManagementService
 
+AddUserController ---> PersistenceContext
 
 
 ActivateUserUI ---> ActivateUserController
 
-ActivateUserController ----> AuthorizationService
+ActivateUserController ---> AuthorizationService
 
-ActivateUserController ----> UserManagementService
+ActivateUserController ---> UserManagementService
 
+ActivateUserController ---> PersistenceContext
 
 
 DeactivateUserUI ---> DeactivateController
 
-DeactivateController ----> AuthorizationService
+DeactivateController ---> AuthorizationService
 
-DeactivateController ----> UserManagementService
+DeactivateController ---> UserManagementService
 
+DeactivateController ---> PersistenceContext
 
 
 ListBackofficeUsersUI ---> ListUsersController
 
-ListUsersController ----> AuthorizationService
+ListUsersController ---> AuthorizationService
 
-ListUsersController ----> UserManagementService
+ListUsersController ---> UserManagementService
 
+ListUsersController ---> PersistenceContext
 
 
 UserManagementService ---> SystemUserBuilder
@@ -98,5 +147,7 @@ UserManagementService ---> UserRepository
 
 UserManagementService ---> SystemUser
 
+
+PersistenceContext ---> RepositoryFactory
 
 @enduml

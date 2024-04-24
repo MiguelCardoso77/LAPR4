@@ -1,6 +1,5 @@
 package core.domain.application;
 
-import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
@@ -88,7 +87,7 @@ public class Application implements AggregateRoot<IdApplication> {
 
 
     public IdApplication idApplication() {
-        return idApplication;
+        return this.idApplication;
     }
 
     public void changeIdApplication(IdApplication idApplication) {
@@ -96,7 +95,7 @@ public class Application implements AggregateRoot<IdApplication> {
     }
 
     public Rank rank() {
-        return rank;
+        return this.rank;
     }
 
     public void changeRank(Rank rank) {
@@ -104,7 +103,7 @@ public class Application implements AggregateRoot<IdApplication> {
     }
 
     public SubmissionDate submissionDate() {
-        return submissionDate;
+        return this.submissionDate;
     }
 
     public void changeSubmissionDate(SubmissionDate submissionDate) {
@@ -112,7 +111,7 @@ public class Application implements AggregateRoot<IdApplication> {
     }
 
     public Status status() {
-        return status;
+        return this.status;
     }
 
     public void changeStatus(Status status) {
@@ -120,7 +119,7 @@ public class Application implements AggregateRoot<IdApplication> {
     }
 
     public ApplicationDataFile applicationDataFile() {
-        return applicationDataFile;
+        return this.applicationDataFile;
     }
 
     public void changeApplicationDataFile(ApplicationDataFile applicationDataFile) {
@@ -128,7 +127,7 @@ public class Application implements AggregateRoot<IdApplication> {
     }
 
     public FilesAttachedContent filesAttachedContent() {
-        return filesAttachedContent;
+        return this.filesAttachedContent;
     }
 
     public void changeFilesAttachedContent(FilesAttachedContent filesAttachedContent) {
@@ -136,7 +135,7 @@ public class Application implements AggregateRoot<IdApplication> {
     }
 
     public EmailFilesAttached emailFilesAttached() {
-        return emailFilesAttached;
+        return this.emailFilesAttached;
     }
 
     public void changeEmailFilesAttached(EmailFilesAttached emailFilesAttached) {
@@ -144,7 +143,7 @@ public class Application implements AggregateRoot<IdApplication> {
     }
 
     public EmailContentFile emailContentFile() {
-        return emailContentFile;
+        return this.emailContentFile;
     }
 
     public void changeEmailContentFile(EmailContentFile emailContentFile) {
@@ -152,7 +151,7 @@ public class Application implements AggregateRoot<IdApplication> {
     }
 
     public JobReference jobReference() {
-        return jobReference;
+        return this.jobReference;
     }
     @Override
     public String toString() {

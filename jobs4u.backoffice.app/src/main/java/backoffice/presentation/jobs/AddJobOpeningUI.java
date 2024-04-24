@@ -13,7 +13,7 @@ public class AddJobOpeningUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        final String jobReference = theController.buildJobReference("1");
+        final String jobReference = "1";
         final String description = Console.readLine("Description");
         final int vacanciesNumber = Console.readInteger("Vacancies Number");
         final String address = Console.readLine("Address");

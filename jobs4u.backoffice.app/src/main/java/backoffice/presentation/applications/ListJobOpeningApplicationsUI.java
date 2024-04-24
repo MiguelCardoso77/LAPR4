@@ -64,11 +64,11 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
             System.out.println("There is no job openings ");
         } else {
             int cont = 1;
-            System.out.println("SELECT job opening\n");
-            System.out.printf("%-30s%-30s%-30s%-%-30s%-30s%-30s%-30s%n", "Job Reference:", "Description:", "Vacancies number", "Address:", "Mode:", "Contract Type:", "Title or function:");
+            System.out.println("Select a Job Opening: \n");
+            System.out.printf("%-30s \n", "Job Reference:");
             for (JobOpening jobOpening : iterable) {
                 list.add(jobOpening);
-                System.out.printf("%-30s%-30s%-30s%-%-30s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.description(), jobOpening.vacanciesNumber(), jobOpening.address(), jobOpening.mode(), jobOpening.contractType(), jobOpening.titleOrFunction());
+                System.out.printf("%-30s \n", jobOpening.jobReference());
                 cont++;
             }
             final int option = Console.readInteger("Enter the number of job opening");

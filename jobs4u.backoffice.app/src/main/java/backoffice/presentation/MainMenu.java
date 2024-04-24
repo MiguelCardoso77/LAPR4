@@ -128,11 +128,11 @@ public class MainMenu extends AbstractUI {
     private Menu buildCustomerManagerMenu() {
         final Menu menu = new Menu("Customer Manager Actions >");
 
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
-        menu.addItem(LIST_BACKOFFICE_USERS_OPTION, "List all Candidate's data", new ListCandidatesAction());
+        menu.addItem(1, "List all Users", new ListUsersAction());
+        menu.addItem(2, "Add User", new AddUserUI()::show);
+        menu.addItem(3, "List all Candidate's data", new ListCandidatesAction());
         menu.addItem(4, "Add Job Opening", new AddJobOpeningAction());
-        menu.addItem(LIST_ALL_APPLICATIONS_OF_A_JOBOPENING , "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
+        menu.addItem(5, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

@@ -7,10 +7,11 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "JOBOPENING")
+@Table(name = "JOB_OPENING")
 public class JobOpening implements AggregateRoot<JobReference> {
 
     @EmbeddedId
+    @Column(name = "JOB_REFERENCE")
     private JobReference jobReference;
 
     @Column(name = "DESCRIPTION")

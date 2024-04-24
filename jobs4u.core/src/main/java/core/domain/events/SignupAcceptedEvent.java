@@ -20,8 +20,8 @@
  */
 package core.domain.events;
 
-import core.domain.client.TelephoneNumber;
-import core.domain.client.SignupRequest;
+import core.domain.customer.TelephoneNumber;
+import core.domain.customer.SignupRequest;
 import eapli.framework.domain.events.DomainEventBase;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.Name;

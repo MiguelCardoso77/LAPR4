@@ -1,6 +1,6 @@
 package core.application;
 
-import core.domain.client.SignupRequest;
+import core.domain.customer.SignupRequest;
 import core.domain.events.SignupAcceptedEvent;
 import core.repositories.SignupRequestRepository;
 import core.persistence.PersistenceContext;

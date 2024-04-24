@@ -1,4 +1,4 @@
-package core.domain.client;
+package core.domain.customer;
 
 /**
  *

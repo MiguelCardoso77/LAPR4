@@ -1,10 +1,10 @@
 package core.application.eventhandlers;
 
-import core.domain.client.ClientUser;
+import core.domain.customer.Customer;
 import core.domain.events.NewUserRegisteredFromSignupEvent;
 import core.persistence.PersistenceContext;
-import core.domain.client.ClientUserBuilder;
-import core.repositories.ClientUserRepository;
+import core.domain.customer.CustomerBuilder;
+import core.repositories.CustomerRepository;
 import eapli.framework.functional.Functions;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -19,17 +19,15 @@ import java.util.Optional;
 /* package */ class AddClientUserOnSignupAcceptedController {
 
     private final UserRepository repo = PersistenceContext.repositories().users();
-    private final ClientUserRepository clientUserRepository = PersistenceContext
-            .repositories().clientUsers();
-
-    public ClientUser addClientUser(final NewUserRegisteredFromSignupEvent event) {
+    private final CustomerRepository customerRepository = PersistenceContext
+            .repositories().customerUsers();
+    public Customer addClientUser(final NewUserRegisteredFromSignupEvent event) {
         final Optional<SystemUser> newUser = findUser(event);
 
         return newUser.map(u -> {
-            final ClientUserBuilder clientUserBuilder = new ClientUserBuilder();
-            clientUserBuilder.withMecanographicNumber(event.mecanographicNumber())
-                    .withSystemUser(u);
-            return clientUserRepository.save(clientUserBuilder.build());
+            final CustomerBuilder customerBuilder = new CustomerBuilder();
+            customerBuilder.withAll(u, event.telephoneNumber(), event.company());
+            return customerRepository.save(customerBuilder.build());
         }).orElseThrow(IllegalStateException::new);
     }
 

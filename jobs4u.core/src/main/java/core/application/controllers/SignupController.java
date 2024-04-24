@@ -1,7 +1,7 @@
 package core.application.controllers;
 
-import core.domain.client.SignupRequest;
-import core.domain.client.SignupRequestBuilder;
+import core.domain.customer.SignupRequest;
+import core.domain.customer.SignupRequestBuilder;
 import core.repositories.SignupRequestRepository;
 import core.persistence.PersistenceContext;
 import core.domain.user.UserBuilderHelper;

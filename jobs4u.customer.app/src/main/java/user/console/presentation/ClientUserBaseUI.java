@@ -29,7 +29,7 @@ import eapli.framework.presentation.console.AbstractUI;
  * @author mcn
  */
 @SuppressWarnings("squid:S106")
-public abstract class ClientUserBaseUI extends AbstractUI {
+public abstract class  ClientUserBaseUI extends AbstractUI {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 

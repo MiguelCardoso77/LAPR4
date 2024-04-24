@@ -1,7 +1,7 @@
 package persistence.inMemory;
 
 import core.repositories.ApplicationRepository;
-import core.repositories.ClientUserRepository;
+import core.repositories.CustomerRepository;
 import core.repositories.SignupRequestRepository;
 import bootstrappers.bootstraping.Jobs4UBootstrapper;
 import core.repositories.JobOpeningRepository;
@@ -29,14 +29,14 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public ClientUserRepository clientUsers(final TransactionalContext tx) {
+    public CustomerRepository customerUsers(final TransactionalContext tx) {
 
-        return new InMemoryClientUserRepository();
+        return new InMemoryCustomerRepository();
     }
 
     @Override
-    public ClientUserRepository clientUsers() {
-        return clientUsers(null);
+    public CustomerRepository customerUsers() {
+        return customerUsers(null);
     }
 
     @Override

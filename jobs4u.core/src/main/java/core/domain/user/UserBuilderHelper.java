@@ -1,6 +1,6 @@
 package core.domain.user;
 
-import core.domain.client.SignupRequestBuilder;
+import core.domain.customer.SignupRequestBuilder;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
 import eapli.framework.util.Utility;

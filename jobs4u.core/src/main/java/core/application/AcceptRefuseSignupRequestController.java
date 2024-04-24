@@ -23,7 +23,7 @@
  */
 package core.application;
 
-import core.domain.client.SignupRequest;
+import core.domain.customer.SignupRequest;
 
 /**
  * The controller for the use case "Accept or refuse signup request".

@@ -20,8 +20,8 @@
  */
 package core.repositories;
 
-import core.domain.client.ClientUser;
-import core.domain.client.TelephoneNumber;
+import core.domain.customer.Customer;
+import core.domain.customer.TelephoneNumber;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
@@ -31,27 +31,11 @@ import java.util.Optional;
  *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-public interface ClientUserRepository
-        extends DomainRepository<TelephoneNumber, ClientUser> {
+public interface CustomerRepository extends DomainRepository<TelephoneNumber, Customer> {
 
-    /**
-     * returns the client user (utente) whose username is given
-     *
-     * @param name
-     *            the username to search for
-     * @return
-     */
-    Optional<ClientUser> findByUsername(Username name);
-
-    /**
-     * returns the client user (utente) with the given mecanographic number
-     *
-     * @param number
-     * @return
-     */
-    default Optional<ClientUser> findByMecanographicNumber(final TelephoneNumber number) {
+    default Optional<Customer> findByTelephoneNumber(final TelephoneNumber number) {
         return ofIdentity(number);
     }
 
-    public Iterable<ClientUser> findAllActive();
+    public Iterable<Customer> findAllActive();
 }

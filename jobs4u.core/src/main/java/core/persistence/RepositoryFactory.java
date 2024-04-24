@@ -1,7 +1,7 @@
 package core.persistence;
 
 import core.repositories.ApplicationRepository;
-import core.repositories.ClientUserRepository;
+import core.repositories.CustomerRepository;
 import core.repositories.SignupRequestRepository;
 import core.repositories.JobOpeningRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
@@ -61,7 +61,7 @@ public interface RepositoryFactory {
     @return
             */
 
-    ClientUserRepository clientUsers(TransactionalContext autoTx);
+    CustomerRepository customerUsers(TransactionalContext autoTx);
 
     /**
 
@@ -71,7 +71,7 @@ public interface RepositoryFactory {
     transaction mode*
             @return*/
 
-    ClientUserRepository clientUsers();
+    CustomerRepository customerUsers();
 
     /**
             *

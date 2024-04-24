@@ -2,7 +2,7 @@ package backoffice.presentation.clientuser;
 
 import core.application.AcceptRefuseSignupFactory;
 import core.application.AcceptRefuseSignupRequestController;
-import core.domain.client.SignupRequest;
+import core.domain.customer.SignupRequest;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;

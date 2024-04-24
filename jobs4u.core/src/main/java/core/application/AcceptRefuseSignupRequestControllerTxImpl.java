@@ -1,8 +1,9 @@
 package core.application;
 
-import core.domain.client.ClientUserBuilder;
-import core.domain.client.SignupRequest;
-import core.repositories.ClientUserRepository;
+import core.domain.customer.CustomerBuilder;
+import core.domain.customer.SignupRequest;
+import core.domain.customer.TelephoneNumber;
+import core.repositories.CustomerRepository;
 import core.repositories.SignupRequestRepository;
 import core.persistence.PersistenceContext;
 import core.domain.user.Jobs4URoles;
@@ -39,8 +40,8 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
 
     private final TransactionalContext txCtx = PersistenceContext.repositories()
             .newTransactionalContext();
-    private final ClientUserRepository clientUserRepository = PersistenceContext
-            .repositories().clientUsers(txCtx);
+    private final CustomerRepository customerRepository = PersistenceContext
+            .repositories().customerUsers(txCtx);
     private final SignupRequestRepository signupRequestsRepository = PersistenceContext
             .repositories().signupRequests(txCtx);
 
@@ -63,7 +64,7 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
         txCtx.beginTransaction();
 
         final SystemUser newUser = createSystemUserForClientUser(theSignupRequest);
-        createClientUser(theSignupRequest, newUser);
+        //createClientUser(theSignupRequest, newUser);
         theSignupRequest = acceptTheSignupRequest(theSignupRequest);
 
         // explicitly commit the transaction
@@ -76,14 +77,17 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
         theSignupRequest.accept();
         return this.signupRequestsRepository.save(theSignupRequest);
     }
+    /*
 
     private void createClientUser(final SignupRequest theSignupRequest,
-                                  final SystemUser newUser) {
-        final ClientUserBuilder clientUserBuilder = new ClientUserBuilder();
-        clientUserBuilder.withMecanographicNumber(theSignupRequest.telephoneNumber())
+                                  final SystemUser newUser, final TelephoneNumber telephoneNumber) {
+        final CustomerBuilder customerBuilder = new CustomerBuilder();
+        customerBuilder.withTelephoneNumber(telephoneNumber)
                 .withSystemUser(newUser);
-        this.clientUserRepository.save(clientUserBuilder.build());
+        this.customerRepository.save(customerBuilder.build());
     }
+
+     */
 
     //
     // add system user

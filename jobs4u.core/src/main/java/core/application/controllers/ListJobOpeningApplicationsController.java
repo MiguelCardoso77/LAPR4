@@ -1,12 +1,12 @@
 package core.application.controllers;
 
 import core.domain.application.Application;
-import core.domain.client.ClientUser;
+import core.domain.customer.Customer;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import core.domain.user.Jobs4URoles;
 import core.persistence.PersistenceContext;
-import core.repositories.ClientUserRepository;
+import core.repositories.CustomerRepository;
 import core.services.ApplicationService;
 import core.services.JobOpeningService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -22,13 +22,13 @@ public class ListJobOpeningApplicationsController {
 
     private final UserManagementService userSvc = AuthzRegistry.userService();
 
-    private final ClientUserRepository repo = PersistenceContext.repositories().clientUsers();
+    private final CustomerRepository repo = PersistenceContext.repositories().customerUsers();
 
     private final JobOpeningService jobserv = new JobOpeningService();
     private final ApplicationService appServ = new ApplicationService();
 
 
-    public Iterable<ClientUser> activeClientUsers() {
+    public Iterable<Customer> activeClientUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
 
         return this.repo.findAllActive();

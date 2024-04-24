@@ -18,10 +18,11 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package core.domain.client;
+package core.domain.customer;
 
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.validations.Preconditions;
 
 /**
  * A factory for User entities.
@@ -31,30 +32,38 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
  *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-public class ClientUserBuilder implements DomainFactory<ClientUser> {
+public class CustomerBuilder implements DomainFactory<Customer> {
 
     private SystemUser systemUser;
     private TelephoneNumber telephoneNumber;
+    private Company company;
 
-    public ClientUserBuilder withSystemUser(final SystemUser systemUser) {
+    // private String CustomerManager;
+
+    public CustomerBuilder withAll(final SystemUser systemUser, final TelephoneNumber telephoneNumber, final Company company){
+        Preconditions.nonNull(systemUser);
+        Preconditions.nonNull(telephoneNumber);
+        Preconditions.nonNull(company);
         this.systemUser = systemUser;
+        this.telephoneNumber = telephoneNumber;
+        this.company = company;
         return this;
     }
-
-    public ClientUserBuilder withMecanographicNumber(final TelephoneNumber telephoneNumber) {
+    public CustomerBuilder withTelephoneNumber(TelephoneNumber telephoneNumber) {
+        Preconditions.nonNull(telephoneNumber);
         this.telephoneNumber = telephoneNumber;
         return this;
     }
-
-    public ClientUserBuilder withMecanographicNumber(final String mecanographicNumber) {
-        this.telephoneNumber = new TelephoneNumber(mecanographicNumber);
-        return this;
-    }
-
+    /**
+     * Builds a client user.
+     *
+     * @return the built client user
+     */
     @Override
-    public ClientUser build() {
+    public Customer build() {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
-        return new ClientUser(this.systemUser, this.telephoneNumber);
+        return new Customer(this.systemUser, this.telephoneNumber, this.company);
     }
+
 }

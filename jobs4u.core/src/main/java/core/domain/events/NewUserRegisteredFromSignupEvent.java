@@ -23,7 +23,8 @@
  */
 package core.domain.events;
 
-import core.domain.client.TelephoneNumber;
+import core.domain.customer.Company;
+import core.domain.customer.TelephoneNumber;
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.events.DomainEventBase;
 import eapli.framework.infrastructure.authz.domain.model.Username;
@@ -45,8 +46,12 @@ public class NewUserRegisteredFromSignupEvent extends DomainEventBase implements
         this.newUser = newUser;
     }
 
-    public TelephoneNumber mecanographicNumber() {
+    public TelephoneNumber telephoneNumber() {
         return telephoneNumber;
+    }
+
+    public Company company(){
+        return company();
     }
 
     public Username username() {

@@ -1,4 +1,4 @@
-package core.domain.client;
+package core.domain.customer;
 
 import core.domain.jobOpening.Address;
 import eapli.framework.domain.model.ValueObject;
@@ -71,6 +71,17 @@ public class Company implements ValueObject, Comparable<Company> {
         this.address = address;
         this.email = emailAddress;
         this.telephoneNumber = telephoneNumber;
+    }
+    /**
+     * Constructs a new Company instance with the specified details.
+     *
+     * @param name            the name of the company
+     * @throws IllegalArgumentException if any of the parameters are null
+     */
+    public Company(final String name) {
+        Preconditions.nonNull(name, "Company name cannot be null");
+        CompanyName companyName = new CompanyName(name);
+        this.name = companyName;
     }
 
     protected Company(){

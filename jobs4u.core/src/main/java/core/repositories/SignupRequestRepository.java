@@ -1,6 +1,6 @@
 package core.repositories;
 
-import core.domain.client.SignupRequest;
+import core.domain.customer.SignupRequest;
 import eapli.framework.domain.repositories.DomainRepository;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 

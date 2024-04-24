@@ -2,7 +2,7 @@ package bootstrappers.bootstraping.demo;
 
 import core.application.AcceptRefuseSignupFactory;
 import core.application.AcceptRefuseSignupRequestController;
-import core.domain.client.SignupRequest;
+import core.domain.customer.SignupRequest;
 import bootstrappers.bootstraping.TestDataConstants;
 import core.application.controllers.SignupController;
 import eapli.framework.actions.Action;

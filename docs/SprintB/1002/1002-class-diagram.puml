@@ -1,23 +1,22 @@
 @startuml
 skinparam linetype ortho
-'left to right direction
-
-class Customer {}
-
-class CustomerRepository {}
+left to right direction
 
 class CreateJobOpeningUI {
-    +createJobOpening(description, vacanciesNumber,address,
-    mode, contractType,titleOrFunction, jobReference, processDate)
+    + doShow()
+    + showModes()
+    + showContractTypes()
+    + addJobOpening(jobReference, description,
+    vacanciesNumber, address, modes, contractTypes, \ntitleOrFunction)
+    +headline()
 }
 
 class CreateJobOpeningController {
     + repositories()
     + companies()
     + findCompanyByCode(companyName)
-    + create(description, vacanciesNumber, address,
-    mode, contractType,titleOrFunction, jobReference)
-    + save(jobOpening)
+    + addJobOpening(jobReference, description,
+    vacanciesNumber, address, modes, contractTypes, \ntitleOrFunction)
 }
 
 class JobOpening {
@@ -28,33 +27,74 @@ class JobOpening {
    - ContractType
    - TitleOrFunction
    - JobReference
+
+   + JobOpening(jobReference, description,
+   vacanciesNumber, address, modes, contractTypes, \ntitleOrFunction)
+   + identity()
+   + sameAs(object)
+   + jobReference()
+   + description()
+   + vacanciesNumber()
+   + address()
+   + mode()
+   + contractType()
+   + titleOrFunction()
 }
 
 class JobOpeningRepository {
+    + allJobOpenings()
 }
 
-class PersistenceContext {}
+class JobOpeningService {
+    + registerJobOpening(jobReference, description, vacanciesNumber,
+    address, mode, contractType, titleOrFunction);
+    + allJobOpenings()
+}
 
-class RepositoryFactory {}
+class JobOpeningBuilder {
+    + withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction)
+    + build()
+}
 
+class AuthorizationService {
+    + authorizationService()
+    + ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
+}
+
+class PersistenceContext {
+    + repositories()
+    + PersistenceContext()
+}
+
+class RepositoryFactory {
+    + newTransactionalContext()
+    + users(TransactionalContext autoTx)
+    + users()
+    + customerUsers(TransactionalContext autoTx)
+    + customerUsers()
+    + signupRequests(TransactionalContext autoTx)
+    + signupRequests()
+    + jobOpenings(TransactionalContext autoTx)
+    + jobOpenings()
+    + applications(TransactionalContext autoTx)
+    + applications()
+}
 
 
 CreateJobOpeningUI -> CreateJobOpeningController
 
 CreateJobOpeningController --> PersistenceContext
 
-CreateJobOpeningController --> RepositoryFactory
+CreateJobOpeningController -> JobOpeningService
 
-CreateJobOpeningController --> CustomerRepository
+CreateJobOpeningController -> AuthorizationService
 
-CreateJobOpeningController --> Customer
+JobOpeningService -> JobOpeningRepository
 
-CreateJobOpeningController --> JobOpening
+JobOpeningService -> JobOpeningBuilder
 
-CreateJobOpeningController --> JobOpeningRepository
+JobOpeningBuilder -> JobOpening
 
-
-
-
+PersistenceContext -> RepositoryFactory
 
 @enduml

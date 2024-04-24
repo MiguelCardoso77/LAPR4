@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <string.h>
@@ -12,6 +14,7 @@
 
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
 #define BUFFER_SIZE 100;
+#define BASE_DIRECTORY "applicationsFileBotOutput"
 
 void handle_children(int signo,siginfo_t *sinfo, void *context) {
   flagChildren = 1;
@@ -52,6 +55,38 @@ pid_t available_process() {
   }
 }
 
+// Function to extract the candidate ID from a string containing the candidate ID followed by a dash '-'
+char* extractCandidateID(char* fileName) {
+  char extracted[100];
+  int i;
+
+  for (i = 0; fileName[i] != '-' && fileName[i] != '\0'; i++) {
+    extracted[i] = fileName[i];
+  }
+
+  extracted[i] = '\0';
+
+  return extracted;
+}
+
+// Function to check if a directory exists, and if not, create it
+int createOutputDirectory(const char *path) {
+  struct stat info;
+  if (stat(path, &info) != 0) {
+      // Directory doesn't exist, try creating it
+      if (mkdir(path, 0777) == -1) {
+          perror("mkdir");
+          return 0;
+      } else {
+          return 1;
+      }
+  } else if (info.st_mode & S_IFDIR) {
+      return 1;
+  } else {
+      return 0;
+  }
+}
+
 // Parameters:
 // 1 - input directory
 // 2 - output directory
@@ -80,7 +115,7 @@ int main(int argc,char *argv[]) {
     }
   }
 
-  if(pipe(pipe_info) == -1) { 
+  if (pipe(pipe_info) == -1) { 
       perror("Pipe failed"); 
       exit(1); 
   }
@@ -135,15 +170,28 @@ int main(int argc,char *argv[]) {
     if (pid[i] == 0) {
       while(flagChildren == 0) {
         close(fd[i][1]);  // Close the write end of the pipe
-        char name[BUFFER_SIZE];
-        while((n=read(fd[i][0],name,sizeof(BUFFER_SIZE)))!=0){
-          //TO DO: criar pasta para o candidato no output directory ou verificar se está criada
-          //TO DO: copiar os ficheiros para o directory criado
-          //TO DO: que pasta criar em função do nome dos ficheiros
+        char fileName[BUFFER_SIZE];
+
+        while ((n = read(fd[i][0], fileName, sizeof(fileName))) != 0) {
+          char folderName[100];
+          strcpy(folderName, extractCandidateID(fileName)); // Copy the result of extractCandidateID into folderName
+          
+          char path[100];
+          snprintf(path, sizeof(path), "%s/%s", BASE_DIRECTORY, folderName);
+          int directorySuccessful = createOutputDirectory(path);
+
+          if (directorySuccessful == 1) {
+              // TO DO: Copy files to the created directory
+              // TO DO: Decide which folder to create based on the file names
+          } else {
+              printf("Failed to create directory: %s\n", path);
+              // Handle directory creation failure
+          }
         }
 
-        kill(getppid(),SIGUSR2);
+        kill(getppid(), SIGUSR2);
       }
+
       close(fd[i][0]);
       exit(0);
     }

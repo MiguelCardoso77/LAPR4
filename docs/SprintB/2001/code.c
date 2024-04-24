@@ -13,25 +13,23 @@
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
 #define BUFFER_SIZE 100;
 
-void handle_children(int signo,siginfo_t *sinfo, void *context){
-  flagChildren=1;
+void handle_children(int signo,siginfo_t *sinfo, void *context) {
+  flagChildren = 1;
 }
 
-void handle_father_usr2(int signo,siginfo_t *sinfo, void *context){
-  for (int i = 0; i < number_children; i++)
-  {
-    if(*(childrens_availability+i)==0){
+void handle_father_usr2(int signo,siginfo_t *sinfo, void *context) {
+  for (int i = 0; i < number_children; i++) {
+    if (*(childrens_availability+i) == 0) {
       *(childrens_availability+i)=sinfo->si_pid;
     }
   }
   
 }
 
-void children_occupied(pid_t pid){
-  for (int i = 0; i < number_children; i++)
-  {
-    if(*(childrens_availability+i)==pid){
-      *(childrens_availability+i)=0;
+void children_occupied(pid_t pid) {
+  for (int i = 0; i < number_children; i++) {
+    if(*(childrens_availability+i) == pid){
+      *(childrens_availability+i) = 0;
     }
   }
 }
@@ -43,13 +41,12 @@ volatile int number_children;
 volatile int new_files=0;
 
 void handle_father_exit(int signo,siginfo_t *sinfo, void *context){
-  flagFather=1;
+  flagFather = 1;     // When the father receives the signal, it will stop the children
 }
 
-pid_t available_process(){
-  for (int i = 0; i < number_children; i++)
-  {
-    if(*(childrens_availability+i) != 0){
+pid_t available_process() {
+  for (int i = 0; i < number_children; i++) {
+    if (*(childrens_availability+i) != 0) {
       return *(childrens_availability+i);
     }
   }
@@ -60,115 +57,119 @@ pid_t available_process(){
 // 2 - output directory
 // 3 - number of childrens
 // 4 - time of check
-int main(int argc,char *argv[]){
-pid_t pid_handler;
-int periodic_check,number_of_files;
-char output_directory[BUFFER_SIZE];
-char input_directory[BUFFER_SIZE];
+int main(int argc,char *argv[]) {
+  pid_t pid_handler;
+  int periodic_check,number_of_files;
+  char output_directory[BUFFER_SIZE];
+  char input_directory[BUFFER_SIZE];
 
 
-output_directory=argv[2];
-input_directory=argv[1];
-periodic_check=atoi(argv[4]);
-number_children=atoi(argv[3]);
-pid_t pid[number_children];
-int fd[number_children][2];
-int pipe_info[2];//pipe to send the new files
-childrens_availability=(pid_t *) calloc(number_children,sizeof(pid_t));
+  output_directory=argv[2];
+  input_directory=argv[1];
+  periodic_check=atoi(argv[4]);
+  number_children=atoi(argv[3]);
+  pid_t pid[number_children];     // Creating an array to store processes that are working
+  int fd[number_children][2];     // Creating an array of pipes for the father to communicate with the children
+  int pipe_info[2];               // Pipe to send the new files
+  childrens_availability=(pid_t *) calloc(number_children,sizeof(pid_t));   // Array to store the availability of the children
 
-for (int i = 0; i < number_children; i++)
-{
-  if(pipe(fd[i]) == -1){ 
-    perror("Pipe failed"); 
-    exit(1); 
+  for (int i = 0; i < number_children; i++) {
+    if(pipe(fd[i]) == -1){ 
+      perror("Pipe failed"); 
+      exit(1); 
+    }
   }
-}
 
-if(pipe(pipe_info) == -1){ 
-    perror("Pipe failed"); 
-    exit(1); 
-}
+  if(pipe(pipe_info) == -1) { 
+      perror("Pipe failed"); 
+      exit(1); 
+  }
 
+  pid_handler = fork();      // Creating the process that warns the father of new files 
 
-pid_handler=fork();
+  if (pid_handler==0) {
+      close(pipe_info[0]);
+      int fd_notify, wd;
+      char buffer[BUF_LEN];
 
-if(pid_handler==0){
-    close(pipe_info[0]);
-    int fd_notify, wd;
-    char buffer[BUF_LEN];
+      fd_notify = inotify_init();   // Waiting for new files at directory
+      if (fd_notify < 0) {
+          perror("inotify_init");
+          exit(EXIT_FAILURE);
+      }
 
-    fd_notify = inotify_init();
-    if (fd_notify < 0) {
-        perror("inotify_init");
-        exit(EXIT_FAILURE);
+      wd = inotify_add_watch(fd_notify, input_directory, IN_CREATE);    // Configs what directory to watch
+      if (wd == -1) {
+          perror("inotify_add_watch");
+          exit(EXIT_FAILURE);
+      }
+
+      while (flagChildren == 0) {
+          int length = read(fd_notify, buffer, BUF_LEN);
+          if (length < 0) {
+              perror("read");
+              exit(EXIT_FAILURE);
+          }
+
+          while (char *ptr < buffer + length) {
+              struct inotify_event *event = (struct inotify_event *)ptr;
+
+              if (event->mask & IN_CREATE) {
+                  write(pipe_info[1],event->name,sizeof(BUFFER_SIZE));
+              }
+              ptr += sizeof(struct inotify_event) + event->len;
+          }
+      }
+      close(pipe_info[1]);
+      exit(0);
+  }
+
+  for (int i = 0; i < number_children; i++) {   // Creation of all working processes
+    pid[i] = fork();
+
+    if (pid[i] < 0) {
+      perror("Fork failed");
+      exit(1);
     }
 
-    wd = inotify_add_watch(fd_notify, input_directory, IN_CREATE);
-    if (wd == -1) {
-        perror("inotify_add_watch");
-        exit(EXIT_FAILURE);
-    }
-
-    while (flagChildren==0) {
-        int length = read(fd_notify, buffer, BUF_LEN);
-        if (length < 0) {
-            perror("read");
-            exit(EXIT_FAILURE);
+    if (pid[i] == 0) {
+      while(flagChildren == 0) {
+        close(fd[i][1]);  // Close the write end of the pipe
+        char name[BUFFER_SIZE];
+        while((n=read(fd[i][0],name,sizeof(BUFFER_SIZE)))!=0){
+          //TO DO: criar pasta para o candidato no output directory ou verificar se está criada
+          //TO DO: copiar os ficheiros para o directory criado
+          //TO DO: que pasta criar em função do nome dos ficheiros
         }
 
-        while (char *ptr < buffer + length) {
-            struct inotify_event *event = (struct inotify_event *)ptr;
+        kill(getppid(),SIGUSR2);
+      }
+      close(fd[i][0]);
+      exit(0);
+    }
+  }
 
-            if (event->mask & IN_CREATE) {
-                write(pipe_info[1],event->name,sizeof(BUFFER_SIZE));
-            }
-            ptr += sizeof(struct inotify_event) + event->len;
+  close(pipe_info[1]);
+
+  while (flagFather == 0) {
+      char file[BUFFER_SIZE];
+      while((n=read(pipe_info[0],file,sizeof(BUFFER_SIZE)))!=0){
+      pid_t pid_available=available_process();
+      for (int i = 0; i < number_children; i++) {
+        if (pid[i] == pid_available) {              // If child is available, put it occupied using the method and...
+          children_occupied(pid_available);
+          write(fd[i][1],file,sizeof(BUFFER_SIZE));       // Send the file to the child 
         }
-    }
-    close(pipe_info[1]);
-    exit(0);
-}
-
-for (int i = 0; i < number_children; i++)
-{
-  pid[i]=fork();
-  if(pid[i]==0){
-    while(flagChildren==0){
-      close(fd[i][1]);
-      char name[BUFFER_SIZE];
-      while((n=read(fd[i][0],name,sizeof(BUFFER_SIZE)))!=0){
-        //criar pasta para o candidato no output directory
-        //copiar os ficheiros para o directory criado
-      }
-      kill(getppid(),SIGUSR2);
-    }
-    close(fd[i][0])
-    exit(0);
-  }
-}
-close(pipe_info[1]);
-while(flagFather==0){
-    char file[BUFFER_SIZE];
-    while((n=read(pipe_info[0],file,sizeof(BUFFER_SIZE)))!=0){
-    pid_t pid_available=available_process();
-    for (int i = 0; i < number_children; i++)
-    {
-      if(pid[i]==pid_available){
-        children_occupied(pid_available);
-        write(fd[i][1],file,sizeof(BUFFER_SIZE));
       }
     }
   }
-}
 
-close(pipe_info[0]);
+  close(pipe_info[0]);
 
-for (int i = 0; i < number_children; i++)
-{
-  kill(pid[i],SIGKILL);
-  waitpid(pid[i]);
-}
+  for (int i = 0; i < number_children; i++) {
+    kill(pid[i],SIGKILL);
+    waitpid(pid[i]);
+  }
 
-return 0;
-
+  return 0;
 }

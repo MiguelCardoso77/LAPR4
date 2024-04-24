@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence">
   <persistence-unit name="eapli.base">
-    <!--
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    -->
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
     <class>eapli.framework.infrastructure.authz.domain.model.SystemUser</class>
@@ -14,7 +11,7 @@
     <class>core.domain.client.SignupRequest</class>
     <class>core.domain.jobOpening.JobOpening</class>
     <class>core.domain.application.Application</class>
-
+    <class>core.domain.process.Process</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
@@ -22,8 +19,6 @@
       <property name="jakarta.persistence.jdbc.password" value=""/>
       <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
       <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
-      <!-- <property name="eclipselink.logging.level" value="FINE"/> -->
-      <!-- <property name = "hibernate.show_sql" value = "true" /> -->
     </properties>
 
   </persistence-unit>

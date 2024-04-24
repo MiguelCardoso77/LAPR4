@@ -12,8 +12,8 @@ public class JobsBootstrapper implements Action {
     final AddJobOpeningController controller = new AddJobOpeningController();
 
     public boolean execute(){
-        registerJobOpening("1-12345", "Jogador da Bola", 3, "Estádio do Dragão", Mode.ON_SITE, ContractType.FULL_TIME, "Ponta de Lança");
-        registerJobOpening("2-24567", "Chefe de Cozinha", 2, "Bar da Ae", Mode.ON_SITE, ContractType.FULL_TIME, "Chef");
+        registerJobOpening("1", "Jogador da Bola", 3, "Estádio do Dragão", Mode.ON_SITE, ContractType.FULL_TIME, "Ponta de Lança");
+        registerJobOpening("2", "Chefe de Cozinha", 2, "Bar da Ae", Mode.ON_SITE, ContractType.FULL_TIME, "Chef");
 
         return true;
     }

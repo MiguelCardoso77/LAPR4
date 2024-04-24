@@ -47,6 +47,11 @@ activate User
             SignUpController -> UserRepository : find(email)
             activate UserRepository
 
+                note left of UserRepository
+                    returns false if
+                    email doesn't exist
+                    in the system
+                end note
                 UserRepository --> SignUpController : returns false
             deactivate UserRepository
 

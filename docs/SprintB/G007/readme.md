@@ -97,7 +97,11 @@ aceitar esse login.
 
 ## 1.7. Sequence Diagrams (SD)
 
+### 1.7.1. Login Sequence Diagram
 ![G007-sequence-diagram-login.svg](G007-sequence-diagram-login.svg)
+
+### 1.7.2 SignUp Sequence Diagram
+![G007-sequence-diagran-signUp.svg](G007-sequence-diagram-signUp.svg)
 
 ### 1.8 Other Relevant Remarks
 

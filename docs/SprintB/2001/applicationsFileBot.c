@@ -1,56 +1,61 @@
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <stdlib.h>
 #include <sys/wait.h>
+#include <sys/inotify.h>
+#include <signal.h>
 #include <string.h>
 #include <unistd.h>
-#include <signal.h>
 #include <fcntl.h>
 #include <time.h>
-#include <sys/inotify.h>
 
+#define EVENT_SIZE 1
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
-#define BUFFER_SIZE 100;
-#define BASE_DIRECTORY "applicationsFileBotOutput"
-
-void handle_children(int signo,siginfo_t *sinfo, void *context) {
-  flagChildren = 1;
-}
-
-void handle_father_usr2(int signo,siginfo_t *sinfo, void *context) {
-  for (int i = 0; i < number_children; i++) {
-    if (*(childrens_availability+i) == 0) {
-      *(childrens_availability+i)=sinfo->si_pid;
-    }
-  }
-  
-}
-
-void children_occupied(pid_t pid) {
-  for (int i = 0; i < number_children; i++) {
-    if(*(childrens_availability+i) == pid){
-      *(childrens_availability+i) = 0;
-    }
-  }
-}
+#define BUFFER_SIZE 100
 
 volatile sig_atomic_t flagFather = 0; 
 volatile sig_atomic_t flagChildren = 0;
-volatile pid_t *childrens_availability;
-volatile int number_children;
+volatile pid_t *childrensAvailability;
+volatile int numberChildren;
 volatile int new_files=0;
 
-void handle_father_exit(int signo,siginfo_t *sinfo, void *context){
-  flagFather = 1;     // When the father receives the signal, it will stop the children
+// Signal handlers
+
+// Handle the signal sent by the father to the children
+void handleChildren(int signo) {
+  flagChildren = 1;
 }
 
+void handleFather_USR2(int signo, siginfo_t *sinfo, void *context) {
+  for (int i = 0; i < numberChildren; i++) {
+    if (*(childrensAvailability+i) == 0) {
+      *(childrensAvailability+i) = sinfo -> si_pid;
+    }
+  }
+}
+
+// Handle the signal sent by the father to the children
+void handleFatherExit(int signo){
+  flagFather = 1;
+}
+
+// Method to put the child as occupied
+void children_occupied(pid_t pid) {
+  for (int i = 0; i < numberChildren; i++) {
+    if(*(childrensAvailability+i) == pid){
+      *(childrensAvailability+i) = 0;
+    }
+  }
+}
+
+
+
+// Method to get the first available child
 pid_t available_process() {
-  for (int i = 0; i < number_children; i++) {
-    if (*(childrens_availability+i) != 0) {
-      return *(childrens_availability+i);
+  for (int i = 0; i < numberChildren; i++) {
+    if (*(childrensAvailability + i) != 0) {
+      return *(childrensAvailability + i);
     }
   }
 }
@@ -69,24 +74,6 @@ char* extractCandidateID(char* fileName) {
   return extracted;
 }
 
-// Function to check if a directory exists, and if not, create it
-int createOutputDirectory(const char *path) {
-  struct stat info;
-  if (stat(path, &info) != 0) {
-      // Directory doesn't exist, try creating it
-      if (mkdir(path, 0777) == -1) {
-          perror("mkdir");
-          return 0;
-      } else {
-          return 1;
-      }
-  } else if (info.st_mode & S_IFDIR) {
-      return 1;
-  } else {
-      return 0;
-  }
-}
-
 // Parameters:
 // 1 - input directory
 // 2 - output directory
@@ -94,21 +81,26 @@ int createOutputDirectory(const char *path) {
 // 4 - time of check
 int main(int argc,char *argv[]) {
   pid_t pid_handler;
-  int periodic_check,number_of_files;
-  char output_directory[BUFFER_SIZE];
-  char input_directory[BUFFER_SIZE];
+  int periodic_check;
+  char outputDirectory[BUFFER_SIZE];
+  char inputDirectory[BUFFER_SIZE];
 
+  if (argc < 5) {
+    fprintf(stderr, "Usage: %s inputDirectory outputDirectory number_of_children periodic_check\n", argv[0]);
+    exit(0);
+  }
 
-  output_directory=argv[2];
-  input_directory=argv[1];
-  periodic_check=atoi(argv[4]);
-  number_children=atoi(argv[3]);
-  pid_t pid[number_children];     // Creating an array to store processes that are working
-  int fd[number_children][2];     // Creating an array of pipes for the father to communicate with the children
+  strcpy(inputDirectory, argv[1]); 
+  strcpy(outputDirectory, argv[2]);
+  periodic_check = atoi(argv[4]);
+  numberChildren = atoi(argv[3]);
+
+  pid_t pid[numberChildren];     // Creating an array to store processes that are working
+  int fd[numberChildren][2];     // Creating an array of pipes for the father to communicate with the children
   int pipe_info[2];               // Pipe to send the new files
-  childrens_availability=(pid_t *) calloc(number_children,sizeof(pid_t));   // Array to store the availability of the children
+  childrensAvailability = (pid_t *) calloc(numberChildren,sizeof(pid_t));   // Array to store the availability of the children
 
-  for (int i = 0; i < number_children; i++) {
+  for (int i = 0; i < numberChildren; i++) {
     if(pipe(fd[i]) == -1){ 
       perror("Pipe failed"); 
       exit(1); 
@@ -133,7 +125,7 @@ int main(int argc,char *argv[]) {
           exit(EXIT_FAILURE);
       }
 
-      wd = inotify_add_watch(fd_notify, input_directory, IN_CREATE);    // Configs what directory to watch
+      wd = inotify_add_watch(fd_notify, inputDirectory, IN_CREATE);    // Configs what directory to watch
       if (wd == -1) {
           perror("inotify_add_watch");
           exit(EXIT_FAILURE);
@@ -146,12 +138,14 @@ int main(int argc,char *argv[]) {
               exit(EXIT_FAILURE);
           }
 
-          while (char *ptr < buffer + length) {
+          char *ptr = buffer;
+          while (ptr < buffer + length) {
               struct inotify_event *event = (struct inotify_event *)ptr;
 
               if (event->mask & IN_CREATE) {
-                  write(pipe_info[1],event->name,sizeof(BUFFER_SIZE));
+                  write(pipe_info[1], event->name, sizeof(BUFFER_SIZE));
               }
+
               ptr += sizeof(struct inotify_event) + event->len;
           }
       }
@@ -159,7 +153,7 @@ int main(int argc,char *argv[]) {
       exit(0);
   }
 
-  for (int i = 0; i < number_children; i++) {   // Creation of all working processes
+  for (int i = 0; i < numberChildren; i++) {   // Creation of all working processes
     pid[i] = fork();
 
     if (pid[i] < 0) {
@@ -173,20 +167,32 @@ int main(int argc,char *argv[]) {
         char fileName[BUFFER_SIZE];
 
         while ((n = read(fd[i][0], fileName, sizeof(fileName))) != 0) {
-          char folderName[100];
-          strcpy(folderName, extractCandidateID(fileName)); // Copy the result of extractCandidateID into folderName
-          
-          char path[100];
-          snprintf(path, sizeof(path), "%s/%s", BASE_DIRECTORY, folderName);
-          int directorySuccessful = createOutputDirectory(path);
 
-          if (directorySuccessful == 1) {
-              // TO DO: Copy files to the created directory
-              // TO DO: Decide which folder to create based on the file names
-          } else {
-              printf("Failed to create directory: %s\n", path);
-              // Handle directory creation failure
+          // Extract the candidate ID from the file name
+
+          char folderName[100];
+          strcpy(folderName, extractCandidateID(fileName));
+          
+          // Create the directory
+
+          char createDirectory[100];
+          snprintf(createDirectory, sizeof(createDirectory), "./%s/%s", outputDirectory, folderName);
+
+          pid_t mkdir = fork();
+          if (mkdir == 0) {
+            execlp("mkdir", "mkdir", createDirectory, NULL);
           }
+          
+          // Copy the file to the new directory
+
+          char copyFiles[100];
+          snprintf(copyFiles, sizeof(copyFiles), "./%s/%s", inputDirectory, fileName);
+          
+          pid_t copy = fork();
+          if (copy == 0) {
+            execlp("cp", "cp", copyFiles, createDirectory, NULL);
+          }
+
         }
 
         kill(getppid(), SIGUSR2);
@@ -202,8 +208,8 @@ int main(int argc,char *argv[]) {
   while (flagFather == 0) {
       char file[BUFFER_SIZE];
       while((n=read(pipe_info[0],file,sizeof(BUFFER_SIZE)))!=0){
-      pid_t pid_available=available_process();
-      for (int i = 0; i < number_children; i++) {
+      pid_t pid_available = available_process();
+      for (int i = 0; i < numberChildren; i++) {
         if (pid[i] == pid_available) {              // If child is available, put it occupied using the method and...
           children_occupied(pid_available);
           write(fd[i][1],file,sizeof(BUFFER_SIZE));       // Send the file to the child 
@@ -214,10 +220,14 @@ int main(int argc,char *argv[]) {
 
   close(pipe_info[0]);
 
-  for (int i = 0; i < number_children; i++) {
-    kill(pid[i],SIGKILL);
-    waitpid(pid[i]);
+  for (int i = 0; i < numberChildren; i++) {
+    kill(pid[i], SIGKILL);
+
+    int status;
+    waitpid(pid[i], &status, 0);
   }
+
+  free(childrensAvailability);
 
   return 0;
 }

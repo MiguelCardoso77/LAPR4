@@ -1,28 +1,64 @@
 package core.domain.process;
+import core.domain.jobOpening.JobReference;
+import eapli.framework.domain.model.AggregateRoot;
+import jakarta.persistence.*;
 
-public class Process {
-    private Process process;
+@Entity
+@Table(name = "PROCESS")
+public class Process implements AggregateRoot<IdProcess> {
 
-    public Process(Process process) {
-        this.process = process;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private IdProcess idProcess;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PROCESS_STATE")
+    private ProcessState processState;
+
+    @Column(name = "PROCESS_DATE")
+    private ProcessDate processDate;
+
+    @Column(name = "JOB_REFERENCE")
+    private JobReference jobReference;
+
+    public Process(IdProcess idProcess,ProcessState processState, ProcessDate processDate, JobReference jobReference){
+        this.idProcess = idProcess;
+        this.processState = processState;
+        this.processDate = processDate;
+        this.jobReference = jobReference;
     }
 
     protected Process() {
         // for ORM only
     }
 
-    public Process process() {
-        return this.process;
+    @Override
+    public boolean sameAs(final Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof Process)){
+            return false;
+        }
+
+        final Process that = (Process) other;
+
+        return idProcess.equals(that.idProcess) && processState.equals(that.processState) && processDate.equals(that.processDate) && jobReference.equals(that.jobReference);
     }
+
+    public int compareTo(IdProcess other) { return AggregateRoot.super.compareTo(other); }
 
     @Override
-    public boolean equals(final Object o) {
-        return this.process.equals(o);
+    public IdProcess identity() {
+        return null;
     }
 
-    @Override
-    public int hashCode() {
-        return this.process.hashCode();
-    }
+    public IdProcess idProcess() { return this.idProcess; }
 
+    public ProcessState processState() { return this.processState; }
+
+    public ProcessDate processDate() { return  this.processDate; }
+
+    public JobReference jobReference() { return this.jobReference; }
 }

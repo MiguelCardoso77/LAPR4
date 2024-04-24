@@ -2,7 +2,7 @@ package core.domain.process;
 
 import eapli.framework.domain.model.ValueObject;
 
-public enum ProccessState implements ValueObject {
+public enum ProcessState implements ValueObject {
     APPLICATION,
     SCREENING,
     INTERVIEWS,

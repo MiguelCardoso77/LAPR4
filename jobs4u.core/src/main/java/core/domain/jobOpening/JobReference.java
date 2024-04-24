@@ -12,7 +12,7 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
             throw new IllegalArgumentException("Company Number should not be empty");
         }
 
-        jobReference = buildJobReference(companyNumber);
+        this.jobReference = buildJobReference(companyNumber);
     }
 
     protected JobReference() {

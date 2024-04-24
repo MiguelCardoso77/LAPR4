@@ -65,10 +65,10 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         } else {
             int cont = 1;
             System.out.println("Select a Job Opening: \n");
-            System.out.printf("%-30s \n", "Job Reference:");
+            System.out.printf("%-30s%-30s%n", "Title or Function:", "Job Reference:");
             for (JobOpening jobOpening : iterable) {
                 list.add(jobOpening);
-                System.out.printf("%-30s \n", jobOpening.jobReference());
+                System.out.printf("%-6s%-30s%-30s%n",cont, jobOpening.titleOrFunction(), jobOpening.jobReference());
                 cont++;
             }
             final int option = Console.readInteger("Enter the number of job opening");
@@ -87,8 +87,8 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
 
         final Iterable<Application> iterable1 = elementsApp(jobOpeningApplication.jobReference());
         for (Application application : iterable1) {
-            System.out.printf("%-30s%-30s%-%-30s%-30s%-30s%-30s%n", application.idApplication(), application.rank(), application.submissionDate(), application.status(), application.applicationDataFile(),
-                    application.filesAttachedContent(), application.emailFilesAttached(), application.emailContentFile(), application.jobReference());
+            System.out.printf("%-30s%-30s%-30s%-30s", application.idApplication(), application.rank(), application.submissionDate(), application.status(), application.applicationDataFile());
+            System.out.printf("%-30s%-30s%-30s%-30s%n", application.applicationDataFile(), application.filesAttachedContent(), application.emailFilesAttached(), application.emailContentFile(), application.jobReference());
         }
 
         return true;

@@ -65,7 +65,7 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
 
     @Override
     public ApplicationRepository applications() {
-        return null;
+        return applications(null);
     }
 
     @Override

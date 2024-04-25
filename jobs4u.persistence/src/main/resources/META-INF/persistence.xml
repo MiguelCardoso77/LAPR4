@@ -11,6 +11,7 @@
     <class>core.domain.jobOpening.JobOpening</class>
     <class>core.domain.application.Application</class>
     <class>core.domain.process.Process</class>
+    <class>core.domain.candidate.Candidate</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>

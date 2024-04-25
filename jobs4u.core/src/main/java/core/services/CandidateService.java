@@ -30,4 +30,22 @@ public class CandidateService {
 
         return this.candidateRepository.save(newCandidate);
     }
+
+
+    public Candidate findCandidate(TelephoneNumber telephoneNumber) {
+        Iterable<Candidate> candidates = candidateRepository.allCandidates() ;
+        for(Candidate candidate : candidates){
+            if(candidate.identity().equals(telephoneNumber) ){
+                return candidate;
+            }
+
+        }
+
+
+        return null;
+    }
+
+    public Iterable<Candidate> allCandidates() {
+        return candidateRepository.allCandidates();
+    }
 }

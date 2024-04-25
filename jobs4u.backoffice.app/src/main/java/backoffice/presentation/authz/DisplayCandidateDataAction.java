@@ -2,10 +2,12 @@ package backoffice.presentation.authz;
 
 import eapli.framework.actions.Action;
 
-public class ListCandidatesAction implements Action {
+public class DisplayCandidateDataAction implements Action {
 
     @Override
     public boolean execute() {
-        return new ListCandidatesUI().show();
+        return new DisplayCandidateDataUI().doShow();
     }
+
+
 }

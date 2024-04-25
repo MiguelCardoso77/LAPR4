@@ -1,5 +1,6 @@
 package core.domain.application;
 
+import core.domain.customer.TelephoneNumber;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.model.DomainFactory;
@@ -24,10 +25,12 @@ public class ApplicationBuilder implements DomainFactory<Application> {
     private EmailContentFile emailContentFile;
     private JobReference jobReference;
 
+    private TelephoneNumber telephoneNumber;
+
 
     private static final Logger LOGGER = LogManager.getLogger(Application.class);
 
-    public ApplicationBuilder withAll(long idApplication, int rank, Calendar submissionDate, Status status, String applicationDataFile, String filesAttachedContent, String emailFilesAttached, String emailContentFile, String jobReference) {
+    public ApplicationBuilder withAll(long idApplication, int rank, Calendar submissionDate, Status status, String applicationDataFile, String filesAttachedContent, String emailFilesAttached, String emailContentFile, String jobReference , String telephoneNumber) {
         this.idApplication = new IdApplication(idApplication);
         this.rank = new Rank(rank);
         this.submissionDate = new SubmissionDate(submissionDate);
@@ -37,6 +40,7 @@ public class ApplicationBuilder implements DomainFactory<Application> {
         this.emailFilesAttached = new EmailFilesAttached(emailFilesAttached);
         this.emailContentFile = new EmailContentFile(emailContentFile);
         this.jobReference = new JobReference(jobReference);
+        this.telephoneNumber = new TelephoneNumber(telephoneNumber);
         return this;
     }
 
@@ -49,8 +53,8 @@ public class ApplicationBuilder implements DomainFactory<Application> {
             LOGGER.error("Missing mandatory information to build a JobOpening");
             return null;
         } else {
-            LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}", idApplication, rank, submissionDate, status, applicationDataFile, filesAttachedContent, emailFilesAttached, emailContentFile,jobReference);
-            application = new Application(idApplication, rank, submissionDate, status, applicationDataFile, filesAttachedContent, emailFilesAttached, emailContentFile, jobReference);
+            LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}, telephone number{}", idApplication, rank, submissionDate, status, applicationDataFile, filesAttachedContent, emailFilesAttached, emailContentFile,jobReference, telephoneNumber);
+            application = new Application(idApplication, rank, submissionDate, status, applicationDataFile, filesAttachedContent, emailFilesAttached, emailContentFile, jobReference , telephoneNumber);
         }
 
         return application;

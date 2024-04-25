@@ -14,11 +14,11 @@ public class ApplicationService {
     @Transactional
     public Application registerApplication(long idApplication, int rank, Calendar submissionDate, Status status,
                                            String applicationDataFile, String filesAttachedContent, String emailFilesAttached,
-                                           String emailContentFile, String jobReference){
+                                           String emailContentFile, String jobReference, String telephoneNumber){
 
         ApplicationBuilder applicationBuilder = new ApplicationBuilder();
         applicationBuilder.withAll(idApplication,rank,submissionDate,status,applicationDataFile,filesAttachedContent,
-                emailFilesAttached,emailContentFile,jobReference);
+                emailFilesAttached,emailContentFile,jobReference ,telephoneNumber);
         Application application = applicationBuilder.build();
         return applicationRepository.save(application);
     }

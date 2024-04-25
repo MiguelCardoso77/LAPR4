@@ -1,5 +1,6 @@
 package core.domain.application;
 
+import core.domain.customer.TelephoneNumber;
 import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
@@ -37,9 +38,13 @@ public class Application implements AggregateRoot<IdApplication> {
     @Column(name = "ASSOCIATED_JOB_OPENING")
     private JobReference jobReference;
 
+    @Column(name = "CANDIDATE")
+    private TelephoneNumber telephoneNumber;
+
+
     public Application(IdApplication idApplication, Rank rank, SubmissionDate submissionDate, Status status,
                        ApplicationDataFile applicationDataFile, FilesAttachedContent filesAttachedContent,
-                       EmailFilesAttached emailFilesAttached, EmailContentFile emailContentFile, JobReference jobReference) {
+                       EmailFilesAttached emailFilesAttached, EmailContentFile emailContentFile, JobReference jobReference, TelephoneNumber telephoneNumber) {
         this.idApplication = idApplication;
         this.rank = rank;
         this.submissionDate = submissionDate;
@@ -49,6 +54,7 @@ public class Application implements AggregateRoot<IdApplication> {
         this.emailFilesAttached = emailFilesAttached;
         this.emailContentFile = emailContentFile;
         this.jobReference = jobReference;
+        this.telephoneNumber = telephoneNumber;
     }
 
     protected Application() {
@@ -69,7 +75,8 @@ public class Application implements AggregateRoot<IdApplication> {
         return  idApplication.equals(that.idApplication) && rank.equals(that.rank) && submissionDate.equals(that.submissionDate)
                 && status.equals(that.status) && applicationDataFile.equals(that.applicationDataFile)
                 && filesAttachedContent.equals(that.filesAttachedContent) && emailFilesAttached.equals(that.emailFilesAttached)
-                && emailContentFile.equals(that.emailContentFile) && jobReference.equals(that.jobReference);
+                && emailContentFile.equals(that.emailContentFile) && jobReference.equals(that.jobReference)
+                && telephoneNumber.equals(that.telephoneNumber);
     }
 
     public int compareTo(IdApplication other) {
@@ -85,6 +92,9 @@ public class Application implements AggregateRoot<IdApplication> {
         return AggregateRoot.super.hasIdentity(id);
     }
 
+    public TelephoneNumber telephoneNumber() {
+        return telephoneNumber;
+    }
 
     public IdApplication idApplication() {
         return this.idApplication;
@@ -153,6 +163,7 @@ public class Application implements AggregateRoot<IdApplication> {
     public JobReference jobReference() {
         return this.jobReference;
     }
+
     @Override
     public String toString() {
         return "Application{" +
@@ -165,7 +176,9 @@ public class Application implements AggregateRoot<IdApplication> {
                 ", emailFilesAttached=" + emailFilesAttached +
                 ", emailContentFile=" + emailContentFile +
                 ", jobReference=" + jobReference +
+                ", telephoneNumber= " + telephoneNumber +
                 '}';
     }
+
 
 }

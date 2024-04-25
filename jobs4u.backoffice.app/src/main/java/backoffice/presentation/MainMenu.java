@@ -132,7 +132,7 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(1, "List all Users", new ListUsersAction());
         menu.addItem(2, "Add User", new AddUserUI()::show);
-        menu.addItem(3, "List all Candidate's data", new ListCandidatesAction());
+        menu.addItem(3, "List all Candidate's data", new DisplayCandidateDataAction());
         menu.addItem(4, "Add Job Opening", new AddJobOpeningAction());
         menu.addItem(5, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
         menu.addItem(6, "Register Customer", new RegisterCustomerAction());

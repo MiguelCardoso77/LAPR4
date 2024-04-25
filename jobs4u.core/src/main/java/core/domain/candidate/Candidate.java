@@ -70,4 +70,14 @@ public class Candidate implements AggregateRoot<TelephoneNumber> {
 
         return telephoneNumber.equals(that.telephoneNumber) && curriculum.equals(that.curriculum);
     }
+
+
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "telephoneNumber=" + telephoneNumber +
+                ", curriculum=" + curriculum +
+                ", systemUser=" + systemUser +
+                '}';
+    }
 }

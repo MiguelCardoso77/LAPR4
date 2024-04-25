@@ -1,6 +1,7 @@
 package persistence.jpa;
 
 import core.repositories.ApplicationRepository;
+import core.repositories.CandidateRepository;
 import infrastructure.Application;
 import core.repositories.SignupRequestRepository;
 import core.persistence.RepositoryFactory;
@@ -71,6 +72,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public TransactionalContext newTransactionalContext() {
         return JpaAutoTxRepository.buildTransactionalContext(Application.settings().getPersistenceUnitName(),
                 Application.settings().getExtendedPersistenceProperties());
+    }
+
+    @Override
+    public CandidateRepository candidates(final TransactionalContext autoTx) {
+        return new JpaCandidateRepository(autoTx);
+    }
+
+    @Override
+    public CandidateRepository candidates() {
+        return new JpaCandidateRepository(Application.settings().getPersistenceUnitName());
     }
 
 }

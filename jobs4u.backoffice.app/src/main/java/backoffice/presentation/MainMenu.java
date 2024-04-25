@@ -2,8 +2,8 @@ package backoffice.presentation;
 
 import backoffice.presentation.applications.ListJobOpeningApplicationsAction;
 import backoffice.presentation.authz.*;
+import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
-import backoffice.presentation.customer.RegisterCustomerUI;
 import backoffice.presentation.jobs.AddJobOpeningAction;
 import infrastructure.Application;
 import backoffice.presentation.clientuser.AcceptRefuseSignupRequestAction;
@@ -146,6 +146,7 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
         menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
+        menu.addItem(3, "Register Candidate", new RegisterCandidateAction());
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

@@ -1,9 +1,6 @@
 package core.persistence;
 
-import core.repositories.ApplicationRepository;
-import core.repositories.CustomerRepository;
-import core.repositories.SignupRequestRepository;
-import core.repositories.JobOpeningRepository;
+import core.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
@@ -108,5 +105,8 @@ public interface RepositoryFactory {
     ApplicationRepository applications(TransactionalContext autoTx);
 
     ApplicationRepository applications();
+
+    CandidateRepository candidates(TransactionalContext autoTx);
+    CandidateRepository candidates();
 
 }

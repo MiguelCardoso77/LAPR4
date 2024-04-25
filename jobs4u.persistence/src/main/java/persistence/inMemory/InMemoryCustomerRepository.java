@@ -2,6 +2,7 @@ package persistence.inMemory;
 
 import core.domain.customer.Customer;
 import core.repositories.CustomerRepository;
+import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.Optional;
@@ -10,7 +11,7 @@ import java.util.Optional;
  *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-public class InMemoryCustomerRepository extends InMemoryDomainRepository<Customer, TelephoneNumber> implements CustomerRepository {
+public class InMemoryCustomerRepository extends InMemoryDomainRepository<Customer, EmailAddress> implements CustomerRepository {
 
     static {
         InMemoryInitializer.init();
@@ -18,8 +19,8 @@ public class InMemoryCustomerRepository extends InMemoryDomainRepository<Custome
 
 
     @Override
-    public Optional<Customer> findByTelephoneNumber(final TelephoneNumber number) {
-        return Optional.of(data().get(number));
+    public Optional<Customer> findByEmailAddress(final EmailAddress emailAddress) {
+        return Optional.of(data().get(emailAddress));
     }
 
     @Override

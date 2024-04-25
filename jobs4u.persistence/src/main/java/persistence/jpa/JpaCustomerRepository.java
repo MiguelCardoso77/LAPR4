@@ -1,5 +1,6 @@
 package persistence.jpa;
 
+import eapli.framework.general.domain.model.EmailAddress;
 import infrastructure.Application;
 import core.domain.customer.Customer;
 import core.repositories.CustomerRepository;
@@ -14,9 +15,7 @@ import java.util.Optional;
  *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-class JpaCustomerRepository
-        extends JpaAutoTxRepository<Customer, TelephoneNumber, TelephoneNumber>
-        implements CustomerRepository {
+class JpaCustomerRepository extends JpaAutoTxRepository<Customer, EmailAddress, EmailAddress> implements CustomerRepository {
 
     public JpaCustomerRepository(final TransactionalContext autoTx) {
         super(autoTx, "mecanographicNumber");
@@ -28,10 +27,10 @@ class JpaCustomerRepository
     }
 
     @Override
-    public Optional<Customer> findByTelephoneNumber(final TelephoneNumber number) {
+    public Optional<Customer> findByEmailAddress(final EmailAddress emailAddress) {
         final Map<String, Object> params = new HashMap<>();
-        params.put("number", number);
-        return matchOne("e.mecanographicNumber=:number", params);
+        params.put("email", emailAddress);
+        return matchOne("e.emailAddress=:emailAddress", params);
     }
 
     @Override

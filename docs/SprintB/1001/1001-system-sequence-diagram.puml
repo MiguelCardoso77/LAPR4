@@ -12,40 +12,39 @@ participant ": System" as System
 
 activate CM    
 
-    CM -> System : Requests to register a customer
+    CM -> System : Asks to register a Customer
     activate System
 
-        System --> CM : Asks for the customer's first name
+        System --> CM : Asks for the customer's information
     deactivate System
 
-    CM -> System : Provides the name
+    CM -> System : firstName, lastName, email, chooseToCreateOrToSelectAnExistentCompany
     activate System
 
-        System --> CM : Asks for the customer's last name
+    opt choose to select a company
+
+    System --> CM : asks to select one company
+
     deactivate System
 
-    CM -> System : Provides the name
+    CM -> System : selects one company
+
+    else choose to create a company
+
     activate System
 
-        System --> CM : Asks for the customer's Email
+    System --> CM : asks for the company's name
+
     deactivate System
 
-    CM -> System : Provides the email
+    CM -> System : companyName
+
     activate System
 
-        System --> CM : Shows all the inputted data and asks for confirmation
-    deactivate System
+    end
 
-    CM -> System : Provides the email
-    activate System
+    System --> CM : shows operation's success
 
-         System --> CM : Shows all the inputted data and asks for confirmation
-    deactivate System
-
-    CM -> System : Confirms the data
-    activate System
-
-         System --> CM : Creates the user for the registered \ncostumer and displays operation success
     deactivate System
 
 @enduml

@@ -1,18 +1,22 @@
 # 1001 -  register a customer and that the system automatically creates a user for that customer
 
+| **ID** | **Sprint** | **Priority** |
+|:------:|:----------:|:------------:|
+|   9    |     B      |      1       |
+
 --------
 
-## 1.1. User Story Description
+## 1. Requirements
 
-As Customer Manager I want to register a customer and that the system automatically creates a user for that customer
+"As Customer Manager I want to register a customer and that the system automatically creates a user for that customer"
 
-## 1.2. Customer Specifications and Clarifications
+### 1.1. Customer Specifications and Clarifications
 
-### From the specifications document:
+#### From the specifications document:
 
     Equals to the User Story Description
 
-### From the client clarifications:
+#### From the client clarifications:
 
 * Question:
 
@@ -30,7 +34,8 @@ As Customer Manager I want to register a customer and that the system automatica
 
       81. For registering a customer see US1001.
 
-## 1.3. Acceptance Criteria
+### 1.3. Acceptance Criteria
+
 * AC1: Customer Registration:
 
       The system should allow the Customer Manager to initiate the registration process for a new customer.
@@ -77,75 +82,70 @@ As Customer Manager I want to register a customer and that the system automatica
 
       Access controls should be enforced to ensure that only authorized personnel, such as Customer Managers, can perform customer registrations and user creations.
 
-## 1.4. Found out Dependencies
+### 1.4. Functional Requirements
+
+      NFR08 - Authentication and Authorization The system must support and apply authentication and authorization for all its users and functionalities
+
+### 1.5. Found out Dependencies
 
 * G007 - As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
 
 * 1000 - As Administrator, I want to be able to register, disable/enable, and list users of the backoffice.
 
-## 1.5 Input and Output Data
+### 1.5 Input and Output Data
 
 * Input Data:
 
       - Customer´s first name
       - Customer's last name
       - Customer's email
-      - Data Confirmation.
+      - Company's name
 
 * Output Data:
 
       - All the inputed data
       - (In)Success of the operation
 
-## 1.6. System Sequence Diagram (SSD)
+## 2. Analysis
+
+### 2.1. Main success scenario
+
+    The customer is registered in the system.
+
+### 2.2. System Sequence Diagram (SSD)
 
 ![1001-system-sequence-diagram.svg](1001-system-sequence-diagram.svg)
 
-## 1.7. System Diagram (SD)
+### 2.3. System Diagram (SD)
 
 ![1001-sequence-diagram.svg](1001-sequence-diagram.svg)
 
-## 1.8 Other Relevant Remarks
-
-None to specify
-
-## 2.0. Domain Model
-
-----------------
-
-### 2.1. Relevant Domain Model Excerpt
+### 2.4. Partial Domain Model
 
 ![1001-domain-model.svg](1001-domain-model.svg)
 
-### 2.2. Entities and Aggregates
 
-Entities represent distinct objects with unique identities and lifecycles within the domain. Aggregates are clusters of associated entities and value objects that are treated as a unit for data changes.
+## 3.0. Design
+
+----------------
+
+### 3.1. Partial Class Diagram
+
+![1001-class-diagram.svg](1001-class-diagram.svg)
+
+### 3.2. Applied Patterns
+
+### 3.3. Tests
 
 
-* CustomerManager:
+## 4.0. Integration and Demonstration
 
-      Represents employees of the Jobs4U company who manage relationships with customer entities. Customer Managers are responsible for registering job openings, setting up recruitment processes, and overseeing the selection of candidates for their assigned customers.
 
-* User
-
-      Represents all the users that are registered in the system.
-
-* Customer
-
-      Represents entities (other companies or entities) that need to recruit human resources.
-
-### Associations
-
-CustomerManager ---> User
-
-CustomerManager "1" ---> "N" Customer : registers
-
-Customer ---> User
-
-## 3.0. Class Diagram
 
 ------------------
 
-### 3.1. Relevant Class Diagram Excerpt
+## 5.0. Observations
 
-![1001-class-diagram.svg](1001-class-diagram.svg)
+------------------
+
+      N/a.

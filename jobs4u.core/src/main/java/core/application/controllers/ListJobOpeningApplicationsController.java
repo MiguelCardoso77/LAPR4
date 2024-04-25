@@ -29,13 +29,13 @@ public class ListJobOpeningApplicationsController {
 
 
     public Iterable<Customer> activeClientUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
 
         return this.repo.findAllActive();
     }
 
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         Iterable<Application> allApplications = appServ.allApplication();
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
@@ -49,13 +49,13 @@ public class ListJobOpeningApplicationsController {
 
 
     public Iterable<JobOpening> allJobOpening() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         return jobserv.allJobOpenings();
     }
 
 
     public JobOpening findJobOpening(JobReference jobReference) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         Iterable<JobOpening> allJobOpenings = jobserv.allJobOpenings();
         for (JobOpening j : allJobOpenings) {
             if (j.jobReference().equals(jobReference)) {

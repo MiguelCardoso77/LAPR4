@@ -31,7 +31,7 @@ public class RegisterCandidateController {
         Preconditions.nonNull(lastName);
         Preconditions.nonNull(email);
 
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.ADMIN, Jobs4URoles.CANDIDATE, Jobs4URoles.OPERATOR);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.ADMIN, Jobs4URoles.BOOTSTRAP, Jobs4URoles.CANDIDATE, Jobs4URoles.OPERATOR);
 
         roles.add(Jobs4URoles.CANDIDATE);
         String password = passwordPolicy.passwordGenerator(firstName);

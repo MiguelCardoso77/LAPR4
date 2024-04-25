@@ -1,8 +1,6 @@
 package core.application;
 
-import core.domain.customer.CustomerBuilder;
 import core.domain.customer.SignupRequest;
-import core.domain.customer.TelephoneNumber;
 import core.repositories.CustomerRepository;
 import core.repositories.SignupRequestRepository;
 import core.persistence.PersistenceContext;
@@ -54,7 +52,7 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
      */
     @Override
     public SignupRequest acceptSignupRequest(SignupRequest theSignupRequest) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
 
         if (theSignupRequest == null) {
             throw new IllegalArgumentException();
@@ -108,7 +106,7 @@ public class AcceptRefuseSignupRequestControllerTxImpl implements AcceptRefuseSi
      */
     @Override
     public SignupRequest refuseSignupRequest(SignupRequest theSignupRequest) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
 
         if (theSignupRequest == null) {
             throw new IllegalArgumentException();

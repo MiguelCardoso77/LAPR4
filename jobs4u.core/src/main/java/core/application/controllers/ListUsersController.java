@@ -46,17 +46,17 @@ public class ListUsersController{
     private final UserManagementService userSvc = AuthzRegistry.userService();
 
     public Iterable<SystemUser> allUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
 
         return userSvc.allUsers();
     }
 
     public Iterable<SystemUser> allBackofficeUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
         List<SystemUser> backofficeUsers = new ArrayList<>();
 
         for (SystemUser u : userSvc.allUsers()) {
-            if (u.hasAny(Jobs4URoles.ADMIN, Jobs4URoles.POWER_USER, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.LANGUAGE_ENGINEER, Jobs4URoles.OPERATOR)) {
+            if (u.hasAny(Jobs4URoles.ADMIN, Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.LANGUAGE_ENGINEER, Jobs4URoles.OPERATOR)) {
                 backofficeUsers.add(u);
             }
         }
@@ -65,7 +65,7 @@ public class ListUsersController{
     }
 
     public Iterable<SystemUser> allCandidates() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.POWER_USER, Jobs4URoles.ADMIN, Jobs4URoles.CUSTOMER_MANAGER);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN, Jobs4URoles.CUSTOMER_MANAGER);
         List<SystemUser> candidates = new ArrayList<>();
 
         for (SystemUser u : userSvc.allUsers()) {

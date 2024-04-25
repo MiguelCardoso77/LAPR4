@@ -2,7 +2,6 @@ package core.application.controllers;
 
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.JobOpening;
-import core.domain.jobOpening.JobReference;
 import core.domain.jobOpening.Mode;
 import core.services.JobOpeningService;
 import core.domain.user.Jobs4URoles;
@@ -16,7 +15,7 @@ public class AddJobOpeningController {
     private final JobOpeningService jobOpeningService = new JobOpeningService();
 
     public JobOpening addJobOpening(String jobReference, String description, int vacanciesNumber, String address, Mode mode, ContractType contractType, String titleOrFunction) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.BOOTSTRAP);
 
         return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction);
     }

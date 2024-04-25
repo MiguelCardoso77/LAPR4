@@ -31,10 +31,9 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
  */
 public final class Jobs4URoles {
     public static final Role CLIENT_USER = Role.valueOf("CLIENT_USER");
-    public static final Role POWER_USER = Role.valueOf("POWER_USER");
-
 
     public static final Role ADMIN = Role.valueOf("ADMIN");
+    public static final Role BOOTSTRAP = Role.valueOf("BOOTSTRAP");
     public static final Role CANDIDATE = Role.valueOf("CANDIDATE");
     public static final Role CUSTOMER = Role.valueOf("CUSTOMER");
     public static final Role CUSTOMER_MANAGER = Role.valueOf("CUSTOMER_MANAGER");

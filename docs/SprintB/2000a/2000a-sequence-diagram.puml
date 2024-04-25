@@ -1,0 +1,91 @@
+@startuml
+autonumber
+
+actor Operator
+
+participant RegisterCandidateUI <<presentation>>
+participant RegisterCandidateController <<controller>>
+
+participant AuthorizationService <<service>>
+participant Jobs4UPasswordPolicy <<policy>>
+
+participant UserManagementService <<service>>
+participant CandidateService <<service>>
+
+participant SystemUserBuilder <<builder>>
+participant CandidateBuilder <<builder>>
+
+database UserRepository <<repository>>
+database CandidateRepository <<repository>>
+
+activate Operator
+
+    Operator -> RegisterCandidateUI : asks to register a new candidate
+    activate RegisterCandidateUI
+
+
+       RegisterCandidateUI --> Operator : requests account opening details (FirstName, LastName,\n Email, TelephoneNumber, Curriculum)
+    deactivate RegisterCandidateUI
+
+    Operator -> RegisterCandidateUI : provides account opening details
+    activate RegisterCandidateUI
+
+       RegisterCandidateUI --> RegisterCandidateController : registerCandidate(firstName, lastName, email,\n role, createdOn, telephoneNumber, curriculum)
+       activate RegisterCandidateController
+
+             RegisterCandidateController -> AuthorizationService : ensureAuthenticatedUserHasAnyOf(OPERATOR)
+             activate AuthorizationService
+
+                AuthorizationService --> RegisterCandidateController : returns true
+             deactivate AuthorizationService
+
+             RegisterCandidateController -> Jobs4UPasswordPolicy : passwordGenerator(firstName)
+             activate Jobs4UPasswordPolicy
+
+                Jobs4UPasswordPolicy --> RegisterCandidateController : returns password
+             deactivate Jobs4UPasswordPolicy
+
+             RegisterCandidateController -> UserManagementService : registerNewUser(email, password, firstName, lastName, email, roles, createdOn)
+             activate UserManagementService
+
+                UserManagementService -> SystemUserBuilder : build(firstName, lastName, email,\n password, roles, createdOn)
+                activate SystemUserBuilder
+
+                    SystemUserBuilder --> UserManagementService : returns systemUser
+                deactivate SystemUserBuilder
+
+                UserManagementService -> UserRepository : save(systemUser)
+                activate UserRepository
+
+                    UserRepository --> UserManagementService : returns systemUser
+                deactivate UserRepository
+
+                UserManagementService --> RegisterCandidateController : returns systemUser
+             deactivate UserManagementService
+
+             RegisterCandidateController -> CandidateService : registerCandidate(systemUser, telephoneNumber, curriculum)
+             activate CandidateService
+
+                CandidateService -> CandidateBuilder : build(systemUser, telephoneNumber, curriculum)
+                activate CandidateBuilder
+
+                    CandidateBuilder --> CandidateService : returns candidate
+                deactivate CandidateBuilder
+
+                CandidateService -> CandidateRepository : save(candidate)
+                activate CandidateRepository
+
+                    CandidateRepository --> CandidateService : returns candidate
+                deactivate CandidateRepository
+
+                CandidateService --> RegisterCandidateController : returns candidate
+             deactivate CandidateService
+
+             RegisterCandidateController --> RegisterCandidateUI : returns candidate
+       deactivate RegisterCandidateController
+
+       RegisterCandidateUI --> Operator : confirms registration and shows details
+    deactivate RegisterCandidateUI
+deactivate Operator
+
+@enduml

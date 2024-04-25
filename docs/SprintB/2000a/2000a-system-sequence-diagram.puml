@@ -12,20 +12,14 @@ participant ":System" as System
 
 activate OPERATOR
 
-    OPERATOR -> System : asks to register a new user
+    OPERATOR -> System : asks to register a new candidate
     activate System
 
 
-       System --> OPERATOR : requests account opening details (Email, FirstName, LastName)
+       System --> OPERATOR : requests account opening details (FirstName, LastName,\n Email, TelephoneNumber, Curriculum)
     deactivate System
 
     OPERATOR -> System : inserts requested details
-    activate System
-
-        System --> OPERATOR : displays role options (no role / candidate)
-    deactivate System
-
-    OPERATOR -> System : selects role candidate
     activate System
 
         System --> OPERATOR : displays operation success

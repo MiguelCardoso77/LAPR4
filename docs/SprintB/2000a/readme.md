@@ -87,7 +87,8 @@ should be created. I think there is no registration of a candidate by the admin.
   
       The system should allow the Operator to initiate the registration process for a new candidate.
       
-      Upon registration, the system should prompt the Operator to provide necessary information such as the candidate's first name, last name, and email.
+      Upon registration, the system should prompt the Operator to provide necessary information such as the candidate's first name, 
+      last name, email, telephone number and curriculum.
 
 * AC2: User Creation:
   
@@ -99,6 +100,8 @@ should be created. I think there is no registration of a candidate by the admin.
 
 ### 1.4. Found out Dependencies
 
+* G007 - As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
+
 ### 1.5 Input and Output Data
 
 **Input Data:**
@@ -106,19 +109,22 @@ should be created. I think there is no registration of a candidate by the admin.
     * First Name
     * Last Name
     * Email
-
-**Selected Data:**
-
-    * Role : Candidate
+    * Telephone Number
+    * Curriculum
 
 **Output Data:**
 
     * (In)Success of the operation
 
-### 1.6. System Sequence Diagrams (SSD)
+### 1.6. System Sequence Diagram (SSD)
 
 ![2000a-system-sequence-diagram.svg](2000a-system-sequence-diagram.svg)
 
-### 1.7 Other Relevant Remarks
+### 1.7. Sequence Diagrams (SD)
+![2000a-sequence-diagram.svg](2000a-sequence-diagram.svg)
+
+### 1.8 Other Relevant Remarks
 
 *  None to specify 
+
+## 2. Analysis and Design

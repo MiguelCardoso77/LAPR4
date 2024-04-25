@@ -1,9 +1,7 @@
 package persistence.inMemory;
 
 import core.domain.customer.Customer;
-import core.domain.customer.TelephoneNumber;
 import core.repositories.CustomerRepository;
-import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 
 import java.util.Optional;

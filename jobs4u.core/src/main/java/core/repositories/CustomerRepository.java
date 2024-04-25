@@ -21,9 +21,8 @@
 package core.repositories;
 
 import core.domain.customer.Customer;
-import core.domain.customer.TelephoneNumber;
 import eapli.framework.domain.repositories.DomainRepository;
-import eapli.framework.infrastructure.authz.domain.model.Username;
+import eapli.framework.general.domain.model.EmailAddress;
 
 import java.util.Optional;
 
@@ -31,10 +30,10 @@ import java.util.Optional;
  *
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
-public interface CustomerRepository extends DomainRepository<TelephoneNumber, Customer> {
+public interface CustomerRepository extends DomainRepository<EmailAddress, Customer> {
 
-    default Optional<Customer> findByTelephoneNumber(final TelephoneNumber number) {
-        return ofIdentity(number);
+    default Optional<Customer> findByEmailAddress(final EmailAddress emailAddress) {
+        return ofIdentity(emailAddress);
     }
 
     public Iterable<Customer> findAllActive();

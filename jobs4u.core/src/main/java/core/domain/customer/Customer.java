@@ -23,57 +23,56 @@
  */
 package core.domain.customer;
 
+import core.domain.company.Company;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
-import eapli.framework.identities.impl.UUIDGenerator;
-import eapli.framework.infrastructure.authz.domain.model.Password;
+import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.representations.dto.GeneralDTO;
-import eapli.framework.validations.Invariants;
-import eapli.framework.validations.Preconditions;
 import jakarta.persistence.*;
 
 /**
- * A Customer.
- * This class represents customer. It follows a DDD approach where User
- * is the root entity of the Base User Aggregate and all of its properties
- * are instances of value objects. A Customer references a System User.
- *
- * @author Jorge Santos ajs@isep.ipp.pt
+ * Represents a customer entity.
+ * This class serves as an aggregate root.
  */
 @Entity
-public class Customer implements AggregateRoot<TelephoneNumber> {
+@Table(
+        name = "CUSTOMER"
+)
+public class Customer implements AggregateRoot<EmailAddress> {
 
-    @EmbeddedId
-    @Column(name = "TELEPHONE_NUMBER")
-    private TelephoneNumber telephoneNumber;
-    @Column(name = "COMPANY")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private EmailAddress emailAddress;
+    @OneToOne
+    @JoinColumn(name = "COMPANY_NUMBER")
     private Company company;
 
-
-    /**
-     * cascade = CascadeType.NONE as the systemUser is part of another aggregate
-     */
     @OneToOne
-    @Column(name = "SYSTEM_USER")
-    private SystemUser systemUser;
+    @JoinColumn(name = "CUSTOMER_MANAGER_EMAIL")
+    private SystemUser customerManager;
 
+    @OneToOne
+    @JoinColumn(name = "CUSTOMER_EMAIL")
+    private SystemUser systemUser;
     /**
-     * Constructs a new Customer instance with the specified system user, telephone number, and company.
+     * Constructs a new Customer instance with the specified system user, company, and customer manager.
      *
-     * @param user            the system user associated with the client user
-     * @param telephoneNumber the telephone number of the client user
-     * @param company         the company associated with the client user
-     * @throws IllegalArgumentException if any of the parameters are null
+     * @param user            the system user associated with the customer
+     * @param company         the company associated with the customer
+     * @param customerManager the customer manager associated with the customer
      */
-    public Customer(final SystemUser user, final TelephoneNumber telephoneNumber, final Company company) {
-        if (telephoneNumber == null || user == null || company == null) {
+
+    public Customer(final SystemUser user, final EmailAddress emailAddress, final Company company, final SystemUser customerManager) {
+        if (user == null || company == null || customerManager == null || emailAddress == null) {
             throw new IllegalArgumentException();
         }
         this.systemUser = user;
-        this.telephoneNumber = telephoneNumber;
         this.company = company;
+        this.customerManager = customerManager;
+        this.emailAddress = emailAddress;
     }
+
     /**
      * Default constructor for JPA persistence. Intended for internal use only.
      */
@@ -96,6 +95,15 @@ public class Customer implements AggregateRoot<TelephoneNumber> {
     public Company company(){
         return this.company;
     }
+    /**
+     * Retrieves the customer manager associated with this customer.
+     *
+     * @return the customer manager
+     */
+    public SystemUser customerManager(){
+        return this.customerManager;
+    }
+
     /**
      * Checks if this customer is equal to another object.
      *
@@ -121,13 +129,13 @@ public class Customer implements AggregateRoot<TelephoneNumber> {
      * @return a DTO representing this customer
      */
     public GeneralDTO toDTO() {
-        GeneralDTO ret = new GeneralDTO("user");
-        ret.put("telephoneNumber", this.telephoneNumber.toString());
+        GeneralDTO ret = new GeneralDTO("customer");
+        ret.put("emailAddress", this.emailAddress.toString());
         ret.put("company", this.company.toString());
         ret.put("systemUser", this.systemUser.toString());
+        ret.put("customerManager", this.customerManager.toString());
         return ret;
     }
-
     /**
      * Compares this customer with another object for equality.
      *
@@ -138,23 +146,23 @@ public class Customer implements AggregateRoot<TelephoneNumber> {
     public boolean sameAs(final Object other) {
         return DomainEntities.areEqual(this, other);
     }
-
     /**
-     * Retrieves the telephone number of this customer.
+     * Retrieves the customer ID of this customer.
      *
-     * @return the telephone number
+     * @return the customer ID
      */
-    public TelephoneNumber telephoneNumber() {
+    public EmailAddress emailAddress() {
         return identity();
     }
 
+
     /**
-     * Retrieves the identity (telephone number) of this customer.
+     * Retrieves the identity (customer ID) of this customer.
      *
      * @return the identity of this customer
      */
     @Override
-    public TelephoneNumber identity() {
-        return this.telephoneNumber;
+    public EmailAddress identity() {
+        return this.emailAddress();
     }
 }

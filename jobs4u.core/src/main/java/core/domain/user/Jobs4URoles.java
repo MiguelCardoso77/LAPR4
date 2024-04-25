@@ -48,6 +48,10 @@ public final class Jobs4URoles {
         return new Role[] { CANDIDATE, CUSTOMER };
     }
 
+    public static Role[] customer(){
+        return new Role[]{CUSTOMER};
+    }
+
     public static Role[] allValues() {
         return new Role[] { ADMIN, CANDIDATE, CUSTOMER, CUSTOMER_MANAGER, LANGUAGE_ENGINEER, OPERATOR };
     }

@@ -109,4 +109,7 @@ public interface RepositoryFactory {
     CandidateRepository candidates(TransactionalContext autoTx);
     CandidateRepository candidates();
 
+    CompanyRepository companies(TransactionalContext autoTx);
+    CompanyRepository companies();
+
 }

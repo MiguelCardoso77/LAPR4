@@ -76,6 +76,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public CompanyRepository companies(TransactionalContext autoTx) {
+        return null;
+    }
+
+    @Override
+    public CompanyRepository companies() {
+        return null;
+    }
+
+    @Override
     public TransactionalContext newTransactionalContext() {
         // in memory does not support transactions...
         return null;

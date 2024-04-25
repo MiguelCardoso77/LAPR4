@@ -12,14 +12,326 @@ title "Sequence Diagram - 1001"
 actor CustomerManager
 
 participant RegisterCustomerUI <<presentation>>
-participant RegisterCustomerController<<application>>
-participant UserManagementService <<service>>
-participant SystemUserBuilder <<userBuilder>>
-participant UserRepository <<repository>>
-participant SystemUser <<systemUser>>
-participant PersistenceContext<<persistence>>
-participant RepositoryFactory<<factory>>
+participant ListCompaniesUI <<presentation>>
+participant AddCompanyUI <<presentation>>
 
+participant AddCustomerController<<application>>
+participant AddUserController<<application>>
+participant ListCompaniesController<<application>>
+participant AddCompanyController<<application>>
+
+participant PersistenceContext <<persistence>>
+participant RepositoryFactory <<factory>>
+
+participant Job4PasswordPolicy<<password generator>>
+
+participant AuthorizationService <<service>>
+participant UserManagementService <<service>>
+participant AuthorizationService <<service>>
+participant UserManagementService <<service>>
+participant CustomerService <<service>>
+participant CompanyService <<service>>
+
+participant SystemUserBuilder <<userBuilder>>
+participant CustomerBuilder <<userBuilder>>
+participant CompanyBuilder <<userBuilder>>
+
+database UserRepository <<repository>>
+database CustomerRepository <<repository>>
+database CompanyRepository <<repository>>
+
+participant PersistenceContext <<persistence>>
+participant RepositoryFactory <<factory>>
+
+
+
+activate CustomerManager
+
+    CustomerManager -> RegisterCustomerUI: Asks to register a Customer
+
+    activate RegisterCustomerUI
+
+        RegisterCustomerUI -->  CustomerManager : asks for Customer's information
+
+    deactivate RegisterCustomerUI
+
+    CustomerManager -> RegisterCustomerUI : firstName, lastName, email, \nchooseToCreateOrToSelectAnExistentCompany
+
+    activate RegisterCustomerUI
+
+        RegisterCustomerUI --> AddCustomerController : passwordGenerator(firstName)
+
+    activate AddCustomerController
+
+        AddCustomerController --> Job4PasswordPolicy : passwordGenerator(firstName)
+
+    activate Job4PasswordPolicy
+
+        Job4PasswordPolicy --> AddCustomerController : password
+
+    deactivate Job4PasswordPolicy
+
+        AddCustomerController --> RegisterCustomerUI : password
+
+        RegisterCustomerUI --> AddCustomerController : selectOrCreateCompany
+
+    deactivate AddCustomerController
+
+    opt choose to select a company
+
+
+
+        RegisterCustomerUI --> ListCompaniesUI : show()
+
+        activate ListCompaniesUI
+
+        ListCompaniesUI --> ListCompaniesController : elements()
+
+        activate ListCompaniesController
+
+        ListCompaniesController --> AuthorizationService : ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+        AuthorizationService --> ListCompaniesController : true
+
+        deactivate AuthorizationService
+
+        ListCompaniesController --> CompanyService : allCompanies()
+
+        activate CompanyService
+
+        CompanyService --> PersistenceContext : repositories()
+
+        activate PersistenceContext
+
+        PersistenceContext --> CompanyService : factory
+
+        deactivate PersistenceContext
+
+        CompanyService --> RepositoryFactory : companies()
+
+        activate RepositoryFactory
+
+        RepositoryFactory --> CompanyService : companies
+
+        deactivate RepositoryFactory
+
+        CompanyService --> CompanyRepository : allCompanies()
+
+        activate CompanyRepository
+
+        CompanyRepository --> CompanyService : companies
+
+        deactivate CompanyRepository
+
+        CompanyService --> ListCompaniesController : companies
+
+        deactivate CompanyService
+
+        ListCompaniesController --> ListCompaniesUI : elements
+
+        deactivate ListCompaniesController
+
+        ListCompaniesUI --> RegisterCustomerUI : show
+
+        deactivate ListCompaniesUI
+
+        RegisterCustomerUI --> CustomerManager : asks to select one company
+
+        deactivate RegisterCustomerUI
+
+        CustomerManager --> RegisterCustomerUI : selects one company
+
+        activate RegisterCustomerUI
+
+        RegisterCustomerUI --> ListCompaniesController : findCompany()
+
+        activate ListCompaniesController
+
+        ListCompaniesController --> AuthorizationService : ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+        AuthorizationService --> ListCompaniesController : true
+
+        deactivate AuthorizationService
+
+        ListCompaniesController --> CompanyService : findCompany()
+
+        activate CompanyService
+
+        CompanyService --> PersistenceContext : repositories()
+
+        activate PersistenceContext
+
+        PersistenceContext --> CompanyService : factory
+
+        deactivate PersistenceContext
+
+        CompanyService --> RepositoryFactory : companies()
+
+        activate RepositoryFactory
+
+        RepositoryFactory --> CompanyService : companies
+
+        deactivate RepositoryFactory
+
+        CompanyService --> CompanyRepository : findCompany()
+
+        activate CompanyRepository
+
+        CompanyRepository --> CompanyService : company
+
+        deactivate CompanyRepository
+
+        CompanyService --> ListCompaniesController : company
+
+        deactivate CompanyService
+
+        ListCompaniesController --> RegisterCustomerUI : company
+
+        deactivate ListCompaniesController
+
+        else create a company
+
+        RegisterCustomerUI --> AddCompanyUI : show()
+
+        activate AddCompanyUI
+
+        AddCompanyUI --> RegisterCustomerUI : show
+
+        deactivate AddCompanyUI
+
+        RegisterCustomerUI --> CustomerManager : asks for the company's information
+
+        deactivate RegisterCustomerUI
+
+        CustomerManager --> RegisterCustomerUI : companyName
+
+        activate RegisterCustomerUI
+
+        RegisterCustomerUI --> AddCompanyUI : createNewCompany()
+
+        activate AddCompanyUI
+
+        AddCompanyUI --> AddCompanyController : addCompany()
+
+        activate AddCompanyController
+
+        AddCompanyController --> CompanyService : registerCompany()
+
+        activate CompanyService
+
+        CompanyService --> CompanyBuilder : build()
+
+        activate CompanyBuilder
+
+        CompanyBuilder --> CompanyService : company
+
+        deactivate CompanyBuilder
+
+        CompanyService --> CompanyRepository : save(company)
+
+        activate CompanyRepository
+
+        CompanyRepository --> CompanyService : company
+
+        deactivate CompanyRepository
+
+        CompanyService --> AddCompanyController : company
+
+        deactivate CompanyService
+
+        AddCompanyController --> AddCompanyUI : company
+
+        deactivate AddCompanyController
+
+        AddCompanyUI --> RegisterCustomerUI : company
+
+        deactivate AddCompanyUI
+
+        end
+
+        RegisterCustomerUI --> AddCustomerController : registerCustomer()
+
+        activate AddCustomerController
+
+        AddCustomerController --> AddUserController : createSystemUser()
+
+    activate AddUserController
+
+        AddUserController --> AuthorizationService : ensureAuthenticatedUserHasAnyOf(roles)
+
+    activate AuthorizationService
+
+        AuthorizationService --> AddUserController: true
+
+    deactivate AuthorizationService
+
+        AddUserController -> UserManagementService: registerNewUser(name, password, email, role)
+
+    activate UserManagementService
+
+        UserManagementService -> SystemUserBuilder: build()
+
+    activate SystemUserBuilder
+
+        SystemUserBuilder --> UserManagementService: systemUser
+
+    deactivate SystemUserBuilder
+
+        UserManagementService -> UserRepository: save(systemUser)
+
+    activate UserRepository
+
+        UserRepository --> UserManagementService: systemUser
+
+    deactivate UserRepository
+
+        UserManagementService --> AddUserController: systemUser
+
+    deactivate UserManagementService
+
+        AddUserController --> AddCustomerController : systemUser
+
+   deactivate AddUserController
+
+        AddCustomerController --> CustomerService : createCustomer
+
+   activate CustomerService
+
+        CustomerService --> CustomerBuilder : build()
+
+   activate CustomerBuilder
+
+        CustomerBuilder --> CustomerService : customer
+
+   deactivate CustomerBuilder
+
+        CustomerService --> CustomerRepository : save(customer)
+
+   activate CustomerRepository
+
+        CustomerRepository --> CustomerService : customer
+
+   deactivate CustomerRepository
+
+        CustomerService --> AddCustomerController : customer
+
+   deactivate CustomerService
+
+   deactivate AddUserController
+
+        AddCustomerController --> RegisterCustomerUI : customer
+
+   deactivate AddCustomerController
+
+        RegisterCustomerUI --> CustomerManager : shows operation's success
+
+   deactivate RegisterCustomerUI
+
+deactivate CustomerManager
 
 
 

@@ -1,11 +1,9 @@
 package persistence.jpa;
 
-import core.domain.customer.TelephoneNumber;
 import infrastructure.Application;
 import core.domain.customer.Customer;
 import core.repositories.CustomerRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
-import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import java.util.HashMap;

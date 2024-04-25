@@ -63,7 +63,7 @@ public class CompanyBuilder implements DomainFactory<Company> {
     public Company build() {
         // since the factory knows that all the parts are needed it could throw
         // an exception. however, we will leave that to the constructor
-        return new Company(this.companyNumber, this.companyName);
+        return new Company(companyName, companyNumber);
     }
 
 

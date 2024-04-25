@@ -23,6 +23,8 @@
  */
 package core.domain.events;
 
+import core.domain.company.Company;
+import core.domain.customer.TelephoneNumber;
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.events.DomainEventBase;
 import eapli.framework.infrastructure.authz.domain.model.Username;

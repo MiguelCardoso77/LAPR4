@@ -1,7 +1,6 @@
 package user.console.presentation;
 
 import console.presentation.authz.LoginUI;
-import user.console.presentation.myuser.SignupRequestAction;
 import infrastructure.authz.AuthenticationCredentialHandler;
 import core.domain.user.Jobs4URoles;
 import eapli.framework.actions.ChainedAction;
@@ -13,15 +12,21 @@ import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
 /**
- * @author Paulo Gandra Sousa
+ * User interface class for the front menu of Jobs4U application.
+ * This menu provides options for user login and exiting the application.
+ * It is specifically designed for candidates.
+ *
+ * @author Miguel Cardoso
  */
 public class FrontMenu extends AbstractUI {
-
     private static final int EXIT_OPTION = 0;
-
     private static final int LOGIN_OPTION = 1;
-    private static final int SIGNUP_OPTION = 2;
 
+    /**
+     * Displays the front menu to the user.
+     *
+     * @return true if the user selected the exit option
+     */
     @Override
     public boolean show() {
         drawFormTitle();
@@ -29,23 +34,27 @@ public class FrontMenu extends AbstractUI {
     }
 
     /**
+     * Displays the front menu to the user.
+     *
      * @return true if the user selected the exit option
      */
     @Override
     public boolean doShow() {
-        final Menu menu = new Menu();
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(new LoginUI(new AuthenticationCredentialHandler(), Jobs4URoles.CANDIDATE)::show, () -> {
-            new MainMenu().mainLoop();
-            return true;
-        }));
-        //TODO: instead of leaving the app, return to the main menu again
-        menu.addItem(SIGNUP_OPTION, "Sign up", new SignupRequestAction());
+        final Menu menu = new Menu("Candidate Menu Options:");
+        LoginUI loginUI = new LoginUI(new AuthenticationCredentialHandler(), Jobs4URoles.CANDIDATE);
+
+        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(loginUI::show, () -> {new MainMenu().mainLoop();return true;}));
         menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
         return renderer.render();
     }
 
+    /**
+     * Returns the headline for this menu.
+     *
+     * @return the headline for this menu
+     */
     @Override
     public String headline() {
         return "Jobs4U Candidate Menu";

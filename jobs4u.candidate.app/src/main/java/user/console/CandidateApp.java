@@ -7,17 +7,25 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
 /**
- * Base User App.
+ * Main class for the Jobs4U Candidate Application.
+ * This class initializes the application by configuring the authorization registry and displaying the front menu.
+ *
+ * @author Miguel Cardoso
  */
 @SuppressWarnings("squid:S106")
 public final class CandidateApp {
 
     /**
-     * Empty constructor is private to avoid instantiation of this class.
+     * Private constructor to prevent instantiation of this class.
      */
     private CandidateApp() {
     }
 
+    /**
+     * Main method to start the application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(final String[] args) {
         System.out.println("=====================================");
         System.out.println("Candidate App");
@@ -27,7 +35,6 @@ public final class CandidateApp {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new FrontMenu().show();
 
-        // exiting the application, closing all threads
         System.exit(0);
     }
 }

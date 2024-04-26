@@ -1,6 +1,6 @@
 package persistence.inMemory;
 
-import bootstrappers.bootstraping.Jobs4UBootstrapper;
+import bootstrappers.Jobs4UBootstrapper;
 
 final class InMemoryInitializer {
 

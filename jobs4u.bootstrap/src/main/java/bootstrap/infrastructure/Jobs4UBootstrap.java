@@ -1,8 +1,8 @@
 package bootstrap.infrastructure;
 
-import bootstrappers.smoketests.Jobs4USmokeTester;
+import bootstrappers.Jobs4USmokeTester;
 import console.BaseApplication;
-import bootstrappers.bootstraping.Jobs4UBootstrapper;
+import bootstrappers.Jobs4UBootstrapper;
 import core.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import core.domain.events.NewUserRegisteredFromSignupEvent;
 import core.domain.events.SignupAcceptedEvent;
@@ -17,7 +17,7 @@ public class Jobs4UBootstrap extends BaseApplication {
     private Jobs4UBootstrap() {
     }
 
-    private final boolean isToBootstrapTestData = true;
+    private final boolean isToBootstrapTestData = false;
 
     public static void main(final String[] args) {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());

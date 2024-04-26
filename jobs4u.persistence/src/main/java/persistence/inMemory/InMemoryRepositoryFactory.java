@@ -1,7 +1,7 @@
 package persistence.inMemory;
 
 import core.repositories.*;
-import bootstrappers.bootstraping.Jobs4UBootstrapper;
+import bootstrappers.Jobs4UBootstrapper;
 import core.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;

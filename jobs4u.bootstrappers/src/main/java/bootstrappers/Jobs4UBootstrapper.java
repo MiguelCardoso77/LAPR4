@@ -1,5 +1,7 @@
-package bootstrappers.bootstraping;
+package bootstrappers;
 
+import bootstrappers.bootstraping.JobsBootstrapper;
+import bootstrappers.bootstraping.MasterUsersBootstrapper;
 import core.persistence.PersistenceContext;
 import core.domain.user.Jobs4URoles;
 import core.domain.user.UserBuilderHelper;

@@ -18,9 +18,10 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package bootstrappers.smoketests;
+package bootstrappers;
 
-import bootstrappers.bootstraping.Jobs4UBootstrapper;
+import bootstrappers.Jobs4UBootstrapper;
+import bootstrappers.smoketests.MasterUsersSmokeTester;
 import core.domain.user.Jobs4URoles;
 import core.domain.user.UserBuilderHelper;
 import core.persistence.PersistenceContext;
@@ -57,7 +58,7 @@ public class Jobs4USmokeTester implements Action {
 
     @Override
     public boolean execute() {
-        final Action[] actions = {};
+        final Action[] actions = {new MasterUsersSmokeTester()};
 
         registerBootstrapTestAccount();
         authenticateForTestBootstrapping();

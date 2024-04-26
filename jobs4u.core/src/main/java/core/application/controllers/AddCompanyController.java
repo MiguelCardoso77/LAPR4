@@ -15,6 +15,9 @@ public class AddCompanyController {
      * @param companyName   the company name
      * @return the added company
      */
+    public Company addCompany(String companyName, int companyNumber){
+        return companyService.registerCompany(companyName, companyNumber);
+    }
     public Company addCompany(String companyName){
         return companyService.registerCompany(companyName);
     }

@@ -2,7 +2,6 @@ package backoffice.presentation.company;
 
 import core.application.controllers.ListCompaniesController;
 import core.domain.company.Company;
-import core.domain.company.CompanyNumber;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -60,7 +59,7 @@ public class ListCompaniesUI extends AbstractListUI<Company> {
             System.out.println("List of Companies: \n");
             for (Company company1 : iterable) {
                 list.add(company1);
-                System.out.printf("%-6s%-30s%-30s%n", cont, company1.companyNumber(), company1.companyName());
+                System.out.printf("%-6s%-30s%-30s%n", cont, company1.companyNumber(), company1.identity());
                 cont++;
             }
 

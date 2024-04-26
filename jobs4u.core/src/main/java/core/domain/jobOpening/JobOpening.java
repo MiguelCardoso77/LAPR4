@@ -1,10 +1,8 @@
 package core.domain.jobOpening;
 
-import core.domain.application.Application;
+import core.domain.company.Company;
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "JOB_OPENING")
@@ -34,7 +32,12 @@ public class JobOpening implements AggregateRoot<JobReference> {
     @Column(name = "TITLE_OR_FUNCTION")
     private TitleOrFunction titleOrFunction;
 
-    public JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber, Address address, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction) {
+    @OneToOne
+    @JoinColumn(name = "COMPANY_ID")
+    private Company company;
+
+    public JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber,
+                      Address address, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction, Company company) {
         this.jobReference = jobReference;
         this.description = description;
         this.vacanciesNumber = vacanciesNumber;
@@ -42,6 +45,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
         this.mode = mode;
         this.contractType = contractType;
         this.titleOrFunction = titleOrFunction;
+        this.company = company;
     }
 
     protected JobOpening() {
@@ -67,7 +71,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
         return jobReference.equals(that.jobReference) && description.equals(that.description)
                 && vacanciesNumber.equals(that.vacanciesNumber) && address.equals(that.address)
                 && mode.equals(that.mode) && contractType.equals(that.contractType)
-                && titleOrFunction.equals(that.titleOrFunction);
+                && titleOrFunction.equals(that.titleOrFunction) && company.equals(company);
     }
 
     public JobReference jobReference() {
@@ -98,5 +102,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public TitleOrFunction titleOrFunction() {
         return titleOrFunction;
     }
+
+    public Company company() { return company;}
 
 }

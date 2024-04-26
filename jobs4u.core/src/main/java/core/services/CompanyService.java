@@ -2,7 +2,6 @@ package core.services;
 
 import core.domain.company.Company;
 import core.domain.company.CompanyBuilder;
-import core.domain.company.CompanyNumber;
 import core.persistence.PersistenceContext;
 import core.repositories.CompanyRepository;
 import jakarta.transaction.Transactional;
@@ -20,6 +19,14 @@ public class CompanyService {
      * @return the registered company
      */
     @Transactional
+    public Company registerCompany(String companyName, int companyNumber) {
+        CompanyBuilder companyBuilder = new CompanyBuilder();
+        companyBuilder.withCompanyName(companyName).withCompanyNumber(companyNumber);
+        Company company = companyBuilder.build();
+        return companyRepository.save(company);
+    }
+
+    @Transactional
     public Company registerCompany(String companyName) {
         CompanyBuilder companyBuilder = new CompanyBuilder();
         companyBuilder.withCompanyName(companyName);
@@ -33,7 +40,7 @@ public class CompanyService {
      * @return The company object corresponding to the provided company number if found,
      *         or null if no such company exists in the repository.
      */
-    public Company findCompany(CompanyNumber companyNumber) {
+    public Company findCompany(int companyNumber) {
         Iterable<Company> companies = companyRepository.allCompanies() ;
         for(Company company : companies){
             if(company.identity().equals(companyNumber) ){

@@ -14,14 +14,12 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(
-        name = "COMPANY"
-)
+@Table(name = "COMPANY")
 @Embeddable
-public class Company implements AggregateRoot<CompanyNumber> {
+public class Company implements AggregateRoot<CompanyName> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private CompanyNumber companyNumber;
+    private int companyNumber;
 
     @Column(name = "COMPANY_NAME")
     private CompanyName companyName;
@@ -31,65 +29,72 @@ public class Company implements AggregateRoot<CompanyNumber> {
      * * @param name          the company name to set
      * @throws NullPointerException if the company number or name is null
      */
-    public Company(final CompanyName name, final CompanyNumber companyNumber) {
+    public Company(final CompanyName name, final int companyNumber) {
+        Preconditions.nonNull(companyNumber, "Company number cannot be null");
+        Preconditions.nonNull(name, "Company name cannot be null");
 
         this.companyName = name;
         this.companyNumber = companyNumber;
     }
+
+    public Company(final CompanyName name){
+        Preconditions.nonNull(name, "Company name cannot be null");
+        this.companyName= name;
+    }
+
     /**
      * Protected constructor for ORM usage.
      */
     protected Company(){
         // for ORM
     }
-    public boolean sameAs(final Object o){
-        if(this == o){
-            return true;
-        }
-
-        if(!(o instanceof Company)){
-            return false;
-        }
-
-        final Company that = (Company) o;
-
-        return companyNumber.equals(that.companyNumber) && companyName.equals(that.companyName);
-    }
-
-
     /**
-     * Retrieves the identity of this Company.
+     * Checks if this Company object is equal to another object.
      *
-     * @return the company number
+     * @param o the object to compare to
+     * @return true if the objects are equal, false otherwise
      */
-    public CompanyNumber identity(){
-        return null;
-    }
-    /**
-     * Retrieves the company number.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Company company = (Company) o;
+        return Objects.equals(companyNumber, company.companyNumber) && Objects.equals(companyName, company.companyName);
+    }/**
+     * Generates a hash code for this Company object.
      *
-     * @return the company number
+     * @return the hash code
      */
-    public CompanyNumber companyNumber(){
-        return this.companyNumber;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(companyNumber, companyName);
     }
+
     /**
      * Retrieves the company name.
      *
      * @return the company name
      */
-    public CompanyName companyName(){
-        return this.companyName;
+    public int companyNumber(){
+        return this.companyNumber;
     }
+    /**
+     * Compares this Company with another Company for equality.
+     *
+     * @param other the other object to compare to
+     * @return true if the Companies are equal, false otherwise
+     */
     @Override
-    public int compareTo(CompanyNumber o) {
-        return companyNumber.compareTo(o);
+    public boolean sameAs(final Object other) {
+        return DomainEntities.areEqual(this, other);
     }
 
     @Override
-    public String toString() {
-        return "Company " +
-                "companyNumber = " + companyNumber +
-                ", companyName = " + companyName;
+    public int compareTo(CompanyName o) {
+        return companyName.compareTo(o);
     }
+
+    @Override
+    public CompanyName identity() { return companyName; }
 }

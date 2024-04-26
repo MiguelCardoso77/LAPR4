@@ -1,13 +1,10 @@
 package backoffice.presentation.customer;
 
-import backoffice.presentation.company.AddCompanyUI;
-import backoffice.presentation.company.ListCompaniesUI;
 import core.application.controllers.AddCompanyController;
 import core.application.controllers.AddCustomerController;
 import core.application.controllers.AddUserController;
 import core.application.controllers.ListCompaniesController;
 import core.domain.company.Company;
-import core.domain.company.CompanyNumber;
 import core.domain.customer.Customer;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -84,7 +81,7 @@ public class RegisterCustomerUI extends AbstractUI {
             company.toString();
         }
         int companyNumber = Console.readInteger("Enter the number of the company you want to select: ");
-        return companiesController.findCompany(CompanyNumber.valueOf(companyNumber));
+        return companiesController.findCompany(Integer.valueOf(companyNumber));
     }
 
     private Company createNewCompany() {

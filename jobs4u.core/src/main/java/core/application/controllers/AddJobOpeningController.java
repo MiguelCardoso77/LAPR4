@@ -1,5 +1,6 @@
 package core.application.controllers;
 
+import core.domain.company.Company;
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.Mode;
@@ -14,9 +15,10 @@ public class AddJobOpeningController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final JobOpeningService jobOpeningService = new JobOpeningService();
 
-    public JobOpening addJobOpening(String jobReference, String description, int vacanciesNumber, String address, Mode mode, ContractType contractType, String titleOrFunction) {
+    public JobOpening addJobOpening(String jobReference, String description, int vacanciesNumber, String address,
+                                    Mode mode, ContractType contractType, String titleOrFunction, Company company) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.BOOTSTRAP);
 
-        return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction);
+        return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
     }
 }

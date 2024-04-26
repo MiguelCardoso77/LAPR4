@@ -1,14 +1,11 @@
 package core.application.controllers;
 
 import core.domain.company.Company;
-import core.domain.company.CompanyNumber;
 import core.domain.user.Jobs4URoles;
-import core.persistence.PersistenceContext;
-import core.repositories.CompanyRepository;
 import core.services.CompanyService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.application.UserManagementService;
+
 /**
  * A controller class for listing companies.
  */
@@ -21,11 +18,11 @@ public class ListCompaniesController {
      * @param companyNumber the company number to search for
      * @return the found company, or null if not found
      */
-    public Company findCompany(CompanyNumber companyNumber) {
+    public Company findCompany(int companyNumber) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         Iterable<Company> allCompanies = companyService.allCompanies();
         for (Company c : allCompanies) {
-            if (c.companyNumber().equals(companyNumber)) {
+            if (c.companyNumber()==(companyNumber)) {
                 return c;
             }
         }

@@ -25,13 +25,13 @@ public class ActivateUserUI extends AbstractUI {
             System.out.println("There is no registered User");
         } else {
             int cont = 1;
-            System.out.println("SELECT User to activate\n");
-            // FIXME use select widget, see, ChangeDishTypeUI
-            System.out.printf("%-6s%-10s%-30s%-30s%n", "Nº:", "Username", "Firstname", "Lastname");
+
+            System.out.println("Select User to activate\n");
+            System.out.printf("%-6s%-10s%-30s%-30s%n", "Nº:", "Email:", "Firstname", "Lastname");
+
             for (final SystemUser user : iterable) {
                 list.add(user);
-                System.out.printf("%-6d%-10s%-30s%-30s%n", cont, user.username(), user.name().firstName(),
-                        user.name().lastName());
+                System.out.printf("%-6d%-10s%-30s%-30s%n", cont, user.email(), user.name().firstName(), user.name().lastName());
                 cont++;
             }
             final int option = Console.readInteger("Enter user nº to activate or 0 to finish ");

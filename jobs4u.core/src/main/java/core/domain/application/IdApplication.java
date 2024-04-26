@@ -3,7 +3,6 @@ package core.domain.application;
 import eapli.framework.domain.model.ValueObject;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class IdApplication implements ValueObject, Comparable<IdApplication> {
     private long idApplication;

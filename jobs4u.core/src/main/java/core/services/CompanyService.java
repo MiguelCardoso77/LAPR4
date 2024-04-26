@@ -1,10 +1,8 @@
 package core.services;
 
-import core.domain.candidate.Candidate;
 import core.domain.company.Company;
 import core.domain.company.CompanyBuilder;
 import core.domain.company.CompanyNumber;
-import core.domain.customer.TelephoneNumber;
 import core.persistence.PersistenceContext;
 import core.repositories.CompanyRepository;
 import jakarta.transaction.Transactional;

@@ -23,6 +23,7 @@
  */
 package core.domain.customer;
 
+import core.domain.candidate.TelephoneNumber;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.EmailAddress;

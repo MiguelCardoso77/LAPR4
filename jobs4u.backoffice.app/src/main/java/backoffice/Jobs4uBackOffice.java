@@ -22,7 +22,7 @@ import eapli.framework.infrastructure.pubsub.EventDispatcher;
 @SuppressWarnings("squid:S106")
 public final class Jobs4uBackOffice extends BaseApplication {
 
-    private Jobs4uBackOffice() {
+    public Jobs4uBackOffice() {
     }
 
     public static void main(final String[] args) {

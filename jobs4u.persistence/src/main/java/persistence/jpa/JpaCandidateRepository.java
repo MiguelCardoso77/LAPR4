@@ -1,7 +1,7 @@
 package persistence.jpa;
 
 import core.domain.candidate.Candidate;
-import core.domain.customer.TelephoneNumber;
+import core.domain.candidate.TelephoneNumber;
 import core.repositories.CandidateRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;

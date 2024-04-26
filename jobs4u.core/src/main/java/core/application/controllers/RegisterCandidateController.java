@@ -5,7 +5,6 @@ import core.domain.user.Jobs4UPasswordPolicy;
 import core.domain.user.Jobs4URoles;
 import core.services.CandidateService;
 import eapli.framework.application.UseCaseController;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.Role;
@@ -17,7 +16,6 @@ import java.util.Set;
 
 @UseCaseController
 public class RegisterCandidateController {
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final UserManagementService userService = AuthzRegistry.userService();
     private final Jobs4UPasswordPolicy passwordPolicy = new Jobs4UPasswordPolicy();
 
@@ -30,8 +28,6 @@ public class RegisterCandidateController {
         Preconditions.nonNull(firstName);
         Preconditions.nonNull(lastName);
         Preconditions.nonNull(email);
-
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.ADMIN, Jobs4URoles.BOOTSTRAP, Jobs4URoles.CANDIDATE, Jobs4URoles.OPERATOR);
 
         roles.add(Jobs4URoles.CANDIDATE);
         String password = passwordPolicy.passwordGenerator(firstName);

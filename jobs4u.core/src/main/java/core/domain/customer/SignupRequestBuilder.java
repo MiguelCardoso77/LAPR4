@@ -23,6 +23,7 @@
  */
 package core.domain.customer;
 
+import core.domain.candidate.TelephoneNumber;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.application.PasswordPolicy;

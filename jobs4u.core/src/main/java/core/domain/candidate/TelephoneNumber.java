@@ -1,4 +1,4 @@
-package core.domain.customer;
+package core.domain.candidate;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.util.StringPredicates;

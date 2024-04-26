@@ -33,9 +33,6 @@ public class AddUserController {
      *
      * @return a list of RoleTypes
      */
-    public Role[] getRoleTypes() {
-        return Jobs4URoles.nonUserValues();
-    }
 
     public Role[] getAllRoles() {
         return Jobs4URoles.allValues();

@@ -1,16 +1,12 @@
 package core.domain.application;
 
-import core.domain.customer.TelephoneNumber;
-import core.domain.jobOpening.JobOpening;
+import core.domain.candidate.TelephoneNumber;
 import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.model.DomainFactory;
-import jakarta.persistence.Id;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
 
 public class ApplicationBuilder implements DomainFactory<Application> {

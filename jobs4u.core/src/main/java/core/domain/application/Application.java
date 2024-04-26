@@ -1,6 +1,6 @@
 package core.domain.application;
 
-import core.domain.customer.TelephoneNumber;
+import core.domain.candidate.TelephoneNumber;
 import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;

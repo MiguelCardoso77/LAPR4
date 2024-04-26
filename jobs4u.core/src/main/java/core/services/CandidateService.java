@@ -3,7 +3,7 @@ package core.services;
 import core.domain.candidate.Candidate;
 import core.domain.candidate.CandidateBuilder;
 import core.domain.candidate.Curriculum;
-import core.domain.customer.TelephoneNumber;
+import core.domain.candidate.TelephoneNumber;
 import core.persistence.PersistenceContext;
 import core.repositories.CandidateRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;

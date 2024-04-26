@@ -1,6 +1,5 @@
 package core.domain.candidate;
 
-import core.domain.customer.TelephoneNumber;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;

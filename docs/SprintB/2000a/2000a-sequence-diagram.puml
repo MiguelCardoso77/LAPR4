@@ -30,7 +30,7 @@ activate Operator
     Operator -> RegisterCandidateUI : provides account opening details
     activate RegisterCandidateUI
 
-       RegisterCandidateUI --> RegisterCandidateController : registerCandidate(firstName, lastName, email,\n role, createdOn, telephoneNumber, curriculum)
+       RegisterCandidateUI -> RegisterCandidateController : registerCandidate(firstName, lastName, email,\n role, createdOn, telephoneNumber, curriculum)
        activate RegisterCandidateController
 
              RegisterCandidateController -> AuthorizationService : ensureAuthenticatedUserHasAnyOf(OPERATOR)

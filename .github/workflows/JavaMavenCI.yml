@@ -55,3 +55,12 @@ jobs:
         with:
           name: backoffice-app-coverage-report
           path: jobs4u.backoffice.app/target/site/jacoco
+
+      - name: Generate combined code coverage report
+        run: mvn -B jacoco:report-aggregate
+
+      - name: Upload combined code coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jobs4u-coverage-report
+          path: target/site/jacoco

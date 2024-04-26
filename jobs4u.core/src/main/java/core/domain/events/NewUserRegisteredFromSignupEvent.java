@@ -27,6 +27,8 @@ import core.domain.company.Company;
 import core.domain.customer.TelephoneNumber;
 import eapli.framework.domain.events.DomainEvent;
 import eapli.framework.domain.events.DomainEventBase;
+import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.infrastructure.authz.domain.model.Name;
 import eapli.framework.infrastructure.authz.domain.model.Username;
 
 /**
@@ -37,29 +39,24 @@ public class NewUserRegisteredFromSignupEvent extends DomainEventBase implements
 
     private static final long serialVersionUID = 1L;
 
-    private final TelephoneNumber telephoneNumber;
-    private final Username newUser;
+    private final EmailAddress emailAddress;
+    private final Username username;
 
-    public NewUserRegisteredFromSignupEvent(final TelephoneNumber telephoneNumber,
-            final Username newUser) {
-        this.telephoneNumber = telephoneNumber;
-        this.newUser = newUser;
+    public NewUserRegisteredFromSignupEvent(final EmailAddress emailAddress, final Username username) {
+        this.emailAddress = emailAddress;
+        this.username = username;
     }
 
-    public TelephoneNumber telephoneNumber() {
-        return telephoneNumber;
-    }
-
-    public Company company(){
-        return company();
+    public EmailAddress emailAddress() {
+        return emailAddress;
     }
 
     public Username username() {
-        return newUser;
+        return username;
     }
 
     @Override
     public String toString() {
-        return "NewUserFromsignup(" + username() + ")";
+        return "NewUserFromsignup(" + username + ")";
     }
 }

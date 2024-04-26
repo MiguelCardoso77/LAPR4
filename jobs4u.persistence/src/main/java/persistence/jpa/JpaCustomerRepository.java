@@ -18,12 +18,12 @@ import java.util.Optional;
 class JpaCustomerRepository extends JpaAutoTxRepository<Customer, EmailAddress, EmailAddress> implements CustomerRepository {
 
     public JpaCustomerRepository(final TransactionalContext autoTx) {
-        super(autoTx, "mecanographicNumber");
+        super(autoTx, "emailAddress");
     }
 
     public JpaCustomerRepository(final String puname) {
         super(puname, Application.settings().getExtendedPersistenceProperties(),
-                "mecanographicNumber");
+                "emailAddress");
     }
 
     @Override

@@ -11,32 +11,23 @@ import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
 import java.util.Optional;
 
-/**
- *
- * @author Paulo Gandra de Sousa
- *
- */
 /* package */ class AddClientUserOnSignupAcceptedController {
 
-    private final UserRepository repo = PersistenceContext.repositories().users();
-    private final CustomerRepository customerRepository = PersistenceContext
-            .repositories().customerUsers();
+    private final UserRepository userRepository = PersistenceContext.repositories().users();
+    private final CustomerRepository customerRepository = PersistenceContext.repositories().customerUsers();
+
     public Customer addClientUser(final NewUserRegisteredFromSignupEvent event) {
         final Optional<SystemUser> newUser = findUser(event);
 
         return newUser.map(u -> {
             final CustomerBuilder customerBuilder = new CustomerBuilder();
-            customerBuilder.withAll(u, event.telephoneNumber(), event.company());
+            customerBuilder.withEmailAddress(event.emailAddress()).withUser(u);
             return customerRepository.save(customerBuilder.build());
         }).orElseThrow(IllegalStateException::new);
     }
 
-    @SuppressWarnings("squid:S1488")
     private Optional<SystemUser> findUser(final NewUserRegisteredFromSignupEvent event) {
-        // since we are using events, the actual user may not yet be
-        // created, so lets give it a time and wait
-        final Optional<SystemUser> newUser = Functions
-                .retry(() -> repo.ofIdentity(event.username()), 1000, 3);
+        final Optional<SystemUser> newUser = Functions.retry(() -> userRepository.ofIdentity(event.username()), 1000, 3);
         return newUser;
     }
 }

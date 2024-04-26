@@ -13,6 +13,7 @@
     <class>core.domain.process.Process</class>
     <class>core.domain.candidate.Candidate</class>
     <class>core.domain.company.Company</class>
+    <class>core.domain.customer.Customer</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>

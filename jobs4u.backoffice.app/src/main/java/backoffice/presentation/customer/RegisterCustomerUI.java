@@ -1,21 +1,26 @@
 package backoffice.presentation.customer;
 
+import backoffice.presentation.jobs.AddJobOpeningUI;
 import core.application.controllers.AddCompanyController;
 import core.application.controllers.AddCustomerController;
 import core.application.controllers.AddUserController;
 import core.application.controllers.ListCompaniesController;
 import core.domain.company.Company;
 import core.domain.customer.Customer;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class RegisterCustomerUI extends AbstractUI {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
     private final AddUserController controller = new AddUserController();
 
     private final AddCustomerController theController = new AddCustomerController();
@@ -36,7 +41,7 @@ public class RegisterCustomerUI extends AbstractUI {
             final Calendar createdOn = Calendar.getInstance();
             final Set<Role> roles = new HashSet<>();
 
-            final Company selectedCompany = selectOrCreateCompany();
+            Company selectedCompany = selectOrCreateCompany();
 
             try {
                 Customer registeredCustomer = theController.registerCustomer(firstName, lastName, email, roles, createdOn, selectedCompany , currentUser);
@@ -66,22 +71,47 @@ public class RegisterCustomerUI extends AbstractUI {
 
         switch (option) {
             case 1:
-                return selectExistingCompany();
+                return showAndSelectCompanies();
             case 2:
                 return createNewCompany();
             default:
                 System.out.println("Invalid choice. Selecting Existing Company by default.");
-                return selectExistingCompany();
+                return showAndSelectCompanies();
         }
     }
 
-    private Company selectExistingCompany() {
-        System.out.println("List of Companies:");
-        for (Company company : companiesController.allCompanies()){
-            company.toString();
+    private Company showAndSelectCompanies() {
+        final List<Company> list = new ArrayList<>();
+        final Iterable<Company> iterable = companiesController.allCompanies();
+
+        Company company = null;
+        if (!iterable.iterator().hasNext()) {
+            System.out.println("There are no companies");
+        } else {
+            int cont = 1;
+            System.out.println("List of Companies: \n");
+            for (Company company1 : iterable) {
+                list.add(company1);
+                System.out.printf("%-6s%-30s%-30s%n", cont, company1.identity(), company1.companyNumber());
+                cont++;
+            }
+
+            final int option = Console.readInteger("Enter the number of the company");
+            if (option == 0) {
+                System.out.println("No company selected");
+            } else {
+                try {
+                    company = this.companiesController.findCompany(list.get(option - 1).companyNumber());
+                } catch (IntegrityViolationException | ConcurrencyException ex) {
+                    LOGGER.error("Error performing the operation", ex);
+                    System.out.println(
+                            "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
+                }
+            }
         }
-        int companyNumber = Console.readInteger("Enter the number of the company you want to select: ");
-        return companiesController.findCompany(Integer.valueOf(companyNumber));
+
+        return company;
+
     }
 
     private Company createNewCompany() {

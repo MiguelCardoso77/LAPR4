@@ -56,7 +56,7 @@ public class AddCustomerController {
         Preconditions.nonNull(lastName);
         Preconditions.nonNull(email);
 
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.ADMIN, Jobs4URoles.CANDIDATE, Jobs4URoles.OPERATOR);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.ADMIN, Jobs4URoles.CANDIDATE, Jobs4URoles.OPERATOR, Jobs4URoles.CUSTOMER_MANAGER);
 
         roles.add(Jobs4URoles.CUSTOMER);
         String password = passwordPolicy.passwordGenerator(firstName);

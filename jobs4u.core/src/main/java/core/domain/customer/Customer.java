@@ -44,11 +44,12 @@ public class Customer implements AggregateRoot<EmailAddress> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private EmailAddress emailAddress;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "COMPANY_NUMBER")
     private Company company;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "CUSTOMER_MANAGER_EMAIL")
     private SystemUser customerManager;
 

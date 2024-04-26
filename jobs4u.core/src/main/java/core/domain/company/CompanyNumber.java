@@ -10,7 +10,6 @@ import java.util.Objects;
  * This class is a value object.
  */
 public class CompanyNumber implements ValueObject, Comparable<CompanyNumber> {
-    @Column(name = "COMPANY_ID")
     private long companyNumber;
     /**
      * Constructs a CompanyNumber object with the specified company number.

@@ -1,17 +1,15 @@
 package bootstrap.infrastructure;
 
+import bootstrappers.smoketests.Jobs4USmokeTester;
 import console.BaseApplication;
 import bootstrappers.bootstraping.Jobs4UBootstrapper;
-import bootstrappers.bootstraping.demo.BaseDemoBootstrapper;
 import core.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
 import core.domain.events.NewUserRegisteredFromSignupEvent;
 import core.domain.events.SignupAcceptedEvent;
-import eapli.framework.collections.util.ArrayPredicates;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
 import core.persistence.PersistenceContext;
-import bootstrappers.smoketests.BaseDemoSmokeTester;
 import core.application.eventhandlers.SignupAcceptedWatchDog;
 import core.domain.user.Jobs4UPasswordPolicy;
 
@@ -19,8 +17,7 @@ public class Jobs4UBootstrap extends BaseApplication {
     private Jobs4UBootstrap() {
     }
 
-    private boolean isToBootstrapDemoData;
-    private boolean isToRunSampleE2E;
+    private final boolean isToBootstrapTestData = true;
 
     public static void main(final String[] args) {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
@@ -29,33 +26,22 @@ public class Jobs4UBootstrap extends BaseApplication {
 
     @Override
     protected void doMain(final String[] args) {
-        handleArgs(args);
-
-        System.out.println("\n\n------- MASTER DATA -------");
-        new Jobs4UBootstrapper().execute();
-
-        if (isToBootstrapDemoData) {
-            System.out.println("\n\n------- DEMO DATA -------");
-            new BaseDemoBootstrapper().execute();
-        }
-        if (isToRunSampleE2E) {
-            System.out.println("\n\n------- BASIC SCENARIO -------");
-            new BaseDemoSmokeTester().execute();
-        }
-    }
-
-    private void handleArgs(final String[] args) {
-        isToRunSampleE2E = ArrayPredicates.contains(args, "-smoke:basic");
-        if (isToRunSampleE2E) {
-            isToBootstrapDemoData = true;
+        if (isToBootstrapTestData) {
+            System.out.println("\n\n------- TEST DATA -------");
+            new Jobs4USmokeTester().execute();
         } else {
-            isToBootstrapDemoData = ArrayPredicates.contains(args, "-bootstrap:demo");
+            System.out.println("\n\n------- MASTER DATA -------");
+            new Jobs4UBootstrapper().execute();
         }
     }
 
     @Override
     protected String appTitle() {
-        return "Bootstrapping Jobs4u data ";
+        if (isToBootstrapTestData) {
+            return "Bootstrapping Jobs4u test data";
+        } else {
+            return "Bootstrapping Jobs4u data ";
+        }
     }
 
     @Override

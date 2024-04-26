@@ -1,52 +1,37 @@
-/*
- * Copyright (c) 2013-2024 the original author or authors.
- *
- * MIT License
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package user.console.presentation;
 
 import console.presentation.authz.MyUserMenu;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 
 /**
- * @author Paulo Gandra Sousa
+ * Represents the main menu of the Candidate App.
+ * Extends {@link CandidateUserUI} to display user authentication information in the headline.
+ * Responsible for displaying the main menu options and handling user input.
+ * This menu includes options for managing the user's profile and exiting the application.
+ * <p>
+ * The main menu consists of the following options:
+ * 1. My User: Sub-menu for managing the current user's profile.
+ * 2. Exit: Option to exit the application.
+ * </p>
+ *
+ * @author Miguel Cardoso
  */
 class MainMenu extends CandidateUserUI {
 
     private static final String SEPARATOR_LABEL = "--------------";
-
     private static final int EXIT_OPTION = 0;
+    private static final int USER_PROFILE_OPTION = 1;
 
-    // MAIN MENU
-    private static final int MY_USER_OPTION = 1;
-
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
+    /**
+     * Displays the main menu and handles user input.
+     *
+     * @return true if the user selected the exit option, false otherwise
+     */
     @Override
     public boolean show() {
         drawFormTitle();
@@ -54,23 +39,29 @@ class MainMenu extends CandidateUserUI {
     }
 
     /**
-     * @return true if the user selected the exit option
+     * Builds and displays the main menu options.
+     *
+     * @return true if the user selected the exit option, false otherwise
      */
     @Override
     public boolean doShow() {
         final Menu menu = buildMainMenu();
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
+
         return renderer.render();
     }
 
+    /**
+     * Builds the main menu with its options.
+     *
+     * @return the constructed main menu
+     */
     private Menu buildMainMenu() {
         final Menu mainMenu = new Menu();
-
         final Menu myUserMenu = new MyUserMenu();
-        mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
 
+        mainMenu.addSubMenu(USER_PROFILE_OPTION, myUserMenu);
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
-
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;

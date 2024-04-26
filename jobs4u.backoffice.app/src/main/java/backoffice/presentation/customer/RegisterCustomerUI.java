@@ -3,11 +3,14 @@ package backoffice.presentation.customer;
 import backoffice.presentation.company.AddCompanyUI;
 import backoffice.presentation.company.ListCompaniesUI;
 import core.application.controllers.AddCustomerController;
+import core.application.controllers.AddUserController;
 import core.application.controllers.ListCompaniesController;
 import core.domain.company.Company;
 import core.domain.company.CompanyNumber;
 import core.domain.customer.Customer;
+import core.domain.user.Jobs4URoles;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.domain.model.Name;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
@@ -18,6 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class RegisterCustomerUI extends AbstractUI {
+    private final AddUserController controller = new AddUserController();
 
     private final AddCustomerController theController = new AddCustomerController();
 
@@ -25,7 +29,12 @@ public class RegisterCustomerUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        SystemUser currentUser = AuthzRegistry.authorizationService().session().authenticatedUser();
+
+        final Calendar createdOn1 = Calendar.getInstance();
+        final Set<Role> role = new HashSet<>();
+        role.add(Jobs4URoles.CUSTOMER_MANAGER);
+
+        SystemUser currentUser = controller.addUser("fjwbfj", "Agubhnj23", "fyghjk", "tgyhjn", "FGHJKLFGHJK", role, createdOn1);
 
         if (currentUser != null) {
             final String firstName = Console.readLine("First Name:");

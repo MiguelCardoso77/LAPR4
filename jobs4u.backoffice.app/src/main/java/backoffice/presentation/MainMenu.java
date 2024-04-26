@@ -29,24 +29,23 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 public class MainMenu extends AbstractUI {
 
     private static final String RETURN_LABEL = "Return ";
-
     private static final int EXIT_OPTION = 0;
 
-    // USERS
-    private static final int LIST_USERS_OPTION = 1;
-    private static final int ADD_USER_OPTION = 2;
-    private static final int LIST_BACKOFFICE_USERS_OPTION = 3;
-    private static final int ACTIVATE_USER_OPTION = 4;
-    private static final int DEACTIVATE_USER_OPTION = 5;
-    private static final int ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION = 6;
+    // OPTIONS
+    private static final int OPTION_ONE = 1;
+    private static final int OPTION_TWO = 2;
+    private static final int OPTION_THREE = 3;
+    private static final int OPTION_FOUR = 4;
+    private static final int OPTION_FIVE = 5;
+    private static final int OPTION_SIX = 6;
+    private static final int OPTION_SEVEN = 7;
+    private static final int OPTION_EIGHT = 8;
+    private static final int OPTION_NINE = 9;
+    private static final int OPTION_TEN = 10;
 
-    private static final int LIST_ALL_APPLICATIONS_OF_A_JOBOPENING = 7;
-
-
-    // MAIN MENU
+    // MENU OPTIONS
     private static final int MY_USER_OPTION = 1;
     private static final int USER_MANAGEMENT_OPTION = 2;
-    private static final int SETTINGS_OPTION = 3;
 
     private static final String SEPARATOR_LABEL = "--------------";
 
@@ -116,12 +115,19 @@ public class MainMenu extends AbstractUI {
     private Menu buildAdminMenu() {
         final Menu menu = new Menu("Admin Actions >");
 
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
-        menu.addItem(LIST_BACKOFFICE_USERS_OPTION, "List all Backoffice Users", new ListBackofficeUsersAction());
-        menu.addItem(ACTIVATE_USER_OPTION,"Activate User", new ActivateUserAction());
-        menu.addItem(DEACTIVATE_USER_OPTION, "Deactivate User", new DeactivateUserAction());
-        menu.addItem(ACCEPT_REFUSE_SIGNUP_REQUEST_OPTION, "Accept/Refuse Signup Request", new AcceptRefuseSignupRequestAction());
+        menu.addItem(OPTION_ONE, "List all Users", new ListUsersAction());
+        menu.addItem(OPTION_TWO, "List all Backoffice Users", new ListBackofficeUsersAction());
+        menu.addItem(OPTION_THREE, "List all Candidate's data", new DisplayCandidateDataAction());
+        menu.addItem(OPTION_FOUR, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
+
+        menu.addItem(OPTION_FIVE, "Add User", new AddUserUI()::show);
+        menu.addItem(OPTION_SIX,"Activate User", new ActivateUserAction());
+        menu.addItem(OPTION_SEVEN, "Deactivate User", new DeactivateUserAction());
+        menu.addItem(OPTION_EIGHT, "Accept/Refuse Signup Request", new AcceptRefuseSignupRequestAction());
+
+        menu.addItem(OPTION_NINE, "Add Job Opening", new AddJobOpeningAction());
+        menu.addItem(OPTION_TEN, "Register Customer", new RegisterCustomerAction());
+
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
@@ -130,12 +136,13 @@ public class MainMenu extends AbstractUI {
     private Menu buildCustomerManagerMenu() {
         final Menu menu = new Menu("Customer Manager Actions >");
 
-        menu.addItem(1, "List all Users", new ListUsersAction());
-        menu.addItem(2, "Add User", new AddUserUI()::show);
-        menu.addItem(3, "List all Candidate's data", new DisplayCandidateDataAction());
-        menu.addItem(4, "Add Job Opening", new AddJobOpeningAction());
-        menu.addItem(5, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
-        menu.addItem(6, "Register Customer", new RegisterCustomerAction());
+        menu.addItem(OPTION_ONE, "List all Candidate's data", new DisplayCandidateDataAction());
+        menu.addItem(OPTION_TWO, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
+
+        menu.addItem(OPTION_THREE, "Register Customer", new RegisterCustomerAction());
+        menu.addItem(OPTION_FOUR, "Register Candidate", new RegisterCandidateAction());
+        menu.addItem(OPTION_FIVE, "Add Job Opening", new AddJobOpeningAction());
+
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
@@ -144,9 +151,9 @@ public class MainMenu extends AbstractUI {
     private Menu buildOperatorMenu() {
         final Menu menu = new Menu("Operator Actions >");
 
-        menu.addItem(LIST_USERS_OPTION, "List all Users", new ListUsersAction());
-        menu.addItem(ADD_USER_OPTION, "Add User", new AddUserUI()::show);
-        menu.addItem(3, "Register Candidate", new RegisterCandidateAction());
+        menu.addItem(OPTION_ONE, "List all Users", new ListUsersAction());
+        menu.addItem(OPTION_TWO, "Register Candidate", new RegisterCandidateAction());
+
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

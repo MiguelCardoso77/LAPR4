@@ -32,7 +32,6 @@ public class Company implements AggregateRoot<CompanyNumber> {
      * @throws NullPointerException if the company number or name is null
      */
     public Company(final CompanyName name, final CompanyNumber companyNumber) {
-        Preconditions.nonNull(companyNumber, "Company number name cannot be null");
 
         this.companyName = name;
         this.companyNumber = companyNumber;
@@ -43,28 +42,21 @@ public class Company implements AggregateRoot<CompanyNumber> {
     protected Company(){
         // for ORM
     }
-    /**
-     * Checks if this Company object is equal to another object.
-     *
-     * @param o the object to compare to
-     * @return true if the objects are equal, false otherwise
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Company company = (Company) o;
-        return Objects.equals(companyNumber, company.companyNumber) && Objects.equals(companyName, company.companyName);
-    }/**
-     * Generates a hash code for this Company object.
-     *
-     * @return the hash code
-     */
+    public boolean sameAs(final Object o){
+        if(this == o){
+            return true;
+        }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(companyNumber, companyName);
+        if(!(o instanceof Company)){
+            return false;
+        }
+
+        final Company that = (Company) o;
+
+        return companyNumber.equals(that.companyNumber) && companyName.equals(that.companyName);
     }
+
+
     /**
      * Retrieves the identity of this Company.
      *
@@ -89,18 +81,15 @@ public class Company implements AggregateRoot<CompanyNumber> {
     public CompanyName companyName(){
         return this.companyName;
     }
-    /**
-     * Compares this Company with another Company for equality.
-     *
-     * @param other the other object to compare to
-     * @return true if the Companies are equal, false otherwise
-     */
-    @Override
-    public boolean sameAs(final Object other) {
-        return DomainEntities.areEqual(this, other);
-    }
     @Override
     public int compareTo(CompanyNumber o) {
         return companyNumber.compareTo(o);
+    }
+
+    @Override
+    public String toString() {
+        return "Company " +
+                "companyNumber = " + companyNumber +
+                ", companyName = " + companyName;
     }
 }

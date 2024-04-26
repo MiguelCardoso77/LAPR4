@@ -2,15 +2,13 @@ package backoffice.presentation.customer;
 
 import backoffice.presentation.company.AddCompanyUI;
 import backoffice.presentation.company.ListCompaniesUI;
+import core.application.controllers.AddCompanyController;
 import core.application.controllers.AddCustomerController;
 import core.application.controllers.AddUserController;
 import core.application.controllers.ListCompaniesController;
 import core.domain.company.Company;
 import core.domain.company.CompanyNumber;
 import core.domain.customer.Customer;
-import core.domain.user.Jobs4URoles;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.domain.model.Name;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;
@@ -26,15 +24,12 @@ public class RegisterCustomerUI extends AbstractUI {
     private final AddCustomerController theController = new AddCustomerController();
 
     private final ListCompaniesController companiesController = new ListCompaniesController();
+    private final AddCompanyController addCompanyController = new AddCompanyController();
 
     @Override
     protected boolean doShow() {
 
-        final Calendar createdOn1 = Calendar.getInstance();
-        final Set<Role> role = new HashSet<>();
-        role.add(Jobs4URoles.CUSTOMER_MANAGER);
-
-        SystemUser currentUser = controller.addUser("fjwbfj", "Agubhnj23", "fyghjk", "tgyhjn", "FGHJKLFGHJK", role, createdOn1);
+        SystemUser currentUser = controller.getLoggedInUser();
 
         if (currentUser != null) {
             final String firstName = Console.readLine("First Name:");
@@ -85,14 +80,17 @@ public class RegisterCustomerUI extends AbstractUI {
 
     private Company selectExistingCompany() {
         System.out.println("List of Companies:");
-        new ListCompaniesUI().show();
+        for (Company company : companiesController.allCompanies()){
+            company.toString();
+        }
         int companyNumber = Console.readInteger("Enter the number of the company you want to select: ");
         return companiesController.findCompany(CompanyNumber.valueOf(companyNumber));
     }
 
     private Company createNewCompany() {
-        new AddCompanyUI().show();
-        return selectExistingCompany();
+        String companyName = Console.readLine("Enter the company name: ");
+        Company newCompany = addCompanyController.addCompany(companyName);
+        return companiesController.findCompany(newCompany.companyNumber());
     }
 
     @Override

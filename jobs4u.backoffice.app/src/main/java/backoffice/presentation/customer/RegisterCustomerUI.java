@@ -48,7 +48,7 @@ public class RegisterCustomerUI extends AbstractUI {
 
                 if (registeredCustomer != null) {
                     System.out.println("Customer registered successfully:");
-                    System.out.println(registeredCustomer.toString());
+                    System.out.println(registeredCustomer);
                 } else {
                     System.out.println("Failed to register customer.");
                 }
@@ -64,54 +64,64 @@ public class RegisterCustomerUI extends AbstractUI {
     }
 
     private Company selectOrCreateCompany() {
+        showCompanies();
+        System.out.println();
         System.out.println("Select or Create a Company:");
         System.out.println("1. Select Existing Company");
         System.out.println("2. Create New Company");
         int option = Console.readInteger("Enter your choice: ");
 
+        Company company;
         switch (option) {
             case 1:
-                return showAndSelectCompanies();
+                company = selectCompany();
+                break;
             case 2:
-                return createNewCompany();
+                company = createNewCompany();
+                break;
             default:
                 System.out.println("Invalid choice. Selecting Existing Company by default.");
-                return showAndSelectCompanies();
+                company = selectCompany();
         }
+        return company;
     }
 
-    private Company showAndSelectCompanies() {
-        final List<Company> list = new ArrayList<>();
+    private void showCompanies() {
         final Iterable<Company> iterable = companiesController.allCompanies();
 
-        Company company = null;
         if (!iterable.iterator().hasNext()) {
             System.out.println("There are no companies");
         } else {
             int cont = 1;
-            System.out.println("List of Companies: \n");
-            for (Company company1 : iterable) {
-                list.add(company1);
-                System.out.printf("%-6s%-30s%n", cont, company1.companyName());
+            System.out.println("List of registered Companies: \n");
+            for (Company company : iterable) {
+                System.out.printf("%-6s%-30s%n", cont, company.companyName());
                 cont++;
             }
+        }
+    }
 
-            final int option = Console.readInteger("Enter the number of the company");
-            if (option == 0) {
-                System.out.println("No company selected");
-            } else {
-                try {
-                    company = this.companiesController.findCompany(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println(
-                            "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
+    private Company selectCompany() {
+        final List<Company> list = new ArrayList<>();
+        for (Company company : companiesController.allCompanies()) {
+            list.add(company);
+        }
+
+        Company company = null;
+        final int option = Console.readInteger("Enter the number of the company");
+        if (option == 0) {
+            System.out.println("No company selected");
+        } else {
+            try {
+                company = this.companiesController.findCompany(list.get(option - 1).identity());
+            } catch (IntegrityViolationException | ConcurrencyException ex) {
+                LOGGER.error("Error performing the operation", ex);
+                System.out.println(
+                        "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
             }
         }
 
         return company;
-
     }
 
     private Company createNewCompany() {

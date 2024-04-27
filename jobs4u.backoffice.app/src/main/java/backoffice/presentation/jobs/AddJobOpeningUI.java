@@ -24,7 +24,6 @@ public class AddJobOpeningUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        final String jobReference = "1";
         final String description = Console.readLine("Description");
         final int vacanciesNumber = Console.readInteger("Vacancies Number");
         final String address = Console.readLine("Address");
@@ -39,6 +38,8 @@ public class AddJobOpeningUI extends AbstractUI {
 
         showCompanies();
         Company company = selectCompany();
+
+        final String jobReference = company.companyName().toString();
 
         try {
             this.theController.addJobOpening(jobReference, description, vacanciesNumber, address, modes, contractTypes, titleOrFunction, company);

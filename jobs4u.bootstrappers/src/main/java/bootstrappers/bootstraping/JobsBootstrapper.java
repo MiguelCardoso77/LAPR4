@@ -2,7 +2,6 @@ package bootstrappers.bootstraping;
 
 import core.application.controllers.AddJobOpeningController;
 import core.domain.company.Company;
-import core.domain.company.CompanyName;
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.Mode;
 import eapli.framework.actions.Action;
@@ -16,8 +15,8 @@ public class JobsBootstrapper implements Action {
     public boolean execute(){
         CompanyBootstrapper companyBootstrapper = new CompanyBootstrapper();
 
-        registerJobOpening("1", "Jogador da Bola", 3, "Estádio do Dragão", Mode.ON_SITE, ContractType.FULL_TIME, "Ponta de Lança", companyBootstrapper.controller.addCompany("FEUP"));
-        registerJobOpening("2", "Chefe de Cozinha", 2, "Bar da Ae", Mode.ON_SITE, ContractType.FULL_TIME, "Chef",companyBootstrapper.controller.addCompany("FMUP") );
+        registerJobOpening("FEUP", "Jogador da Bola", 3, "Estádio do Dragão", Mode.ON_SITE, ContractType.FULL_TIME, "Ponta de Lança", companyBootstrapper.controller.addCompany("FEUP"));
+        registerJobOpening("FMUP", "Chefe de Cozinha", 2, "Bar da Ae", Mode.ON_SITE, ContractType.FULL_TIME, "Chef",companyBootstrapper.controller.addCompany("FMUP") );
 
         return true;
     }

@@ -1,29 +1,40 @@
 package core.domain.jobOpening;
 
 import eapli.framework.domain.model.ValueObject;
-
 import java.util.Random;
 
 public class JobReference implements ValueObject, Comparable<JobReference> {
+
     private String jobReference;
-
-    public JobReference(final String companyNumber) {
-        if (companyNumber == null || companyNumber.isEmpty()) {
-            throw new IllegalArgumentException("Company Number should not be empty");
-        }
-
-        this.jobReference = buildJobReference(companyNumber);
-    }
 
     protected JobReference() {
         // for ORM
     }
+    public JobReference(final String companyName) {
+        if (companyName == null || companyName.isEmpty()) {
+            throw new IllegalArgumentException("Company Number should not be empty");
+        }
+        String companyReference = buildCompanyReference(companyName);
+        this.jobReference = buildJobReference(companyReference);
+    }
 
-    public String buildJobReference(final String companyNumber) {
+    private String buildCompanyReference(String companyName) {
+        String companyReference = null;
+        if (companyName != null && companyName.length() >= 3) {
+            companyReference = companyName.substring(0, 3);
+        } else {
+            System.out.println("Company name is either null or too short.");
+        }
+        return companyReference;
+    }
+
+
+
+    public String buildJobReference(final String companyReference) {
         Random rand = new Random(); // Generate random 5 digit code
         int randomPart = rand.nextInt(90000) + 10000;
 
-        return companyNumber + "-" + randomPart;
+        return companyReference + "-" + randomPart;
     }
 
     public static JobReference valueOf(final String jobReference) {

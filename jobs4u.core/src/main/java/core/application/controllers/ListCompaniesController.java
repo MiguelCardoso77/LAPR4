@@ -22,7 +22,7 @@ public class ListCompaniesController {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         Iterable<Company> allCompanies = companyService.allCompanies();
         for (Company c : allCompanies) {
-            if (c.companyNumber()==(companyNumber)) {
+            if (c.identity()==(companyNumber)) {
                 return c;
             }
         }

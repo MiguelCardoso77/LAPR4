@@ -2,6 +2,7 @@ package backoffice.presentation;
 
 import backoffice.presentation.applications.ListJobOpeningApplicationsAction;
 import backoffice.presentation.authz.*;
+import backoffice.presentation.candidate.ListCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
 import backoffice.presentation.jobs.AddJobOpeningAction;
@@ -153,6 +154,7 @@ public class MainMenu extends AbstractUI {
 
         menu.addItem(OPTION_ONE, "List all Users", new ListUsersAction());
         menu.addItem(OPTION_TWO, "Register Candidate", new RegisterCandidateAction());
+        menu.addItem(OPTION_THREE, "List all Candidates", new ListCandidatesAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

@@ -5,10 +5,8 @@ autonumber
 actor "Customer Manager" as CM
 participant AddJobOpeningUI <<presentation>>
 participant AddJobOpeningController <<application>>
-participant PersistenceContext <<persistence>>
-participant RepositoryFactory <<factory>>
-database CustomerRepository <<repository>>
-participant Customer <<Company>>
+participant JobOpeningService <<service>>
+participant JobOpeningBuilder <<builder>>
 participant JobOpening <<JobOpening>>
 database JobOpeningRepository <<repository>>
 
@@ -27,59 +25,41 @@ activate CM
 
         activate AddJobOpeningUI
 
-    AddJobOpeningUI -> AddJobOpeningController: createJobOpening(description, vacanciesNumber, \n address, mode, contractType, titleOrFunction, \n jobReference, processDate)
+    AddJobOpeningUI -> AddJobOpeningController: addJobOpening(description, vacanciesNumber, \n address, mode, contractType, titleOrFunction, \n jobReference, processDate)
 
         activate AddJobOpeningController
 
-    AddJobOpeningController -> PersistenceContext : repositories()
+    AddJobOpeningController  -> JobOpeningService: registerJobOpening(jobReference, description, vacanciesNumber, \n address, mode, contractType, titleOrFunction)
 
-        activate PersistenceContext
+        activate JobOpeningService
 
-    PersistenceContext --> AddJobOpeningController : factory
+    JobOpeningService -> JobOpeningBuilder: build()
 
-        deactivate PersistenceContext
+        activate JobOpeningBuilder
 
-    AddJobOpeningController -> RepositoryFactory : companies()
-
-        activate RepositoryFactory
-
-    RepositoryFactory --> AddJobOpeningController : companies
-
-        deactivate RepositoryFactory
-
-alt companyExists() return true
-
-    AddJobOpeningController -> CustomerRepository : findCompanyByCode(companyName)
-        activate CustomerRepository
-
-    CustomerRepository --> AddJobOpeningController : company
-        deactivate CustomerRepository
-end alt
-
-
-alt companyExists() return false
-    AddJobOpeningController -> Customer: create(code, name)
-        activate Customer
-
-    Customer --> AddJobOpeningController: company
-        deactivate Customer
-end alt
-
-    AddJobOpeningController -> JobOpening: create(description, vacanciesNumber, address, mode, contractType, titleOrFunction, \n jobReference, processDate, company)
+    JobOpeningBuilder -> JobOpening : JobOpening(jobReference, description, vacanciesNumber, \n address, mode, contractType, titleOrFunction)
 
         activate JobOpening
 
-    JobOpening --> AddJobOpeningController: jobOpening
+    JobOpening --> JobOpeningBuilder: jobOpening
 
         deactivate JobOpening
 
-    AddJobOpeningController -> JobOpeningRepository : save(JobOpening)
+    JobOpeningBuilder --> JobOpeningService: jobOpening
+
+        deactivate JobOpeningBuilder
+
+    JobOpeningService -> JobOpeningRepository: save(JobOpening)
 
         activate JobOpeningRepository
 
-    JobOpeningRepository --> AddJobOpeningController: return success
+    JobOpeningRepository --> JobOpeningService: return true
 
         deactivate JobOpeningRepository
+
+    JobOpeningService --> AddJobOpeningController: jobOpening
+
+        deactivate JobOpeningService
 
     AddJobOpeningController --> AddJobOpeningUI : JobOpening
 
@@ -90,5 +70,7 @@ end alt
         deactivate AddJobOpeningUI
 
         deactivate CM
+
+
 
 @enduml

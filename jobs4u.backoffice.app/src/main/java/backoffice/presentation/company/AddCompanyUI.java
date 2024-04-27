@@ -12,8 +12,9 @@ public class AddCompanyUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         final String companyName = Console.readLine("Company Name");
+        final int companyNumber = Console.readInteger("Company Number");
         try {
-            this.theController.addCompany(companyName);
+            this.theController.addCompany(companyName, companyNumber);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             System.out.println("That company name is already in use.");
         }

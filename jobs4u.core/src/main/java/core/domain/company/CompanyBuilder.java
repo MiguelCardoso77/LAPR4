@@ -8,7 +8,7 @@ import eapli.framework.validations.Preconditions;
  */
 public class CompanyBuilder implements DomainFactory<Company> {
 
-    private CompanyNumber companyNumber;
+    private int companyNumber;
     private CompanyName companyName;
     /**
      * Sets the company number for the company being built.
@@ -16,7 +16,7 @@ public class CompanyBuilder implements DomainFactory<Company> {
      * @param companyNumber the company number to set
      * @return this CompanyBuilder instance
      */
-    public CompanyBuilder withCompanyNumber(final CompanyNumber companyNumber){
+    public CompanyBuilder withCompanyNumber(final int companyNumber){
         Preconditions.nonNull(companyNumber);
         this.companyNumber = companyNumber;
         return this;
@@ -43,17 +43,7 @@ public class CompanyBuilder implements DomainFactory<Company> {
         this.companyName = new CompanyName(companyName);
         return this;
     }
-    /**
-     * Sets the company number for the company being built from a long value.
-     *
-     * @param companyNumber the company number as a long value
-     * @return this CompanyBuilder instance
-     */
-    public CompanyBuilder withCompanyNumber(final long companyNumber){
-        Preconditions.nonNull(companyNumber);
-        this.companyNumber = new CompanyNumber(companyNumber);
-        return this;
-    }
+
     /**
      * Builds a new instance of {@link Company} using the provided company number and name.
      *
@@ -65,6 +55,5 @@ public class CompanyBuilder implements DomainFactory<Company> {
         // an exception. however, we will leave that to the constructor
         return new Company(companyName, companyNumber);
     }
-
 
 }

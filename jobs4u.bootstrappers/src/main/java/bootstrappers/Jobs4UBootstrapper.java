@@ -1,5 +1,6 @@
 package bootstrappers;
 
+import bootstrappers.bootstraping.CompanyBootstrapper;
 import bootstrappers.bootstraping.JobsBootstrapper;
 import bootstrappers.bootstraping.MasterUsersBootstrapper;
 import core.persistence.PersistenceContext;
@@ -37,6 +38,7 @@ public class Jobs4UBootstrapper implements Action {
     @Override
     public boolean execute() {
         final Action[] actions = { new MasterUsersBootstrapper(),
+                                   new CompanyBootstrapper(),
                                    new JobsBootstrapper()};
 
         registerBootstrapAccount();

@@ -14,7 +14,8 @@ import java.util.Objects;
  */
 
 @Embeddable
-public final class CompanyName implements ValueObject, Serializable {
+public final class CompanyName implements ValueObject, Serializable,  Comparable<CompanyName>  {
+
     @Column(name = "DESIGNATION")
     private String designation;
     /**
@@ -88,5 +89,10 @@ public final class CompanyName implements ValueObject, Serializable {
         int result = 1;
         result = prime * result + ((designation == null) ? 0 : designation.hashCode());
         return result;
+    }
+
+    @Override
+    public int compareTo(CompanyName o) {
+        return this.designation.compareTo(o.designation);
     }
 }

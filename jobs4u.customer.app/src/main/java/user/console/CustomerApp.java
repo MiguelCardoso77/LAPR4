@@ -7,17 +7,25 @@ import core.domain.user.Jobs4UPasswordPolicy;
 import user.console.presentation.FrontMenu;
 
 /**
- * Base User App.
+ * Main class for the Jobs4U Customer Application.
+ * This class initializes the application by configuring the authorization registry and displaying the front menu.
+ *
+ * @author Miguel Cardoso
  */
 @SuppressWarnings("squid:S106")
 public final class CustomerApp {
 
     /**
-     * Empty constructor is private to avoid instantiation of this class.
+     * Private constructor to prevent instantiation of this class.
      */
     private CustomerApp() {
     }
 
+    /**
+     * Main method to start the application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(final String[] args) {
         System.out.println("=====================================");
         System.out.println("Customer App");
@@ -27,7 +35,6 @@ public final class CustomerApp {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new FrontMenu().show();
 
-        // exiting the application, closing all threads
         System.exit(0);
     }
 }

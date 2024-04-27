@@ -17,7 +17,7 @@ public class AddJobOpeningController {
 
     public JobOpening addJobOpening(String jobReference, String description, int vacanciesNumber, String address,
                                     Mode mode, ContractType contractType, String titleOrFunction, Company company) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.BOOTSTRAP);
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.ADMIN);
 
         return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
     }

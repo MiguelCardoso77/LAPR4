@@ -32,8 +32,8 @@ public class JobOpening implements AggregateRoot<JobReference> {
     @Column(name = "TITLE_OR_FUNCTION")
     private TitleOrFunction titleOrFunction;
 
-    @OneToOne
-    @JoinColumn(name = "COMPANY_ID")
+    @ManyToOne
+    @JoinColumn(name = "COMPANY_NUMBER")
     private Company company;
 
     public JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber,

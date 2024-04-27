@@ -47,8 +47,8 @@ public class RegisterCustomerUI extends AbstractUI {
                 Customer registeredCustomer = theController.registerCustomer(firstName, lastName, email, roles, createdOn, selectedCompany , currentUser);
 
                 if (registeredCustomer != null) {
-                    System.out.println("Candidate registered successfully:");
-                    System.out.println(registeredCustomer);
+                    System.out.println("Customer registered successfully:");
+                    System.out.println(registeredCustomer.toString());
                 } else {
                     System.out.println("Failed to register customer.");
                 }
@@ -92,7 +92,7 @@ public class RegisterCustomerUI extends AbstractUI {
             System.out.println("List of Companies: \n");
             for (Company company1 : iterable) {
                 list.add(company1);
-                System.out.printf("%-6s%-30s%-30s%n", cont, company1.identity(), company1.companyNumber());
+                System.out.printf("%-6s%-30s%n", cont, company1.companyName());
                 cont++;
             }
 
@@ -101,7 +101,7 @@ public class RegisterCustomerUI extends AbstractUI {
                 System.out.println("No company selected");
             } else {
                 try {
-                    company = this.companiesController.findCompany(list.get(option - 1).companyNumber());
+                    company = this.companiesController.findCompany(list.get(option - 1).identity());
                 } catch (IntegrityViolationException | ConcurrencyException ex) {
                     LOGGER.error("Error performing the operation", ex);
                     System.out.println(
@@ -117,7 +117,7 @@ public class RegisterCustomerUI extends AbstractUI {
     private Company createNewCompany() {
         String companyName = Console.readLine("Enter the company name: ");
         Company newCompany = addCompanyController.addCompany(companyName);
-        return companiesController.findCompany(newCompany.companyNumber());
+        return companiesController.findCompany(newCompany.identity());
     }
 
     @Override

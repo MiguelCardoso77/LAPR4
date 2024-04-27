@@ -37,9 +37,11 @@ public class Jobs4UBootstrapper implements Action {
 
     @Override
     public boolean execute() {
-        final Action[] actions = { new MasterUsersBootstrapper(),
-                                   new CompanyBootstrapper(),
-                                   new JobsBootstrapper()};
+        final Action[] actions = {
+                new CompanyBootstrapper(),
+                new MasterUsersBootstrapper(),
+                new JobsBootstrapper()};
+
 
         registerBootstrapAccount();
         authenticateForBootstrapping();

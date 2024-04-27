@@ -6,10 +6,9 @@ import eapli.framework.domain.repositories.DomainRepository;
 
 import java.util.Optional;
 
-public interface CompanyRepository extends DomainRepository<CompanyName, Company> {
-    default Optional<Company> findByCompanyName(final CompanyName name){
-        return ofIdentity(name);
-    }
+public interface CompanyRepository extends DomainRepository<Integer, Company> {
+
+    Optional<Company> findByCompanyID(Integer id);
 
     public Iterable<Company> allCompanies();
 }

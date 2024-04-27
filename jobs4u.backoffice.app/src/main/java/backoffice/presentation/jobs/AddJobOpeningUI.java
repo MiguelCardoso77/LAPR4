@@ -1,7 +1,5 @@
 package backoffice.presentation.jobs;
 
-import backoffice.presentation.company.ListCompaniesUI;
-import core.application.controllers.AddCompanyController;
 import core.application.controllers.AddJobOpeningController;
 import core.application.controllers.ListCompaniesController;
 import core.domain.company.Company;
@@ -101,7 +99,7 @@ public class AddJobOpeningUI extends AbstractUI {
             System.out.println("List of Companies: \n");
             for (Company company1 : iterable) {
                 list.add(company1);
-                System.out.printf("%-6s%-30s%-30s%n", cont, company1.identity(), company1.companyNumber());
+                System.out.printf("%-6s%-30s%n", cont, company1.companyName());
                 cont++;
             }
 
@@ -110,7 +108,7 @@ public class AddJobOpeningUI extends AbstractUI {
                 System.out.println("No company selected");
             } else {
                 try {
-                    company = this.listCompaniesController.findCompany(list.get(option - 1).companyNumber());
+                    company = this.listCompaniesController.findCompany(list.get(option - 1).identity());
                 } catch (IntegrityViolationException | ConcurrencyException ex) {
                     LOGGER.error("Error performing the operation", ex);
                     System.out.println(

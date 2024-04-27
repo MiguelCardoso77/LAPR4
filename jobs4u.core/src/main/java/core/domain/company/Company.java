@@ -16,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "COMPANY")
 @Embeddable
-public class Company implements AggregateRoot<CompanyName> {
+public class Company implements AggregateRoot<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int companyNumber;
@@ -76,8 +76,8 @@ public class Company implements AggregateRoot<CompanyName> {
      *
      * @return the company name
      */
-    public int companyNumber(){
-        return this.companyNumber;
+    public CompanyName companyName(){
+        return this.companyName;
     }
     /**
      * Compares this Company with another Company for equality.
@@ -91,10 +91,17 @@ public class Company implements AggregateRoot<CompanyName> {
     }
 
     @Override
-    public int compareTo(CompanyName o) {
-        return companyName.compareTo(o);
+    public int compareTo(Integer other) {
+        return AggregateRoot.super.compareTo(other);
     }
 
     @Override
-    public CompanyName identity() { return companyName; }
+    public Integer identity() { return companyNumber; }
+
+    @Override
+    public String toString() {
+        return "Company : " +
+                "companyNumber = " + companyNumber +
+                ", companyName = " + companyName;
+    }
 }

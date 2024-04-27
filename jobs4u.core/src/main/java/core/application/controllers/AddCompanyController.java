@@ -1,13 +1,18 @@
 package core.application.controllers;
 
 import core.domain.company.Company;
+import core.domain.user.Jobs4URoles;
 import core.services.CompanyService;
 import eapli.framework.application.UseCaseController;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+
 /**
  * A controller class for adding a new company.
  */
 @UseCaseController
 public class AddCompanyController {
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final CompanyService companyService = new CompanyService();
     /**
      * Adds a new company with the specified name.
@@ -19,6 +24,8 @@ public class AddCompanyController {
         return companyService.registerCompany(companyName, companyNumber);
     }
     public Company addCompany(String companyName){
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.BOOTSTRAP);
+
         return companyService.registerCompany(companyName);
     }
 }

@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "PROCESS")
-public class Process implements AggregateRoot<IdProcess> {
+public class Process implements AggregateRoot<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private IdProcess idProcess;
+    private Integer idProcess;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "PROCESS_STATE")
@@ -21,7 +21,7 @@ public class Process implements AggregateRoot<IdProcess> {
     @Column(name = "JOB_REFERENCE")
     private JobReference jobReference;
 
-    public Process(IdProcess idProcess,ProcessState processState, ProcessDate processDate, JobReference jobReference){
+    public Process(Integer idProcess,ProcessState processState, ProcessDate processDate, JobReference jobReference){
         this.idProcess = idProcess;
         this.processState = processState;
         this.processDate = processDate;
@@ -47,14 +47,12 @@ public class Process implements AggregateRoot<IdProcess> {
         return idProcess.equals(that.idProcess) && processState.equals(that.processState) && processDate.equals(that.processDate) && jobReference.equals(that.jobReference);
     }
 
-    public int compareTo(IdProcess other) { return AggregateRoot.super.compareTo(other); }
+    public int compareTo(Integer other) { return AggregateRoot.super.compareTo(other); }
 
     @Override
-    public IdProcess identity() {
-        return null;
+    public Integer identity() {
+        return idProcess;
     }
-
-    public IdProcess idProcess() { return this.idProcess; }
 
     public ProcessState processState() { return this.processState; }
 

@@ -15,7 +15,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "COMPANY")
-@Embeddable
 public class Company implements AggregateRoot<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

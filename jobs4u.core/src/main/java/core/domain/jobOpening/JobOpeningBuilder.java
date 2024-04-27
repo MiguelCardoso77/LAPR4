@@ -35,11 +35,11 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     public JobOpening build() {
         JobOpening jobOpening;
 
-        if (jobReference == null || description == null || vacanciesNumber == null || address == null || mode == null || contractType == null || titleOrFunction == null) {
+        if (jobReference == null || description == null || vacanciesNumber == null || address == null || mode == null || contractType == null || titleOrFunction == null || company == null) {
             LOGGER.error("Missing mandatory information to build a JobOpening");
             return null;
         } else {
-            LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}", jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
+            LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}, company {}", jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
             jobOpening = new JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
         }
 

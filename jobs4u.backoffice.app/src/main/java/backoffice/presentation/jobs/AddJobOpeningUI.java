@@ -20,11 +20,10 @@ public class AddJobOpeningUI extends AbstractUI {
 
     private final AddJobOpeningController theController = new AddJobOpeningController();
 
-    private final ListCompaniesController listCompaniesController = new ListCompaniesController();
+    private final ListCompaniesController companiesController = new ListCompaniesController();
 
     @Override
     protected boolean doShow() {
-        final String jobReference = "1";
         final String description = Console.readLine("Description");
         final int vacanciesNumber = Console.readInteger("Vacancies Number");
         final String address = Console.readLine("Address");
@@ -37,7 +36,10 @@ public class AddJobOpeningUI extends AbstractUI {
 
         final String titleOrFunction = Console.readLine("Title or Function");
 
-        Company company = showAndSelectCompanies();
+        showCompanies();
+        Company company = selectCompany();
+
+        final String jobReference = company.companyName().toString();
 
         try {
             this.theController.addJobOpening(jobReference, description, vacanciesNumber, address, modes, contractTypes, titleOrFunction, company);
@@ -87,38 +89,42 @@ public class AddJobOpeningUI extends AbstractUI {
         }
     }
 
-    private Company showAndSelectCompanies() {
-        final List<Company> list = new ArrayList<>();
-        final Iterable<Company> iterable = listCompaniesController.allCompanies();
+    private void showCompanies() {
+        final Iterable<Company> iterable = companiesController.allCompanies();
 
-        Company company = null;
         if (!iterable.iterator().hasNext()) {
             System.out.println("There are no companies");
         } else {
             int cont = 1;
-            System.out.println("List of Companies: \n");
-            for (Company company1 : iterable) {
-                list.add(company1);
-                System.out.printf("%-6s%-30s%n", cont, company1.companyName());
+            System.out.println("List of registered Companies: \n");
+            for (Company company : iterable) {
+                System.out.printf("%-6s%-30s%n", cont, company.companyName());
                 cont++;
             }
+        }
+    }
 
-            final int option = Console.readInteger("Enter the number of the company");
-            if (option == 0) {
-                System.out.println("No company selected");
-            } else {
-                try {
-                    company = this.listCompaniesController.findCompany(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println(
-                            "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
+    private Company selectCompany() {
+        final List<Company> list = new ArrayList<>();
+        for (Company company : companiesController.allCompanies()) {
+            list.add(company);
+        }
+
+        Company company = null;
+        final int option = Console.readInteger("Enter the number of the company");
+        if (option == 0) {
+            System.out.println("No company selected");
+        } else {
+            try {
+                company = this.companiesController.findCompany(list.get(option - 1).identity());
+            } catch (IntegrityViolationException | ConcurrencyException ex) {
+                LOGGER.error("Error performing the operation", ex);
+                System.out.println(
+                        "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
             }
         }
 
         return company;
-
     }
 
     @Override

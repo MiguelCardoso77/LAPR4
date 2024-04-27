@@ -31,12 +31,13 @@ public class AddUserUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+
         final String firstName = Console.readLine("First Name");
         final String lastName = Console.readLine("Last Name");
         final String email = Console.readLine("E-Mail");
         final String password = theController.passwordGenerator(firstName);
-
         final Set<Role> roleTypes = new HashSet<>();
+
         boolean show;
         do {
             show = showRoles(roleTypes);
@@ -44,6 +45,7 @@ public class AddUserUI extends AbstractUI {
 
         try {
             this.theController.addUser(email, password, firstName, lastName, email, roleTypes);
+
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             System.out.println("That email is already in use.");
         }

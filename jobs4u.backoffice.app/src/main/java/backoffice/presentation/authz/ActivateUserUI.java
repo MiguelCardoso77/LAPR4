@@ -21,8 +21,10 @@ public class ActivateUserUI extends AbstractUI {
     protected boolean doShow() {
         final List<SystemUser> list = new ArrayList<>();
         final Iterable<SystemUser> iterable = this.theController.deactivatedUsers();
+
         if (!iterable.iterator().hasNext()) {
             System.out.println("There is no registered User");
+
         } else {
             int cont = 1;
 
@@ -34,13 +36,19 @@ public class ActivateUserUI extends AbstractUI {
                 System.out.printf("%-6d%-10s%-30s%-30s%n", cont, user.email(), user.name().firstName(), user.name().lastName());
                 cont++;
             }
+
             final int option = Console.readInteger("Enter user nº to activate or 0 to finish ");
+
             if (option == 0) {
                 System.out.println("No user selected");
+
             } else {
+
                 try {
                     this.theController.activateUser(list.get(option - 1));
+
                 } catch (IntegrityViolationException | ConcurrencyException ex) {
+
                     LOGGER.error("Error performing the operation", ex);
                     System.out.println(
                             "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");

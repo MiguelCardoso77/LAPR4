@@ -47,7 +47,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>hello.HelloWorld</mainClass>
+                            <mainClass>user.console.CustomerApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

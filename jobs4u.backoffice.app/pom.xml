@@ -43,7 +43,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>hello3.HelloWorld</mainClass>
+                            <mainClass>backoffice.Jobs4uBackOffice</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

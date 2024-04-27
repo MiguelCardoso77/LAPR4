@@ -10,9 +10,9 @@
 #include <fcntl.h>
 #include <time.h>
 
-#define EVENT_SIZE 1
-#define BUF_LEN (1024 * (EVENT_SIZE + 16))
-#define BUFFER_SIZE 100
+#define EVENT_SIZE (sizeof (struct inotify_event))
+#define BUF_LEN ( 1 * ( EVENT_SIZE + 255 )) 
+#define BUFFER_SIZE 255
 
 volatile sig_atomic_t flagFather = 0; 
 volatile sig_atomic_t flagChildren = 0;
@@ -62,7 +62,7 @@ pid_t available_process() {
 
 // Function to extract the candidate ID from a string containing the candidate ID followed by a dash '-'
 char* extractCandidateID(char* fileName) {
-  char extracted[100];
+  char extracted[BUF_LEN];
   int i;
 
   for (i = 0; fileName[i] != '-' && fileName[i] != '\0'; i++) {
@@ -81,13 +81,13 @@ char* extractCandidateID(char* fileName) {
 // 4 - time of check
 int main(int argc,char *argv[]) {
   pid_t pid_handler;
-  int periodic_check;
+  int periodic_check,n;
   char outputDirectory[BUFFER_SIZE];
   char inputDirectory[BUFFER_SIZE];
 
   if (argc < 5) {
     fprintf(stderr, "Usage: %s inputDirectory outputDirectory number_of_children periodic_check\n", argv[0]);
-    exit(0);
+    exit(1);
   }
 
   strcpy(inputDirectory, argv[1]); 
@@ -116,7 +116,7 @@ int main(int argc,char *argv[]) {
 
   if (pid_handler==0) {
       close(pipe_info[0]);
-      int fd_notify, wd;
+      int fd_notify, wd,i=0;
       char buffer[BUF_LEN];
 
       fd_notify = inotify_init();   // Waiting for new files at directory
@@ -137,16 +137,16 @@ int main(int argc,char *argv[]) {
               perror("read");
               exit(EXIT_FAILURE);
           }
+          while (i < length) {
+              struct inotify_event *event = (struct inotify_event *) &buffer[ i ];
 
-          char *ptr = buffer;
-          while (ptr < buffer + length) {
-              struct inotify_event *event = (struct inotify_event *)ptr;
+              if(event->len){
+                if (event->mask & IN_CREATE) {
+                    write(pipe_info[1], event->name, sizeof(BUF_LEN));
+                }
 
-              if (event->mask & IN_CREATE) {
-                  write(pipe_info[1], event->name, sizeof(BUFFER_SIZE));
+                i += EVENT_SIZE + event->len;
               }
-
-              ptr += sizeof(struct inotify_event) + event->len;
           }
       }
       close(pipe_info[1]);
@@ -161,21 +161,28 @@ int main(int argc,char *argv[]) {
       exit(1);
     }
 
+    if(pid[i]>0){
+      *(childrensAvailability+i)=pid[i];
+    }
+
     if (pid[i] == 0) {
       while(flagChildren == 0) {
         close(fd[i][1]);  // Close the write end of the pipe
-        char fileName[BUFFER_SIZE];
+        char fileName[BUF_LEN];
 
         while ((n = read(fd[i][0], fileName, sizeof(fileName))) != 0) {
 
           // Extract the candidate ID from the file name
 
-          char folderName[100];
-          strcpy(folderName, extractCandidateID(fileName));
+          char folderName[BUF_LEN];
+          char * candidate;
+          candidate=extractCandidateID(fileName);
+
+          strcpy(folderName, candidate);
           
           // Create the directory
 
-          char createDirectory[100];
+          char createDirectory[BUF_LEN];
           snprintf(createDirectory, sizeof(createDirectory), "./%s/%s", outputDirectory, folderName);
 
           pid_t mkdir = fork();
@@ -185,7 +192,7 @@ int main(int argc,char *argv[]) {
           
           // Copy the file to the new directory
 
-          char copyFiles[100];
+          char copyFiles[BUF_LEN];
           snprintf(copyFiles, sizeof(copyFiles), "./%s/%s", inputDirectory, fileName);
           
           pid_t copy = fork();
@@ -206,13 +213,15 @@ int main(int argc,char *argv[]) {
   close(pipe_info[1]);
 
   while (flagFather == 0) {
-      char file[BUFFER_SIZE];
-      while((n=read(pipe_info[0],file,sizeof(BUFFER_SIZE)))!=0){
+      char file[BUF_LEN];
+      while((n=read(pipe_info[0],file,sizeof(BUF_LEN)))!=0){
+      printf("qaqui");
       pid_t pid_available = available_process();
       for (int i = 0; i < numberChildren; i++) {
         if (pid[i] == pid_available) {              // If child is available, put it occupied using the method and...
           children_occupied(pid_available);
-          write(fd[i][1],file,sizeof(BUFFER_SIZE));       // Send the file to the child 
+          printf("aqui");
+          write(fd[i][1],file,sizeof(BUF_LEN));       // Send the file to the child 
         }
       }
     }

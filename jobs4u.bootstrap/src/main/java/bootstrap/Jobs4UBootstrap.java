@@ -1,4 +1,4 @@
-package bootstrap.infrastructure;
+package bootstrap;
 
 import bootstrappers.Jobs4USmokeTester;
 import console.BaseApplication;

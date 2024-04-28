@@ -7,7 +7,6 @@ import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
 import backoffice.presentation.jobs.AddJobOpeningAction;
 import infrastructure.Application;
-import backoffice.presentation.clientuser.AcceptRefuseSignupRequestAction;
 import console.presentation.authz.MyUserMenu;
 import core.domain.user.Jobs4URoles;
 import eapli.framework.actions.Actions;
@@ -124,10 +123,9 @@ public class MainMenu extends AbstractUI {
         menu.addItem(OPTION_FIVE, "Add User", new AddUserUI()::show);
         menu.addItem(OPTION_SIX,"Activate User", new ActivateUserAction());
         menu.addItem(OPTION_SEVEN, "Deactivate User", new DeactivateUserAction());
-        menu.addItem(OPTION_EIGHT, "Accept/Refuse Signup Request", new AcceptRefuseSignupRequestAction());
 
-        menu.addItem(OPTION_NINE, "Add Job Opening", new AddJobOpeningAction());
-        menu.addItem(OPTION_TEN, "Register Customer", new RegisterCustomerAction());
+        menu.addItem(OPTION_EIGHT, "Add Job Opening", new AddJobOpeningAction());
+        menu.addItem(OPTION_NINE, "Register Customer", new RegisterCustomerAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

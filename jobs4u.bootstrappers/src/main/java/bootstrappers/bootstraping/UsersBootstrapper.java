@@ -17,7 +17,6 @@ import java.util.Set;
 
 public class  UsersBootstrapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersBootstrapper.class);
-    final SignupController signupController = new SignupController();
     final AddUserController userController = new AddUserController();
     final RegisterCandidateController registerCandidateController = new RegisterCandidateController();
     final ListUsersController listUserController = new ListUsersController();
@@ -42,16 +41,6 @@ public class  UsersBootstrapper {
             LOGGER.debug("»»» %s", username);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             listUserController.find(Username.valueOf(username)).orElseThrow(() -> e);
-        }
-    }
-
-    protected void signupUser(final String password, final String firstName, final String lastName, final String email, String telephoneNumber) {
-        try {
-            signupController.signup(password, firstName, lastName, email, telephoneNumber, Calendar.getInstance());
-            LOGGER.debug("»»» %s", email);
-        } catch (final IntegrityViolationException | ConcurrencyException e) {
-            LOGGER.error("Error performing the operation", e);
-            System.out.println("Unfortunatelly there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
         }
     }
 

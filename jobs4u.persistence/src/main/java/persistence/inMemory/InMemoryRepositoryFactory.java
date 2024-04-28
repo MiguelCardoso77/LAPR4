@@ -37,16 +37,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public SignupRequestRepository signupRequests() {
-        return signupRequests(null);
-    }
-
-    @Override
-    public SignupRequestRepository signupRequests(final TransactionalContext tx) {
-        return new InMemorySignupRequestRepository();
-    }
-
-    @Override
     public JobOpeningRepository jobOpenings(final TransactionalContext tx) {
         return new InMemoryJobOpeningRepository();
     }

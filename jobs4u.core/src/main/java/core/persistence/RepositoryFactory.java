@@ -81,7 +81,6 @@ public interface RepositoryFactory {
     @return
             */
 
-    SignupRequestRepository signupRequests(TransactionalContext autoTx);
 
     /**
 
@@ -91,7 +90,6 @@ public interface RepositoryFactory {
     transaction mode*
             @return*/
 
-    SignupRequestRepository signupRequests();
 
     /**
      * @param autoTx

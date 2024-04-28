@@ -7,7 +7,6 @@
     <class>eapli.framework.infrastructure.authz.domain.model.Role</class>
     <class>eapli.framework.infrastructure.authz.domain.model.RoleSet</class>
     <class>eapli.framework.infrastructure.authz.domain.model.RoleAssignment</class>
-    <class>core.domain.customer.SignupRequest</class>
     <class>core.domain.jobOpening.JobOpening</class>
     <class>core.domain.application.Application</class>
     <class>core.domain.process.Process</class>

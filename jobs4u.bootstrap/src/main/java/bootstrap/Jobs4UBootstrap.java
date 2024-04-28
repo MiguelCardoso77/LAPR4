@@ -3,14 +3,10 @@ package bootstrap;
 import bootstrappers.Jobs4USmokeTester;
 import console.BaseApplication;
 import bootstrappers.Jobs4UBootstrapper;
-import core.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
-import core.domain.events.NewUserRegisteredFromSignupEvent;
-import core.domain.events.SignupAcceptedEvent;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
 import core.persistence.PersistenceContext;
-import core.application.eventhandlers.SignupAcceptedWatchDog;
 import core.domain.user.Jobs4UPasswordPolicy;
 
 public class Jobs4UBootstrap extends BaseApplication {
@@ -52,7 +48,6 @@ public class Jobs4UBootstrap extends BaseApplication {
     @SuppressWarnings("unchecked")
     @Override
     protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
-        dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(), NewUserRegisteredFromSignupEvent.class);
-        dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
+        // nothing to do
     }
 }

@@ -7,6 +7,7 @@ participant LoginUI <<presentation>>
 participant AuthenticationCredentialHandler <<authentication>>
 participant AuthzRegistry <<authentication>>
 participant AuthorizationService <<authentication>>
+participant Authenticator <<authentication>>
 database UserRepository <<repository>>
 
 activate User
@@ -41,13 +42,28 @@ activate User
                         UserRepository --> AuthzRegistry: returns userRepository
                     deactivate UserRepository
 
-                    AuthzRegistry --> AuthenticationCredentialHandler: returns userRepository
+                    AuthzRegistry -> UserRepository: findByIdentity(email)
+                    note right of AuthzRegistry
+                        Will return true if user is found
+                    end note
+                    activate UserRepository
+
+                        UserRepository --> AuthzRegistry: returns true
+                    deactivate UserRepository
+
+                    AuthzRegistry -> Authenticator: authenticate(email, password, role)
+                    note right of AuthzRegistry
+                        Will return true if user details are correct
+                    end note
+                    activate Authenticator
+
+                        Authenticator --> AuthzRegistry: returns true
+                    deactivate Authenticator
+
+                    AuthzRegistry --> AuthenticationCredentialHandler: returns true
                 deactivate AuthzRegistry
 
                 AuthenticationCredentialHandler --> LoginUI: returns true
-                note left of AuthenticationCredentialHandler
-                    Only returns true if user details are valid.
-                end note
             deactivate AuthenticationCredentialHandler
 
             LoginUI -> User: shows home page

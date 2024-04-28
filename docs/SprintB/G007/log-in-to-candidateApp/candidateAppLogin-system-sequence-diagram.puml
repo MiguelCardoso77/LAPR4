@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Candidate Sign-Up/Login
+title System Sequence Diagram (SSD) - Candidate Login
 
 autonumber
 
@@ -12,17 +12,11 @@ participant ":System" as System
 
 activate CANDIDATE
 
-    CANDIDATE -> System : asks to sign-up/login as a candidate
+    CANDIDATE -> System : asks to login as a candidate
     activate System
 
-    alt Sign-Up option is selected
-       System --> CANDIDATE : requests account opening details (FirstName, LastName, Email,\n PhoneNumber, Curriculum)
-
-    else Login option is selected
         System --> CANDIDATE : requests account login details (Email, Password)
-
     deactivate System
-    end
 
     CANDIDATE -> System : inserts requested details
     activate System

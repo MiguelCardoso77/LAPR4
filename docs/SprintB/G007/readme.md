@@ -6,6 +6,9 @@
 
 As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
 
+### 1.2. Use Case Diagram
+![G007-use-case-diagram.svg](G007-use-case-diagram.svg)
+
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
@@ -13,7 +16,6 @@ As a Project Manager, I want the system to support and apply authentication and 
 > **NFR08 - Authentication and Authorization :**
 >
 > The system must support and apply authentication and authorization for all its users and functionalities.
-
 
 **From the client clarifications:**
 
@@ -68,16 +70,11 @@ aceitar esse login.
 
 ### 1.4. Found out Dependencies
 
+*  None to specify
+
 ### 1.5 Input and Output Data
 
 **Input Data:**
-
-    While registering, the user must provide the following data:
-    * Email,
-    * First Name,
-    * Last Name,
-    * Phone Number,
-    * Curriculum (only for candidates).
 
     While logging in, the user must provide the following data:
     * Email,
@@ -89,19 +86,19 @@ aceitar esse login.
 
 ### 1.6. System Sequence Diagrams (SSD)
 
-![G007-system-sequence-diagram-backofficeApp.svg](G007-system-sequence-diagram-backofficeApp.svg)
+#### 1.6.1. Login in to Backoffice SSD
+![backofficeLogin-system-sequence-diagram.svg](log-in-to-backoffice%2FbackofficeLogin-system-sequence-diagram.svg)
 
-![G007-system-sequence-diagram-candidateApp.svg](G007-system-sequence-diagram-candidateApp.svg)
+#### 1.6.2. Login in to Candidate App SSD
+![candidateAppLogin-system-sequence-diagram.svg](log-in-to-candidateApp%2FcandidateAppLogin-system-sequence-diagram.svg)
 
-![G007-system-sequence-diagram-customerApp.svg](G007-system-sequence-diagram-customerApp.svg)
+#### 1.6.3. Login in to Customer App SSD
+![customerAppLogin-system-sequence-diagram.svg](log-in-to-customerApp%2FcustomerAppLogin-system-sequence-diagram.svg)
 
-## 1.7. Sequence Diagrams (SD)
+### 1.7. Sequence Diagrams (SD)
 
-### 1.7.1. Login Sequence Diagram
-![G007-sequence-diagram-login.svg](G007-sequence-diagram-login.svg)
-
-### 1.7.2 SignUp Sequence Diagram
-![G007-sequence-diagran-signUp.svg](G007-sequence-diagram-signUp.svg)
+#### 1.7.1. Login Sequence Diagram
+![login-sequence-diagram.svg](login-sequence-diagram.svg)
 
 ### 1.8 Other Relevant Remarks
 
@@ -117,10 +114,4 @@ managing user sessions, and the PasswordPolicy, which ensures password adherence
 Within this ecosystem, the SystemUser entity embodies a user within our system, while the Role value object delineates 
 the user's role, dictating their permissions and access levels.
 
-### 2.1. Domain Model
-
-![G007-domain-model.svg](G007-domain-model.svg)
-
-## 3. Testing
-
-## 4. Implementation
+## 3. Implementation

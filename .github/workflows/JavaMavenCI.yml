@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: target/site/jacoco-aggregate/jacoco.csv
+          path: jobs4u.util.ci/target/site/jacoco-aggregate/

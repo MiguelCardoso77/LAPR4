@@ -27,7 +27,7 @@ jobs:
           cache: maven
 
       - name: Build all modules with Maven
-        run: mvn clean install
+        run: mvn %1 %2 dependency:copy-dependencies package
 
       - name: Generate project coverage report
         run: mvn -B jacoco:report-aggregate

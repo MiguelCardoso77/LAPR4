@@ -1,0 +1,171 @@
+@startuml
+skinparam linetype ortho
+top to bottom direction
+
+class ListJobOpeningApplicationsUI{
+    + headline()
+    + emptyMessage()
+    + elementsApp()
+    + elements()
+    + elementPrinter()
+    + elementName()
+    + listHeader()
+    + doShow()
+}
+
+
+class ListJobOpeningController {
+    + allJobOpening()
+}
+
+class ListJobOpeningApplicationsController{
+    + allApplicationsOfJobOpening(jobReference)
+    + findJobOpening(jobReference)
+}
+
+class JobOpening {
+   - Description description
+   - VacanciesNumber vacanciesNumber
+   - Address address
+   - Mode mode
+   - ContractType contractType
+   - TitleOrFunction titleOrFunction
+   - JobReference jobReference
+   - Company company
+
+   + JobOpening(jobReference, description,
+   vacanciesNumber, address, modes, contractTypes, \n titleOrFunction , company)
+   + identity()
+   + sameAs(object)
+   + jobReference()
+   + description()
+   + vacanciesNumber()
+   + address()
+   + mode()
+   + contractType()
+   + titleOrFunction()
+   + company()
+}
+
+class JobOpeningRepository {
+    + allJobOpenings()
+}
+
+class JobOpeningService {
+    + registerJobOpening(jobReference, description, vacanciesNumber,
+    address, mode, contractType, titleOrFunction, company);
+    + allJobOpenings()
+}
+
+class JobOpeningBuilder {
+    + withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction , company )
+    + build()
+}
+
+class Application{
+    - IdApplication idApplication
+    - Rank rank
+    - SubmissionDate submissionDate
+    - Status status
+    - ApplicationDataFile applicationDataFile
+    - FilesAttachedContent filesAttachedContent
+    - EmailsFilesAttached emailsFilesAttached
+    - EmailContentFile emailContentFile
+    - JobReference jobReference
+    - TelephoneNumber telephoneNumber
+
+    + Application(idApplication,  rank,  submissionDate,  status, \n applicationDataFile,  filesAttachedContent, emailFilesAttached,  emailContentFile,\n  jobReference,  telephoneNumber)
+    + sameAs(other)
+    + compareTo(other)
+    + identity()
+    + hasIdentity (id)
+    + telephoneNumber()
+    + idApplication()
+    + rank()
+    + submissionDate()
+    + status()
+    + applicationDataFile()
+    + filesAttachedContent()
+    + emailFilesAttached()
+    + emailContentFile()
+    + jobReference()
+    + toString()
+
+}
+
+class ApplicationBuilder{
+
+    + withAll( idApplication,  rank,  submissionDate,  status,  applicationDataFile,  filesAttachedContent,  emailFilesAttached,  emailContentFile,  jobReference ,  telephoneNumber) {
+    + build()
+}
+
+class ApplicationRepository{
+
+    + allApplications()
+
+}
+
+class ApplicationService{
+
+    + allApplication()
+
+}
+
+
+
+
+
+class AuthorizationService {
+    + authorizationService()
+    + ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
+}
+
+
+
+
+
+
+
+class PersistenceContext {
+    + repositories()
+    + PersistenceContext()
+}
+
+class RepositoryFactory{
+    + newTransactionalContext()
+    + users(TransactionalContext autoTx)
+    + users()
+    + customerUsers(TransactionalContext autoTx)
+    + customerUsers()
+    + signupRequests(TransactionalContext autoTx)
+    + signupRequests()
+    + jobOpenings(TransactionalContext autoTx)
+    + jobOpenings()
+    + applications(TransactionalContext autoTx)
+    + applications()
+}
+
+ListJobOpeningApplicationsUI --> ListJobOpeningApplicationsController
+ListJobOpeningApplicationsUI ----> ListJobOpeningController
+ListJobOpeningApplicationsController --> AuthorizationService
+ListJobOpeningApplicationsController ---> PersistenceContext
+PersistenceContext -> RepositoryFactory
+
+ListJobOpeningController ----> JobOpeningService
+ListJobOpeningController --> AuthorizationService
+
+
+ListJobOpeningApplicationsController ---> JobOpeningService
+JobOpeningService --> JobOpeningRepository
+JobOpeningService -> JobOpeningBuilder
+JobOpeningBuilder -> JobOpening
+
+ListJobOpeningApplicationsController -> ApplicationService
+ApplicationService -> ApplicationRepository
+ApplicationService --> ApplicationBuilder
+ApplicationBuilder --> Application
+
+
+
+
+@enduml

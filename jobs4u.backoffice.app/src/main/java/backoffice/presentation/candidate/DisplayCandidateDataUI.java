@@ -14,7 +14,6 @@ import java.util.List;
 public class DisplayCandidateDataUI extends AbstractListUI<Candidate> {
 
     private final DisplayCandidateDataController theController = new DisplayCandidateDataController();
-    private Application selectedApplication;
 
     public String headline() {
         return "Display all personal data of a candidate";

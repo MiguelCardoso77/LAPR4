@@ -21,17 +21,10 @@ activate CM
     CM -> System : selects a job opening
     activate System
 
-    System --> CM : shows all applications of that  job opening
-    deactivate System
-
-    CM -> System : asks to list all applications
-    activate System
-
-    System --> CM :lists all applications and display success
+    System --> CM : list all applications of that  job opening
     deactivate System
 
 
-        deactivate System
 
 
 @enduml

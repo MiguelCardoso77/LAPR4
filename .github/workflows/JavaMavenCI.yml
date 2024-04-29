@@ -26,8 +26,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven
-        run: mvn surefire-report:report checkstyle:checkstyle -B package --file pom.xml
+      - name: Generate project coverage report
+        run: mvn -B jacoco:report-aggregate
 
       - name: JaCoCo Code Coverage Report
         id: jacoco_reporter
@@ -49,5 +49,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: code-coverage-report-markdown
-          path: jobs4u.util.ci/target/site/jacoco-aggregate/coverage-results.md
+          path: jobs4u.util.ci/target/site/jacoco-aggregate
           retention-days: 1

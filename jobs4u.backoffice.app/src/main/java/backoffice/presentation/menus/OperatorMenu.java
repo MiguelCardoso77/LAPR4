@@ -23,8 +23,8 @@ public class OperatorMenu extends AbstractUI {
         final Menu menu = new Menu("Operator Actions >");
 
         menu.addItem(LIST_ALL_USERS, "List all Users", new ListUsersAction());
-        menu.addItem(LIST_ALL_CANDIDATES, "List all Candidates", new RegisterCandidateAction());
-        menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new ListCandidatesAction());
+        menu.addItem(LIST_ALL_CANDIDATES, "List all Candidates", new ListCandidatesAction());
+        menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
@@ -33,6 +33,6 @@ public class OperatorMenu extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Customer Manager Menu";
+        return "Operator Menu";
     }
 }

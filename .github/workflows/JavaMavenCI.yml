@@ -35,6 +35,9 @@ jobs:
       - name: Build with Maven and run tests with coverage for backoffice app
         run: mvn -B clean verify jacoco:report -f jobs4u.backoffice.app/pom.xml
 
+      - name: Test
+        run: mvn -B test
+
       - name: Upload code coverage report for Candidate App
         uses: actions/upload-artifact@v4
         with:

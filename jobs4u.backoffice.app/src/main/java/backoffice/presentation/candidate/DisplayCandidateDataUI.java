@@ -1,4 +1,4 @@
-package backoffice.presentation.authz;
+package backoffice.presentation.candidate;
 
 import core.application.controllers.DisplayCandidateDataController;
 import core.domain.application.Application;

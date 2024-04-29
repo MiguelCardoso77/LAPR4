@@ -1,4 +1,4 @@
-package backoffice.presentation.jobs;
+package backoffice.presentation.jobOpening;
 
 import core.application.controllers.AddJobOpeningController;
 import core.application.controllers.ListCompaniesController;

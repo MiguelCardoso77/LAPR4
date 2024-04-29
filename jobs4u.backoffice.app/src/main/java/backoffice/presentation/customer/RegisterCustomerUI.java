@@ -1,6 +1,6 @@
 package backoffice.presentation.customer;
 
-import backoffice.presentation.jobs.AddJobOpeningUI;
+import backoffice.presentation.jobOpening.AddJobOpeningUI;
 import core.application.controllers.AddCompanyController;
 import core.application.controllers.AddCustomerController;
 import core.application.controllers.AddUserController;

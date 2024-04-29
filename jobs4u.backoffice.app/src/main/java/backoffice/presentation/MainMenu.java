@@ -1,11 +1,13 @@
 package backoffice.presentation;
 
-import backoffice.presentation.applications.ListJobOpeningApplicationsAction;
+import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 import backoffice.presentation.authz.*;
+import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.candidate.ListCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
-import backoffice.presentation.jobs.AddJobOpeningAction;
+import backoffice.presentation.jobOpening.AddJobOpeningAction;
+import backoffice.presentation.menus.OperatorMenu;
 import infrastructure.Application;
 import console.presentation.authz.MyUserMenu;
 import core.domain.user.Jobs4URoles;
@@ -148,15 +150,8 @@ public class MainMenu extends AbstractUI {
     }
 
     private Menu buildOperatorMenu() {
-        final Menu menu = new Menu("Operator Actions >");
-
-        menu.addItem(OPTION_ONE, "List all Users", new ListUsersAction());
-        menu.addItem(OPTION_TWO, "Register Candidate", new RegisterCandidateAction());
-        menu.addItem(OPTION_THREE, "List all Candidates", new ListCandidatesAction());
-
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
+        OperatorMenu operator = new OperatorMenu();
+        return operator.build();
     }
 
 }

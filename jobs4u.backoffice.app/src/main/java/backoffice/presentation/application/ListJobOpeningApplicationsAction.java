@@ -1,4 +1,4 @@
-package backoffice.presentation.applications;
+package backoffice.presentation.application;
 
 import eapli.framework.actions.Action;
 

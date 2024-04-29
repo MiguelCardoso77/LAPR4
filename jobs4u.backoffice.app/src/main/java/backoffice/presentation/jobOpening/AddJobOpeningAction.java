@@ -1,4 +1,4 @@
-package backoffice.presentation.jobs;
+package backoffice.presentation.jobOpening;
 
 import eapli.framework.actions.Action;
 

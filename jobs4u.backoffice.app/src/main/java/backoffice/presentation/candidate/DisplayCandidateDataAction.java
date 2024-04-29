@@ -1,4 +1,4 @@
-package backoffice.presentation.authz;
+package backoffice.presentation.candidate;
 
 import eapli.framework.actions.Action;
 

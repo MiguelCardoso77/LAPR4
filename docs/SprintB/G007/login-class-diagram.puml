@@ -1,0 +1,35 @@
+@startuml
+skinparam linetype ortho
+left to right direction
+
+class LoginUI {
+}
+
+class AuthenticationCredentialHandler {
+    + authenticated(username, password, role)
+}
+
+class AuthzRegistry {
+    + configure(userRepo, policy, encoder)
+    + userService()
+    + authenticationService()
+    + authorizationService()
+}
+
+class AuthorizationService {
+    + authenticate(username, rawPassword, roles)
+    + changePassword(user, oldPassword, newPassword)
+    + changePassword(oldPassword, newPassword)
+    + resetPassword(user)
+    + confirmResetPassword(user, token, newPass)
+    - noActionRightsToValidate(role)
+    - retrieveUser(username)
+}
+
+interface Authenticator {
+}
+
+interface UserRepository {
+}
+
+@enduml

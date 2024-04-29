@@ -20,19 +20,9 @@ public class ListJobOpeningApplicationsController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
-    private final UserManagementService userSvc = AuthzRegistry.userService();
-
-    private final CustomerRepository repo = PersistenceContext.repositories().customerUsers();
-
     private final JobOpeningService jobserv = new JobOpeningService();
     private final ApplicationService appServ = new ApplicationService();
 
-
-    public Iterable<Customer> activeClientUsers() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
-
-        return this.repo.findAllActive();
-    }
 
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
@@ -46,13 +36,6 @@ public class ListJobOpeningApplicationsController {
         }
         return  allApplicationsJobOpening;
     }
-
-
-    public Iterable<JobOpening> allJobOpening() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
-        return jobserv.allJobOpenings();
-    }
-
 
     public JobOpening findJobOpening(JobReference jobReference) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);

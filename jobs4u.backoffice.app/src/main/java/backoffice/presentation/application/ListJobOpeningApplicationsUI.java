@@ -1,6 +1,7 @@
 package backoffice.presentation.application;
 
 import core.application.controllers.ListJobOpeningApplicationsController;
+import core.application.controllers.ListJobOpeningController;
 import core.domain.application.Application;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
@@ -18,6 +19,9 @@ import java.util.List;
 
 public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
     private final ListJobOpeningApplicationsController theController = new ListJobOpeningApplicationsController();
+
+    private final ListJobOpeningController theController1 = new ListJobOpeningController();
+
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ListJobOpeningApplicationsUI.class);
 
@@ -37,7 +41,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
 
     @Override
     protected Iterable<JobOpening> elements() {
-        return theController.allJobOpening();
+        return theController1.allJobOpening();
     }
 
     @Override
@@ -86,9 +90,15 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         }
 
         final Iterable<Application> iterable1 = elementsApp(jobOpeningApplication.jobReference());
-        for (Application application : iterable1) {
-            System.out.printf("%-30s%-30s%-30s%-30s", application.idApplication(), application.rank(), application.submissionDate(), application.status(), application.applicationDataFile());
-            System.out.printf("%-30s%-30s%-30s%-30s%n", application.applicationDataFile(), application.filesAttachedContent(), application.emailFilesAttached(), application.emailContentFile(), application.jobReference());
+        if(!iterable1.iterator().hasNext()){
+            System.out.println("There is no applications for this job opening ");
+        }else {
+
+
+            for (Application application : iterable1) {
+                System.out.printf("%-30s%-30s%-30s%-30s%-30s", application.idApplication(), application.rank(), application.submissionDate(), application.status(), application.applicationDataFile());
+                System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", application.applicationDataFile(), application.filesAttachedContent(), application.emailFilesAttached(), application.emailContentFile(), application.jobReference());
+            }
         }
 
         return true;

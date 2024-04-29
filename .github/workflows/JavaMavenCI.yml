@@ -26,32 +26,27 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven and run tests with coverage for candidate app
-        run: mvn -B clean verify jacoco:report -f jobs4u.candidate.app/pom.xml
+      - name: Build with Maven
+        run: mvn surefire-report:report checkstyle:checkstyle -B package --file pom.xml
 
-      - name: Build with Maven and run tests with coverage for customer app
-        run: mvn -B clean verify jacoco:report -f jobs4u.customer.app/pom.xml
+      - name: JaCoCo Code Coverage Report
+        id: jacoco_reporter
+        uses: PavanMudigonda/jacoco-reporter@v4.8
+        with:
+          coverage_results_path: jobs4u.util.ci/target/site/jacoco-aggregate/jacoco.xml
+          coverage_report_name: Coverage
+          coverage_report_title: JaCoCo
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          skip_check_run: false
+          minimum_coverage: 80
+          fail_below_threshold: false
+          publish_only_summary: false
 
-      - name: Build with Maven and run tests with coverage for backoffice app
-        run: mvn -B clean verify jacoco:report -f jobs4u.backoffice.app/pom.xml
-
-      - name: Test
-        run: mvn -B test
-
-      - name: Upload code coverage report for Candidate App
+      - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: candidate-app-coverage-report
-          path: jobs4u.candidate.app/target/site/jacoco
+          name: code-coverage-report-markdown
+          path: target/site
 
-      - name: Upload code coverage report for Customer App
-        uses: actions/upload-artifact@v4
-        with:
-          name: customer-app-coverage-report
-          path: jobs4u.customer.app/target/site/jacoco
-
-      - name: Upload code coverage report for Backoffice App
-        uses: actions/upload-artifact@v4
-        with:
-          name: backoffice-app-coverage-report
-          path: jobs4u.backoffice.app/target/site/jacoco
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6

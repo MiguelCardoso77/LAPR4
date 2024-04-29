@@ -5,6 +5,12 @@ import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
 
+/**
+ * Represents an application for a job opening.
+ *
+ * @author Tomás Gonçalves
+ */
+
 @Entity
 @Table(name = "APPLICATION")
 public class Application implements AggregateRoot<IdApplication> {
@@ -42,6 +48,20 @@ public class Application implements AggregateRoot<IdApplication> {
     private TelephoneNumber telephoneNumber;
 
 
+    /**
+     * Constructs an application object.
+     *
+     * @param idApplication         The application ID.
+     * @param rank                  The rank of the application.
+     * @param submissionDate        The submission date of the application.
+     * @param status                The status of the application.
+     * @param applicationDataFile   The data file associated with the application.
+     * @param filesAttachedContent  The attached files content.
+     * @param emailFilesAttached    The files attached to the email.
+     * @param emailContentFile      The content file of the email.
+     * @param jobReference          The job reference associated with the application.
+     * @param telephoneNumber       The telephone number of the candidate.
+     */
     public Application(IdApplication idApplication, Rank rank, SubmissionDate submissionDate, Status status,
                        ApplicationDataFile applicationDataFile, FilesAttachedContent filesAttachedContent,
                        EmailFilesAttached emailFilesAttached, EmailContentFile emailContentFile, JobReference jobReference, TelephoneNumber telephoneNumber) {
@@ -57,10 +77,19 @@ public class Application implements AggregateRoot<IdApplication> {
         this.telephoneNumber = telephoneNumber;
     }
 
+    /**
+     * Default constructor required by ORM.
+     */
     protected Application() {
         // for ORM only
     }
 
+    /**
+     * Checks if this application is the same as another object.
+     *
+     * @param other The object to compare with.
+     * @return True if the objects are the same, false otherwise.
+     */
     public boolean sameAs(final Object other) {
         if (this == other) {
             return true;
@@ -79,6 +108,12 @@ public class Application implements AggregateRoot<IdApplication> {
                 && telephoneNumber.equals(that.telephoneNumber);
     }
 
+    /**
+     * Compares this application to the specified ID.
+     *
+     * @param other The ID to compare with.
+     * @return The comparison result.
+     */
     public int compareTo(IdApplication other) {
         return AggregateRoot.super.compareTo(other);
     }
@@ -88,82 +123,111 @@ public class Application implements AggregateRoot<IdApplication> {
         return null;
     }
 
+    /**
+     * Checks if this application has the specified ID.
+     *
+     * @param id The ID to check.
+     * @return True if the application has the given ID, false otherwise.
+     */
     public boolean hasIdentity(IdApplication id) {
         return AggregateRoot.super.hasIdentity(id);
     }
 
+    /**
+     * Retrieves the telephone number associated with this application.
+     *
+     * @return The telephone number of the candidate.
+     */
     public TelephoneNumber telephoneNumber() {
         return telephoneNumber;
     }
 
+    /**
+     * Retrieves the ID of this application.
+     *
+     * @return The ID of the application.
+     */
     public IdApplication idApplication() {
         return this.idApplication;
     }
 
-    public void changeIdApplication(IdApplication idApplication) {
-        this.idApplication = idApplication;
-    }
-
+    /**
+     * Retrieves the rank of this application.
+     *
+     * @return The rank of the application.
+     */
     public Rank rank() {
         return this.rank;
     }
 
-    public void changeRank(Rank rank) {
-        this.rank = rank;
-    }
-
+    /**
+     * Retrieves the submission date of this application.
+     *
+     * @return The submission date of the application.
+     */
     public SubmissionDate submissionDate() {
         return this.submissionDate;
     }
 
-    public void changeSubmissionDate(SubmissionDate submissionDate) {
-        this.submissionDate = submissionDate;
-    }
-
+    /**
+     * Retrieves the status of this application.
+     *
+     * @return The status of the application.
+     */
     public Status status() {
         return this.status;
     }
 
-    public void changeStatus(Status status) {
-        this.status = status;
-    }
-
+    /**
+     * Retrieves the data file associated with this application.
+     *
+     * @return The data file associated with the application.
+     */
     public ApplicationDataFile applicationDataFile() {
         return this.applicationDataFile;
     }
 
-    public void changeApplicationDataFile(ApplicationDataFile applicationDataFile) {
-        this.applicationDataFile = applicationDataFile;
-    }
-
+    /**
+     * Retrieves the content of files attached to this application.
+     *
+     * @return The content of files attached to the application.
+     */
     public FilesAttachedContent filesAttachedContent() {
         return this.filesAttachedContent;
     }
 
-    public void changeFilesAttachedContent(FilesAttachedContent filesAttachedContent) {
-        this.filesAttachedContent = filesAttachedContent;
-    }
-
+    /**
+     * Retrieves the files attached to the email associated with this application.
+     *
+     * @return The files attached to the email.
+     */
     public EmailFilesAttached emailFilesAttached() {
         return this.emailFilesAttached;
     }
 
-    public void changeEmailFilesAttached(EmailFilesAttached emailFilesAttached) {
-        this.emailFilesAttached = emailFilesAttached;
-    }
-
+    /**
+     * Retrieves the content file of the email associated with this application.
+     *
+     * @return The content file of the email.
+     */
     public EmailContentFile emailContentFile() {
         return this.emailContentFile;
     }
 
-    public void changeEmailContentFile(EmailContentFile emailContentFile) {
-        this.emailContentFile = emailContentFile;
-    }
-
+    /**
+     * Retrieves the job reference associated with this application.
+     *
+     * @return The job reference associated with the application.
+     */
     public JobReference jobReference() {
         return this.jobReference;
     }
 
+    /**
+     * Returns a string representation of this application.
+     *
+     * @return A string representation of the application.
+     */
     @Override
     public String toString() {
         return "Application{" +

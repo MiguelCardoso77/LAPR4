@@ -6,7 +6,7 @@ import jakarta.persistence.Embeddable;
 
 /**
  *
- * @author Jorge Santos ajs@isep.ipp.pt
+ * @author Tomás Gonçalves
  */
 @Embeddable
 public class TelephoneNumber implements ValueObject, Comparable<TelephoneNumber> {

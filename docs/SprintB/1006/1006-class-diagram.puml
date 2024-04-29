@@ -18,9 +18,9 @@ class DisplayCandidateDataController{
 }
 
 class Candidate{
-    - String user
-    - String curriculum
-    - String telephoneNumber
+    - User user
+    - Curriculum curriculum
+    - TelephoneNumber telephoneNumber
 
     + Candidate( user, telephoneNumber, curriculum)
     + Candidate()
@@ -86,8 +86,8 @@ class RepositoryFactory{
 DisplayCandidateDataUI -> DisplayCandidateDataController
 DisplayCandidateDataController -> PersistenceContext
 PersistenceContext -> RepositoryFactory
-DisplayCandidateDataController -> AuthorizationService
-DisplayCandidateDataController -> CandidateService
+DisplayCandidateDataController --> AuthorizationService
+DisplayCandidateDataController ---> CandidateService
 CandidateService -> CandidateBuilder
 CandidateBuilder -> Candidate
 CandidateService-> CandidateRepository

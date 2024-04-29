@@ -29,11 +29,11 @@ jobs:
       - name: Build all modules with Maven
         run: mvn clean install
 
-      - name: Generate project coverage report
-        run: mvn -B jacoco:report-aggregate
+      - name: Build with Maven and run tests with coverage for backoffice app
+        run: mvn -B clean verify jacoco:report -f jobs4u.backoffice.app/pom.xml
 
-      - name: Upload project coverage report
+      - name: Upload code coverage report for Backoffice App
         uses: actions/upload-artifact@v4
         with:
-          name: jobs4u-coverage-report
-          path: jobs4u.util.ci/target/site/jacoco-aggregate
+          name: backoffice-app-coverage-report
+          path: jobs4u.backoffice.app/target/site/jacoco

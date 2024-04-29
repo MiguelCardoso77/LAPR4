@@ -70,4 +70,8 @@ public class VacanciesNumber implements ValueObject, Comparable<VacanciesNumber>
     public int compareTo(final VacanciesNumber arg0) {
         return Integer.compare(number, arg0.number);
     }
+
+    public int number() {
+        return number;
+    }
 }

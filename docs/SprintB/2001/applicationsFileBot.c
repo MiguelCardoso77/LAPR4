@@ -14,11 +14,11 @@
 #define BUF_LEN ( 1 * ( EVENT_SIZE + 255 )) 
 #define BUFFER_SIZE 255
 
-volatile sig_atomic_t flagFather = 0; 
-volatile sig_atomic_t flagChildren = 0;
-volatile pid_t *childrensAvailability;
-volatile int numberChildren;
-volatile int new_files=0;
+int flagFather = 0; 
+int flagChildren = 0;
+pid_t *childrensAvailability;
+int numberChildren;
+int new_files=0;
 
 // Signal handlers
 
@@ -30,7 +30,7 @@ void handleChildren(int signo) {
 void handleFather_USR2(int signo, siginfo_t *sinfo, void *context) {
   for (int i = 0; i < numberChildren; i++) {
     if (*(childrensAvailability+i) == 0) {
-      *(childrensAvailability+i) = sinfo -> si_pid;
+      *(childrensAvailability+i) = sinfo->si_pid;
     }
   }
 }
@@ -58,11 +58,18 @@ pid_t available_process() {
       return *(childrensAvailability + i);
     }
   }
+  return 0;
 }
 
 // Function to extract the candidate ID from a string containing the candidate ID followed by a dash '-'
 char* extractCandidateID(char* fileName) {
-  char extracted[BUF_LEN];
+  char* extracted = (char*)malloc(BUF_LEN * sizeof(char));
+
+  if (extracted == NULL) {
+    // Handle allocation failure
+    fprintf(stderr, "Memory allocation failed\n");
+    exit(EXIT_FAILURE);
+  }
   int i;
 
   for (i = 0; fileName[i] != '-' && fileName[i] != '\0'; i++) {
@@ -80,25 +87,32 @@ char* extractCandidateID(char* fileName) {
 // 3 - number of childrens
 // 4 - time of check
 int main(int argc,char *argv[]) {
+
+  struct sigaction act,act2,children_act; 
+
   pid_t pid_handler;
-  int periodic_check,n;
+  int n;
   char outputDirectory[BUFFER_SIZE];
   char inputDirectory[BUFFER_SIZE];
 
-  if (argc < 5) {
-    fprintf(stderr, "Usage: %s inputDirectory outputDirectory number_of_children periodic_check\n", argv[0]);
+  if (argc < 4) {
+    fprintf(stderr, "Usage: %s inputDirectory outputDirectory number_of_children\n", argv[0]);
     exit(1);
   }
 
   strcpy(inputDirectory, argv[1]); 
   strcpy(outputDirectory, argv[2]);
-  periodic_check = atoi(argv[4]);
   numberChildren = atoi(argv[3]);
 
   pid_t pid[numberChildren];     // Creating an array to store processes that are working
   int fd[numberChildren][2];     // Creating an array of pipes for the father to communicate with the children
   int pipe_info[2];               // Pipe to send the new files
   childrensAvailability = (pid_t *) calloc(numberChildren,sizeof(pid_t));   // Array to store the availability of the children
+
+  if (childrensAvailability == NULL) {
+    perror("Memory allocation failed");
+    exit(1);
+  }
 
   for (int i = 0; i < numberChildren; i++) {
     if(pipe(fd[i]) == -1){ 
@@ -114,41 +128,61 @@ int main(int argc,char *argv[]) {
 
   pid_handler = fork();      // Creating the process that warns the father of new files 
 
+  if (pid_handler < 0) {
+          perror("fork failed");
+          exit(1);
+      }
+
   if (pid_handler==0) {
+      memset(&children_act, 0, sizeof(struct sigaction)); 
+      children_act.sa_handler = handleChildren; 
+      sigaction(SIGINT, &children_act, NULL);
+
       close(pipe_info[0]);
-      int fd_notify, wd,i=0;
+      int fd_notify, wd;
       char buffer[BUF_LEN];
 
       fd_notify = inotify_init();   // Waiting for new files at directory
       if (fd_notify < 0) {
           perror("inotify_init");
-          exit(EXIT_FAILURE);
+          exit(1);
       }
 
       wd = inotify_add_watch(fd_notify, inputDirectory, IN_CREATE);    // Configs what directory to watch
       if (wd == -1) {
           perror("inotify_add_watch");
-          exit(EXIT_FAILURE);
+          exit(1);
       }
 
-      while (flagChildren == 0) {
-          int length = read(fd_notify, buffer, BUF_LEN);
-          if (length < 0) {
-              perror("read");
-              exit(EXIT_FAILURE);
-          }
-          while (i < length) {
-              struct inotify_event *event = (struct inotify_event *) &buffer[ i ];
+      const struct inotify_event *event;
+      ssize_t length;
 
-              if(event->len){
-                if (event->mask & IN_CREATE) {
-                    write(pipe_info[1], event->name, sizeof(BUF_LEN));
-                }
 
-                i += EVENT_SIZE + event->len;
-              }
+      while(flagChildren==0){
+        length = read(fd_notify, buffer, BUF_LEN);
+
+        if (length < 0) {
+            perror("inotify error");
+            exit(1);
+        }
+
+        for (char *ptr = buffer; ptr < buffer + length;
+                       ptr += sizeof(struct inotify_event) + event->len) {
+
+          event = (const struct inotify_event *) ptr;
+
+          /* Print the name of the file. */
+
+          if (event->len){
+            char file[BUF_LEN];
+            strcpy(file, event->name);
+            write(pipe_info[1], file, BUF_LEN);
           }
+        }
       }
+
+      inotify_rm_watch(fd_notify,wd);
+      close(fd_notify);
       close(pipe_info[1]);
       exit(0);
   }
@@ -161,29 +195,30 @@ int main(int argc,char *argv[]) {
       exit(1);
     }
 
-    if(pid[i]>0){
-      *(childrensAvailability+i)=pid[i];
-    }
-
     if (pid[i] == 0) {
+      memset(&children_act, 0, sizeof(struct sigaction)); 
+      children_act.sa_handler = handleChildren; 
+      sigaction(SIGINT, &children_act, NULL);
+      
+      close(fd[i][1]);  // Close the write end of the pipe
+      char fileName[BUF_LEN];
+
       while(flagChildren == 0) {
-        close(fd[i][1]);  // Close the write end of the pipe
-        char fileName[BUF_LEN];
 
-        while ((n = read(fd[i][0], fileName, sizeof(fileName))) != 0) {
-
+        while((n = read(fd[i][0], fileName, BUF_LEN))!=0){
           // Extract the candidate ID from the file name
 
           char folderName[BUF_LEN];
-          char * candidate;
-          candidate=extractCandidateID(fileName);
+          char *candidate = extractCandidateID(fileName);
 
           strcpy(folderName, candidate);
+
+          free(candidate);
           
           // Create the directory
 
           char createDirectory[BUF_LEN];
-          snprintf(createDirectory, sizeof(createDirectory), "./%s/%s", outputDirectory, folderName);
+          snprintf(createDirectory, sizeof(createDirectory), "%s/%s", outputDirectory, folderName);
 
           pid_t mkdir = fork();
           if (mkdir == 0) {
@@ -199,38 +234,53 @@ int main(int argc,char *argv[]) {
           if (copy == 0) {
             execlp("cp", "cp", copyFiles, createDirectory, NULL);
           }
-
+          kill(getppid(), SIGUSR2);            
         }
 
-        kill(getppid(), SIGUSR2);
       }
-
       close(fd[i][0]);
       exit(0);
     }
   }
 
+  for (int i = 0; i < numberChildren; i++)
+  {
+      *(childrensAvailability+i)=pid[i];
+  }
+  
+  memset(&act, 0, sizeof(struct sigaction)); 
+  act.sa_sigaction = handleFather_USR2; 
+  act.sa_flags = SA_SIGINFO; 
+  sigaction(SIGUSR2, &act, NULL);
+
+  memset(&act2, 0, sizeof(struct sigaction)); 
+  act2.sa_handler = handleFatherExit; 
+  sigaction(SIGINT, &act2, NULL);
+
   close(pipe_info[1]);
 
   while (flagFather == 0) {
       char file[BUF_LEN];
-      while((n=read(pipe_info[0],file,sizeof(BUF_LEN)))!=0){
-      printf("qaqui");
-      pid_t pid_available = available_process();
-      for (int i = 0; i < numberChildren; i++) {
-        if (pid[i] == pid_available) {              // If child is available, put it occupied using the method and...
-          children_occupied(pid_available);
-          printf("aqui");
-          write(fd[i][1],file,sizeof(BUF_LEN));       // Send the file to the child 
+      while((n=read(pipe_info[0],file,BUF_LEN))!=0){
+        pid_t pid_available=available_process();
+
+        while(pid_available==0){
+          pid_available=available_process(); //while loop to wait for one process to be available
+        }
+        
+        for (int i = 0; i < numberChildren; i++) {
+          if (pid[i] == pid_available) {              // If child is available, put it occupied using the method and...
+            children_occupied(pid_available);
+            write(fd[i][1],file,BUF_LEN);       // Send the file to the child 
+          }
         }
       }
-    }
   }
 
   close(pipe_info[0]);
 
   for (int i = 0; i < numberChildren; i++) {
-    kill(pid[i], SIGKILL);
+    kill(pid[i], SIGINT);
 
     int status;
     waitpid(pid[i], &status, 0);

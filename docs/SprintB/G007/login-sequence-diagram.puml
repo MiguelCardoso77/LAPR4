@@ -1,0 +1,74 @@
+@startuml
+autonumber
+
+actor User
+
+participant LoginUI <<presentation>>
+participant AuthenticationCredentialHandler <<authentication>>
+participant AuthzRegistry <<authentication>>
+participant AuthorizationService <<authentication>>
+participant Authenticator <<authentication>>
+database UserRepository <<repository>>
+
+activate User
+    note right of User
+        The user role depends on the app he is using.
+    end note
+    User -> LoginUI: asks to login
+
+    activate LoginUI
+
+        LoginUI --> User: asks for email and password
+    deactivate LoginUI
+
+    User -> LoginUI: provides details
+    activate LoginUI
+
+            LoginUI -> AuthenticationCredentialHandler: authenticated(email, password, role)
+            activate AuthenticationCredentialHandler
+
+                AuthenticationCredentialHandler -> AuthzRegistry: authenticate(email, password, role)
+                activate AuthzRegistry
+
+                    AuthzRegistry -> AuthorizationService: AuthorizationService()
+                    activate AuthorizationService
+
+                        AuthorizationService --> AuthzRegistry: returns instance
+                    deactivate AuthorizationService
+
+                    AuthzRegistry -> UserRepository: get
+                    activate UserRepository
+
+                        UserRepository --> AuthzRegistry: returns userRepository
+                    deactivate UserRepository
+
+                    AuthzRegistry -> UserRepository: findByIdentity(email)
+                    note right of AuthzRegistry
+                        Will return true if user is found
+                    end note
+                    activate UserRepository
+
+                        UserRepository --> AuthzRegistry: returns true
+                    deactivate UserRepository
+
+                    AuthzRegistry -> Authenticator: authenticate(email, password, role)
+                    note right of AuthzRegistry
+                        Will return true if user details are correct
+                    end note
+                    activate Authenticator
+
+                        Authenticator --> AuthzRegistry: returns true
+                    deactivate Authenticator
+
+                    AuthzRegistry --> AuthenticationCredentialHandler: returns true
+                deactivate AuthzRegistry
+
+                AuthenticationCredentialHandler --> LoginUI: returns true
+            deactivate AuthenticationCredentialHandler
+
+            LoginUI -> User: shows home page
+    deactivate LoginUI
+
+deactivate User
+
+@enduml

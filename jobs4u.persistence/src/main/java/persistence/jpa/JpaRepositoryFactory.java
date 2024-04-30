@@ -39,16 +39,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public SignupRequestRepository signupRequests(final TransactionalContext autoTx) {
-        return new JpaSignupRequestRepository(autoTx);
-    }
-
-    @Override
-    public SignupRequestRepository signupRequests() {
-        return new JpaSignupRequestRepository(Application.settings().getPersistenceUnitName());
-    }
-
-    @Override
     public JpaJobOpeningRepository jobOpenings(final TransactionalContext autoTx) {
         return new JpaJobOpeningRepository(autoTx);
     }

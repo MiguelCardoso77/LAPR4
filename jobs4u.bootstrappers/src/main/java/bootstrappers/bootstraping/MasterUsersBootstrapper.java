@@ -31,10 +31,6 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
         registerLanguageEngineer("LanguageEngineerEx", "ExLanguageEngineer1", "LanguageEngineer", "Example", "exlanguageengineer@gmail.com");
         registerOperator("OperatorEx", "ExOperator1", "Operator", "Example", "exoperator@gmail.com");
 
-        addSignUpRequest("excandidate2@gmail.com", "ExCandidate2", "CandidateTwo", "ExampleTwo",  "912345999");
-        addSignUpRequest("excandidate3@gmail.com", "ExCandidate3", "CandidateThree", "ExampleThree", "912345000");
-        addSignUpRequest("excustomer2@gmail.com", "ExCustomer2", "CustomerTwo", "ExampleTwo", "922000888");
-
         registerBootstrapCandidate("CandidateOne", "ExampleOne", "candidateOne@gmail.com", "910920930", "curriculumPathOne");
         registerBootstrapCandidate("CandidateTwo", "ExampleTwo", "candidateTwo@gmail.com", "940950960", "curriculumpPathTwo");
 
@@ -85,9 +81,5 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
         final Set<Role> roles = new HashSet<>();
         roles.add(Jobs4URoles.CUSTOMER);
         registerCustomer(firstName, lastName, email, customerManager, selectedCompany);
-    }
-
-    private void addSignUpRequest(final String email, final String password, final String firstName, final String lastName, final String telephoneNumber) {
-        signupUser(password, firstName, lastName, email, telephoneNumber);
     }
 }

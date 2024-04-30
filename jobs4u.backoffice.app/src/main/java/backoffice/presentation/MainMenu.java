@@ -1,15 +1,10 @@
 package backoffice.presentation;
 
-import backoffice.presentation.applications.ListJobOpeningApplicationsAction;
-import backoffice.presentation.authz.*;
-import backoffice.presentation.candidate.RegisterCandidateAction;
-import backoffice.presentation.customer.RegisterCustomerAction;
-import backoffice.presentation.jobs.AddJobOpeningAction;
-import infrastructure.Application;
-import backoffice.presentation.clientuser.AcceptRefuseSignupRequestAction;
+import backoffice.presentation.menus.AdminMenu;
+import backoffice.presentation.menus.CustomerManagerMenu;
+import backoffice.presentation.menus.OperatorMenu;
 import console.presentation.authz.MyUserMenu;
 import core.domain.user.Jobs4URoles;
-import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
@@ -20,9 +15,9 @@ import eapli.framework.presentation.console.menu.HorizontalMenuRenderer;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
+import infrastructure.Application;
 
 /**
- * TODO split this class in more specialized classes for each menu
  *
  * @author Paulo Gandra Sousa
  */
@@ -30,18 +25,6 @@ public class MainMenu extends AbstractUI {
 
     private static final String RETURN_LABEL = "Return ";
     private static final int EXIT_OPTION = 0;
-
-    // OPTIONS
-    private static final int OPTION_ONE = 1;
-    private static final int OPTION_TWO = 2;
-    private static final int OPTION_THREE = 3;
-    private static final int OPTION_FOUR = 4;
-    private static final int OPTION_FIVE = 5;
-    private static final int OPTION_SIX = 6;
-    private static final int OPTION_SEVEN = 7;
-    private static final int OPTION_EIGHT = 8;
-    private static final int OPTION_NINE = 9;
-    private static final int OPTION_TEN = 10;
 
     // MENU OPTIONS
     private static final int MY_USER_OPTION = 1;
@@ -74,7 +57,6 @@ public class MainMenu extends AbstractUI {
 
     @Override
     public String headline() {
-
         return authz.session().map(s -> "BackOffice [ @" + s.authenticatedUser().identity() + " ]").orElse("BackOffice [ ==Anonymous== ]");
     }
 
@@ -113,50 +95,23 @@ public class MainMenu extends AbstractUI {
     }
 
     private Menu buildAdminMenu() {
-        final Menu menu = new Menu("Admin Actions >");
-
-        menu.addItem(OPTION_ONE, "List all Users", new ListUsersAction());
-        menu.addItem(OPTION_TWO, "List all Backoffice Users", new ListBackofficeUsersAction());
-        menu.addItem(OPTION_THREE, "List all Candidate's data", new DisplayCandidateDataAction());
-        menu.addItem(OPTION_FOUR, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
-
-        menu.addItem(OPTION_FIVE, "Add User", new AddUserUI()::show);
-        menu.addItem(OPTION_SIX,"Activate User", new ActivateUserAction());
-        menu.addItem(OPTION_SEVEN, "Deactivate User", new DeactivateUserAction());
-        menu.addItem(OPTION_EIGHT, "Accept/Refuse Signup Request", new AcceptRefuseSignupRequestAction());
-
-        menu.addItem(OPTION_NINE, "Add Job Opening", new AddJobOpeningAction());
-        menu.addItem(OPTION_TEN, "Register Customer", new RegisterCustomerAction());
-
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
+        AdminMenu admin = new AdminMenu();
+        return admin.build();
     }
 
     private Menu buildCustomerManagerMenu() {
-        final Menu menu = new Menu("Customer Manager Actions >");
+        CustomerManagerMenu customerManager = new CustomerManagerMenu();
+        return customerManager.build();
+    }
 
-        menu.addItem(OPTION_ONE, "List all Candidate's data", new DisplayCandidateDataAction());
-        menu.addItem(OPTION_TWO, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
-
-        menu.addItem(OPTION_THREE, "Register Customer", new RegisterCustomerAction());
-        menu.addItem(OPTION_FOUR, "Register Candidate", new RegisterCandidateAction());
-        menu.addItem(OPTION_FIVE, "Add Job Opening", new AddJobOpeningAction());
-
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
+    private Menu buildLanguageEnginnerMenu() {
+        // TODO build the language engineer menu
+        return null;
     }
 
     private Menu buildOperatorMenu() {
-        final Menu menu = new Menu("Operator Actions >");
-
-        menu.addItem(OPTION_ONE, "List all Users", new ListUsersAction());
-        menu.addItem(OPTION_TWO, "Register Candidate", new RegisterCandidateAction());
-
-        menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
-
-        return menu;
+        OperatorMenu operator = new OperatorMenu();
+        return operator.build();
     }
 
 }

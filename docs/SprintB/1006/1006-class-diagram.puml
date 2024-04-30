@@ -1,0 +1,95 @@
+@startuml
+skinparam linetype ortho
+top to bottom direction
+
+class DisplayCandidateDataUI{
+    + headline()
+    + emptyMessage()
+    + elements()
+    + elementPrinter()
+    + elementName()
+    + listHeader()
+    + doShow()
+}
+
+
+class DisplayCandidateDataController{
+    + allCandidates()
+}
+
+class Candidate{
+    - User user
+    - Curriculum curriculum
+    - TelephoneNumber telephoneNumber
+
+    + Candidate( user, telephoneNumber, curriculum)
+    + Candidate()
+    + user()
+    + curriculum()
+    + identity()
+    + sameAs (other)
+    + equals(o)
+    + toString()
+
+}
+
+class CandidateRepository{
+    + allCandidates()
+}
+
+class CandidateService{
+    + findCandidate(telephoneNumber)
+    + allCandidates()
+
+}
+
+class CandidateBuilder{
+    + withAll(systemUser, telephoneNumber, curriculum)
+    +build()
+}
+
+class AuthorizationService{
+    + authorizationService()
+    + ensureAuthenticatedUserHasAnyOf\n(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
+
+}
+
+class PersistenceContext {
+    + repositories()
+    + PersistenceContext()
+}
+
+class RepositoryFactory{
+    + newTransactionalContext()
+    + users(TransactionalContext autoTx)
+    + users()
+    + customerUsers(TransactionalContext autoTx)
+    + customerUsers()
+    + signupRequests(TransactionalContext autoTx)
+    + signupRequests()
+    + jobOpenings(TransactionalContext autoTx)
+    + jobOpenings()
+    + applications(TransactionalContext autoTx)
+    + applications()
+}
+
+
+
+
+
+
+
+
+
+
+
+DisplayCandidateDataUI -> DisplayCandidateDataController
+DisplayCandidateDataController -> PersistenceContext
+PersistenceContext -> RepositoryFactory
+DisplayCandidateDataController --> AuthorizationService
+DisplayCandidateDataController ---> CandidateService
+CandidateService -> CandidateBuilder
+CandidateBuilder -> Candidate
+CandidateService-> CandidateRepository
+
+@enduml

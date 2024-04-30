@@ -4,6 +4,11 @@ import eapli.framework.domain.model.ValueObject;
 
 import java.util.Calendar;
 
+/**
+ * Represents the date associated with a process.
+ *
+ * @author Diana Neves
+ */
 public class ProcessDate implements ValueObject {
     private Calendar processDate;
 

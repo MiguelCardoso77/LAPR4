@@ -8,7 +8,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Calendar;
 
-
+/**
+ * Builder for creating instances of the {@link Application} class.
+ *
+ * @author Tomás Gonçalves
+ */
 public class ApplicationBuilder implements DomainFactory<Application> {
 
     private IdApplication idApplication;
@@ -26,6 +30,21 @@ public class ApplicationBuilder implements DomainFactory<Application> {
 
     private static final Logger LOGGER = LogManager.getLogger(Application.class);
 
+    /**
+     * Sets all attributes of the ApplicationBuilder.
+     *
+     * @param idApplication         The application ID.
+     * @param rank                  The rank of the application.
+     * @param submissionDate        The submission date of the application.
+     * @param status                The status of the application.
+     * @param applicationDataFile   The data file associated with the application.
+     * @param filesAttachedContent  The content of files attached to the application.
+     * @param emailFilesAttached    The files attached to the application via email.
+     * @param emailContentFile      The content of the email attached to the application.
+     * @param jobReference          The reference to the job associated with the application.
+     * @param telephoneNumber       The telephone number of the candidate.
+     * @return                      The ApplicationBuilder instance with all attributes set.
+     */
     public ApplicationBuilder withAll(long idApplication, int rank, Calendar submissionDate, Status status, String applicationDataFile, String filesAttachedContent, String emailFilesAttached, String emailContentFile, String jobReference , String telephoneNumber) {
         this.idApplication = new IdApplication(idApplication);
         this.rank = new Rank(rank);
@@ -41,6 +60,11 @@ public class ApplicationBuilder implements DomainFactory<Application> {
     }
 
 
+    /**
+     * Constructs an {@link Application} instance based on the provided data.
+     *
+     * @return The created application.
+     */
     @Override
     public Application build() {
         Application application;

@@ -121,7 +121,7 @@ public class Candidate implements AggregateRoot<TelephoneNumber> {
         return "Candidate{" +
                 "telephoneNumber=" + telephoneNumber +
                 ", curriculum=" + curriculum +
-                ", systemUser=" + systemUser +
+                ", systemUser=" + systemUser.toString() +
                 '}';
     }
 }

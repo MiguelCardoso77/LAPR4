@@ -24,14 +24,10 @@ activate CM
        System --> CM : shows candidate's data \n( name, phone number, \n email, curriculum )
     deactivate System
 
-    CM -> System : confirms condidate's data
-    activate System
-
-        System --> CM :displays candidate data
-    deactivate System
 
 
-        deactivate System
+
+
 
 
 @enduml

@@ -26,23 +26,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build all modules with Maven
-        run: mvn clean install
+      - name: Generate project coverage report
+        run: mvn clean org.jacoco:jacoco-maven-plugin:0.8.8:prepare-agent  verify org.jacoco:jacoco-maven-plugin:0.8.8:report
 
-      - name: Build with Maven and run tests with coverage for candidate app
-        run: mvn -B clean verify jacoco:report -f jobs4u.candidate.app/pom.xml
-
-      - name: Upload code coverage report for Candidate App
+      - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: candidate-app-coverage-report
-          path: jobs4u.candidate.app/target/site/jacoco
-
-      - name: Generate combined code coverage report
-        run: mvn -B jacoco:report-aggregate
-
-      - name: Upload combined code coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: jobs4u-coverage-report
-          path: jobs4u.util.ci/target/site/jacoco-aggregate
+          name: coverage-report
+          path: jobs4u.util.ci/target/site/jacoco-aggregate/

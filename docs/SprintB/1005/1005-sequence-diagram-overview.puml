@@ -1,0 +1,115 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Customer Manager" as CM
+participant ListJobOpeningApplicationsUI <<presentation>>
+participant ListJobOpeningApplicationsController <<controller>>
+participant AuthorizationService <<service>>
+participant JobOpeningService <<service>>
+database JobOpeningRepository <<repository>>
+participant ApplicationService <<service>>
+database ApplicationRepository <<repository>>
+
+
+
+activate CM
+
+        CM -> ListJobOpeningApplicationsUI : list all applications of a job opening
+
+        activate ListJobOpeningApplicationsUI
+
+        ListJobOpeningApplicationsUI -> ListJobOpeningApplicationsController : selects a job opening
+
+        activate ListJobOpeningApplicationsController
+
+        ListJobOpeningApplicationsController -> AuthorizationService : ensureAuthenticationUserHasAnyOf()
+
+        activate AuthorizationService
+
+        AuthorizationService --> ListJobOpeningApplicationsController : return true
+
+        deactivate AuthorizationService
+
+        ListJobOpeningApplicationsController -> JobOpeningService : allJobOpening()
+
+        activate JobOpeningService
+
+        JobOpeningService -> JobOpeningRepository : allJobOpening()
+
+        activate JobOpeningRepository
+
+        JobOpeningRepository --> JobOpeningService : listAllJobOpenings
+
+        deactivate JobOpeningRepository
+
+        JobOpeningService --> ListJobOpeningApplicationsController : listAllJobOpenings
+
+        deactivate JobOpeningService
+
+
+        ListJobOpeningApplicationsController --> ListJobOpeningApplicationsUI : listAllJobOpenings
+
+        deactivate ListJobOpeningApplicationsController
+
+        ListJobOpeningApplicationsUI --> CM : asks to select a job opening
+
+        deactivate ListJobOpeningApplicationsUI
+
+        CM -> ListJobOpeningApplicationsUI : selects a job opening
+
+        activate ListJobOpeningApplicationsUI
+
+        ListJobOpeningApplicationsUI -> ListJobOpeningApplicationsController : selects all applications of the selected job opening
+
+        activate ListJobOpeningApplicationsController
+
+        ListJobOpeningApplicationsController -> JobOpeningService : findJobOpening(jobReference)
+
+        activate JobOpeningService
+
+        JobOpeningService -> JobOpeningRepository : findJobOpening(jobReference)
+
+        activate JobOpeningRepository
+
+        JobOpeningRepository --> JobOpeningService : jobOpeningApplication
+
+        deactivate JobOpeningRepository
+
+        JobOpeningService --> ListJobOpeningApplicationsController : jobOpeningApplication
+
+        deactivate JobOpeningService
+
+        ListJobOpeningApplicationsController -> ApplicationService : allApplicationsOfJobOpening(jobReference)
+
+        activate ApplicationService
+
+        ApplicationService -> ApplicationRepository : allApplicationsOfJobOpening(jobReference)
+
+        activate ApplicationRepository
+
+        ApplicationRepository  --> ApplicationService : listAllJobOpeningsApplication
+
+        deactivate ApplicationRepository
+
+        ApplicationService--> ListJobOpeningApplicationsController : listAllJobOpeningsApplication
+
+        deactivate ApplicationService
+
+        ListJobOpeningApplicationsController --> ListJobOpeningApplicationsUI : listAllJobOpeningsApplication
+
+        deactivate ListJobOpeningApplicationsController
+
+        ListJobOpeningApplicationsUI --> CM : display all applications of a selected job opening
+
+
+
+
+
+deactivate CM
+
+@enduml

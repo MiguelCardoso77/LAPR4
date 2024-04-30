@@ -3,14 +3,10 @@ package backoffice;
 import backoffice.presentation.MainMenu;
 import console.BaseApplication;
 import console.presentation.authz.LoginUI;
-import core.application.eventhandlers.NewUserRegisteredFromSignupWatchDog;
-import core.domain.events.NewUserRegisteredFromSignupEvent;
-import core.domain.events.SignupAcceptedEvent;
 import core.domain.user.Jobs4UPasswordPolicy;
 import core.domain.user.Jobs4URoles;
 import infrastructure.authz.AuthenticationCredentialHandler;
 import core.persistence.PersistenceContext;
-import core.application.eventhandlers.SignupAcceptedWatchDog;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 import eapli.framework.infrastructure.pubsub.EventDispatcher;
@@ -57,7 +53,6 @@ public final class Jobs4uBackOffice extends BaseApplication {
     @SuppressWarnings("unchecked")
     @Override
     protected void doSetupEventHandlers(final EventDispatcher dispatcher) {
-        dispatcher.subscribe(new NewUserRegisteredFromSignupWatchDog(), NewUserRegisteredFromSignupEvent.class);
-        dispatcher.subscribe(new SignupAcceptedWatchDog(), SignupAcceptedEvent.class);
+        // nothing to do
     }
 }

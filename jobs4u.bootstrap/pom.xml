@@ -51,7 +51,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>user.console.CustomerApp</mainClass>
+                            <mainClass>bootstrap.Jobs4UBootstrap</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

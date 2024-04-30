@@ -34,7 +34,7 @@ public class Process implements AggregateRoot<Integer> {
      * @param processDate   the date of the process
      * @param jobReference  the reference to the associated job opening
      */
-    public Process(Integer idProcess,ProcessState processState, ProcessDate processDate, JobReference jobReference){
+    public Process(Integer idProcess, ProcessState processState, ProcessDate processDate, JobReference jobReference){
         this.idProcess = idProcess;
         this.processState = processState;
         this.processDate = processDate;

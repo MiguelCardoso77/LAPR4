@@ -49,8 +49,6 @@ void children_occupied(pid_t pid) {
   }
 }
 
-
-
 // Method to get the first available child
 pid_t available_process() {
   for (int i = 0; i < numberChildren; i++) {
@@ -159,24 +157,20 @@ int main(int argc,char *argv[]) {
 
 
       while(flagChildren==0){
-        length = read(fd_notify, buffer, BUF_LEN);
+        while((length = read(fd_notify, buffer, BUF_LEN))>0){
 
-        if (length < 0) {
-            perror("inotify error");
-            exit(1);
-        }
+          for (char *ptr = buffer; ptr < buffer + length;
+                        ptr += sizeof(struct inotify_event) + event->len) {
 
-        for (char *ptr = buffer; ptr < buffer + length;
-                       ptr += sizeof(struct inotify_event) + event->len) {
+            event = (const struct inotify_event *) ptr;
 
-          event = (const struct inotify_event *) ptr;
+            /* Print the name of the file. */
 
-          /* Print the name of the file. */
-
-          if (event->len){
-            char file[BUF_LEN];
-            strcpy(file, event->name);
-            write(pipe_info[1], file, BUF_LEN);
+            if (event->len){
+              char file[BUF_LEN];
+              strcpy(file, event->name);
+              write(pipe_info[1], file, BUF_LEN);
+            }
           }
         }
       }
@@ -205,7 +199,7 @@ int main(int argc,char *argv[]) {
 
       while(flagChildren == 0) {
 
-        while((n = read(fd[i][0], fileName, BUF_LEN))!=0){
+        while((n = read(fd[i][0], fileName, BUF_LEN))>0){
           // Extract the candidate ID from the file name
 
           char folderName[BUF_LEN];
@@ -234,7 +228,8 @@ int main(int argc,char *argv[]) {
           if (copy == 0) {
             execlp("cp", "cp", copyFiles, createDirectory, NULL);
           }
-          kill(getppid(), SIGUSR2);            
+
+          kill(getppid(), SIGUSR2);
         }
 
       }
@@ -261,28 +256,38 @@ int main(int argc,char *argv[]) {
 
   while (flagFather == 0) {
       char file[BUF_LEN];
-      while((n=read(pipe_info[0],file,BUF_LEN))!=0){
+      while((n=read(pipe_info[0],file,BUF_LEN))>0){
         pid_t pid_available=available_process();
 
+        fprintf(stderr,"\n%d",pid_available);
+        
         while(pid_available==0){
           pid_available=available_process(); //while loop to wait for one process to be available
         }
-        
+
+        int process;
+
         for (int i = 0; i < numberChildren; i++) {
           if (pid[i] == pid_available) {              // If child is available, put it occupied using the method and...
-            children_occupied(pid_available);
-            write(fd[i][1],file,BUF_LEN);       // Send the file to the child 
+            process=i;       // Send the file to the child
           }
-        }
+        }            // If child is available, put it occupied using the method and...
+
+        children_occupied(pid_available);
+        write(fd[process][1],file,BUF_LEN);       // Send the file to the child
       }
   }
 
   close(pipe_info[0]);
 
+  int status;
+  kill(pid_handler,SIGINT);
+  waitpid(pid_handler,&status,0);
+
   for (int i = 0; i < numberChildren; i++) {
     kill(pid[i], SIGINT);
+    
 
-    int status;
     waitpid(pid[i], &status, 0);
   }
 

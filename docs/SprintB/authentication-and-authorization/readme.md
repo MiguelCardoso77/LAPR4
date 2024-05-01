@@ -1,4 +1,6 @@
-# G007 -  Applying authentication and authorization for all its users and functionalities.
+# Applying authentication and authorization for all its users and functionalities.
+
+--------
 
 ## 1. Requirements Engineering
 
@@ -6,10 +8,7 @@
 
 As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
 
-### 1.2. Use Case Diagram
-![G007-use-case-diagram.svg](G007-use-case-diagram.svg)
-
-### 1.3. Customer Specifications and Clarifications
+### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
 
@@ -58,7 +57,7 @@ funcionalidades diferentes ou são aplicações diferentes (que acedem à mesma 
 “executa” a aplicação “Candidate App” mesmo que se identifique como um user válido do tipo “Customer” a aplicação não deve
 aceitar esse login.
 
-### 1.4. Acceptance Criteria
+### 1.3. Acceptance Criteria
 
 * AC1: User Creation
 
@@ -68,11 +67,11 @@ aceitar esse login.
 
       The system should generate a unique password for the account.
 
-### 1.5. Found out Dependencies
+### 1.4. Found out Dependencies
 
 *  None to specify
 
-### 1.6. Input and Output Data
+### 1.5. Input and Output Data
 
 **Input Data:**
 
@@ -84,21 +83,21 @@ aceitar esse login.
 
     * (In)Success of the operation
 
-### 1.7. System Sequence Diagrams (SSD)
+### 1.6. System Sequence Diagrams (SSD)
 
-#### 1.7.1. Login in to Backoffice SSD
+#### 1.6.1. Login in to Backoffice SSD
 ![backofficeLogin-system-sequence-diagram.svg](log-in-to-backoffice%2FbackofficeLogin-system-sequence-diagram.svg)
 
-#### 1.7.2. Login in to Candidate App SSD
+#### 1.6.2. Login in to Candidate App SSD
 ![candidateAppLogin-system-sequence-diagram.svg](log-in-to-candidateApp%2FcandidateAppLogin-system-sequence-diagram.svg)
 
-#### 1.7.3. Login in to Customer App SSD
+#### 1.6.3. Login in to Customer App SSD
 ![customerAppLogin-system-sequence-diagram.svg](log-in-to-customerApp%2FcustomerAppLogin-system-sequence-diagram.svg)
 
-### 1.8. Sequence Diagram (SD)
+### 1.7. Sequence Diagram (SD)
 ![login-sequence-diagram.svg](login-sequence-diagram.svg)
 
-### 1.9 Other Relevant Remarks
+### 1.8 Other Relevant Remarks
 
 *  None to specify
 
@@ -207,3 +206,5 @@ We created tests to ensure the password policy is working as expected, as well a
         assertEquals(Jobs4UPasswordPolicy.PasswordStrength.EXCELLENT, passwordPolicy.strength("Exce11entP@ssw0rd"));
     }
 ```
+
+## 5. Demonstration

@@ -1,0 +1,135 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
+
+Title "Class Diagram - Register a candidate"
+
+package "presentation" {
+    class RegisterCandidateUI {
+        + doShow()
+        + headline()
+    }
+}
+
+package "candidate" {
+    package "application" {
+        class RegisterCandidateController {
+            + registerCandidate(firstName, lastName, email, role, createdOn, telephoneNumber, curriculum)
+            - createSystemUser(firstName, lastName, email, role, createdOn)
+            - createCandidate(user, telephoneNumber, curriculum)
+        }
+    }
+
+    package "authorization" {
+        class AuthorizationService {
+            + authenticate(username, rawPassword, roles)
+            + changePassword(user, oldPassword, newPassword)
+            + changePassword(oldPassword, newPassword)
+            + resetPassword(user)
+            + confirmResetPassword(user, token, newPass)
+            - noActionRightsToValidate(role)
+            - retrieveUser(username)
+        }
+
+    }
+
+    package "user" {
+        class UserManagementService {}
+
+        class SystemyUserBuilder {}
+
+        class SystemUser {}
+
+        note right of UserManagementService
+        - UserManagementService, SystemUser and SystemyUserBuilder are classes
+        from the eapli framework so their methods are not represented
+        because it doesn't make sense to represent the framework infrastructure
+        end note
+
+        class Jobs4UPasswordPolicy {
+            + isSatisfiedBy(password)
+            + passwordGenerator(name)
+            + strength(password)
+            + enum PasswordStrength {INVALID, WEAK, GOOD, EXCELLENT}
+        }
+    }
+
+    package "services" {
+        class CandidateService {
+            + registerCandidate(systemUser, telephoneNumber, curriculum)
+            + createCandidate(systemUser, telephoneNumber, curriculum)
+            + findCandidate(telephoneNumber)
+            + allCandidates()
+        }
+    }
+
+    package "domain" {
+        class CandidateBuilder {
+            + withAll(systemUser, telephoneNumber, curriculum)
+            + build()
+        }
+
+        class Candidate {
+            + Candidate(systemUser, telephoneNumber, curriculum)
+            + user()
+            + curriculum()
+            + identity()
+            + sameAs(object)
+            + equals(object)
+            + toString()
+        }
+
+        class TelephoneNumber {
+            + TelephoneNumber(number)
+            + valueOf(number)
+            + sameAs(object)
+            + hashCode()
+            + equals(object)
+            + toString()
+        }
+
+        class Curriculum {
+            + Curriculum(curriculum)
+            + valueOf(curriculum)
+            + sameAs(object)
+            + hashCode()
+            + equals(object)
+            + toString()
+        }
+    }
+
+    package "repositories" {
+        interface UserRepository {
+            + findByActive(active)
+        }
+
+        interface CandidateRepository {
+            + allCandidates()
+        }
+    }
+}
+
+RegisterCandidateUI --> RegisterCandidateController
+
+RegisterCandidateController -> AuthorizationService
+RegisterCandidateController --> Jobs4UPasswordPolicy
+RegisterCandidateController --> UserManagementService
+RegisterCandidateController --> CandidateService
+
+UserManagementService --> SystemyUserBuilder
+UserManagementService -> UserRepository
+SystemyUserBuilder --> SystemUser
+
+CandidateService --> CandidateBuilder
+CandidateService --> CandidateRepository
+CandidateBuilder --> Candidate
+Candidate -> SystemUser
+Candidate --> TelephoneNumber
+Candidate --> Curriculum
+
+@enduml

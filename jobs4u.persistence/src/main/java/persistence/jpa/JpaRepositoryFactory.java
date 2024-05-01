@@ -1,10 +1,8 @@
 package persistence.jpa;
 
-import core.repositories.ApplicationRepository;
-import core.repositories.CandidateRepository;
-import core.repositories.CompanyRepository;
+import core.domain.interview.JobInterview;
+import core.repositories.*;
 import infrastructure.Application;
-import core.repositories.SignupRequestRepository;
 import core.persistence.RepositoryFactory;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -83,6 +81,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public CompanyRepository companies() {
         return new JpaCompanyRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public JobInterviewRepository jobInterviews(TransactionalContext autoTx) {
+        return new JpaJobInterviewRepository(autoTx);
+    }
+
+    @Override
+    public JobInterviewRepository jobInterviews() {
+        return new JpaJobInterviewRepository(Application.settings().getPersistenceUnitName());
     }
 
 }

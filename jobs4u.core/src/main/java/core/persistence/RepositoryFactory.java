@@ -110,4 +110,6 @@ public interface RepositoryFactory {
     CompanyRepository companies(TransactionalContext autoTx);
     CompanyRepository companies();
 
+    JobInterviewRepository jobInterviews(TransactionalContext autoTx);
+    JobInterviewRepository jobInterviews();
 }

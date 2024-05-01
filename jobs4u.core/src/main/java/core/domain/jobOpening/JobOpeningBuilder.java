@@ -1,11 +1,9 @@
 package core.domain.jobOpening;
 
 import core.domain.company.Company;
-import core.domain.company.CompanyName;
 import eapli.framework.domain.model.DomainFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.annotation.ScopeMetadata;
 
 public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private static final Logger LOGGER = LogManager.getLogger(JobOpening.class);

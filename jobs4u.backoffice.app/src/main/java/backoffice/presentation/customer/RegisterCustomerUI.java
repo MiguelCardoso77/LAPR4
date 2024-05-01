@@ -18,6 +18,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * @author 1220812@isep.ipp.pt
+ */
+
 public class RegisterCustomerUI extends AbstractUI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);

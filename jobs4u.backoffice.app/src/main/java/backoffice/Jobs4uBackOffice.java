@@ -29,10 +29,10 @@ public final class Jobs4uBackOffice extends BaseApplication {
     @Override
     protected void doMain(final String[] args) {
         LoginUI loginUI = new LoginUI(new AuthenticationCredentialHandler(),
-                          Jobs4URoles.ADMIN,
-                          Jobs4URoles.CUSTOMER_MANAGER,
-                          Jobs4URoles.LANGUAGE_ENGINEER,
-                          Jobs4URoles.OPERATOR);
+                Jobs4URoles.ADMIN,
+                Jobs4URoles.CUSTOMER_MANAGER,
+                Jobs4URoles.LANGUAGE_ENGINEER,
+                Jobs4URoles.OPERATOR);
 
         if (loginUI.show()) {
             final MainMenu menu = new MainMenu();

@@ -24,15 +24,15 @@ import core.domain.company.Company;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.validations.Preconditions;
 
 /**
- * A factory for User entities.
+ * A factory for Customer entities.
  *
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
- * interface. it acts as a Builder (GoF).
+ * interface. It acts as a Builder (GoF).
  *
- * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
+ * @Author 1220812@isep.ipp.pt
+ *
  */
 public class CustomerBuilder implements DomainFactory<Customer> {
     private EmailAddress emailAddress;

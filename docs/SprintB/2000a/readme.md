@@ -6,9 +6,14 @@
 
 As Operator, I want to register a candidate and create a corresponding user.
 
-### 1.2. Customer Specifications and Clarifications
+### 1.2. Use Case Diagram
+![2000a-use-case-diagram.svg](2000a-use-case-diagram.svg)
+
+### 1.3. Customer Specifications and Clarifications
 
 **From the specifications document:**
+
+> After the candidate is registered, the created user needs to be able to use the Candidate App.
 
 **From the client clarifications:**
 
@@ -81,7 +86,7 @@ the admin or made by the operator.
 of the applications from the data in the files produced by the application file bot. If the candidate does not exist, it 
 should be created. I think there is no registration of a candidate by the admin.
 
-### 1.3. Acceptance Criteria
+### 1.4. Acceptance Criteria
 
 * AC1: Candidate Registration:
   
@@ -98,11 +103,11 @@ should be created. I think there is no registration of a candidate by the admin.
   
       The system should generate a unique password for the candidate account.
 
-### 1.4. Found out Dependencies
+### 1.5. Found out Dependencies
 
 * G007 - As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
 
-### 1.5 Input and Output Data
+### 1.6. Input and Output Data
 
 **Input Data:**
 
@@ -116,15 +121,24 @@ should be created. I think there is no registration of a candidate by the admin.
 
     * (In)Success of the operation
 
-### 1.6. System Sequence Diagram (SSD)
+### 1.7. System Sequence Diagram (SSD)
 
-![2000a-system-sequence-diagram.svg](2000a-system-sequence-diagram.svg)
+![2000a-system-sequence-diagram.svg](registering-candidate-system-sequence-diagram.svg)
 
-### 1.7. Sequence Diagrams (SD)
-![2000a-sequence-diagram.svg](2000a-sequence-diagram.svg)
+### 1.8. Sequence Diagram (SD)
+![2000a-sequence-diagram.svg](registering-candidate-sequence-diagram.svg)
 
-### 1.8 Other Relevant Remarks
+### 1.9 Other Relevant Remarks
 
 *  None to specify 
 
 ## 2. Analysis and Design
+
+### 2.1. Domain Model
+![registering-canidate-domain-model.svg](registering-canidate-domain-model.svg)
+
+### 2.2. Class Diagram
+
+## 3. Implementation
+
+## 4. Testing

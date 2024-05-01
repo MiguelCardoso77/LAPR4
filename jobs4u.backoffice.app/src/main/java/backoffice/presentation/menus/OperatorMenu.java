@@ -15,7 +15,8 @@ public class OperatorMenu extends AbstractUI {
     private static final int LIST_ALL_USERS = 1;
     private static final int LIST_ALL_CANDIDATES = 2;
     private static final int REGISTER_CANDIDATE = 3;
-    private static final int COLLECT_DATA_FIELDS = 4;
+    private static final int REGISTER_APPLICATION = 4;
+    private static final int COLLECT_DATA_FIELDS = 5;
 
 
     @Override
@@ -28,7 +29,8 @@ public class OperatorMenu extends AbstractUI {
 
         menu.addItem(LIST_ALL_USERS, "List all Users", new ListUsersAction());
         menu.addItem(LIST_ALL_CANDIDATES, "List all Candidates", new ListCandidatesAction());
-        menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
+        menu.addItem(REGISTER_CANDIDATE, "Register a Candidate", new RegisterCandidateAction());
+        //menu.addItem(REGISTER_APPLICATION , "Register an Application" ,  new RegisterApplicationAction());
         menu.addItem(COLLECT_DATA_FIELDS, "Collect data fields for candidates of a job opening", new CollectDataFieldsAction());
 
 

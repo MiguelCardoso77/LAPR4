@@ -6,18 +6,25 @@ import eapli.framework.strings.util.StringPredicates;
 import java.util.Random;
 
 /**
- * Enforces that passwords must be at least 6 characters long and have at least
+ * Enforces that passwords must be at least 8 characters long and have at least
  * one digit and one capital letter.
  *
  * <p>
- * look into
- * https://documentation.cpanel.net/display/CKB/How+to+Determine+Password+Strength
- * for example rules of password strength
+ * This class implements the {@link eapli.framework.infrastructure.authz.application.PasswordPolicy}
+ * interface and provides methods to check the strength of a password and generate a random password.
+ * It also defines an enum {@link PasswordStrength} to represent the strength levels of passwords.
+ * </p>
  *
- * @author Paulo Gandra de Sousa 24/05/2019
+ * @author Miguel Cardoso
  */
 public class Jobs4UPasswordPolicy implements PasswordPolicy {
 
+    /**
+     * Checks if the given password meets the criteria for a strong password.
+     *
+     * @param rawPassword the password to be checked
+     * @return true if the password is strong, false otherwise
+     */
     @Override
     public boolean isSatisfiedBy(final String rawPassword) {
         // sanity check
@@ -25,7 +32,7 @@ public class Jobs4UPasswordPolicy implements PasswordPolicy {
             return false;
         }
 
-        // at least 6 characters long
+        // at least 8 characters long
         if (rawPassword.length() < 8) {
             return false;
         }
@@ -39,6 +46,12 @@ public class Jobs4UPasswordPolicy implements PasswordPolicy {
         return StringPredicates.containsCapital(rawPassword);
     }
 
+    /**
+     * Generates a random password based on the given name.
+     *
+     * @param name the name to be used for generating the password
+     * @return a randomly generated password
+     */
     public String passwordGenerator(String name) {
         String initials = name.substring(0, 1).toUpperCase() + name.substring(1, Math.min(name.length(), 4));
 
@@ -55,29 +68,31 @@ public class Jobs4UPasswordPolicy implements PasswordPolicy {
     }
 
     /**
-     * Check how strong a password is. just for demo purposes.
+     * Evaluates the strength of a password.
      *
-     * <p>
-     * look into
-     * https://documentation.cpanel.net/display/CKB/How+to+Determine+Password+Strength
-     * for example rules of password strength
-     *
-     * @param rawPassword the string to check
-     * @return how strong a password is
+     * @param rawPassword the password to be evaluated
+     * @return the strength level of the password
      */
     public PasswordStrength strength(final String rawPassword) {
         PasswordStrength passwordStrength = PasswordStrength.WEAK;
 
-        if (rawPassword.length() >= 12 || (rawPassword.length() >= 8 && StringPredicates.containsAny(rawPassword, "$#!%&?"))) {
+        if (!isSatisfiedBy(rawPassword)) {
+            return PasswordStrength.INVALID;
+        }
+
+        if (rawPassword.length() >= 14 || (rawPassword.length() >= 10 && StringPredicates.containsAny(rawPassword, "$#!%&?"))) {
             passwordStrength = PasswordStrength.EXCELLENT;
-        } else if (rawPassword.length() >= 8) {
+        } else if (rawPassword.length() >= 10) {
             passwordStrength = PasswordStrength.GOOD;
         }
 
         return passwordStrength;
     }
 
+    /**
+     * Enum representing the strength levels of passwords.
+     */
     public enum PasswordStrength {
-        WEAK, GOOD, EXCELLENT,
+        INVALID, WEAK, GOOD, EXCELLENT,
     }
 }

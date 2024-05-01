@@ -1,5 +1,5 @@
 # 1008 - deploy and configure a plugin (i.e., Job Requirement Specification or Interview Model) to be used by the system
-
+# How to execute .g4: java -jar .\libs\antlr-4.13.0-complete.jar .\jobs4u.backoffice.app\src\main\java\antlr4\InterviewModel.g4
 --------
 
 ## 1.1. User Story Description

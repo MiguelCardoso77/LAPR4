@@ -146,7 +146,7 @@ int main(int argc,char *argv[]) {
           exit(1);
       }
 
-      wd = inotify_add_watch(fd_notify, inputDirectory, IN_CREATE);    // Configs what directory to watch
+      wd = inotify_add_watch(fd_notify, inputDirectory, IN_CREATE | IN_MOVED_TO);    // Configs what directory to watch
       if (wd == -1) {
           perror("inotify_add_watch");
           exit(1);
@@ -212,12 +212,15 @@ int main(int argc,char *argv[]) {
           // Create the directory
 
           char createDirectory[BUF_LEN];
-          snprintf(createDirectory, sizeof(createDirectory), "%s/%s", outputDirectory, folderName);
+          snprintf(createDirectory, sizeof(createDirectory), "./%s/%s/", outputDirectory, folderName);
 
           pid_t mkdir = fork();
           if (mkdir == 0) {
             execlp("mkdir", "mkdir", createDirectory, NULL);
           }
+
+          int status;
+          waitpid(mkdir, &status, 0);
           
           // Copy the file to the new directory
 
@@ -254,12 +257,20 @@ int main(int argc,char *argv[]) {
 
   close(pipe_info[1]);
 
+  
+  char reportFileName[BUF_LEN];
+  snprintf(reportFileName, sizeof(reportFileName), "./%s/report.txt", outputDirectory);
+  int report=open(reportFileName,O_RDWR);
+  if(report == -1){
+      printf("\nError Opening File!!\n");
+      exit(1);
+  }
+
   while (flagFather == 0) {
       char file[BUF_LEN];
       while((n=read(pipe_info[0],file,BUF_LEN))>0){
         pid_t pid_available=available_process();
 
-        fprintf(stderr,"\n%d",pid_available);
         
         while(pid_available==0){
           pid_available=available_process(); //while loop to wait for one process to be available
@@ -275,9 +286,24 @@ int main(int argc,char *argv[]) {
 
         children_occupied(pid_available);
         write(fd[process][1],file,BUF_LEN);       // Send the file to the child
+
+        char candidateReport[BUF_LEN];
+        char candidateFolder[BUF_LEN];
+        char id[BUF_LEN];
+        char *candidate = extractCandidateID(file);
+        strcpy(id, candidate);
+        free(candidate);
+
+        memset(candidateReport,0,BUF_LEN);
+        snprintf(candidateFolder, sizeof(candidateFolder), "%s/%s", outputDirectory, id);
+        snprintf(candidateReport, sizeof(candidateReport), "\nCandidate ID: %s\nOutput Directory: %s\nFile: %s\n", id,candidateFolder, file);
+
+
+        write(report,candidateReport,BUF_LEN);
       }
   }
 
+  close(report);
   close(pipe_info[0]);
 
   int status;

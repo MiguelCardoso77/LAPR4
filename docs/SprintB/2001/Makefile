@@ -18,7 +18,7 @@ ${EXEC}: ${OBJFILES}
 ${OBJFILES}: ${SOURCES}
 
 run: ${EXEC}
-		./${EXEC}
+		./${EXEC} ${ARGS}
 
 clean:
 		rm -f ${OBJFILES} ${EXEC}

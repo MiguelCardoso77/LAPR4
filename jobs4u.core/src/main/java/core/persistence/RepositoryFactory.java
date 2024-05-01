@@ -1,5 +1,6 @@
 package core.persistence;
 
+import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -112,4 +113,8 @@ public interface RepositoryFactory {
 
     JobInterviewRepository jobInterviews(TransactionalContext autoTx);
     JobInterviewRepository jobInterviews();
+    JobRequirementsSpecificationRepository jobRequirements(TransactionalContext autoTx);
+    JobRequirementsSpecificationRepository jobRequirements();
+
+
 }

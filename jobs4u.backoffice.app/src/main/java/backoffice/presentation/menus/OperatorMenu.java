@@ -1,8 +1,10 @@
 package backoffice.presentation.menus;
 
+import backoffice.presentation.authz.CollectDataFieldsAction;
 import backoffice.presentation.authz.ListUsersAction;
 import backoffice.presentation.candidate.ListCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
+import eapli.framework.actions.Action;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
@@ -13,6 +15,8 @@ public class OperatorMenu extends AbstractUI {
     private static final int LIST_ALL_USERS = 1;
     private static final int LIST_ALL_CANDIDATES = 2;
     private static final int REGISTER_CANDIDATE = 3;
+    private static final int COLLECT_DATA_FIELDS = 4;
+
 
     @Override
     protected boolean doShow() {
@@ -25,6 +29,8 @@ public class OperatorMenu extends AbstractUI {
         menu.addItem(LIST_ALL_USERS, "List all Users", new ListUsersAction());
         menu.addItem(LIST_ALL_CANDIDATES, "List all Candidates", new ListCandidatesAction());
         menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
+        menu.addItem(COLLECT_DATA_FIELDS, "Collect data fields for candidates of a job opening", new CollectDataFieldsAction());
+
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

@@ -131,6 +131,8 @@
 
 ## 2. Analysis
 
+------------------------------------------
+
 The .md file is followed by a Class Diagram and a Sequence Diagram, with the purpose of illustrating the design decisions.
 
 Serving as an overview, here will be presented some of the main concerns:

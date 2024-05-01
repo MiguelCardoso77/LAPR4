@@ -27,11 +27,10 @@ skinparam card {
 package "Customer Aggregate"{
 entity Customer <<entity>><<root>>
 
-    card Company <<Value Object>> {
+    card EmailAddress <<Value Object>>{
     }
 
-    Customer --> Company
-
+    Customer --> EmailAddress
 }
 
 package "Candidate Aggregate"{
@@ -39,9 +38,11 @@ entity Candidate <<entity>><<root>>
 
     card Curriculum <<Value Object>> {
     }
+    card TelephoneNumber <<Value Object>>{
+    }
 
     Candidate --> Curriculum
-
+    Candidate --> TelephoneNumber
 }
 
 package "Job Requirements Specification Aggregate"{
@@ -104,12 +105,12 @@ entity User <<entity>><<root>>
     }
     card UserPassword <<Value Object>> {
     }
-    card UserTelephoneNumber <<Value Object>> {
+    card Username<<Value Object>> {
     }
 
     User --> UserEmail
     User --> UserName
-    User --> UserTelephoneNumber
+    User --> Username
     User --> UserPassword
 
 }
@@ -169,13 +170,7 @@ entity Process <<entity>><<root>>
 package "Application Aggregate"{
 entity Application <<entity>><<root>>
 
-    card EmailContentFile <<Value Object>> {
-    }
-    card EmailFilesAttached <<Value Object>>{
-    }
-    card FilesAttachedContent <<Value Object>>{
-    }
-    card ApplicationDataFile <<Value Object>>{
+    card ApplicationFiles <<Value Object>>{
     }
     card Status <<Value Object>>{
     }
@@ -184,10 +179,7 @@ entity Application <<entity>><<root>>
     card Rank <<Value Object>>{
     }
 
-    Application --> EmailContentFile
-    Application --> EmailFilesAttached
-    Application --> FilesAttachedContent
-    Application --> ApplicationDataFile
+    Application --> ApplicationFiles
     Application --> Status
     Application --> SubmissionDate
     Application --> Rank
@@ -198,6 +190,14 @@ entity Application <<entity>><<root>>
         - pending
         - accepted
         - declined
+    end note
+
+    note right of ApplicationFiles
+        Can be one of the following:
+        - text file with the contents of the email
+        - file for each file attached to the email
+        - text file with the contents of each file attached to the email
+        - text file with the data of the application and candidate
     end note
 
 }
@@ -233,8 +233,20 @@ package "Operator Aggregate"{
 }
 
 package "ANTLR Service Aggregate"{
-    entity "ANTLR" <<entity>><<root>>
+    entity ANTLR <<entity>><<root>>
 
+}
+
+package "Company Aggregate" {
+    entity Company <<entity>><<root>>
+
+    card CompanyName <<Value Object>>{
+    }
+    card CompanyNumber <<Value Object>>{
+    }
+
+    Company --> CompanyName
+    Company --> CompanyNumber
 }
 
     JobOpening "1" <-- "N " Application : has
@@ -259,14 +271,20 @@ package "ANTLR Service Aggregate"{
 
     InterviewModel "1" <--- "N" JobInterview : uses
 
-    ANTLR ---> JobRequirementsSpecification : processes
+    ANTLR --> JobRequirementsSpecification : processes
     ANTLR ---> InterviewModel : processes
 
     Admin ---> User: manages
+
     CustomerManager ---> User
+
     Operator --> User
+
     LanguageEngineer ---> User
+
     Customer ---> User
+    Customer "N" --> "1" Company : associated <
+
     Candidate --> User
 
 @enduml

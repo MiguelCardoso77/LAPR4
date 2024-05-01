@@ -1,0 +1,59 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title SSD - Register a customer
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ": System" as System
+
+activate CM    
+
+    CM -> System : Asks to register a Customer
+    activate System
+
+        System --> CM : Asks for the customer's information
+    deactivate System
+
+    CM -> System : provides firstName, lastName and emailAddress
+    activate System
+
+        System --> CM : shows the list of all companies registered\n and asks to select one or to create a new one
+
+    deactivate System
+
+    CM -> System : makes the choice
+
+
+    activate System
+
+    opt choose to select a company
+
+        System --> CM : asks for the desired company's number
+
+    deactivate System
+
+    CM -> System : inserts the companyNumber
+
+    else choose to create a company
+
+    activate System
+
+        System --> CM : asks for the new company's name
+
+    deactivate System
+
+    CM -> System : provides the companyName
+
+    activate System
+
+    end
+
+        System --> CM : shows operation's success
+
+    deactivate System
+
+@enduml

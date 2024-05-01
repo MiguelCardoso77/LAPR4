@@ -93,6 +93,6 @@ public class Jobs4UPasswordPolicy implements PasswordPolicy {
      * Enum representing the strength levels of passwords.
      */
     public enum PasswordStrength {
-        INVALID, WEAK, GOOD, EXCELLENT,
+        INVALID, WEAK, GOOD, EXCELLENT
     }
 }

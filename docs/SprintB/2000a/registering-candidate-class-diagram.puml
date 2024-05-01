@@ -1,0 +1,70 @@
+@startuml
+left to right direction
+
+class RegisterCandidateUI {
+    + doShow()
+    + headline()
+}
+
+class RegisterCandidateController {
+    + registerCandidate(firstName, lastName, email, role, createdOn, telephoneNumber, curriculum)
+    - createSystemUser(firstName, lastName, email, role, createdOn)
+    - createCandidate(user, telephoneNumber, curriculum)
+}
+
+class AuthorizationService {
+    + authenticate(username, rawPassword, roles)
+    + changePassword(user, oldPassword, newPassword)
+    + changePassword(oldPassword, newPassword)
+    + resetPassword(user)
+    + confirmResetPassword(user, token, newPass)
+    - noActionRightsToValidate(role)
+    - retrieveUser(username)
+}
+
+class Jobs4UPasswordPolicy {
+    + isSatisfiedBy(password)
+    + passwordGenerator(name)
+    + strength(password)
+    + enum PasswordStrength {INVALID, WEAK, GOOD, EXCELLENT}
+}
+
+class UserManagementService {
+}
+
+class CandidateService {
+    + registerCandidate(systemUser, telephoneNumber, curriculum)
+    + createCandidate(systemUser, telephoneNumber, curriculum)
+    + findCandidate(telephoneNumber)
+    + allCandidates()
+}
+
+class SystemyUserBuilder {
+}
+
+class CandidateBuilder {
+    + withAll(systemUser, telephoneNumber, curriculum)
+    + build()
+}
+
+interface UserRepository {
+    + findByActive(active)
+}
+
+interface CandidateRepository {
+    + allCandidates()
+}
+
+RegisterCandidateUI -> RegisterCandidateController
+
+RegisterCandidateController -> AuthorizationService
+RegisterCandidateController --> Jobs4UPasswordPolicy
+RegisterCandidateController --> UserManagementService
+RegisterCandidateController --> CandidateService
+
+UserManagementService --> SystemyUserBuilder
+UserManagementService -> UserRepository
+CandidateService --> CandidateBuilder
+CandidateService -> CandidateRepository
+
+@enduml

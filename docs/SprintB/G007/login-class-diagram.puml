@@ -1,8 +1,10 @@
 @startuml
-skinparam linetype ortho
 left to right direction
 
 class LoginUI {
+    + LoginUI(credentialHandler, role)
+    - doShow()
+    - headline()
 }
 
 class AuthenticationCredentialHandler {
@@ -27,9 +29,17 @@ class AuthorizationService {
 }
 
 interface Authenticator {
+    + authenticate(username, password, role)
 }
 
 interface UserRepository {
+    + findByActive(active)
 }
+
+LoginUI --> AuthenticationCredentialHandler
+AuthenticationCredentialHandler -> AuthzRegistry
+AuthzRegistry -> AuthorizationService
+AuthorizationService -> UserRepository
+AuthorizationService --> Authenticator : implements
 
 @enduml

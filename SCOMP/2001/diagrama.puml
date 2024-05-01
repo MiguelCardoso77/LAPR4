@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Title "Diagrama de componentes e interações"
+
+actor User
+
+participant ApplicationFileBot
+participant OutputFolder
+participant ApplicationEmailBot
+participant ApplicationFileBotProcessTree
+
+activate User
+
+User -> ApplicationFileBot : provides the names of the input and output directories, number \nof worker children and the time for periodic checking of new files
+
+activate ApplicationFileBot
+
+ApplicationFileBot -> ApplicationEmailBot : getAllFiles()
+
+activate ApplicationEmailBot
+
+ApplicationEmailBot --> ApplicationFileBot : allFiles
+
+deactivate ApplicationEmailBot
+
+ApplicationFileBot -> ApplicationFileBotProcessTree : processTheFiles()
+
+activate ApplicationFileBotProcessTree
+
+ApplicationFileBotProcessTree -> ApplicationFileBotProcessTree : processContentEmail(emailFile)
+
+ApplicationFileBotProcessTree -> ApplicationFileBotProcessTree : processContentEachFile(contentFiles)
+
+ApplicationFileBotProcessTree -> ApplicationFileBotProcessTree : processContentAttachedFiles(contentAttachedFiles)
+
+ApplicationFileBotProcessTree -> ApplicationFileBotProcessTree : processCandidateInformation(candidateFile)
+
+ApplicationFileBotProcessTree --> ApplicationFileBot : return success
+
+ApplicationFileBot -> ApplicationFileBotProcessTree : generateReport()
+
+ApplicationFileBotProcessTree --> ApplicationFileBot : report
+
+deactivate ApplicationFileBotProcessTree
+
+ApplicationFileBot -> OutputFolder : saveReport()
+
+activate OutputFolder
+
+OutputFolder --> ApplicationFileBot : return true
+
+deactivate OutputFolder
+
+ApplicationFileBot --> User : display operation's success
+
+deactivate ApplicationFileBot
+
+deactivate User
+
+@enduml

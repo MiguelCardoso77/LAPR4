@@ -64,19 +64,6 @@ public class ListUsersController{
         return backofficeUsers;
     }
 
-    public Iterable<SystemUser> allCandidates() {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN, Jobs4URoles.CUSTOMER_MANAGER);
-        List<SystemUser> candidates = new ArrayList<>();
-
-        for (SystemUser u : userSvc.allUsers()) {
-            if (u.hasAny(Jobs4URoles.CANDIDATE)) {
-                candidates.add(u);
-            }
-        }
-
-        return candidates;
-    }
-
     public Optional<SystemUser> find(final Username u) {
         return userSvc.userOfIdentity(u);
     }

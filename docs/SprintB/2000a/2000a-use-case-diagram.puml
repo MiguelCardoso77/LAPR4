@@ -1,0 +1,17 @@
+@startuml
+
+title 2000a - Registering a candidate and creating a corresponding user.
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Operator" as OPERATOR
+
+rectangle "Backoffice" as backoffice {
+    usecase "Register a Candidate"
+
+
+    OPERATOR --> "Register a Candidate"
+}
+
+@enduml

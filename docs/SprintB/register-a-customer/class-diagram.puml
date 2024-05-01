@@ -1,0 +1,227 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+Title "Class Diagram - Register a customer"
+
+
+package "ui"{
+     class RegisterCustomerUI{
+         + doShow()
+         + selectOrCreateCompany()
+         + showCompanies()
+         + selectCompany()
+         + createNewCompany()
+         + headline()
+     }
+}
+
+package "customer"{
+
+    package "application"{
+
+        class AddCustomerController{
+                + registerCustomer(firstName, lastName, email, roles, createdOn, company, customerManager)
+                + createSystemUser(firstName, lastName, email, roles, createdOn)
+                + createCustomer(newUser, emailAddress, company, customerManager)
+        }
+
+        note right of AddCustomerController
+                - Some used methods are provided by the framework,
+                they are not being represented because there's no sense in
+                representing the framework infrastructure
+                    end note
+
+    }
+
+    package "domain"{
+
+        class Customer{
+                        - EmailAddress emailAddress
+                        - SystemUser customerManager
+                        - SystemUser systemUser
+                        - Company company
+                        + Customer(user, emailAddress, company, customerManager)
+                        + Customer()
+                        + user()
+                        + company()
+                        + customerManager()
+                        + equals(otherCustomer)
+                        + hashCode()
+                        + sameAs(otherCustomer)
+                        + identity()
+                        + toString()
+                }
+
+                note right of Customer
+                The EmailAddress and SystemUser are classes from the framework
+                so that they are simplified because there's no sense in
+                representing the framework implementation
+                end note
+
+
+
+                class CustomerBuilder{
+                       - EmailAddress emailAddress
+                       - SystemUser customerManager
+                       - SystemUser systemUser
+                       - Company company
+                       + withUser(systemUser)
+                       + withCompany(company)
+                       + withCustomerManager(customerManager)
+                       + withEmailAddress(emailAddress)
+                       + build()
+                }
+
+                note right of CustomerBuilder
+                                The EmailAddress and SystemUser are classes from the framework
+                                so that they are simplified because there's no sense in
+                                representing the framework implementation
+                                end note
+    }
+
+    package "repositories"{
+
+        Interface CustomerRepository{
+                + findByEmailAddress(emailAddress)
+                + findAllActive()
+        }
+
+    }
+
+    package "services"{
+
+        class CustomerService{
+                + registerCustomer(systemUser, company, customerManager, emailAddress)
+                + allCustomers()
+        }
+    }
+
+}
+
+package "company"{
+
+    package "application"{
+
+        class ListCompaniesController{
+                + findCompany(companyNumber)
+                + allCompanies()
+        }
+
+        class AddCompanyController{
+                + addCompany(companyName)
+        }
+    }
+
+    package "domain"{
+
+        class CompanyBuilder{
+                - int companyNumber
+                - CompanyName companyName
+                + withCompanyNumber(companyNumber)
+                + withCompanyName(companyName)
+                + build()
+            }
+
+            class CompanyName{
+                - String : designation
+                + companyName(designation)
+                + valueOf(designation)
+                + toString()
+                + designation()
+                + equals(otherCompanyName)
+                + hashCode()
+                + compareTo(otherCompanyName)
+            }
+
+            class Company{
+                    - int companyNumber
+                    - CompanyName companyName
+                    + Company(companyName, companyNumber)
+                    + Company()
+                    + equals(otherCompany)
+                    + hashCode()
+                    + companyName()
+                    + sameAs(otherCompany)
+                    + compareTo(otherCompanyNumber)
+                    + identity()
+                    + toString()
+                }
+    }
+
+    package "repositories"{
+
+        Interface CompanyRepository{
+                + findByCompanyID(id)
+                + allCompanies()
+        }
+    }
+
+    package "services"{
+
+        class CompanyService{
+                + registerCompany(companyName)
+                + findCompany(companyNumber)
+                + allCompanies()
+            }
+    }
+}
+
+package "user"{
+
+        package "application"{
+
+            class AddUserController{
+                + getAllRoles()
+                + passwordGenerator(name)
+                + getLoggedInUser()
+                + addUser(username, password, firstName, lastName, email, createdOn)
+                + addUser(username, password, firstName, lastName, email)
+            }
+
+            note right of AddUserController
+                - Methods such as getAllRoles(), getLoggedInUser and other services
+                and repositories used are provided by the framework
+                (no sense in representing framework's classes)
+            end note
+        }
+
+        package "domain"{
+            class Jobs4UPasswordPolicy{
+                        + isSatisfiedBy(rawPassword)
+                        + passwordGenerator(name)
+                        + strength(rawPassword)
+            }
+        }
+
+}
+
+RegisterCustomerUI --> AddCustomerController
+RegisterCustomerUI --> AddCompanyController
+RegisterCustomerUI --> ListCompaniesController
+RegisterCustomerUI --> AddUserController
+
+AddUserController --> Jobs4UPasswordPolicy
+
+AddCustomerController --> AddUserController
+AddCustomerController --> CustomerService
+
+CustomerService --> CustomerRepository
+CustomerService --> CustomerBuilder
+
+CustomerBuilder --> Customer
+
+ListCompaniesController --> CompanyService
+
+CompanyService --> CustomerRepository
+CompanyService --> CustomerBuilder
+CompanyService --> CompanyRepository
+CompanyService --> CompanyBuilder
+
+CompanyBuilder --> Company
+
+Company --> CompanyName
+
+AddCompanyController --> CompanyService
+
+
+@enduml

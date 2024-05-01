@@ -112,7 +112,10 @@ managing user sessions, and the PasswordPolicy, which ensures password adherence
 Within this ecosystem, the SystemUser entity embodies a user within our system, while the Role value object delineates 
 the user's role, dictating their permissions and access levels.
 
-### 2.1. Class Diagram
+### 2.1. Domain Model
+![login-domain-model.svg](login-domain-model.svg)
+
+### 2.2. Class Diagram
 ![login-class-diagram.svg](login-class-diagram.svg)
 
 ## 3. Implementation

@@ -8,16 +8,17 @@
     <artifactId>jobs4u</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>jobs4u.customer.app</module>
-        <module>jobs4u.candidate.app</module>
-        <module>jobs4u.util.ci</module>
+        <module>jobs4u.applications.file.bot</module>
         <module>jobs4u.backoffice.app</module>
         <module>jobs4u.bootstrap</module>
-        <module>jobs4u.persistence</module>
-        <module>jobs4u.core</module>
         <module>jobs4u.bootstrappers</module>
-        <module>jobs4u.infrastructure</module>
+        <module>jobs4u.candidate.app</module>
         <module>jobs4u.console</module>
+        <module>jobs4u.core</module>
+        <module>jobs4u.customer.app</module>
+        <module>jobs4u.infrastructure</module>
+        <module>jobs4u.persistence</module>
+        <module>jobs4u.util.ci</module>
     </modules>
     <version>0.1.0</version>
 

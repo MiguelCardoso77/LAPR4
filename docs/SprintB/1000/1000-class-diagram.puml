@@ -63,12 +63,7 @@ class Jobs4UPasswordPolicy {
     + strength(rawPassword)
 }
 
-class AuthorizationService {
-    + authorizationService()
-    + ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
-}
-
-class RepositoryFactory {
+interface RepositoryFactory {
     + newTransactionalContext()
     + users(TransactionalContext autoTx)
     + users()
@@ -107,8 +102,6 @@ AddUserUI ---> AddUserController
 
 AddUserController ---> Jobs4UPasswordPolicy
 
-AddUserController ---> AuthorizationService
-
 AddUserController ---> UserManagementService
 
 AddUserController ---> PersistenceContext
@@ -116,7 +109,6 @@ AddUserController ---> PersistenceContext
 
 ActivateUserUI ---> ActivateUserController
 
-ActivateUserController ---> AuthorizationService
 
 ActivateUserController ---> UserManagementService
 
@@ -125,7 +117,6 @@ ActivateUserController ---> PersistenceContext
 
 DeactivateUserUI ---> DeactivateController
 
-DeactivateController ---> AuthorizationService
 
 DeactivateController ---> UserManagementService
 
@@ -134,18 +125,10 @@ DeactivateController ---> PersistenceContext
 
 ListBackofficeUsersUI ---> ListUsersController
 
-ListUsersController ---> AuthorizationService
 
 ListUsersController ---> UserManagementService
 
 ListUsersController ---> PersistenceContext
-
-
-UserManagementService ---> SystemUserBuilder
-
-UserManagementService ---> UserRepository
-
-UserManagementService ---> SystemUser
 
 
 PersistenceContext ---> RepositoryFactory

@@ -13,56 +13,54 @@ actor "Admin" as admin
 actor "Operator" as operator
 actor "Customer Manager" as customerManager
 actor "Language Engineer" as languageEngineer
-actor "Candidate" as candidate
-actor "Customer" as customer
-actor "Applications Email Bot" as applicationEmailBot
+actor "Product Owner" as productOwner
 
-rectangle "Backoffice" as backoffice {
-    usecase "1000 - register, disable/enable, and list users of the backoffice" as 1000
-    usecase "1001 - register a customer and that the system automatically creates a user for that customer" as 1001
-    usecase "1002 - register a job opening" as 1002
-    usecase "2002 - register an application of a candidate for a job opening and import all files received" as 2002
-    usecase "2000a - register a candidate and create a corresponding user" as 2000a
-    usecase "2000 - register an application of a candidate for a job opening and import all files received" as 2000
-    usecase "1005 - list all applications for a job opening" as 1005
-    usecase "1006 - display all the personal data of a candidate" as 1006
-    usecase "1008 - deploy and configure a plugin (i.e., Job Requirement Specification or Interview Model) to be used by the system" as 1008
-    usecase "1009 - select the requirements specification to be used for a job opening" as 1009
-    usecase "1011 - select the interview model to use for the interviews of a job opening (for their evaluation/grading)" as 1011
-    usecase "1012 - generate and export a template text file to help collect the candidate answers during the interviews" as 1012
-    usecase "2003 - generate and export a template text file to help collect data fields for candidates of a job opening (so the data is used to verify the requirements of the job opening)" as 2003
+title "Use Case Diagram"
 
-    admin --> 1000
-    operator --> 2000a
-    operator --> 2000
-    operator --> 2002
-    operator --> 2003
-    customerManager --> 1001
-    customerManager --> 1002
-    customerManager --> 1005
-    customerManager --> 1006
-    customerManager --> 1009
-    customerManager --> 1011
-    customerManager --> 1012
-    languageEngineer --> 1008
+rectangle "System" as backoffice {
+
+    usecase "register user of the backoffice"
+    usecase "disable user of the backoffice"
+    usecase "enable user of the backoffice"
+    usecase "list users of the backoffice"
+    usecase "register a customer"
+    usecase "register a job opening"
+    usecase "register a candidate"
+    usecase "register an application"
+    usecase "list all applications for a job opening"
+    usecase "display all the personal data of a candidate"
+    usecase "deploy and configure a plugin"
+    usecase "select the requirements specifications to be used for a job opening"
+    usecase "select the interview model to use for the interviews of a job opening"
+    usecase "generate and export a template text file to help collect the candidate answers during the interviews"
+    usecase "generate and export a template text file to help collect data fields for candidates of a job opening "
+    usecase "support and apply authentication and authorization for all its users and functionalities"
+    usecase "process the files produced by the Applications Email Bot, so that they can be imported into the system by initiative of the Operator"
+
+    admin --> "register user of the backoffice"
+    admin --> "disable user of the backoffice"
+    admin --> "enable user of the backoffice"
+    admin --> "list users of the backoffice"
+
+    customerManager --> "register a customer"
+        customerManager --> "register a job opening"
+        customerManager --> "list all applications for a job opening"
+        customerManager --> "display all the personal data of a candidate"
+        customerManager --> "select the requirements specifications to be used for a job opening"
+        customerManager --> "select the interview model to use for the interviews of a job opening"
+        customerManager --> "generate and export a template text file to help collect the candidate answers during the interviews"
+
+    operator --> "register a candidate"
+    operator --> "register an application"
+    operator --> "generate and export a template text file to help collect data fields for candidates of a job opening "
+
+    languageEngineer --> "deploy and configure a plugin"
+
+    productOwner --> "support and apply authentication and authorization for all its users and functionalities"
+    productOwner --> "process the files produced by the Applications Email Bot, so that they can be imported into the system by initiative of the Operator"
+
+
 }
 
-rectangle "Candidate App" as candidateApp{
-    usecase "Follow Applications"
-
-    candidate --> "Follow Applications"
-}
-
-rectangle "Customer App" as customerApp{
-    usecase "Follow Job Openings"
-
-    customer --> "Follow Job Openings"
-}
-
-rectangle "Applications File Bot" as ApplicationsFileBotApp{
-    usecase "Import Application Files"
-
-    applicationEmailBot --> "Import Application Files"
-}
 
 @enduml

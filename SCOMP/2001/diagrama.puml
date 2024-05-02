@@ -11,6 +11,9 @@ participant ApplicationFileBot
 participant OutputFolder
 participant ApplicationEmailBot
 participant ApplicationFileBotProcessTree
+participant ParentProcess
+participant Watcher
+participant Worker
 
 activate User
 

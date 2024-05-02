@@ -48,5 +48,15 @@ public class ListJobOpeningApplicationsController {
         return null;
     }
 
+    public Application findApplicationByID(int id){
+        Iterable<Application> allApplications = appServ.allApplications();
+        for(Application application : allApplications){
+            if (application.identity() == id){
+                return application;
+            }
+        }
+        return null;
+    }
+
 
 }

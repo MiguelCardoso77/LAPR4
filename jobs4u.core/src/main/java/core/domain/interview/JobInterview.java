@@ -78,6 +78,10 @@ public class JobInterview implements AggregateRoot<Integer> {
         return interviewModel;
     }
 
+    public InterviewModel changeInterviewModel(InterviewModel interviewModel){
+        return this.interviewModel = interviewModel;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

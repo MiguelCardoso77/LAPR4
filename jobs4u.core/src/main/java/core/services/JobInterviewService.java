@@ -27,4 +27,5 @@ public class JobInterviewService {
     public Iterable<JobInterview> allJobInterviews() {
         return jobInterviewRepository.allJobInterviews();
     }
+
 }

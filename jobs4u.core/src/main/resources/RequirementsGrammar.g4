@@ -10,7 +10,7 @@ academicDegree: ACADEMIC_DEGREE academicDegreeType PARAGRAPH requirementsList | 
 academicDegreeType: NONE | BACHELOR | MASTER | DOCTORATE;
 
 programmingLanguages: PROGRAMMING_LANGUAGES programmingLanguagesType PARAGRAPH requirementsList | PROGRAMMING_LANGUAGES programmingLanguagesType;
-programmingLanguagesType: programmingTypes | programmingTypes SPACE programmingLanguagesType;
+programmingLanguagesType: programmingTypes | programmingTypes COMMA SPACE programmingLanguagesType;
 programmingTypes: JAVA | JAVASCRIPT | PYTHON | TYPESCRIPT | PHP | CHASH;
 
 yearsOfExperience: YEARS_OF_EXPERIENCE yearsOfExperienceType PARAGRAPH requirementsList | YEARS_OF_EXPERIENCE yearsOfExperienceType;
@@ -18,6 +18,7 @@ yearsOfExperienceType: INTEGER;
 
 // Lexical rules:
 ARROW: '-> ';
+COMMA: ',';
 INTEGER: [0-9]+;
 HASHTAG: '# ';
 PARAGRAPH: '\n' | '\r';

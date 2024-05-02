@@ -13,7 +13,8 @@ academicDegree: ACADEMIC_DEGREE academicDegreeType PARAGRAPH requirementsList | 
 academicDegreeType: NONE | BACHELOR | MASTER | DOCTORATE;
 
 programmingLanguages: PROGRAMMING_LANGUAGES programmingLanguagesType PARAGRAPH requirementsList | PROGRAMMING_LANGUAGES programmingLanguagesType PARAGRAPH PARAGRAPH questions;
-programmingLanguagesType: JAVA | JAVASCRIPT | PYTHON | TYPESCRIPT | PHP | CHASH;
+programmingLanguagesType: programmingTypes | programmingTypes SPACE programmingLanguagesType;
+programmingTypes: JAVA | JAVASCRIPT | PYTHON | TYPESCRIPT | PHP | CHASH;
 
 yearsOfExperience: YEARS_OF_EXPERIENCE yearsOfExperienceType PARAGRAPH requirementsList | YEARS_OF_EXPERIENCE yearsOfExperienceType PARAGRAPH PARAGRAPH questions;
 yearsOfExperienceType: INTEGER;
@@ -24,6 +25,9 @@ questionsList: ARROW questionType;
 questionBody: ANY_STRING;
 questionType: questionDate | questionDecimalNumber | questionIntegerNumber | questionMultipleChoice | questionNumericRange | questionSingleChoice | questionShortAnswer | questionTime | questionTrueFalse;
 
+questionDate: DATE questionBody SPACE answerDate SPACE score;
+answerDate: DATE_ANSWER;
+
 questionDecimalNumber: DECIMAL_NUMBER questionBody SPACE answerDecimal SPACE score;
 answerDecimal: DECIMAL;
 
@@ -33,21 +37,20 @@ answerInteger: INTEGER;
 questionShortAnswer: SHORT_ANSWER questionBody SPACE answerShortText SPACE score;
 answerShortText: ANY_STRING;
 
+questionTime: TIME questionBody SPACE answerTime SPACE score;
+answerTime: TIME_ANSWER;
+
 questionTrueFalse: TRUE_FALSE questionBody SPACE answerTrueFalse score;
 answerTrueFalse: TRUE_FALSE_ANWSER;
 
 //////////
-questionDate: DATE questionBody answerDate;
 questionMultipleChoice: MULTIPLE_CHOICE questionBody answerMultipleChoice;
 questionNumericRange: NUMERIC_RANGE questionBody answerNumericRange;
 questionSingleChoice: SINGLE_CHOICE questionBody answerSingleChoice;
-questionTime: TIME questionBody answerTime;
 
-answerDate: ANY_STRING;
 answerMultipleChoice: '(' ANY_STRING (',' ANY_STRING)* ')';
 answerNumericRange: INTEGER;
 answerSingleChoice: ANY_STRING;
-answerTime: ANY_STRING;
 //////////
 
 score: PERCENTAGE PARAGRAPH questionsList | PERCENTAGE PARAGRAPH PARAGRAPH results;
@@ -90,6 +93,7 @@ CHASH: 'C#';
 // Question Types:
 QUESTIONS: 'Questions:';
 DATE: 'Date: ';
+DATE_ANSWER: ('0'[1-9]|'1'[0-9]|'2'[0-9]|'3'[0-1]) '/' ('0'[1-9]|'1'[0-2]) '/' [1-9][0-9][0-9][0-9];
 DECIMAL_NUMBER: 'Decimal Number: ';
 INTEGER_NUMBER: 'Integer Number: ';
 MULTIPLE_CHOICE: 'Multiple Choice: ';
@@ -97,6 +101,7 @@ NUMERIC_RANGE: 'Numeric Range: ';
 SINGLE_CHOICE: 'Single Choice: ';
 SHORT_ANSWER: 'Short Answer: ';
 TIME: 'Time: ';
+TIME_ANSWER: ('0'[0-9]|'1'[0-9]|'2'[0-4]) ':' ('0'[0-9]|'1'[0-9]|'2'[0-9]|'3'[0-9]|'4'[0-9]|'5'[0-9]);
 TRUE_FALSE: 'True/False: ';
 TRUE_FALSE_ANWSER: [Tt]'rue ' | [Ff]'alse ';
 

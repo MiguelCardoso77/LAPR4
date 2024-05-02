@@ -20,13 +20,13 @@ class CreateJobOpeningController {
 }
 
 class JobOpening {
-   - String Description
-   - String VacanciesNumber
-   - String Address
-   - Mode
-   - ContractType
-   - TitleOrFunction
-   - JobReference
+   - Description description
+   - VacanciesNumber vacanciesNumber
+   - Address address
+   - Mode mode
+   - ContractType contractType
+   - TitleOrFunction titleOrFunction
+   - JobReference jobReference
 
    + JobOpening(jobReference, description,
    vacanciesNumber, address, modes, contractTypes, \ntitleOrFunction)
@@ -56,17 +56,13 @@ class JobOpeningBuilder {
     + build()
 }
 
-class AuthorizationService {
-    + authorizationService()
-    + ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
-}
 
 class PersistenceContext {
     + repositories()
     + PersistenceContext()
 }
 
-class RepositoryFactory {
+interface RepositoryFactory {
     + newTransactionalContext()
     + users(TransactionalContext autoTx)
     + users()
@@ -86,8 +82,6 @@ CreateJobOpeningUI -> CreateJobOpeningController
 CreateJobOpeningController --> PersistenceContext
 
 CreateJobOpeningController -> JobOpeningService
-
-CreateJobOpeningController -> AuthorizationService
 
 JobOpeningService -> JobOpeningRepository
 

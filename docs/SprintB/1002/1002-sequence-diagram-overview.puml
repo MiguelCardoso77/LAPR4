@@ -4,11 +4,15 @@ autonumber
 
 actor "Customer Manager" as CM
 participant AddJobOpeningUI <<presentation>>
+participant ListCompaniesController <<application>>
 participant AddJobOpeningController <<application>>
+participant AuthorizationService <<service>>
+participant CompanyService <<service>>
+database    CompanyRepository <<application>>
 participant JobOpeningService <<service>>
 participant JobOpeningBuilder <<builder>>
 participant JobOpening <<JobOpening>>
-database JobOpeningRepository <<repository>>
+database    JobOpeningRepository <<repository>>
 
 activate CM
 
@@ -25,11 +29,51 @@ activate CM
 
         activate AddJobOpeningUI
 
+    AddJobOpeningUI -> ListCompaniesController: allCompanies()
+
+        activate ListCompaniesController
+
+    ListCompaniesController -> AuthorizationService :ensureAuthenticatedUserHasAnyOf
+
+        activate AuthorizationService
+
+    AuthorizationService --> ListCompaniesController: true
+
+        deactivate AuthorizationService
+
+    ListCompaniesController -> CompanyService : allCompanies()
+
+        activate CompanyService
+
+    CompanyService -> CompanyRepository : allCompanies()
+
+        activate CompanyRepository
+
+    CompanyRepository --> CompanyService : listOfCompanies
+
+        deactivate CompanyRepository
+
+    CompanyService --> ListCompaniesController : listOfCompanies
+
+        deactivate CompanyService
+
+    ListCompaniesController --> AddJobOpeningUI : listOfCompanies
+
+        deactivate ListCompaniesController
+
+    AddJobOpeningUI --> CM : displays allCompanies listOfCompanies and asks to select one
+
+        deactivate AddJobOpeningUI
+
+    CM -> AddJobOpeningUI : selects company
+
+        activate AddJobOpeningUI
+
     AddJobOpeningUI -> AddJobOpeningController: addJobOpening(description, vacanciesNumber, \n address, mode, contractType, titleOrFunction, \n jobReference, processDate)
 
         activate AddJobOpeningController
 
-    AddJobOpeningController  -> JobOpeningService: registerJobOpening(jobReference, description, vacanciesNumber, \n address, mode, contractType, titleOrFunction)
+    AddJobOpeningController  -> JobOpeningService: registerJobOpening(jobReference, description, vacanciesNumber, \naddress, mode, contractType, titleOrFunction)
 
         activate JobOpeningService
 
@@ -37,7 +81,7 @@ activate CM
 
         activate JobOpeningBuilder
 
-    JobOpeningBuilder -> JobOpening : JobOpening(jobReference, description, vacanciesNumber, \n address, mode, contractType, titleOrFunction)
+    JobOpeningBuilder -> JobOpening : JobOpening(jobReference, description, \nvacanciesNumber, address, mode, \ncontractType, titleOrFunction)
 
         activate JobOpening
 

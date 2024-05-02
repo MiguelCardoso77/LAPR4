@@ -18,12 +18,16 @@ import java.util.Calendar;
 import java.util.Set;
 /**
  * A controller class for adding a new customer.
+ *
+ * @author 1220812@isep.ipp.pt
  */
 @UseCaseController
 public class AddCustomerController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final UserManagementService userService = AuthzRegistry.userService();
+    private final AddUserController addUserController = new AddUserController();
     private final Jobs4UPasswordPolicy passwordPolicy = new Jobs4UPasswordPolicy();
+
+    private final CustomerService customerService = new CustomerService();
     /**
      * Registers a new customer with the specified information.
      *
@@ -61,7 +65,7 @@ public class AddCustomerController {
         roles.add(Jobs4URoles.CUSTOMER);
         String password = passwordPolicy.passwordGenerator(firstName);
 
-        return userService.registerNewUser(email, password, firstName, lastName, email, roles, createdOn);
+        return addUserController.addUser(email, password, firstName, lastName, email, roles, createdOn);
     }
     /**
      * Creates a new candidate.
@@ -79,7 +83,6 @@ public class AddCustomerController {
         Preconditions.nonNull(company);
         Preconditions.nonNull(customerManager);
 
-        CustomerService customerService = new CustomerService();
         return customerService.registerCustomer(newUser, company, customerManager, emailAddress);
     }
 }

@@ -86,6 +86,16 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public JobRequirementsSpecificationRepository jobRequirements(TransactionalContext autoTx) {
+        return new InMemoryJobRequirementsSpecificationRepository();
+    }
+
+    @Override
+    public JobRequirementsSpecificationRepository jobRequirements() {
+        return null;
+    }
+
+    @Override
     public TransactionalContext newTransactionalContext() {
         // in memory does not support transactions...
         return null;

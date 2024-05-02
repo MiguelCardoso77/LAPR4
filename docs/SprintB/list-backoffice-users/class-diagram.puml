@@ -1,0 +1,64 @@
+@startuml
+'skinparam linetype ortho
+left to right direction
+
+class ListBackofficeUsersUI {
+    + elements()
+    + headline()
+    + emptyMessage()
+    + elementPrinter()
+    + elementName()
+    + listHeader()
+    + doShow()
+}
+
+class ListUsersController {
+    + allUsers()
+    + allBackofficeUsers()
+}
+
+interface RepositoryFactory {
+    + newTransactionalContext()
+    + users(TransactionalContext autoTx)
+    + users()
+    + customerUsers(TransactionalContext autoTx)
+    + customerUsers()
+    + signupRequests(TransactionalContext autoTx)
+    + signupRequests()
+    + jobOpenings(TransactionalContext autoTx)
+    + jobOpenings()
+    + applications(TransactionalContext autoTx)
+    + applications()
+}
+
+class PersistenceContext {
+    + repositories()
+    + PersistenceContext()
+}
+
+class UserManagementService {
+    + UserManagementService(userRepo, policy, encoder)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles, createdOn)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles)
+    + registerUser(username, password, name, email, roles)
+    + activeUsers()
+    + deactivatedUsers()
+    + allUsers()
+    + userOfIdentity(id)
+    + deactivateUser(user)
+    + activateUser(user)
+}
+
+
+ListBackofficeUsersUI ---> ListUsersController
+
+ListUsersController ---> UserManagementService
+
+ListUsersController ---> PersistenceContext
+
+
+PersistenceContext ---> RepositoryFactory
+
+@enduml

@@ -9,6 +9,8 @@ import core.repositories.CandidateRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import jakarta.transaction.Transactional;
 
+import java.util.Optional;
+
 /**
  * Service class for managing candidates.
  *
@@ -77,5 +79,16 @@ public class CandidateService {
      */
     public Iterable<Candidate> allCandidates() {
         return candidateRepository.allCandidates();
+    }
+
+    /**
+     * Retrieve the Candidate associated with the telephone number passed by parameter
+     *
+     * @param telephoneNumber candidate´s telephone number
+     * @return candidate
+     */
+    public Candidate findCandidateByTelephoneNumber(TelephoneNumber telephoneNumber) {
+        Optional<Candidate> candidateOptional = candidateRepository.findByTelephoneNumber(telephoneNumber);
+        return candidateOptional.orElse(null);
     }
 }

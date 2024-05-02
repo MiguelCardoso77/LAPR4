@@ -1,0 +1,22 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ": System" as System
+
+activate CM
+
+    CM -> System : asks to list all backOffice users
+    activate System
+
+        System --> CM : displays backOffice users
+        deactivate System
+
+
+@enduml

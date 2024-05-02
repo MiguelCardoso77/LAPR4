@@ -93,4 +93,18 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaJobInterviewRepository(Application.settings().getPersistenceUnitName());
     }
 
+    @Override
+    public JobRequirementsSpecificationRepository jobRequirements(TransactionalContext autoTx) {
+        return new JpaJobRequirementsSpecificationRepository(autoTx);
+    }
+
+    @Override
+    public JobRequirementsSpecificationRepository jobRequirements() {
+        return new JpaJobRequirementsSpecificationRepository(Application.settings().getPersistenceUnitName());
+    }
+
+
+
+
+
 }

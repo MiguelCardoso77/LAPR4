@@ -1,0 +1,45 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ": System" as System
+
+activate CM    
+
+    CM -> System : asks to select the interview model
+    activate System
+
+       System --> CM : asks to select a jobOpening
+    deactivate System
+
+    CM -> System : selects jobOpening
+    activate System
+
+        System --> CM : asks to select a jobInterview
+    deactivate System
+
+    CM -> System : selects jobInterview
+    activate System
+
+        System --> CM : asks to select an interviewModel
+    deactivate System
+
+    CM -> System : selects interviewModel
+    activate System
+
+        System --> CM : asks to confirm all the data selected
+    deactivate System
+
+    CM -> System : confirms all the data
+    activate System
+
+        System --> CM : displays operation success
+        deactivate System
+
+@enduml

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * A service class for managing operations related to customers.
+ *
+ * @author 1220812@isep.ipp.pt
  */
 @Service
 public class CustomerService {

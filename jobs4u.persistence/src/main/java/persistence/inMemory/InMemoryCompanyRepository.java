@@ -6,15 +6,38 @@ import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainR
 
 import java.util.Optional;
 
+/**
+ * @author 1220812@isep.ipp.pt
+ */
+
 public class InMemoryCompanyRepository extends InMemoryDomainRepository<Company, Integer> implements CompanyRepository {
 
-    @Override
-    public Optional<Company> findByCompanyID(Integer id) {
-        return Optional.empty();
+    /**
+     * Static block to initialize the in-memory data store.
+     */
+
+    static {
+        InMemoryInitializer.init();
     }
 
+    /**
+     * Find a company by its ID.
+     *
+     * @param companyID the ID of the company to find
+     * @return an {@link Optional} containing the company if found, or empty if not found
+     */
+
     @Override
-    public Iterable<Company> allCompanies() {
+    public Optional<Company> findByCompanyID(final Integer companyID){
+        return Optional.of(data().get(companyID));
+    }
+    /**
+     * Retrieve all companies.
+     *
+     * @return an iterable collection of all companies
+     */
+    @Override
+    public Iterable<Company> allCompanies(){
         return match(e -> true);
     }
 }

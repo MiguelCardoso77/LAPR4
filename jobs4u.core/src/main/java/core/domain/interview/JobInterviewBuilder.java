@@ -2,29 +2,34 @@ package core.domain.interview;
 
 import core.domain.application.Application;
 import eapli.framework.domain.model.DomainFactory;
+
 import java.util.Calendar;
 
 public class JobInterviewBuilder implements DomainFactory<JobInterview> {
 
     private int id;
     private Calendar createdOn;
-    private int time;
-    private int score;
-    private String result;
+    private Time time;
+    private Score score;
+    private Result result;
     private Application application;
+    private InterviewModel interviewModel;
 
-    public JobInterviewBuilder withAll(int id, Calendar createdOn, int time, int score, String result, Application application){
+    public JobInterviewBuilder withAll(int id, Calendar createdOn, int time, int score, String result,
+                                       Application application, InterviewModel interviewModel) {
         this.id = id;
         this.createdOn = createdOn;
-        this.time = time;
-        this.score = score;
-        this.result = result;
+        this.time = new Time(time);
+        this.score = new Score(score);
+        this.result = new Result(result);
         this.application = application;
+        this.interviewModel = interviewModel;
         return this;
     }
 
     @Override
     public JobInterview build() {
-        return new JobInterview(id, createdOn, time, score, result, application);
+        return new JobInterview(id, createdOn, time, score, result, application, interviewModel);
     }
+
 }

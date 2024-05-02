@@ -17,6 +17,7 @@ public class JobsBootstrapper implements Action {
 
         registerJobOpening("FEUP", "Jogador da Bola", 3, "Estádio do Dragão", Mode.ON_SITE, ContractType.FULL_TIME, "Ponta de Lança", companyBootstrapper.controller.addCompany("FEUP"));
         registerJobOpening("FMUP", "Chefe de Cozinha", 2, "Bar da Ae", Mode.ON_SITE, ContractType.FULL_TIME, "Chef",companyBootstrapper.controller.addCompany("FMUP") );
+        registerJobOpening("IBM-000123", "Software Engineer", 4, "IBM st.", Mode.HYBRID, ContractType.FULL_TIME, "Software Engineer", companyBootstrapper.controller.addCompany("IBM"));
 
         return true;
     }
@@ -25,6 +26,5 @@ public class JobsBootstrapper implements Action {
        controller.addJobOpening(jobReference, description, vacanciesNumber, address, mode , contractType, titleOrFunction, company);
         LOGGER.debug("»»» %s", jobReference);
     }
-
 
 }

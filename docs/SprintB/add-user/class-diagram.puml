@@ -1,0 +1,76 @@
+@startuml
+'skinparam linetype ortho
+left to right direction
+
+class AddUserUI {
+    + doShow()
+    + showRoles(roleTypes)
+    + buildRolesMenu(roleTypes)
+    + buildCustomerManagerAvailableRoles(roleTypes)
+    + buildOperatorAvailableRoles(roleTypes)
+    +  headline()
+}
+
+class AddUserController {
+    + passwordGenerator(name)
+    + addUser(username, password, firstName,
+    lastName, email, roles, CurrentTimeCalendars.now())
+    + addUser(username, password,
+    firstName, lastName, email, roles)
+    + registerNewUser(name,password,email,role)
+    + getRoleTypes()
+    + getAllRoles()
+}
+
+class Jobs4UPasswordPolicy {
+    + isSatisfiedBy(rawPassword)
+    + passwordGenerator(name)
+    + strength(rawPassword)
+}
+
+interface RepositoryFactory {
+    + newTransactionalContext()
+    + users(TransactionalContext autoTx)
+    + users()
+    + customerUsers(TransactionalContext autoTx)
+    + customerUsers()
+    + signupRequests(TransactionalContext autoTx)
+    + signupRequests()
+    + jobOpenings(TransactionalContext autoTx)
+    + jobOpenings()
+    + applications(TransactionalContext autoTx)
+    + applications()
+}
+
+class PersistenceContext {
+    + repositories()
+    + PersistenceContext()
+}
+
+class UserManagementService {
+    + UserManagementService(userRepo, policy, encoder)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles, createdOn)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles)
+    + registerUser(username, password, name, email, roles)
+    + activeUsers()
+    + deactivatedUsers()
+    + allUsers()
+    + userOfIdentity(id)
+    + deactivateUser(user)
+    + activateUser(user)
+}
+
+
+AddUserUI ---> AddUserController
+
+AddUserController ---> Jobs4UPasswordPolicy
+
+AddUserController ---> UserManagementService
+
+AddUserController ---> PersistenceContext
+
+PersistenceContext ---> RepositoryFactory
+
+@enduml

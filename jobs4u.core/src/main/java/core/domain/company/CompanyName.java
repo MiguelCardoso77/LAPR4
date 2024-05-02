@@ -12,12 +12,12 @@ import java.util.Objects;
  * Represents the name of a company.
  * This class is a value object and is embeddable.
  */
-
 @Embeddable
-public final class CompanyName implements ValueObject, Serializable,  Comparable<CompanyName>  {
+public final class CompanyName implements ValueObject, Serializable, Comparable<CompanyName> {
 
-    @Column(name = "DESIGNATION")
+    @Column(name = "COMPANY_NAME")
     private String designation;
+
     /**
      * Constructs a CompanyName object with the specified designation.
      *
@@ -28,10 +28,11 @@ public final class CompanyName implements ValueObject, Serializable,  Comparable
         Preconditions.nonEmpty(designation, "Designation should neither be null nor empty");
         this.designation = designation;
     }
+
     /**
      * Protected constructor for ORM usage.
      */
-    protected CompanyName(){
+    protected CompanyName() {
         // for ORM only
     }
 
@@ -45,6 +46,7 @@ public final class CompanyName implements ValueObject, Serializable,  Comparable
     public static CompanyName valueOf(final String designation) {
         return new CompanyName(designation);
     }
+
     /**
      * Returns the string representation of this CompanyName object.
      *
@@ -53,6 +55,7 @@ public final class CompanyName implements ValueObject, Serializable,  Comparable
     public String toString() {
         return this.designation;
     }
+
     /**
      * Retrieves the designation of this CompanyName object.
      *
@@ -61,6 +64,7 @@ public final class CompanyName implements ValueObject, Serializable,  Comparable
     public String designation() {
         return this.designation;
     }
+
     /**
      * Checks if this CompanyName object is equal to another object.
      *
@@ -79,6 +83,7 @@ public final class CompanyName implements ValueObject, Serializable,  Comparable
 
         return Objects.equals(designation, that.designation);
     }
+
     /**
      * Generates a hash code for this CompanyName object.
      *
@@ -91,6 +96,12 @@ public final class CompanyName implements ValueObject, Serializable,  Comparable
         return result;
     }
 
+    /**
+     * Compares this CompanyName with another CompanyName for order.
+     *
+     * @param o the CompanyName to be compared
+     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object
+     */
     @Override
     public int compareTo(CompanyName o) {
         return this.designation.compareTo(o.designation);

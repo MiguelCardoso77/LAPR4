@@ -13,15 +13,29 @@ import java.util.Optional;
  */
 public class InMemoryCustomerRepository extends InMemoryDomainRepository<Customer, EmailAddress> implements CustomerRepository {
 
+    /**
+     * Static block to initialize the in-memory data store.
+     */
     static {
         InMemoryInitializer.init();
     }
-
+    /**
+     * Find a customer by their email address.
+     *
+     * @param emailAddress the email address of the customer to find
+     * @return an {@link Optional} containing the customer if found, or empty if not found
+     */
 
     @Override
     public Optional<Customer> findByEmailAddress(final EmailAddress emailAddress) {
         return Optional.of(data().get(emailAddress));
     }
+
+    /**
+     * Retrieve all active customers.
+     *
+     * @return an iterable collection of active customers
+     */
 
     @Override
     public Iterable<Customer> findAllActive() {

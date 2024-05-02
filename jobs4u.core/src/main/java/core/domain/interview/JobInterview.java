@@ -1,8 +1,10 @@
 package core.domain.interview;
+
 import core.domain.application.Application;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import jakarta.persistence.*;
+
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -18,51 +20,63 @@ public class JobInterview implements AggregateRoot<Integer> {
     private Calendar createdOn;
 
     @Column(name = "INTERVIEW_TIME")
-    private int time;
+    private Time time;
 
     @Column(name = "SCORE")
-    private int score;
+    private Score score;
 
     @Column(name = "RESULT")
-    private String result;
+    private Result result;
 
     @ManyToOne
     @JoinColumn(name = "APPLICATION_ID")
     private Application application;
 
+    @Column(name = "INTERVIEW_MODEL")
+    private InterviewModel interviewModel;
 
-    public JobInterview(int id, Calendar createdOn, int time, int score, String result, Application application){
+
+    public JobInterview(int id, Calendar createdOn, Time time, Score score, Result result, Application application, InterviewModel interviewModel) {
         this.id = id;
         this.createdOn = createdOn;
         this.time = time;
         this.score = score;
         this.result = result;
         this.application = application;
+        this.interviewModel = interviewModel;
     }
 
-    protected JobInterview(){
+    protected JobInterview() {
         // for ORM only
     }
 
-    public Integer identity(){ return id;}
+    public Integer identity() {
+        return id;
+    }
 
     public Calendar createdOn() {
         return createdOn;
     }
 
-    public int time() {
+    public Time time() {
         return time;
     }
 
-    public int score() {
+    public Score score() {
         return score;
     }
 
-    public String result() {
+    public Result result() {
         return result;
     }
 
-    public Application application() { return application; }
+    public Application application() {
+        return application;
+    }
+
+    public InterviewModel interviewModel() {
+        return interviewModel;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -71,7 +85,8 @@ public class JobInterview implements AggregateRoot<Integer> {
         JobInterview jobInterview = (JobInterview) o;
         return Objects.equals(id, jobInterview.id) && Objects.equals(createdOn, jobInterview.createdOn)
                 && Objects.equals(time, jobInterview.time) && Objects.equals(score, jobInterview.score)
-                && Objects.equals(result, jobInterview.result) && Objects.equals(application, jobInterview.application);
+                && Objects.equals(result, jobInterview.result) && Objects.equals(application, jobInterview.application)
+                && Objects.equals(interviewModel, jobInterview.interviewModel);
     }
 
     @Override

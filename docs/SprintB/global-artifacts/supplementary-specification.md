@@ -48,6 +48,7 @@ _Addresses the system's maintainability and testability, ensuring it is easy to 
 
 _Specifies the design, implementation, and interface constraints of the system:_
 
+- Before running the Backoffice, the user must open the H2 database, run the Bootstrap and then the Backoffice
 - The system must be developed in Java using the IntelliJ IDE.
 - Development should follow agile methodologies with continuous integration.
 - The system should be compatible with different devices and offer a simple and user-friendly interface.

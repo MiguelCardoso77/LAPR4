@@ -1,8 +1,8 @@
 # Questions:
--> Short Answer: "What company owns the Packet Tracer software?" "Cisco" 10%
--> Time: "Estimate how much time it would take to configure a router." 00:45 40%
--> Date: "When was the first version of Packet Tracer released?" 01/06/2007 30%
--> Integer Number: "How many devices can be connected to a switch with 24 ports?" 24 20%
+-> Short Answer: <What company owns the Packet Tracer software?> <Cisco> 10%
+-> Time: <Estimate how much time it would take to configure a router.> 00:45 40%
+-> Date: <When was the first version of Packet Tracer released?> 01/06/2007 30%
+-> Integer Number: <How many devices can be connected to a switch with 24 ports?> 24 20%
 
 # Results:
--> "If the candidate scores above 70%, he's hired."
+-> <If the candidate scores above 70%, he's hired.>

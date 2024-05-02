@@ -41,7 +41,7 @@ results: HASHTAG RESULTS PARAGRAPH resultsBody;
 resultsBody: ARROW ANY_STRING;
 
 // Lexical rules:
-ANY_STRING : '"' ~('"')* '"';
+ANY_STRING : '<' ~('<' | '>')* '>';
 ARROW: '-> ';
 DECIMAL: [0-9]+ '.' [0-9]+ | [0.9]+ ',' [0-9]+;
 INTEGER: [0-9]+;

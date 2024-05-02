@@ -25,12 +25,13 @@ public class GenerateTemplateFileUI extends AbstractUI {
             String answer = Console.readLine("Enter the answer: ");
             int score = Console.readInteger("Enter the score: ");
 
-            String endProduct = "-> " + QuestionType.values()[questionType - 1] + ": '" + question + "' " + answer + " " + score;
+            String endProduct = "-> " + QuestionType.values()[questionType - 1] + ": <" + question + "> " + answer + " " + score + "%";
             questionForFile.add(endProduct);
             questions--;
         }
 
-        theController.writeListToFile(questionForFile, "jobs4u.core/src/main/resources/interviewModels/TemplateFile.txt");
+        String fileName = Console.readLine("Enter the name of the file: ");
+        theController.writeListToFile(questionForFile, "jobs4u.core/src/main/resources/interviewModels/" + fileName + ".txt");
 
         return true;
     }

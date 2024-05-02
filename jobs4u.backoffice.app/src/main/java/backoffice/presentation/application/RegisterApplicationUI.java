@@ -15,6 +15,7 @@ import eapli.framework.visitor.Visitor;
 import jakarta.transaction.InvalidTransactionException;
 import lombok.SneakyThrows;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -67,12 +68,15 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
     protected String emptyMessage() {
         return "No applications found for this job opening.";
     }
-    @SneakyThrows
     @Override
     public boolean doShow(){
         Path path = selectSubfolder();
 
-        candidateData = applicationRegisterController.importCandidateFile(path);
+        try {
+            candidateData = applicationRegisterController.importCandidateFile(path);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         JobReference jobReference = JobReference.valueOf(candidateData.get(0));
 

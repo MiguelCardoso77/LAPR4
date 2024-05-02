@@ -1,10 +1,3 @@
-# Title: "CISCO Packet Tracer Developer"
-
-# Requirements:
--> Academic Degree: Master
--> Programming Languages: Java C#
--> Years of Experience: 7
-
 # Questions:
 -> Short Answer: "What company owns the Packet Tracer software?" "Cisco" 10%
 -> Time: "Estimate how much time it would take to configure a router." 00:45 40%

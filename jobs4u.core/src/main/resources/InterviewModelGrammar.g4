@@ -1,24 +1,6 @@
 grammar InterviewModelGrammar;
 
-start: title requirements;
-
-title: HASHTAG TITLE titleDescription PARAGRAPH PARAGRAPH;
-titleDescription: ANY_STRING;
-
-requirements: HASHTAG REQUIREMENTS PARAGRAPH requirementsList;
-requirementsList: ARROW requirementType;
-requirementType: academicDegree | programmingLanguages | yearsOfExperience;
-
-academicDegree: ACADEMIC_DEGREE academicDegreeType PARAGRAPH requirementsList | ACADEMIC_DEGREE academicDegreeType PARAGRAPH PARAGRAPH questions;
-academicDegreeType: NONE | BACHELOR | MASTER | DOCTORATE;
-
-programmingLanguages: PROGRAMMING_LANGUAGES programmingLanguagesType PARAGRAPH requirementsList | PROGRAMMING_LANGUAGES programmingLanguagesType PARAGRAPH PARAGRAPH questions;
-programmingLanguagesType: programmingTypes | programmingTypes SPACE programmingLanguagesType;
-programmingTypes: JAVA | JAVASCRIPT | PYTHON | TYPESCRIPT | PHP | CHASH;
-
-yearsOfExperience: YEARS_OF_EXPERIENCE yearsOfExperienceType PARAGRAPH requirementsList | YEARS_OF_EXPERIENCE yearsOfExperienceType PARAGRAPH PARAGRAPH questions;
-yearsOfExperienceType: INTEGER;
-
+start: questions;
 
 questions: HASHTAG QUESTIONS PARAGRAPH questionsList;
 questionsList: ARROW questionType;
@@ -58,8 +40,6 @@ score: PERCENTAGE PARAGRAPH questionsList | PERCENTAGE PARAGRAPH PARAGRAPH resul
 results: HASHTAG RESULTS PARAGRAPH resultsBody;
 resultsBody: ARROW ANY_STRING;
 
-TITLE: 'Title: ';
-
 // Lexical rules:
 ANY_STRING : '"' ~('"')* '"';
 ARROW: '-> ';
@@ -69,26 +49,6 @@ HASHTAG: '# ';
 PARAGRAPH: '\n' | '\r';
 PERCENTAGE: [0-9]+ '%';
 SPACE: ' ';
-
-// Requirements:
-REQUIREMENTS: 'Requirements:';
-ACADEMIC_DEGREE: 'Academic Degree: ';
-PROGRAMMING_LANGUAGES: 'Programming Languages: ';
-YEARS_OF_EXPERIENCE: 'Years of Experience: ';
-
-// Academic Degree:
-NONE: 'None';
-BACHELOR: 'Bachelor';
-MASTER: 'Master';
-DOCTORATE: 'Doctorate';
-
-// Programming Languages:
-JAVA: 'Java';
-JAVASCRIPT: 'JavaScript';
-PYTHON: 'Python';
-TYPESCRIPT: 'TypeScript';
-PHP: 'PHP';
-CHASH: 'C#';
 
 // Question Types:
 QUESTIONS: 'Questions:';

@@ -28,10 +28,6 @@ public class JpaCandidateRepository extends JpaAutoTxRepository<Candidate, Telep
      * @param telephoneNumber candidate´s telephone number
      * @return candidate
      */
-    @Override
-    public Optional<Candidate> findByTelephoneNumber(TelephoneNumber telephoneNumber) {
-        return Optional.empty();
-    }
 
     @Override
     public Optional<Candidate> findByTelephoneNumber(final TelephoneNumber telephoneNumber){

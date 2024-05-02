@@ -20,6 +20,22 @@ public class JobOpeningService {
         return jobOpeningRepository.save(jobOpening);
     }
 
+    public JobOpening findJobOpening(JobReference jobReference){
+        Iterable<JobOpening> jobOpenings = jobOpeningRepository.allJobOpenings();
+        for (JobOpening jobOpening : jobOpenings) {
+            if(jobOpening.identity().equals(jobReference)){
+                return jobOpening;
+            }
+        }
+        return null;
+    }
+
+    public boolean verifyJobReference(JobReference jobReference){
+        if(jobOpeningRepository.ofIdentity(jobReference).isPresent()){
+            return true;
+        }
+        return false;
+    }
     public Iterable<JobOpening> allJobOpenings() {
         return jobOpeningRepository.findAll();
     }

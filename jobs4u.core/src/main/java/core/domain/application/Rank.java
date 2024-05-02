@@ -1,6 +1,7 @@
 package core.domain.application;
 
 import eapli.framework.domain.model.ValueObject;
+import eapli.framework.validations.Preconditions;
 
 /**
  * Represents a rank or position.
@@ -9,8 +10,8 @@ import eapli.framework.domain.model.ValueObject;
  * @author Tomás Gonçalves
  */
 
-public class Rank implements ValueObject, Comparable<Rank> {
-    private int rank;
+public class Rank implements ValueObject {
+    private String rank;
 
     /**
      * Constructs a `Rank` instance.
@@ -19,10 +20,8 @@ public class Rank implements ValueObject, Comparable<Rank> {
      * @throws IllegalArgumentException if `rank` is less than 0.
      */
 
-    public Rank(final int rank) {
-        if (rank < 0) {
-            throw new IllegalArgumentException("Rank should be a positive number");
-        }
+    public Rank(final String rank) {
+        Preconditions.nonNull(rank);
 
         this.rank = rank;
     }
@@ -40,7 +39,7 @@ public class Rank implements ValueObject, Comparable<Rank> {
      * @param rank The rank or position.
      * @return A `Rank` instance.
      */
-    public static Rank valueOf(final int rank) {
+    public static Rank valueOf(final String rank) {
         return new Rank(rank);
     }
 
@@ -60,17 +59,7 @@ public class Rank implements ValueObject, Comparable<Rank> {
         }
 
         final Rank that = (Rank) o;
-        return this.rank == that.rank;
-    }
-
-    /**
-     * Computes the hash code for this `Rank`.
-     *
-     * @return The hash code.
-     */
-    @Override
-    public int hashCode() {
-        return Integer.hashCode(this.rank);
+        return this.rank.equals(that.rank);
     }
 
 
@@ -81,20 +70,6 @@ public class Rank implements ValueObject, Comparable<Rank> {
      */
     @Override
     public String toString() {
-        return Integer.toString(this.rank);
-    }
-
-    /**
-     * Compares this `Rank` with another `Rank`.
-     *
-     * @param arg0 The `Rank` to compare.
-     * @return A negative integer, zero, or a positive integer as this `Rank` is less than, equal to, or greater than the specified `Rank`.
-     */
-    @Override
-    public int compareTo(final Rank arg0) {
-        return Integer.compare(rank, arg0.rank);
+        return this.rank;
     }
 }
-
-
-

@@ -17,6 +17,11 @@ public class InMemoryCandidateRepository extends InMemoryDomainRepository<Candid
         return match(e -> true);
     }
 
+    @Override
+    public Optional<Candidate> findByTelephoneNumber(TelephoneNumber telephoneNumber) {
+        return Optional.empty();
+    }
+
     /**
      * Retrieves the Candidate associated to the telephone number passed by parameter
      *

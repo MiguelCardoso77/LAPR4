@@ -1,8 +1,9 @@
 package core.domain.application;
 
-import core.domain.candidate.TelephoneNumber;
-import core.domain.jobOpening.JobReference;
+import core.domain.candidate.Candidate;
+import core.domain.jobOpening.JobOpening;
 import eapli.framework.domain.model.DomainFactory;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,19 +16,19 @@ import java.util.Calendar;
  */
 public class ApplicationBuilder implements DomainFactory<Application> {
 
-    private IdApplication idApplication;
+    private int applicationID;
     private Rank rank;
-    private SubmissionDate submissionDate;
+    private Calendar submissionDate;
     private Status status;
-    private ApplicationDataFile applicationDataFile;
-    private FilesAttachedContent filesAttachedContent;
-    private EmailFilesAttached emailFilesAttached;
-    private EmailContentFile emailContentFile;
-    private JobReference jobReference;
+    private ApplicationFiles applicationFiles;
+    private JobOpening jobReference;
+    private Candidate telephoneNumber;
 
-    private TelephoneNumber telephoneNumber;
+    private SystemUser operator;
 
-
+    /**
+     * The logger for this class.
+     */
     private static final Logger LOGGER = LogManager.getLogger(Application.class);
 
     /**
@@ -45,21 +46,38 @@ public class ApplicationBuilder implements DomainFactory<Application> {
      * @param telephoneNumber       The telephone number of the candidate.
      * @return                      The ApplicationBuilder instance with all attributes set.
      */
-    public ApplicationBuilder withAll(long idApplication, int rank, Calendar submissionDate, Status status, String applicationDataFile, String filesAttachedContent, String emailFilesAttached, String emailContentFile, String jobReference , String telephoneNumber) {
-        this.idApplication = new IdApplication(idApplication);
-        this.rank = new Rank(rank);
-        this.submissionDate = new SubmissionDate(submissionDate);
-        this.status = status;
-        this.applicationDataFile = new ApplicationDataFile(applicationDataFile);
-        this.filesAttachedContent = new FilesAttachedContent(filesAttachedContent);
-        this.emailFilesAttached = new EmailFilesAttached(emailFilesAttached);
-        this.emailContentFile = new EmailContentFile(emailContentFile);
-        this.jobReference = new JobReference(jobReference);
-        this.telephoneNumber = new TelephoneNumber(telephoneNumber);
+    /**
+     * Sets all the attributes of the application builder.
+     *
+     * @param rank             the rank of the candidate in the application
+     * @param applicationFiles the files attached to the application
+     * @param jobReference     the job opening associated with the application
+     * @param telephoneNumber  the candidate who submitted the application
+     * @param operator         the operator who registered the application
+     * @return this application builder instance
+     */
+    public ApplicationBuilder withAll( final Rank rank,
+                                      final ApplicationFiles applicationFiles,
+                                      final JobOpening jobReference , final Candidate telephoneNumber, final SystemUser operator) {
+        this.rank = rank;
+        this.submissionDate = Calendar.getInstance();
+        this.status = Status.SUBMITTED;
+        this.applicationFiles = applicationFiles;
+        this.jobReference = jobReference;
+        this.telephoneNumber = telephoneNumber;
+        this.operator = operator;
         return this;
     }
 
+/**
+ * @author 1220812@isep.ipp.pt
+ */
 
+    /**
+     * Builds and returns a new instance of {@link Application}.
+     *
+     * @return a new instance of {@link Application} with the specified attributes
+     */
     /**
      * Constructs an {@link Application} instance based on the provided data.
      *
@@ -67,16 +85,6 @@ public class ApplicationBuilder implements DomainFactory<Application> {
      */
     @Override
     public Application build() {
-        Application application;
-
-        if (idApplication == null || rank == null || submissionDate == null || status == null || applicationDataFile == null || filesAttachedContent == null || emailFilesAttached == null || emailContentFile == null) {
-            LOGGER.error("Missing mandatory information to build a JobOpening");
-            return null;
-        } else {
-            LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}, telephone number{}", idApplication, rank, submissionDate, status, applicationDataFile, filesAttachedContent, emailFilesAttached, emailContentFile,jobReference, telephoneNumber);
-            application = new Application(idApplication, rank, submissionDate, status, applicationDataFile, filesAttachedContent, emailFilesAttached, emailContentFile, jobReference , telephoneNumber);
-        }
-
-        return application;
+        return new Application(rank, submissionDate, applicationFiles, jobReference, telephoneNumber, operator);
     }
 }

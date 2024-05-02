@@ -26,7 +26,7 @@ public class DisplayCandidateDataController {
 
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
-        Iterable<Application> allApplications = appServ.allApplication();
+        Iterable<Application> allApplications = appServ.allApplications();
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
         for (Application a : allApplications) {
@@ -56,9 +56,9 @@ public class DisplayCandidateDataController {
     }
     public Candidate candidateOfApplication(Application application) {
         if (application != null) {
-            TelephoneNumber telephoneNumber = application.telephoneNumber();
+            TelephoneNumber telephoneNumber = application.candidate().identity();
             if (telephoneNumber != null) {
-                return candServ.findCandidate(telephoneNumber);
+                return candServ.findCandidateByTelephoneNumber(telephoneNumber);
             }
         }
         return null;

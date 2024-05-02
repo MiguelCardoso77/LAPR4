@@ -1,6 +1,7 @@
 package core.application.controllers;
 
 import core.domain.candidate.Candidate;
+import core.domain.candidate.TelephoneNumber;
 import core.domain.user.Jobs4URoles;
 import core.services.CandidateService;
 import eapli.framework.application.UseCaseController;
@@ -18,5 +19,10 @@ public class ListCandidatesController {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.OPERATOR);
 
         return (List<Candidate>) candSvc.allCandidates();
+    }
+    public Candidate findCandidateByTelephoneNumber(TelephoneNumber telephoneNumber){
+        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN, Jobs4URoles.OPERATOR);
+
+        return candSvc.findCandidateByTelephoneNumber(telephoneNumber);
     }
 }

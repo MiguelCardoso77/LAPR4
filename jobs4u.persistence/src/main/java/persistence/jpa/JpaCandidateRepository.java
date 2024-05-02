@@ -8,6 +8,10 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
 import java.util.Optional;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 public class JpaCandidateRepository extends JpaAutoTxRepository<Candidate, TelephoneNumber, TelephoneNumber> implements CandidateRepository {
     public JpaCandidateRepository(String puname) { super(puname, "telephoneNumber"); }
 
@@ -27,5 +31,12 @@ public class JpaCandidateRepository extends JpaAutoTxRepository<Candidate, Telep
     @Override
     public Optional<Candidate> findByTelephoneNumber(TelephoneNumber telephoneNumber) {
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<Candidate> findByTelephoneNumber(final TelephoneNumber telephoneNumber){
+        final Map<String, Object> params = new HashMap<>();
+        params.put("telephone number", telephoneNumber);
+        return matchOne("e.telephoneNumber=:telephoneNumber", params);
     }
 }

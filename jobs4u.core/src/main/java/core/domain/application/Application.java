@@ -1,248 +1,234 @@
 package core.domain.application;
 
-import core.domain.candidate.TelephoneNumber;
-import core.domain.jobOpening.JobReference;
+import core.domain.candidate.Candidate;
+import core.domain.jobOpening.JobOpening;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import eapli.framework.validations.Preconditions;
 import jakarta.persistence.*;
 
+import java.util.Calendar;
+
 /**
- * Represents an application for a job opening.
  *
- * @author Tomás Gonçalves
+ * @author 1220812@isep.ipp.pt
  */
 
 @Entity
 @Table(name = "APPLICATION")
-public class Application implements AggregateRoot<IdApplication> {
+public class Application implements AggregateRoot<Integer> {
 
+    /**
+     * The unique identifier of the application.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private IdApplication idApplication;
+    private int applicationID;
 
-    @Column(name = "RANK")
+    /**
+     * The rank of the candidate in the application.
+     */
+    @Column(name = "RANK_POSITION")
     private Rank rank;
 
-    @Column(name = "SUBMISSION_DATE")
-    private SubmissionDate submissionDate;
+    /**
+     * The submission date of the application.
+     */
+    @Temporal(TemporalType.DATE)
+    private Calendar submissionDate;
 
+    /**
+     * The status of the application.
+     */
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private Status status;
 
-    @Column(name = "APPLICATION_DATA_FILE")
-    private ApplicationDataFile applicationDataFile;
-
-    @Column(name = "FILES_ATTACHED_CONTENT")
-    private FilesAttachedContent filesAttachedContent;
-
-    @Column(name = "EMAIL_FILES_ATTACHED")
-    private EmailFilesAttached emailFilesAttached;
-
-    @Column(name = "EMAIL_CONTENT_FILE")
-    private EmailContentFile emailContentFile;
-
-    @Column(name = "ASSOCIATED_JOB_OPENING")
-    private JobReference jobReference;
-
-    @Column(name = "CANDIDATE")
-    private TelephoneNumber telephoneNumber;
-
+    /**
+     * The files attached to the application.
+     */
+    private ApplicationFiles applicationFiles;
 
     /**
-     * Constructs an application object.
-     *
-     * @param idApplication         The application ID.
-     * @param rank                  The rank of the application.
-     * @param submissionDate        The submission date of the application.
-     * @param status                The status of the application.
-     * @param applicationDataFile   The data file associated with the application.
-     * @param filesAttachedContent  The attached files content.
-     * @param emailFilesAttached    The files attached to the email.
-     * @param emailContentFile      The content file of the email.
-     * @param jobReference          The job reference associated with the application.
-     * @param telephoneNumber       The telephone number of the candidate.
+     * The job opening associated with the application.
      */
-    public Application(IdApplication idApplication, Rank rank, SubmissionDate submissionDate, Status status,
-                       ApplicationDataFile applicationDataFile, FilesAttachedContent filesAttachedContent,
-                       EmailFilesAttached emailFilesAttached, EmailContentFile emailContentFile, JobReference jobReference, TelephoneNumber telephoneNumber) {
-        this.idApplication = idApplication;
+    @ManyToOne
+    @JoinColumn(name = "ASSOCIATED_JOB_OPENING")
+    private JobOpening jobReference;
+
+    /**
+     * The candidate who submitted the application.
+     */
+    @ManyToOne
+    @JoinColumn(name = "CANDIDATE_TELEPHONE_NUMBER")
+    private Candidate candidate;
+
+    /**
+     * The operator who registered the application.
+     */
+    @ManyToOne
+    @JoinColumn(name = "OPERATOR_EMAIL")
+    private SystemUser operator;
+
+    /**
+     * Constructs an application with the specified parameters.
+     *
+     * @param rank             the rank of the candidate in the application
+     * @param createdOn        the submission date of the application
+     * @param applicationFiles the files attached to the application
+     * @param jobReference     the job opening associated with the application
+     * @param candidate        the candidate who submitted the application
+     * @param operator         the operator who registered the application
+     */
+    public Application(final Rank rank, final Calendar createdOn,
+                       final ApplicationFiles applicationFiles, final JobOpening jobReference,
+                       final Candidate candidate, final SystemUser operator){
+        Preconditions.noneNull(rank, createdOn, applicationFiles, jobReference, candidate);
         this.rank = rank;
-        this.submissionDate = submissionDate;
-        this.status = status;
-        this.applicationDataFile = applicationDataFile;
-        this.filesAttachedContent = filesAttachedContent;
-        this.emailFilesAttached = emailFilesAttached;
-        this.emailContentFile = emailContentFile;
+        this.submissionDate = createdOn;
+        this.applicationFiles = applicationFiles;
         this.jobReference = jobReference;
-        this.telephoneNumber = telephoneNumber;
+        this.candidate = candidate;
+        this.operator = operator;
     }
 
     /**
-     * Default constructor required by ORM.
+     * Default constructor required by JPA.
      */
     protected Application() {
         // for ORM only
     }
 
     /**
-     * Checks if this application is the same as another object.
+     * Checks if this application is equal to another object.
      *
-     * @param other The object to compare with.
-     * @return True if the objects are the same, false otherwise.
+     * @param other the object to compare with
+     * @return true if the objects are equal, false otherwise
      */
+    @Override
     public boolean sameAs(final Object other) {
-        if (this == other) {
-            return true;
-        }
-
-        if (!(other instanceof Application)) {
-            return false;
-        }
-
-        final Application that = (Application) other;
-
-        return  idApplication.equals(that.idApplication) && rank.equals(that.rank) && submissionDate.equals(that.submissionDate)
-                && status.equals(that.status) && applicationDataFile.equals(that.applicationDataFile)
-                && filesAttachedContent.equals(that.filesAttachedContent) && emailFilesAttached.equals(that.emailFilesAttached)
-                && emailContentFile.equals(that.emailContentFile) && jobReference.equals(that.jobReference)
-                && telephoneNumber.equals(that.telephoneNumber);
+        return DomainEntities.areEqual(this, other);
     }
 
     /**
-     * Compares this application to the specified ID.
+     * Checks if this application is equal to another object.
      *
-     * @param other The ID to compare with.
-     * @return The comparison result.
+     * @param obj the object to compare with
+     * @return true if the objects are equal, false otherwise
      */
-    public int compareTo(IdApplication other) {
+    @Override
+    public boolean equals(final Object obj) {
+        return DomainEntities.areEqual(this, obj);
+    }
+
+    /**
+     * Generates a hash code for this application.
+     *
+     * @return the hash code value for this object
+     */
+    @Override
+    public int hashCode() {
+        return DomainEntities.hashCode(this);
+    }
+
+    /**
+     * Compares this application with the specified object for order.
+     *
+     * @param other the object to be compared
+     * @return a negative integer, zero, or a positive integer as this application
+     * is less than, equal to, or greater than the specified object
+     */
+    @Override
+    public int compareTo(Integer other) {
         return AggregateRoot.super.compareTo(other);
     }
 
+    /**
+     * Retrieves the identity of this application.
+     *
+     * @return the identity of this application
+     */
     @Override
-    public IdApplication identity() {
-        return null;
+    public Integer identity() {
+        return applicationID;
     }
 
     /**
-     * Checks if this application has the specified ID.
+     * Retrieves the rank of the candidate in this application.
      *
-     * @param id The ID to check.
-     * @return True if the application has the given ID, false otherwise.
+     * @return the rank of the candidate
      */
-    public boolean hasIdentity(IdApplication id) {
-        return AggregateRoot.super.hasIdentity(id);
-    }
-
-    /**
-     * Retrieves the telephone number associated with this application.
-     *
-     * @return The telephone number of the candidate.
-     */
-    public TelephoneNumber telephoneNumber() {
-        return telephoneNumber;
-    }
-
-    /**
-     * Retrieves the ID of this application.
-     *
-     * @return The ID of the application.
-     */
-    public IdApplication idApplication() {
-        return this.idApplication;
-    }
-
-    /**
-     * Retrieves the rank of this application.
-     *
-     * @return The rank of the application.
-     */
-    public Rank rank() {
+    public Rank rank(){
         return this.rank;
     }
 
     /**
      * Retrieves the submission date of this application.
      *
-     * @return The submission date of the application.
+     * @return the submission date of the application
      */
-    public SubmissionDate submissionDate() {
+    public Calendar submissionDate(){
         return this.submissionDate;
     }
 
     /**
      * Retrieves the status of this application.
      *
-     * @return The status of the application.
+     * @return the status of the application
      */
-    public Status status() {
+    public Status status(){
         return this.status;
     }
 
     /**
-     * Retrieves the data file associated with this application.
+     * Retrieves the files attached to this application.
      *
-     * @return The data file associated with the application.
+     * @return the files attached to the application
      */
-    public ApplicationDataFile applicationDataFile() {
-        return this.applicationDataFile;
+    public ApplicationFiles dataFile(){
+        return this.applicationFiles;
     }
 
     /**
-     * Retrieves the content of files attached to this application.
+     * Retrieves the operator who registered this application.
      *
-     * @return The content of files attached to the application.
+     * @return the operator who registered the application
      */
-    public FilesAttachedContent filesAttachedContent() {
-        return this.filesAttachedContent;
+    public SystemUser operator(){
+        return this.operator;
     }
 
     /**
-     * Retrieves the files attached to the email associated with this application.
+     * Retrieves the candidate who submitted this application.
      *
-     * @return The files attached to the email.
+     * @return the candidate who submitted the application
      */
-    public EmailFilesAttached emailFilesAttached() {
-        return this.emailFilesAttached;
+    public Candidate candidate(){
+        return this.candidate;
     }
-
     /**
-     * Retrieves the content file of the email associated with this application.
+     * Retrieves the job reference of the job opening.
      *
-     * @return The content file of the email.
+     * @return the job reference of the associated job opening
      */
-    public EmailContentFile emailContentFile() {
-        return this.emailContentFile;
-    }
-
-    /**
-     * Retrieves the job reference associated with this application.
-     *
-     * @return The job reference associated with the application.
-     */
-    public JobReference jobReference() {
+    public JobOpening jobReference(){
         return this.jobReference;
     }
 
     /**
-     * Returns a string representation of this application.
+     * Generates a string representation of this application.
      *
-     * @return A string representation of the application.
+     * @return a string representation of the application
      */
     @Override
     public String toString() {
-        return "Application{" +
-                "idApplication=" + idApplication +
-                ", rank=" + rank +
-                ", submissionDate=" + submissionDate +
-                ", status=" + status +
-                ", applicationDataFile=" + applicationDataFile +
-                ", filesAttachedContent=" + filesAttachedContent +
-                ", emailFilesAttached=" + emailFilesAttached +
-                ", emailContentFile=" + emailContentFile +
-                ", jobReference=" + jobReference +
-                ", telephoneNumber= " + telephoneNumber +
-                '}';
+        return "Application : " + applicationID +
+                ", rank = " + rank +
+                ", submitted at " + submissionDate +
+                ", is " + status +
+                ", submitted for the job opening " + jobReference +
+                ", by the candidate " + candidate +
+                ", registered by " + operator;
     }
-
-
 }

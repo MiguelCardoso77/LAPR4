@@ -26,7 +26,7 @@ public class ListJobOpeningApplicationsController {
 
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
-        Iterable<Application> allApplications = appServ.allApplication();
+        Iterable<Application> allApplications = appServ.allApplications();
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
         for (Application a : allApplications) {

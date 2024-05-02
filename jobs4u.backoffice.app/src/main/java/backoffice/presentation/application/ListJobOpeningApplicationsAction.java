@@ -2,7 +2,7 @@ package backoffice.presentation.application;
 
 import eapli.framework.actions.Action;
 
-
+/*
     public class ListJobOpeningApplicationsAction implements Action  {
 
         @Override
@@ -10,6 +10,8 @@ import eapli.framework.actions.Action;
             return new ListJobOpeningApplicationsUI().doShow();
         }
     }
+
+ */
 
 
 

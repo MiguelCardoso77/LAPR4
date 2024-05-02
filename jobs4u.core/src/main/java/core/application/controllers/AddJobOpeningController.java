@@ -3,6 +3,7 @@ package core.application.controllers;
 import core.domain.company.Company;
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobReference;
 import core.domain.jobOpening.Mode;
 import core.services.JobOpeningService;
 import core.domain.user.Jobs4URoles;
@@ -20,5 +21,9 @@ public class AddJobOpeningController {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.ADMIN);
 
         return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
+    }
+
+    public boolean verifyID(JobReference jobReference) {
+        return jobOpeningService.verifyJobReference(jobReference);
     }
 }

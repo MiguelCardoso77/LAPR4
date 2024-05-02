@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
 public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
     private final ListJobOpeningApplicationsController theController = new ListJobOpeningApplicationsController();
 
@@ -104,3 +104,4 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         return true;
     }
 }
+ */

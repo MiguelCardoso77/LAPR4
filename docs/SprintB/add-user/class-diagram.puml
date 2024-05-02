@@ -1,6 +1,6 @@
 @startuml
-skinparam linetype ortho
-'left to right direction
+'skinparam linetype ortho
+left to right direction
 
 class AddUserUI {
     + doShow()
@@ -9,26 +9,6 @@ class AddUserUI {
     + buildCustomerManagerAvailableRoles(roleTypes)
     + buildOperatorAvailableRoles(roleTypes)
     +  headline()
-}
-
-class ActivateUserUI {
-    + doShow()
-    + headline()
-}
-
-class DeactivateUserUI {
-    + doShow()
-    + headline()
-}
-
-class ListBackofficeUsersUI {
-    + elements()
-    + headline()
-    + emptyMessage()
-    + elementPrinter()
-    + elementName()
-    + listHeader()
-    + doShow()
 }
 
 class AddUserController {
@@ -40,21 +20,6 @@ class AddUserController {
     + registerNewUser(name,password,email,role)
     + getRoleTypes()
     + getAllRoles()
-}
-
-class ActivateUserController {
-    + deactivatedUsers()
-    + activateUser(systemUser)
-}
-
-class DeactivateController {
-    + activeUsers()
-    + deactivateUser(systemUser)
-}
-
-class ListUsersController {
-    + allUsers()
-    + allBackofficeUsers()
 }
 
 class Jobs4UPasswordPolicy {
@@ -105,31 +70,6 @@ AddUserController ---> Jobs4UPasswordPolicy
 AddUserController ---> UserManagementService
 
 AddUserController ---> PersistenceContext
-
-
-ActivateUserUI ---> ActivateUserController
-
-
-ActivateUserController ---> UserManagementService
-
-ActivateUserController ---> PersistenceContext
-
-
-DeactivateUserUI ---> DeactivateController
-
-
-DeactivateController ---> UserManagementService
-
-DeactivateController ---> PersistenceContext
-
-
-ListBackofficeUsersUI ---> ListUsersController
-
-
-ListUsersController ---> UserManagementService
-
-ListUsersController ---> PersistenceContext
-
 
 PersistenceContext ---> RepositoryFactory
 

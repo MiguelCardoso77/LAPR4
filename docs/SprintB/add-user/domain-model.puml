@@ -1,0 +1,49 @@
+@startuml
+hide methods
+left to right direction
+'skinparam linetype ortho
+
+Title "Domain Model"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
+
+package "Admin Aggregate"{
+entity Admin <<entity>><<root>>
+
+}
+package "User Aggregate"{
+entity User <<entity>><<root>>
+
+    card UserEmail <<Value Object>> {
+    }
+    card UserName <<Value Object>> {
+    }
+    card UserPassword <<Value Object>> {
+    }
+    card UserTelephoneNumber <<Value Object>> {
+    }
+
+    User --> UserEmail
+    User --> UserName
+    User --> UserTelephoneNumber
+    User --> UserPassword
+}
+    Admin ---> User: manages
+@enduml

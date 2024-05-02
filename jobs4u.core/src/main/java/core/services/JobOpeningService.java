@@ -40,4 +40,14 @@ public class JobOpeningService {
         return jobOpeningRepository.findAll();
     }
 
+    public JobOpening findJobOpening(JobReference jobReference) {
+        Iterable<JobOpening> jobOpenings = jobOpeningRepository.allJobOpenings() ;
+        for(JobOpening jobOpening : jobOpenings){
+            if(jobOpening.identity().equals(jobReference) ){
+                return jobOpening;
+            }
+        }
+        return null;
+    }
+
 }

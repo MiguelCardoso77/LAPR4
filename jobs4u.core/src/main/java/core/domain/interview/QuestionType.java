@@ -7,7 +7,7 @@ public enum QuestionType {
     MULTIPLE_CHOICE("Multiple Choice: "),
     NUMERIC_RANGE("Numeric Range: "),
     SINGLE_CHOICE("Single Choice: "),
-    SHORT_TEXT("Short Text: "),
+    SHORT_TEXT("Short Answer: "),
     TIME("Time: "),
     TRUE_FALSE("True/False: ");
 

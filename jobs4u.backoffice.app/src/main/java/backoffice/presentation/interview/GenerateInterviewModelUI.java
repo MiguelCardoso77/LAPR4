@@ -1,6 +1,6 @@
 package backoffice.presentation.interview;
 
-import core.application.controllers.GenerateTemplateFileController;
+import core.application.controllers.GenerateInterviewModelController;
 import core.domain.interview.QuestionType;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
@@ -8,8 +8,8 @@ import eapli.framework.presentation.console.AbstractUI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateTemplateFileUI extends AbstractUI {
-    private final GenerateTemplateFileController theController = new GenerateTemplateFileController();
+public class GenerateInterviewModelUI extends AbstractUI {
+    private final GenerateInterviewModelController theController = new GenerateInterviewModelController();
     @Override
     protected boolean doShow() {
         int questions = Console.readInteger("Enter the number of questions you want in the template file: ");

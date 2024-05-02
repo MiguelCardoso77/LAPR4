@@ -2,9 +2,9 @@ package backoffice.presentation.interview;
 
 import eapli.framework.actions.Action;
 
-public class GenerateTemplateFileAction implements Action {
+public class GenerateInterviewModelAction implements Action {
     @Override
     public boolean execute() {
-        return new GenerateTemplateFileUI().show();
+        return new GenerateInterviewModelUI().show();
     }
 }

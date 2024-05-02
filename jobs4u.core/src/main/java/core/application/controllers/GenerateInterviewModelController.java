@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateTemplateFileController {
+public class GenerateInterviewModelController {
     public List<String> getQuestionTypes() {
         List<String> questionTypes = new ArrayList<>();
         for (QuestionType type : QuestionType.values()) {

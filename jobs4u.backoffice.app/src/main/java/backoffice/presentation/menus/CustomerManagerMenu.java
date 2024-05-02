@@ -4,7 +4,7 @@ package backoffice.presentation.menus;
 import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
-import backoffice.presentation.interview.GenerateTemplateFileAction;
+import backoffice.presentation.interview.GenerateInterviewModelAction;
 import backoffice.presentation.jobOpening.AddJobOpeningAction;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -18,7 +18,7 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int REGISTER_CUSTOMER = 3;
     private static final int REGISTER_CANDIDATE = 4;
     private static final int ADD_JOB_OPENING = 5;
-    private static final int GENERATE_QUESTIONS_TEMPLATE = 6;
+    private static final int GENERATE_INTERVIEW_MODEL = 6;
 
     @Override
     protected boolean doShow() {
@@ -35,7 +35,7 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
         menu.addItem(ADD_JOB_OPENING, "Add Job Opening", new AddJobOpeningAction());
 
-        menu.addItem(GENERATE_QUESTIONS_TEMPLATE, "Generate Questions Template", new GenerateTemplateFileAction());
+        menu.addItem(GENERATE_INTERVIEW_MODEL, "Generate Interview Model", new GenerateInterviewModelAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

@@ -3,6 +3,3 @@
 -> Short Answer: <What is the name of the CEO of Microsoft?> <Satya Nadella> 20%
 -> Integer Number: <How many years of experience do you have?> 6 30%
 -> Decimal Number: <What is the value of 3/2?> 1.5 20%
-
-# Results:
--> <If the candidate answers all the questions correctly, he/she is hired.>

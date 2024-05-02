@@ -25,7 +25,7 @@ public class GenerateTemplateFileUI extends AbstractUI {
             String answer = Console.readLine("Enter the answer: ");
             int score = Console.readInteger("Enter the score: ");
 
-            String endProduct = "-> " + QuestionType.values()[questionType - 1] + ": <" + question + "> " + answer + " " + score + "%";
+            String endProduct = "-> " + QuestionType.values()[questionType - 1] + "<" + question + "> " + answer + " " + score + "%";
             questionForFile.add(endProduct);
             questions--;
         }

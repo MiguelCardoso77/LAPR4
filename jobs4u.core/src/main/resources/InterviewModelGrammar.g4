@@ -35,10 +35,7 @@ answerNumericRange: INTEGER;
 answerSingleChoice: ANY_STRING;
 //////////
 
-score: PERCENTAGE PARAGRAPH questionsList | PERCENTAGE PARAGRAPH PARAGRAPH results;
-
-results: HASHTAG RESULTS PARAGRAPH resultsBody;
-resultsBody: ARROW ANY_STRING;
+score: PERCENTAGE PARAGRAPH questionsList | PERCENTAGE;
 
 // Lexical rules:
 ANY_STRING : '<' ~('<' | '>')* '>';
@@ -64,6 +61,3 @@ TIME: 'Time: ';
 TIME_ANSWER: ('0'[0-9]|'1'[0-9]|'2'[0-4]) ':' ('0'[0-9]|'1'[0-9]|'2'[0-9]|'3'[0-9]|'4'[0-9]|'5'[0-9]);
 TRUE_FALSE: 'True/False: ';
 TRUE_FALSE_ANWSER: [Tt]'rue ' | [Ff]'alse ';
-
-// Results:
-RESULTS: 'Results:';

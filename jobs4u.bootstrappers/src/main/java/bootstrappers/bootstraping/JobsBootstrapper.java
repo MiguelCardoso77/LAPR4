@@ -13,6 +13,7 @@ public class JobsBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(JobsBootstrapper.class);
     final AddJobOpeningController controller = new AddJobOpeningController();
 
+    @Override
     public boolean execute() {
         CompanyBootstrapper companyBootstrapper = new CompanyBootstrapper();
 

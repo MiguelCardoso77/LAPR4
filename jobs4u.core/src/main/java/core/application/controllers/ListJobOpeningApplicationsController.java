@@ -16,6 +16,11 @@ import eapli.framework.infrastructure.authz.application.UserManagementService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller responsible for listing applications of a job opening.
+ *
+ * @author Tomás Gonçalves
+ */
 public class ListJobOpeningApplicationsController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -24,6 +29,13 @@ public class ListJobOpeningApplicationsController {
     private final ApplicationService appServ = new ApplicationService();
 
 
+
+    /**
+     * Retrieves all applications associated with a specific job opening.
+     *
+     * @param jobReference The reference to the job opening.
+     * @return Iterable of applications associated with the specified job opening.
+     */
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         Iterable<Application> allApplications = appServ.allApplications();
@@ -37,6 +49,12 @@ public class ListJobOpeningApplicationsController {
         return  allApplicationsJobOpening;
     }
 
+    /**
+     * Finds a job opening by its reference.
+     *
+     * @param jobReference The reference to the job opening.
+     * @return The job opening if found, otherwise null.
+     */
     public JobOpening findJobOpening(JobReference jobReference) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         Iterable<JobOpening> allJobOpenings = jobserv.allJobOpenings();
@@ -48,6 +66,12 @@ public class ListJobOpeningApplicationsController {
         return null;
     }
 
+    /**
+     * Finds an application by its ID.
+     *
+     * @param id The ID of the application.
+     * @return The application if found, otherwise null.
+     */
     public Application findApplicationByID(int id){
         Iterable<Application> allApplications = appServ.allApplications();
         for(Application application : allApplications){

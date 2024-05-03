@@ -1,6 +1,7 @@
 package core.domain.jobOpening;
 
 import core.domain.company.Company;
+import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.model.DomainFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +16,6 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private ContractType contractType;
     private TitleOrFunction titleOrFunction;
     private Company company;
-
     public JobOpeningBuilder withAll(JobReference jobReference, String description, int vacanciesNumber,
                                      String address, Mode mode, ContractType contractType, String titleOrFunction,
                                     Company company) {

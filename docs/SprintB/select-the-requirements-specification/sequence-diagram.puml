@@ -1,0 +1,55 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+title SD - Select the Requirements Specifications
+
+'hide footbox
+
+actor CustomerManager
+
+participant SelectRequirementsSpecificationUI <<presentation>>
+
+participant ListJobRequirementsSpecificationController <<application>>
+participant ListJobOpeningController <<application>>
+
+participant JobOpeningService <<service>>
+participant JobRequirementsService <<service>>
+
+database JobOpeningRepository <<repository>>
+database JobRequirementsSpecificationRepository <<repository>>
+
+activate CustomerManager
+
+CustomerManager -> SelectRequirementsSpecificationUI : Requests to select a requirements specification
+
+activate SelectRequirementsSpecificationUI
+
+SelectRequirementsSpecificationUI -> 
+
+SelectRequirementsSpecificationUI --> CustomerManager : Displays all job openings registered in the system and asks to select one
+
+deactivate SelectRequirementsSpecificationUI
+
+CustomerManager -> SelectRequirementsSpecificationUI : Selects the job opening
+
+activate SelectRequirementsSpecificationUI
+
+SelectRequirementsSpecificationUI --> CustomerManager : Displays all requirement specifications registered in the system and asks to select one
+
+deactivate SelectRequirementsSpecificationUI
+
+CustomerManager -> SelectRequirementsSpecificationUI : Selects the requirement specification
+
+activate SelectRequirementsSpecificationUI
+
+SelectRequirementsSpecificationUI --> CustomerManager : Displays operation's success
+
+deactivate SelectRequirementsSpecificationUI
+
+deactivate CustomerManager
+
+@enduml

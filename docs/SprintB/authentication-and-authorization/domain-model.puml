@@ -2,7 +2,7 @@
 hide methods
 left to right direction
 
-Title "Login Domain Model"
+Title "Domain Model - Authentication and Authorization"
 
 skinparam class {
     LifeLineBorderColor DarkBlue

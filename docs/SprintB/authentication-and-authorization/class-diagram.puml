@@ -1,0 +1,59 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
+
+Title "Class Diagram - Authentication and Authorization"
+
+package "presentation" {
+    class LoginUI {
+        + LoginUI(credentialHandler, role)
+        - doShow()
+        - headline()
+    }
+}
+
+package "authz" {
+    class AuthenticationCredentialHandler {
+        + authenticated(username, password, role)
+    }
+
+    class AuthzRegistry {
+        + configure(userRepo, policy, encoder)
+        + userService()
+        + authenticationService()
+        + authorizationService()
+    }
+
+    class AuthorizationService {
+        + authenticate(username, rawPassword, roles)
+        + changePassword(user, oldPassword, newPassword)
+        + changePassword(oldPassword, newPassword)
+        + resetPassword(user)
+        + confirmResetPassword(user, token, newPass)
+        - noActionRightsToValidate(role)
+        - retrieveUser(username)
+    }
+
+    interface Authenticator {
+        + authenticate(username, password, role)
+    }
+}
+
+package repositories {
+    interface UserRepository {
+        + findByActive(active)
+    }
+}
+
+LoginUI --> AuthenticationCredentialHandler
+AuthenticationCredentialHandler -> AuthzRegistry
+AuthzRegistry -> AuthorizationService
+AuthorizationService -> UserRepository
+AuthorizationService --> Authenticator : implements
+
+@enduml

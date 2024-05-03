@@ -8,6 +8,14 @@ As Language Engineer, I want to deploy and configure a plugin (i.e., Job Require
 
 -----------
 
+## Plugin Configuration
+
+The plugin configuration was made using the base project example, with little addaptations.
+
+The classes used to create the plugin can be found here: [pluginManagement](..%2F..%2F..%2Fjobs4u.core%2Fsrc%2Fmain%2Fjava%2Fcore%2FpluginManagement)
+
+-----------
+
 # Grammars Created
 
 ## Requirements Grammar

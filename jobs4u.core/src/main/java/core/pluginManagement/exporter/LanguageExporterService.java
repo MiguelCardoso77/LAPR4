@@ -1,14 +1,12 @@
 package core.pluginManagement.exporter;
 
 import core.pluginManagement.language.Language;
-import eapli.framework.application.ApplicationService;
 import eapli.framework.util.TemplateMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-@ApplicationService
 public class LanguageExporterService {
     private static final Logger logger = LogManager.getLogger(LanguageExporterService.class);
 
@@ -27,7 +25,7 @@ public class LanguageExporterService {
      * @param exporter
      * @throws IOException
      */
-    @TemplateMethod
+
     public void export(final Iterable<Language> dishes, final String filename, final LanguageExporter exporter) throws IOException {
         try {
             exporter.begin(filename);

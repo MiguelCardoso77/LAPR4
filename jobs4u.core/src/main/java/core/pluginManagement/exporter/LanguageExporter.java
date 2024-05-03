@@ -5,7 +5,6 @@ import eapli.framework.util.Strategy;
 
 import java.io.IOException;
 
-@Strategy
 public interface LanguageExporter {
     /**
      * Initiate the export process. The implementation should open the underlying resource (e.g., file) and create the

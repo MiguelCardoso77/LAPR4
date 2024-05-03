@@ -4,9 +4,7 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.general.domain.model.Designation;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 @Entity
 public class LanguageType implements AggregateRoot<Designation> {
 

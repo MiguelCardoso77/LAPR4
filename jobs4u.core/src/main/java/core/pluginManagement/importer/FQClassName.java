@@ -1,20 +1,12 @@
 package core.pluginManagement.importer;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.strings.StringMixin;
 import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Embeddable;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import lombok.EqualsAndHashCode;
 
 @Embeddable
-@EqualsAndHashCode
-public class FQClassName implements ValueObject, Comparable<FQClassName>, StringMixin {
+public class FQClassName implements ValueObject, Comparable<FQClassName> {
 
-    @XmlAttribute
-    @JsonProperty
     private final String fqClassName;
 
     protected FQClassName(final String name) {

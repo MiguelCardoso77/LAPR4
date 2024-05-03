@@ -1,21 +1,15 @@
 package core.pluginManagement.importer;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import eapli.framework.domain.model.ValueObject;
-import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Preconditions;
 import jakarta.persistence.Embeddable;
-import jakarta.xml.bind.annotation.XmlAttribute;
 import lombok.EqualsAndHashCode;
 
 @Embeddable
 @EqualsAndHashCode
-public class FileExtension implements ValueObject, Comparable<FileExtension>, StringMixin {
+public class FileExtension implements ValueObject, Comparable<FileExtension> {
 
-    @XmlAttribute
-    @JsonProperty
     private final String fileExtension;
 
     protected FileExtension(final String name) {

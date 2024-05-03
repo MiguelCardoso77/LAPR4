@@ -1,6 +1,7 @@
 package bootstrappers.bootstraping;
 
-import core.application.controllers.AddJobInterviewController;
+/*
+import core.application.controllers;
 import core.persistence.PersistenceContext;
 import core.repositories.JobInterviewRepository;
 import eapli.framework.actions.Action;
@@ -21,3 +22,5 @@ public class JobInterviewsBootstrapper implements Action {
         controller.
     }
 }
+
+ */

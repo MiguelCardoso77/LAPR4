@@ -1,6 +1,9 @@
 package core.domain.jobOpening;
 
 import eapli.framework.domain.model.ValueObject;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Transient;
 
 import java.util.Random;
 
@@ -12,6 +15,12 @@ import java.util.Random;
 public class JobReference implements ValueObject, Comparable<JobReference> {
 
     private String jobReference;
+
+    @Transient
+    private static int lastSequentialNumber = 0;
+
+    @Transient
+    private int sequentialNumber;
 
     /**
      * Default constructor for ORM (Object-Relational Mapping) purposes.
@@ -31,21 +40,8 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
             throw new IllegalArgumentException("Company Number should not be empty");
         }
         String companyReference = buildCompanyReference(companyName);
+        this.sequentialNumber = ++lastSequentialNumber;
         this.jobReference = buildJobReference(companyReference);
-    }
-
-    /**
-     * Constructs a new JobReference based on the provided company name.
-     *
-     * @param companyName The name of the company.
-     * @throws IllegalArgumentException If the company name is null or empty.
-     */
-    public JobReference(final String companyName, final String sequentialNumber) {
-        if (companyName == null || companyName.isEmpty() || sequentialNumber == null || sequentialNumber.length() != 6) {
-            throw new IllegalArgumentException("Company name should not be empty and sequential number should have exactly 6 characters.");
-        }
-        String companyReference = buildCompanyReference(companyName);
-        this.jobReference = buildJobReference1(companyReference, sequentialNumber);
     }
 
     /**
@@ -65,28 +61,14 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
     }
 
     /**
-     * Builds the complete job reference by combining the company reference and a random numeric part.
-     *
-     * @param companyReference The company reference.
-     * @return The complete job reference.
-     */
-    public String buildJobReference(final String companyReference) {
-        Random rand = new Random(); // Generate random 5 digit code
-        int randomPart = rand.nextInt(90000) + 10000;
-
-        return companyReference + "-" + randomPart;
-    }
-
-    /**
      * Builds the complete job reference by combining the company reference and a numeric part.
      *
      * @param companyReference The company reference.
      * @return The complete job reference.
      */
-    public String buildJobReference1(final String companyReference, final String number) {
-        return companyReference + "-" + number;
+    public String buildJobReference(final String companyReference) {
+        return companyReference + "-" + String.format("%06d", sequentialNumber);
     }
-
 
     /**
      * Creates a JobReference instance from an existing job reference string.
@@ -116,7 +98,7 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
             throw new IllegalArgumentException("Sequential number should have exactly 6 characters");
         }
 
-        return new JobReference(companyName, sequentialNumber);
+        return new JobReference(companyName);
     }
 
 

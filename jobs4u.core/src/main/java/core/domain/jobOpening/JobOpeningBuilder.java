@@ -16,10 +16,10 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private TitleOrFunction titleOrFunction;
     private Company company;
 
-    public JobOpeningBuilder withAll(String jobReference, String description, int vacanciesNumber,
+    public JobOpeningBuilder withAll(JobReference jobReference, String description, int vacanciesNumber,
                                      String address, Mode mode, ContractType contractType, String titleOrFunction,
                                     Company company) {
-        this.jobReference = new JobReference(jobReference);
+        this.jobReference = jobReference;
         this.description = new Description(description);
         this.vacanciesNumber = new VacanciesNumber(vacanciesNumber);
         this.address = new Address(address);

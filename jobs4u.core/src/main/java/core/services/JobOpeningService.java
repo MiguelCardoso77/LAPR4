@@ -12,7 +12,7 @@ public class JobOpeningService {
     private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
 
     @Transactional
-    public JobOpening registerJobOpening(String jobReference, String description, int vacanciesNumber, String address,
+    public JobOpening registerJobOpening(JobReference jobReference, String description, int vacanciesNumber, String address,
                                          Mode mode, ContractType contractType, String titleOrFunction, Company company) {
         JobOpeningBuilder jobOpeningBuilder = new JobOpeningBuilder();
         jobOpeningBuilder.withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);

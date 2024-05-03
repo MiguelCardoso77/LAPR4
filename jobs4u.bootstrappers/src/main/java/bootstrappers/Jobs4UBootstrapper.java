@@ -1,5 +1,6 @@
 package bootstrappers;
 
+import bootstrappers.bootstraping.ApplicationsBootstrapper;
 import bootstrappers.bootstraping.CompanyBootstrapper;
 import bootstrappers.bootstraping.JobsBootstrapper;
 import bootstrappers.bootstraping.MasterUsersBootstrapper;
@@ -40,7 +41,8 @@ public class Jobs4UBootstrapper implements Action {
         final Action[] actions = {
                 new CompanyBootstrapper(),
                 new MasterUsersBootstrapper(),
-                new JobsBootstrapper()};
+                new JobsBootstrapper(),
+                new ApplicationsBootstrapper()};
 
 
         registerBootstrapAccount();

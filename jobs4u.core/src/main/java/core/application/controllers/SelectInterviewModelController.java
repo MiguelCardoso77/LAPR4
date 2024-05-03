@@ -18,11 +18,11 @@ public class SelectInterviewModelController {
     final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
     final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
-    Iterable<Application> applicationList = new ArrayList<>();
+    List<Application> applicationList = new ArrayList<>();
     Iterable<JobInterview> jobInterviews = new ArrayList<>();
-    final Iterable<JobOpening> iterable = jobOpeningController.allJobOpening();
+    Iterable<JobOpening> iterable = jobOpeningController.allJobOpening();
 
-    public void showJobOpenings() {
+    public Iterable<JobOpening> showJobOpenings() {
         if (!iterable.iterator().hasNext()) {
             System.out.println("There are no Job Openings");
         } else {
@@ -33,12 +33,12 @@ public class SelectInterviewModelController {
                 cont++;
             }
         }
+        return iterable;
     }
 
-    public void showApplicationsOfJobOpening(JobOpening jobOpening) {
-        applicationList = jobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpening.identity());
-
-        if (!applicationList.iterator().hasNext()) {
+    public Iterable<Application> showApplicationsOfJobOpening(JobOpening jobOpening) {
+        applicationList = (List<Application>) jobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpening.identity());
+        if (applicationList.isEmpty()) {
             System.out.println("There are no Applications for this jobOpening");
         } else {
             int cont = 1;
@@ -48,10 +48,22 @@ public class SelectInterviewModelController {
                 cont++;
             }
         }
+        return applicationList;
     }
 
-    public void showInterviewsOfApplication(Application application) {
+    public Iterable<JobInterview> showInterviewsOfApplication(Application application) {
         jobInterviews = listJobInterviewsApplicationController.allJobInterviewsOfApplication(application);
+        if (!jobInterviews.iterator().hasNext()) {
+            System.out.println("There are no Job Interviews");
+        } else {
+            int cont = 1;
+            System.out.println("List of registered Applications: \n");
+            for (JobInterview jobInterview : jobInterviews) {
+                System.out.printf("%-6s%-30s%-30s%n", cont, jobInterview.interviewModel(), jobInterview.createdOn());
+                cont++;
+            }
+        }
+        return jobInterviews;
     }
 
     public List<String> listInterviewModels(){

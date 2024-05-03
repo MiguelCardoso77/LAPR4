@@ -4,6 +4,7 @@ import backoffice.presentation.jobOpening.AddJobOpeningUI;
 import core.application.controllers.ListJobInterviewsApplicationController;
 import core.application.controllers.ListJobOpeningApplicationsController;
 import core.application.controllers.ListJobOpeningController;
+import core.application.controllers.SelectInterviewModelController;
 import core.domain.application.Application;
 import core.domain.interview.InterviewModel;
 import core.domain.interview.JobInterview;
@@ -15,6 +16,7 @@ import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,12 @@ public class SelectInterviewModelUI extends AbstractUI {
 
     Iterable<JobInterview> jobInterviews = new ArrayList<>();
 
+    final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
+
+    List<String> interviewModels = new ArrayList<>();
+
+
+
 
     @Override
     protected boolean doShow() {
@@ -46,25 +54,17 @@ public class SelectInterviewModelUI extends AbstractUI {
         showInterviewsOfApplication(application);
         JobInterview jobInterview = selectJobInterview();
 
-        //falta dar list dos interviews model e pedir para escolher
-        jobInterview.changeInterviewModel(new InterviewModel("Colocar caminho da escolha de cima aqui :)"));
+        listInterviewModels();
+
+        InterviewModel interviewModel = selectInterviewModel(interviewModels);
+        jobInterview.changeInterviewModel(interviewModel);
 
 
         return false;
     }
 
-
     private void showJobOpenings() {
-        if (!iterable.iterator().hasNext()) {
-            System.out.println("There are no Job Openings");
-        } else {
-            int cont = 1;
-            System.out.println("List of registered Job Openings: \n");
-            for (JobOpening jobOpening : iterable) {
-                System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.company());
-                cont++;
-            }
-        }
+       selectInterviewModelController.showJobOpenings();
     }
 
     private JobOpening selectJobOpening() {
@@ -91,18 +91,7 @@ public class SelectInterviewModelUI extends AbstractUI {
     }
 
     private void showApplicationsOfJobOpening(JobOpening jobOpening) {
-        applicationList = jobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpening.identity());
-
-        if (!applicationList.iterator().hasNext()) {
-            System.out.println("There are no Applications for this jobOpening");
-        } else {
-            int cont = 1;
-            System.out.println("List of registered Applications: \n");
-            for (Application application : applicationList) {
-                System.out.printf("%-6s%-30s%n", cont, application.candidate());
-                cont++;
-            }
-        }
+        selectInterviewModelController.showApplicationsOfJobOpening(jobOpening);
     }
 
     private Application selectApplication() {
@@ -129,7 +118,7 @@ public class SelectInterviewModelUI extends AbstractUI {
     }
 
     private void showInterviewsOfApplication(Application application) {
-        jobInterviews = listJobInterviewsApplicationController.allJobInterviewsOfApplication(application);
+        selectInterviewModelController.showInterviewsOfApplication(application);
     }
 
     private JobInterview selectJobInterview() {
@@ -152,6 +141,27 @@ public class SelectInterviewModelUI extends AbstractUI {
         }
 
         return jobInterview;
+    }
+
+    private void listInterviewModels(){
+        interviewModels = selectInterviewModelController.listInterviewModels();
+    }
+
+    private InterviewModel selectInterviewModel(List<String> listInterviewModels){
+        InterviewModel interviewModel = null;
+
+        final int option = Console.readInteger("Enter the number of the Interview Model");
+        if (option == 0) {
+            System.out.println("No interview model selected");
+        } else {
+            try {
+                interviewModel = new InterviewModel(listInterviewModels.get(option));
+            } catch (IntegrityViolationException | ConcurrencyException ex) {
+                LOGGER.error("Error performing the operation", ex);
+                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
+            }
+        }
+        return interviewModel;
     }
 
     @Override

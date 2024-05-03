@@ -1,4 +1,4 @@
 # Requirements:
--> Academic Degree: 4
--> Programming Languages: 2
+-> Academic Degree: Bachelor
+-> Programming Languages: Java, JavaScript, Python, TypeScript
 -> Years of Experience: 2

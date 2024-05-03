@@ -2,6 +2,7 @@ package backoffice.presentation;
 
 import backoffice.presentation.menus.AdminMenu;
 import backoffice.presentation.menus.CustomerManagerMenu;
+import backoffice.presentation.menus.LanguageEngineerMenu;
 import backoffice.presentation.menus.OperatorMenu;
 import console.presentation.authz.MyUserMenu;
 import core.domain.user.Jobs4URoles;
@@ -89,6 +90,11 @@ public class MainMenu extends AbstractUI {
             mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         }
 
+        if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.LANGUAGE_ENGINEER)) {
+            final Menu languageEngineerMenu = buildLanguageEnginnerMenu();
+            mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, languageEngineerMenu);
+        }
+
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
@@ -105,8 +111,8 @@ public class MainMenu extends AbstractUI {
     }
 
     private Menu buildLanguageEnginnerMenu() {
-        // TODO build the language engineer menu
-        return null;
+        LanguageEngineerMenu languageEngineerMenu = new LanguageEngineerMenu();
+        return languageEngineerMenu.build();
     }
 
     private Menu buildOperatorMenu() {

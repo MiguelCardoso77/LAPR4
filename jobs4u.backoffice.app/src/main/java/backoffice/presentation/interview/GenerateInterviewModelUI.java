@@ -19,6 +19,7 @@ public class GenerateInterviewModelUI extends AbstractUI {
         String RESET_COLOR = ConsoleColors.RESET;
 
         int questions = Console.readInteger("Enter the number of questions you want in the template file: ");
+        int totalScore = 0;
 
         List<String> questionForFile = new ArrayList<>();
         String title = "# Questions:";
@@ -61,10 +62,16 @@ public class GenerateInterviewModelUI extends AbstractUI {
             }
 
             int score = Console.readInteger("Enter the score: ");
+            totalScore += score;
 
             String endProduct = "-> " + QuestionType.values()[questionType - 1] + "<" + question + "> " + answer + " " + score + "%";
             questionForFile.add(endProduct);
             questions--;
+        }
+
+        if (totalScore != 100) {
+            System.out.println(ERROR_COLOR + "The total score of the questions is not 100%. Please review the questions." + RESET_COLOR);
+            return false;
         }
 
         String fileName = Console.readLine("Enter the name of the file: ");

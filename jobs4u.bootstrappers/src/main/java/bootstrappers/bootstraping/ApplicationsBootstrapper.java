@@ -1,8 +1,6 @@
 package bootstrappers.bootstraping;
 
 import core.application.controllers.ApplicationRegisterController;
-import core.domain.application.Application;
-import core.domain.application.ApplicationFiles;
 import core.domain.candidate.Candidate;
 import core.domain.jobOpening.JobOpening;
 import core.domain.user.Jobs4URoles;
@@ -10,13 +8,8 @@ import core.persistence.PersistenceContext;
 import core.repositories.CandidateRepository;
 import core.repositories.JobOpeningRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.infrastructure.authz.domain.model.SystemUserBuilder;
-import eapli.framework.infrastructure.authz.domain.model.Username;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import eapli.framework.actions.Action;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +22,7 @@ public class ApplicationsBootstrapper implements Action {
 
     @Override
     public boolean execute() {
-        List<Path> pathList = new ArrayList<>();
-        ApplicationFiles applicationFiles = new ApplicationFiles(pathList);
+        String path = "/project/IBM";
         List<JobOpening> jobOpenings = (List<JobOpening>) jobOpeningRepository.allJobOpenings();
         List<Candidate> candidates = (List<Candidate>) candidateRepository.allCandidates();
         List<SystemUser> users = (List<SystemUser>) userRepository.findAll();
@@ -43,12 +35,12 @@ public class ApplicationsBootstrapper implements Action {
         JobOpening jobOpening = jobOpenings.get(0);
         Candidate candidate = candidates.get(0);
         SystemUser operator = operators.get(0);
-        registerApplication("9",applicationFiles,jobOpening,candidate,operator);
+        registerApplication("9", path,jobOpening,candidate,operator);
 
         return true;
     }
 
-    private void registerApplication(String rank, ApplicationFiles applicationFiles, JobOpening jobReference,
+    private void registerApplication(String rank, String applicationFiles, JobOpening jobReference,
                                      Candidate candidate, SystemUser operator){
         controller.registerApplication(rank,applicationFiles, jobReference,candidate,operator);
     }

@@ -90,7 +90,7 @@ As Customer Manager, I want to select the requirements specification to be used 
 
 ## 1.7. System Diagram (SD)
 
-![1009-sequence-diagram.svg](1009-sequence-diagram.svg)
+![1009-sequence-diagram.svg](sequence-diagram.svg)
 
 ## 1.8 Other Relevant Remarks
 
@@ -102,7 +102,7 @@ None to specify
 
 ### 2.1. Relevant Domain Model Excerpt
 
-![1009-domain-model.svg](1009-domain-model.svg)
+![1009-domain-model.svg](domain-model.svg)
 
 ### 2.2. Entities and Aggregates
 
@@ -143,4 +143,4 @@ JobOpening --> Process
 
 ### 3.1. Relevant Class Diagram Excerpt
 
-![1009-class-diagram.svg](1009-class-diagram.svg)
+![1009-class-diagram.svg](class-diagram.svg)

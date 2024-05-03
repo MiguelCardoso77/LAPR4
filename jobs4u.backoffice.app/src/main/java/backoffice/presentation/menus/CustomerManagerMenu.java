@@ -23,9 +23,7 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int ADD_JOB_OPENING = 5;
     private static final int GENERATE_INTERVIEW_MODEL = 6;
     private static final int SELECT_INTERVIEW_MODEL = 7;
-
-
-    private static final int SELECT_REQUIREMENTS_SPECIFICATIONS = 7;
+    private static final int SELECT_REQUIREMENTS_SPECIFICATIONS = 8;
 
     @Override
     protected boolean doShow() {

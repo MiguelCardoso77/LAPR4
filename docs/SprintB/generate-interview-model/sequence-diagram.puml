@@ -1,0 +1,85 @@
+@startuml
+autonumber
+
+actor CustomerManager
+
+participant GenerateInterviewModelUI <<presentation>>
+participant GenerateInterviewModelController <<controller>>
+participant QuestionType <<enum>>
+
+activate CustomerManager
+
+    CustomerManager -> GenerateInterviewModelUI : asks to generate interview model
+    activate GenerateInterviewModelUI
+
+        GenerateInterviewModelUI --> CustomerManager : requests candidate telephoneNumber
+    deactivate GenerateInterviewModelUI
+
+    CustomerManager -> GenerateInterviewModelUI : provides telephoneNumber
+    activate GenerateInterviewModelUI
+
+        GenerateInterviewModelUI --> CustomerManager : requests numberOfQuestions
+    deactivate GenerateInterviewModelUI
+
+    CustomerManager -> GenerateInterviewModelUI : provides numberOfQuestions
+    activate GenerateInterviewModelUI
+
+loop numberOfQuestions times
+
+        GenerateInterviewModelUI -> GenerateInterviewModelController : displayQuestionTypes()
+        activate GenerateInterviewModelController
+
+            GenerateInterviewModelController -> QuestionType : values()
+            activate QuestionType
+
+                QuestionType --> GenerateInterviewModelController : return questionTypes
+            deactivate QuestionType
+
+            GenerateInterviewModelController --> GenerateInterviewModelUI : displays questionTypes
+        deactivate GenerateInterviewModelController
+
+        GenerateInterviewModelUI --> CustomerManager : requests to select a questionType
+    deactivate GenerateInterviewModelUI
+
+    CustomerManager -> GenerateInterviewModelUI : provides questionType
+    activate GenerateInterviewModelUI
+
+        GenerateInterviewModelUI --> CustomerManager : requests question
+    deactivate GenerateInterviewModelUI
+
+    CustomerManager -> GenerateInterviewModelUI : provides question
+    activate GenerateInterviewModelUI
+
+        GenerateInterviewModelUI --> CustomerManager : requests answer
+    deactivate GenerateInterviewModelUI
+
+    CustomerManager -> GenerateInterviewModelUI : provides answer
+    activate GenerateInterviewModelUI
+
+        GenerateInterviewModelUI -> GenerateInterviewModelController : verify answer
+        activate GenerateInterviewModelController
+
+                GenerateInterviewModelController -> GenerateInterviewModelController : check answer
+                GenerateInterviewModelController --> GenerateInterviewModelUI : return success
+        deactivate GenerateInterviewModelController
+
+        GenerateInterviewModelUI --> CustomerManager : requests score
+    deactivate GenerateInterviewModelUI
+
+    CustomerManager -> GenerateInterviewModelUI : provides score
+    activate GenerateInterviewModelUI
+
+end loop
+
+        GenerateInterviewModelUI -> GenerateInterviewModelController : writeListToFile(questionList, path)
+        activate GenerateInterviewModelController
+
+            GenerateInterviewModelController --> GenerateInterviewModelUI : return success
+        deactivate GenerateInterviewModelController
+
+        GenerateInterviewModelUI --> CustomerManager : confirms operation success
+    deactivate GenerateInterviewModelUI
+
+deactivate CustomerManager
+
+@enduml

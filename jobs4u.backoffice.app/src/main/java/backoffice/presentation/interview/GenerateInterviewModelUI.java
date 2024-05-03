@@ -39,6 +39,8 @@ public class GenerateInterviewModelUI extends AbstractUI {
         String ERROR_COLOR = ConsoleColors.RED;
         String RESET_COLOR = ConsoleColors.RESET;
 
+        String telephoneNumber = Console.readLine("Enter the telephone number of the candidate: ");
+
         int questions = Console.readInteger("Enter the number of questions you want in the template file: ");
         int totalScore = 0;
 
@@ -95,7 +97,7 @@ public class GenerateInterviewModelUI extends AbstractUI {
             return false;
         }
 
-        String fileName = Console.readLine("Enter the name of the file: ");
+        String fileName = telephoneNumber + "-InterviewModel";
         theController.writeListToFile(questionForFile, "jobs4u.core/src/main/resources/interviewModels/" + fileName + ".txt");
 
         return true;

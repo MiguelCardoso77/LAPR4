@@ -1,4 +1,4 @@
-# 1006 - Display all personal data of a candidate
+# Display all personal data of a candidate
 
 ================================================================================================
 
@@ -17,6 +17,13 @@ As Customer Manager, I want to display all the personal data of a candidate.
 
 **From the client clarifications:**
 
+> Q42 Bernado – US1006, Qual a informação do nome do candidato deve aparecer (nome completo, primeiro e ultimo nome , etc)?
+ A42. À partida diria que seria o nome, tal como foi recebido na application que fez (página 6, “name of the candidate”)
+
+>Q75 Silva – US1006 – Em relação à listagem dos dados pessoais de um determinado candidato, um customer manager vai ter acesso a todos os candidatos do sistema ou apenas aos candidatos que submeteram uma application para uma job opening de um cliente que é gerido por esse customer manager?
+A75. No contexto actual vamos assumir que o Customer Manager pode aceder (consultar) os dados pessoais de qualquer candidato.
+
+
 ### 1.3. Acceptance Criteria
 
 * AC1: Just the candidate details.
@@ -24,11 +31,12 @@ As Customer Manager, I want to display all the personal data of a candidate.
 ### 1.4. Found out Dependencies
 
 * There aren't any dependencies of other user stories.
+
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* No input's data.
+* candidate
 
 **Output Data:**
 
@@ -39,15 +47,15 @@ As Customer Manager, I want to display all the personal data of a candidate.
 
 ### 2.1 System Sequence Diagram (SSD)
 
-![System Sequence Diagram](1006-system-sequence-diagram.svg)
+![System Sequence Diagram](system-sequence-diagram.svg)
 
 ### 2.2 Sequence Diagram(SD)
 
-![Sequence Diagram](1006-sequence-diagram-overview.svg)
+![Sequence Diagram](sequence-diagram.svg)
 
 ### 2.3 Class Diagram(CD)
 
-![Class Diagram](1006-class-diagram.svg)
+![Class Diagram](class-diagram.svg)
 
 ### 2.4 Applied patterns
 
@@ -57,22 +65,14 @@ As Customer Manager, I want to display all the personal data of a candidate.
 - Factory
 - Persistence Context
 
-### 2.5 Tests
-
-**Test 1** 
-
-
-
-
-**Test 2**
-
-
 ## 3. Implementation
 
 ![Implementation Image](ImplementationImage.png)
 
 
 ## 4. Comments
+
+
 
 
 

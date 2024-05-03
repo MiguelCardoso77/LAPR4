@@ -48,7 +48,8 @@ public class Application implements AggregateRoot<Integer> {
     /**
      * The files attached to the application.
      */
-    private ApplicationFiles applicationFiles;
+    @Column(name = "DIRECTORY_PATH")
+    private String applicationFiles;
 
     /**
      * The job opening associated with the application.
@@ -82,7 +83,7 @@ public class Application implements AggregateRoot<Integer> {
      * @param operator         the operator who registered the application
      */
     public Application(final Rank rank, final Calendar createdOn,
-                       final ApplicationFiles applicationFiles, final JobOpening jobReference,
+                       final String applicationFiles, final JobOpening jobReference,
                        final Candidate candidate, final SystemUser operator){
         Preconditions.noneNull(rank, createdOn, applicationFiles, jobReference, candidate);
         this.rank = rank;
@@ -186,7 +187,7 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return the files attached to the application
      */
-    public ApplicationFiles dataFile(){
+    public String dataFile(){
         return this.applicationFiles;
     }
 

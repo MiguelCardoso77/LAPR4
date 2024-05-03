@@ -1,66 +1,39 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
 autonumber
 
-Title "Diagrama de componentes e interações"
+Title "Diagrama de Componentes e Interações"
 
-actor User
-
-participant ApplicationFileBot
-participant OutputFolder
-participant ApplicationEmailBot
-participant ApplicationFileBotProcessTree
 participant ParentProcess
 participant Watcher
-participant Worker
+participant ChildProcess
 
-activate User
+activate ParentProcess
 
-User -> ApplicationFileBot : provides the names of the input and output directories, number \nof worker children and the time for periodic checking of new files
+ParentProcess -> Watcher : createWatcher()
 
-activate ApplicationFileBot
+activate Watcher
 
-ApplicationFileBot -> ApplicationEmailBot : getAllFiles()
+Watcher --> ParentProcess : directory´s information
 
-activate ApplicationEmailBot
+deactivate Watcher
 
-ApplicationEmailBot --> ApplicationFileBot : allFiles
+ParentProcess -> ParentProcess : createWorkers()
 
-deactivate ApplicationEmailBot
+loop until parent process receive Ctrl+C
+    Watcher -> ParentProcess : notifyNewFile()
 
-ApplicationFileBot -> ApplicationFileBotProcessTree : processTheFiles()
+    ParentProcess -> ChildProcess : sendFile()
+    activate ChildProcess
 
-activate ApplicationFileBotProcessTree
+    ChildProcess --> ParentProcess : fileProcessed()
 
-ApplicationFileBotProcessTree -> ApplicationFileBotProcessTree : processContentEmail(emailFile)
+    deactivate ChildProcess
 
-ApplicationFileBotProcessTree -> ApplicationFileBotProcessTree : processContentEachFile(contentFiles)
+end
 
-ApplicationFileBotProcessTree -> ApplicationFileBotProcessTree : processContentAttachedFiles(contentAttachedFiles)
+ParentProcess --> Watcher : endWatcher()
 
-ApplicationFileBotProcessTree -> ApplicationFileBotProcessTree : processCandidateInformation(candidateFile)
-
-ApplicationFileBotProcessTree --> ApplicationFileBot : return success
-
-ApplicationFileBot -> ApplicationFileBotProcessTree : generateReport()
-
-ApplicationFileBotProcessTree --> ApplicationFileBot : report
-
-deactivate ApplicationFileBotProcessTree
-
-ApplicationFileBot -> OutputFolder : saveReport()
-
-activate OutputFolder
-
-OutputFolder --> ApplicationFileBot : return true
-
-deactivate OutputFolder
-
-ApplicationFileBot --> User : display operation's success
-
-deactivate ApplicationFileBot
-
-deactivate User
+deactivate ParentProcess
 
 @enduml

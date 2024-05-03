@@ -1,9 +1,5 @@
 package core.domain.application;
 
-import core.domain.application.ApplicationFiles;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 /*
 

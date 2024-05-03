@@ -89,11 +89,6 @@ As Operator, I want to register an application of a candidate for a job opening 
 
 * AC6: Register new candidates in the system
 
-## 1.4. Found out Dependencies
-
-* G007 -  As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
-
-* 2001 -  As Operator, I want to register an application of a candidate for a job opening and import all files received.
 
 ## 2. Analysis
 
@@ -151,7 +146,7 @@ None to specify
 
 ------------------
 
-
+![img.png](img.png)
 
 ## 5.0. Tests
 

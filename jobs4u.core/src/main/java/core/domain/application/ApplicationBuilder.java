@@ -20,7 +20,7 @@ public class ApplicationBuilder implements DomainFactory<Application> {
     private Rank rank;
     private Calendar submissionDate;
     private Status status;
-    private ApplicationFiles applicationFiles;
+    private String applicationFiles;
     private JobOpening jobReference;
     private Candidate telephoneNumber;
 
@@ -42,7 +42,7 @@ public class ApplicationBuilder implements DomainFactory<Application> {
      * @return this application builder instance
      */
     public ApplicationBuilder withAll( final Rank rank,
-                                      final ApplicationFiles applicationFiles,
+                                      final String applicationFiles,
                                       final JobOpening jobReference , final Candidate telephoneNumber, final SystemUser operator) {
         this.rank = rank;
         this.submissionDate = Calendar.getInstance();
@@ -54,15 +54,6 @@ public class ApplicationBuilder implements DomainFactory<Application> {
         return this;
     }
 
-/**
- * @author 1220812@isep.ipp.pt
- */
-
-    /**
-     * Builds and returns a new instance of {@link Application}.
-     *
-     * @return a new instance of {@link Application} with the specified attributes
-     */
     /**
      * Constructs an {@link Application} instance based on the provided data.
      *

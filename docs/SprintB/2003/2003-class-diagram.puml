@@ -1,0 +1,42 @@
+@startuml
+skinparam classAttributeIconSize 0
+top to bottom direction
+
+class GenerateRequirementsSpecificationUI{
+
++ doShow()
++ headline()
+}
+
+class GenerateRequirementsSpecificationController{
+
++ getAcademicDegree()
++ displayAcademicDegree()
++ getProgrammingLanguages()
++ displayProgrammingLanguages()
++ writeListToFile(List<String> requirementsForFile, String filePath)
++ readAndProcessProgrammingLanguages()
+
+}
+
+class JobRequirementsSpecification{
+- Integer idRequirements
+- Requirements requirements
+
++ JobRequirementsSpecification(Requirements requirements , Integer idRequirements)
++ JobRequirementsSpecification()
++ equals(Object o)
++ hashCode()
++ sameAs(Object other)
++ compareTo(Integer other)
++ requirements()
++ identity()
++ hasIdentity(Integer idRequirements)
+}
+
+
+GenerateRequirementsSpecificationUI ->  GenerateRequirementsSpecificationController
+
+GenerateRequirementsSpecificationController --> JobRequirementsSpecification
+
+@enduml

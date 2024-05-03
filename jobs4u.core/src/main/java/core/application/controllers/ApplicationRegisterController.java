@@ -1,6 +1,5 @@
 package core.application.controllers;
 
-import core.domain.application.ApplicationFiles;
 import core.domain.application.Rank;
 import core.domain.candidate.Candidate;
 import core.domain.jobOpening.JobOpening;
@@ -54,7 +53,7 @@ public class ApplicationRegisterController {
      * @return               The registered application.
      */
     public Application registerApplication(final String rank,
-                                           final ApplicationFiles files, final JobOpening jobReference,
+                                           final String files, final JobOpening jobReference,
                                            final Candidate candidate, final SystemUser operator) {
         return createApplication(rank, files, jobReference, candidate, operator);
     }
@@ -70,7 +69,7 @@ public class ApplicationRegisterController {
      * @return               The registered application.
      */
     private Application createApplication(final String rank,
-                                          final ApplicationFiles files, final JobOpening jobReference,
+                                          final String files, final JobOpening jobReference,
                                           final Candidate candidate, final SystemUser operator) {
         Preconditions.noneNull( rank, files, jobReference, candidate, operator);
 

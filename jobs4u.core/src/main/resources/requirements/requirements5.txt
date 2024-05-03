@@ -1,0 +1,4 @@
+# Requirements:
+-> Academic Degree: Master
+-> Programming Languages: Java, JavaScript, Python
+-> Years of Experience: 4

@@ -1,0 +1,71 @@
+ei -@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+title System Sequence Diagram (SSD)
+
+autonumber
+
+actor "Operator" as OP
+participant ":System" as System
+
+activate OP
+
+    OP -> System : asks to generate a template text file \n to help collect data fields for \ncandidates of a job opening
+
+activate System
+
+System --> OP : asks to select the degree
+
+deactivate System
+
+OP -> System : select the degree
+
+activate System
+
+
+System --> OP : asks to select  one or more programming languages
+
+deactivate System
+
+loop until select -1
+
+
+OP -> System : select a programming language
+
+end loop
+
+activate System
+
+System --> OP: asks to write experience in years
+
+deactivate System
+
+OP -> System : write experience in years
+
+activate System
+
+System --> OP : asks to write file's name
+
+deactivate
+
+OP -> System : write file's name
+
+activate System
+
+System -> OP : generate a text file with collected information
+
+
+
+deactivate System
+
+
+
+
+
+
+
+
+@enduml

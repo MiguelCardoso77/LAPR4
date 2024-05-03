@@ -153,6 +153,7 @@ PersistenceContext -> RepositoryFactory
 
 ListJobOpeningController ----> JobOpeningService
 ListJobOpeningController --> AuthorizationService
+ListJobOpeningController --> PersistenceContext
 
 
 ListJobOpeningApplicationsController ---> JobOpeningService

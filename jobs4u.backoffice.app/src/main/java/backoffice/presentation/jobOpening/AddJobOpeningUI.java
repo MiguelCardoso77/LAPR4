@@ -40,7 +40,7 @@ public class AddJobOpeningUI extends AbstractUI {
         showCompanies();
         Company company = selectCompany();
 
-        final JobReference jobReference = new JobReference(company.companyName().toString());
+        final JobReference jobReference = new JobReference(company.companyName().toString(), true);
 
         try {
             this.theController.addJobOpening(jobReference, description, vacanciesNumber, address, modes, contractTypes, titleOrFunction, company);

@@ -123,12 +123,6 @@
 
       NFR08 - Authentication and Authorization The system must support and apply authentication and authorization for all its users and functionalities
 
-### 1.5. Found out Dependencies
-
-* G007 - As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
-
-* 1000 - As Administrator, I want to be able to register, disable/enable, and list users of the backoffice.
-
 ## 2. Analysis
 
 ------------------------------------------

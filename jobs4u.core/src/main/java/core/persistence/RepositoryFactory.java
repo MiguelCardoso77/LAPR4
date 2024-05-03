@@ -1,6 +1,9 @@
 package core.persistence;
 
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.pluginManagement.importer.LanguageImporterPluginRepository;
+import core.pluginManagement.language.LanguageRepository;
+import core.pluginManagement.language.LanguageTypeRepository;
 import core.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
@@ -115,6 +118,8 @@ public interface RepositoryFactory {
     JobInterviewRepository jobInterviews();
     JobRequirementsSpecificationRepository jobRequirements(TransactionalContext autoTx);
     JobRequirementsSpecificationRepository jobRequirements();
-
+    LanguageImporterPluginRepository languageImporterPlugins();
+    LanguageRepository languages();
+    LanguageTypeRepository languageTypes();
 
 }

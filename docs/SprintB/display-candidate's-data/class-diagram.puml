@@ -2,6 +2,7 @@
 skinparam linetype ortho
 top to bottom direction
 
+package ui{
 class DisplayCandidateDataUI{
     + headline()
     + emptyMessage()
@@ -11,12 +12,18 @@ class DisplayCandidateDataUI{
     + listHeader()
     + doShow()
 }
+}
 
 
+package "Candidates" {
+
+package "application"{
 class DisplayCandidateDataController{
     + allCandidates()
 }
+}
 
+package "domain" {
 class Candidate{
     - User user
     - Curriculum curriculum
@@ -32,27 +39,35 @@ class Candidate{
     + toString()
 
 }
+}
+
+package "repositories"{
 
 class CandidateRepository{
     + allCandidates()
 }
+}
+
+ package "services"{
 
 class CandidateService{
     + findCandidate(telephoneNumber)
     + allCandidates()
 
 }
-
-class CandidateBuilder{
-    + withAll(systemUser, telephoneNumber, curriculum)
-    +build()
 }
 
+}
+
+package "authz" {
 class AuthorizationService{
     + authorizationService()
     + ensureAuthenticatedUserHasAnyOf\n(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
 
 }
+}
+
+package "Persistence" {
 
 class PersistenceContext {
     + repositories()
@@ -72,6 +87,8 @@ class RepositoryFactory{
     + applications(TransactionalContext autoTx)
     + applications()
 }
+}
+
 
 
 
@@ -88,8 +105,7 @@ DisplayCandidateDataController -> PersistenceContext
 PersistenceContext -> RepositoryFactory
 DisplayCandidateDataController --> AuthorizationService
 DisplayCandidateDataController ---> CandidateService
-CandidateService -> CandidateBuilder
-CandidateBuilder -> Candidate
-CandidateService-> CandidateRepository
+CandidateService--> CandidateRepository
+CandidateRepository -> Candidate
 
 @enduml

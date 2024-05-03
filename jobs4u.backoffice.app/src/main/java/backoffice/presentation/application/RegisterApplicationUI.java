@@ -37,7 +37,6 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
     private final AddUserController addUserController = new AddUserController();
     private final Calendar createdOn = Calendar.getInstance();
     private List<Path> filePaths = new ArrayList<>();
-
     private List<String> candidateData = new ArrayList<>();
     @Override
     public String headline(){
@@ -74,11 +73,12 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
 
         try {
             candidateData = applicationRegisterController.importCandidateFile(path);
+            candidateData.toString();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        JobReference jobReference = JobReference.valueOf(candidateData.get(0));
+        JobReference jobReference = JobReference.toJobReference(candidateData.get(0));
 
         if (!jobOpeningController.verifyID(jobReference)) {
             try {

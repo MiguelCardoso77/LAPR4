@@ -24,4 +24,5 @@ public class ListJobOpeningController {
         return jobserv.findJobOpening(jobReference);
     }
 
+
 }

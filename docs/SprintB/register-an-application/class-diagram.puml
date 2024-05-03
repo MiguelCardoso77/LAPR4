@@ -1,27 +1,356 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-class ApplicationSession
-{
-  +static getInstance()
-  +getCurrentSession()
+Title "Class Diagram - Register an application"
+
+package "ui"{
+    class RegisterApplicationUI{
+        + doShow()
+        + candidate(emailAddress, firstName, lastName, telephoneNumber, cvPath)
+        + selectSubfolder()
+    }
 }
 
-class UserSession
-{
-  +isLoggedInWithRole(USER_ROLE)
+package "Application"{
+    package "application"{
+
+        class ApplicationRegisterController{
+            + getLoggedInUser()
+            + registerApplication(rank, files, jobReference, candidate, operator)
+            + createApplication(rank, files, jobReference, candidate, operator)
+            + importCandidateFile(path)
+            + findCVFile(directoryPath)
+            + findAllFiles(directoryPath)
+        }
+
+    }
+
+    package "domain"{
+
+        class Applications{
+            + Application(rank, createdOn, applicationFiles, jobReference, candidate, operator)
+              Application()
+            + sameAs(otherApplication)
+            + equals(otherApplication)
+            + hashCode()
+            + compareTo(otherApplication)
+            + identity()
+            + ranK()
+            + submissionDate()
+            + status()
+            + dataFile()
+            + operator()
+            + candidate()
+            + jobReference()
+            + toString()
+        }
+
+        class ApplicationBuilder{
+            + withAll(rank, applicationFiles, jobReference, telephoneNumber, operator)
+            + build()
+        }
+
+        class ApplicationFiles{
+            + ApplicationFiles(filesPaths)
+            + ApplicationFiles()
+            + equals(otherObject)
+            + hashCode()
+            + toString()
+        }
+
+        class Rank{
+            + Rank(rank)
+            + Rank()
+            + valueOf()
+            + equals(otherObject)
+            + toString
+        }
+
+        Enum Status{
+            SUBMITTED
+            PENDING
+            ACCEPTED
+            DECLINED
+        }
+    }
+
+    package "repositories"{
+
+        Interface ApplicationRepository{
+            ofIdentity(id)
+            allApplications()
+        }
+    }
+
+    package "services"{
+        class ApplicationService{
+            + registerApplication(rank, applicationFiles, jobReference, candidate, operator)
+            + findApplicationByID(applicationID)
+            + allApplications()
+        }
+    }
 }
 
-class "{NameOfUC}Controller" {
-    + {NameOfUC}Controller()
-    + methodX(...)
+
+package "JobOpening"{
+    package "application"{
+        class ListJobOpeningController{
+            + allJobOpenings()
+            + findJobOpeningByJobReference(jobReference)
+        }
+
+        class AddJobOpeningController{
+            + addJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company)
+            + verifyID(jobReference)
+        }
+    }
+
+    package "domain"{
+
+        class Address{
+            + Address(address)
+            Address()
+            + valueOf(address)
+            + equals(otherAddress)
+            + equals(otherAddress)
+            + hashCode()
+            + toString
+        }
+
+        Enum ContractType{
+            FULL_TIME
+            PART_TIME
+        }
+
+        class Description{
+            + Description(description)
+            Description()
+            + valueOf(description)
+            + equals(otherDescription)
+            + hashCode()
+            + toString
+        }
+
+        class JobOpenings{
+            + JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, Company)
+            JobOpening()
+            + identity()
+            + sameAs(otherJobOpening)
+            + jobReference()
+            + description()
+            + vacanciesNumber()
+            + address()
+            + mode()
+            + contractType()
+            + titleOrFunction()
+            + company()
+        }
+
+        class JobOpeningBuilder{
+            + withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company)
+            + build()
+        }
+
+        class JobReference{
+            + JobReference(companyName)
+            JobReference()
+            + buildCompanyReference(companyName)
+            + buildJobReference(companyReference)
+            + valueOf(jobReference)
+            + toString()
+            + compareTo(otherJobReference)
+            + hashCode()
+            + equals(otherJobReference)
+        }
+
+        Enum Mode{
+            REMOTE
+            HYBRID
+            ON_SITE
+        }
+
+        class TitleOrFunction{
+            + TitleOrFunction(titleOrFunction)
+            TitleOrFunction()
+            + valueOf(titleOrFunction)
+            + equals(otherTitleOrFunction)
+            + hashCode()
+            + toString()
+        }
+
+        class VacanciesNumber{
+            + VacanciesNumber(vacanciesNumber)
+            VacanciesNumber()
+            + valueOf(vacanciesNumber)
+            + equals(otherVacanciesNumber)
+            + hashCode()
+            + toString()
+            + compareTo(otherVacanciesNumber)
+            + number()
+        }
+
+    }
+
+    package "repositories"{
+
+        Interface JobOpeningRepository{
+            ofIdentity(id)
+            allJobOpenings()
+        }
+    }
+
+    package "services"{
+        class JobOpeningService{
+            + registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company)
+            + findJobOpening(jobReference)
+            + verifyJobReference(jobReference)
+            + allJobOpenings()
+        }
+    }
 }
 
-class "{NameOfUC}UI" {
+package "Candidate"{
+        package "application" {
+            class RegisterCandidateController {
+                + registerCandidate(firstName, lastName, email, role, createdOn, telephoneNumber, curriculum)
+                - createSystemUser(firstName, lastName, email, role, createdOn)
+                - createCandidate(user, telephoneNumber, curriculum)
+            }
+            class ListCandidatesController{
+            + allCandidates()
+            + findCandidateByTelephoneNumber(telephoneNumber)
+            }
+        }
+
+        package "services" {
+            class CandidateService {
+                + registerCandidate(systemUser, telephoneNumber, curriculum)
+                + createCandidate(systemUser, telephoneNumber, curriculum)
+                + findCandidate(telephoneNumber)
+                + allCandidates()
+            }
+        }
+
+        package "domain" {
+            class CandidateBuilder {
+                + withAll(systemUser, telephoneNumber, curriculum)
+                + build()
+            }
+
+            class Candidates {
+                + Candidate(systemUser, telephoneNumber, curriculum)
+                + user()
+                + curriculum()
+                + identity()
+                + sameAs(object)
+                + equals(object)
+                + toString()
+            }
+
+            class TelephoneNumber {
+                + TelephoneNumber(number)
+                + valueOf(number)
+                + sameAs(object)
+                + hashCode()
+                + equals(object)
+                + toString()
+            }
+
+            class Curriculum {
+                + Curriculum(curriculum)
+                + valueOf(curriculum)
+                + sameAs(object)
+                + hashCode()
+                + equals(object)
+                + toString()
+            }
+        }
+
+        package "repositories" {
+
+            interface CandidateRepository {
+                + allCandidates()
+            }
+        }
+    }
+
+package "user"{
+
+        package "application"{
+
+            class AddUserController{
+                + getAllRoles()
+                + passwordGenerator(name)
+                + getLoggedInUser()
+                + addUser(username, password, firstName, lastName, email, createdOn)
+                + addUser(username, password, firstName, lastName, email)
+            }
+
+            note right of AddUserController
+                - Methods such as getAllRoles(), getLoggedInUser and other services
+                and repositories used are provided by the framework
+                (no sense in representing framework's classes)
+            end note
+        }
+
+        package "domain"{
+            class Jobs4UPasswordPolicy{
+                        + isSatisfiedBy(rawPassword)
+                        + passwordGenerator(name)
+                        + strength(rawPassword)
+            }
+        }
+
 }
 
-"{NameOfUC}UI" ..> "{NameOfUC}Controller"
-"{NameOfUC}Controller" ..> ApplicationSession
-"{NameOfUC}Controller" ..> UserSession
+RegisterApplicationUI --> AddUserController
+RegisterApplicationUI --> ApplicationRegisterController
+RegisterApplicationUI --> RegisterCandidateController
+RegisterApplicationUI --> AddJobOpeningController
+RegisterApplicationUI --> ListCandidatesController
+RegisterApplicationUI --> ListJobOpeningController
+
+ApplicationRegisterController --> ApplicationService
+AddJobOpeningController --> JobOpeningService
+ListJobOpeningController --> JobOpeningService
+RegisterCandidateController --> CandidateService
+ListCandidatesController --> CandidateService
+
+ApplicationRegisterController --> ListJobOpeningController
+ApplicationRegisterController --> ListCandidatesController
+
+ApplicationBuilder --> Applications
+
+Applications --> ApplicationFiles
+Applications --> Rank
+Applications --> Status
+
+ApplicationService --> ApplicationRepository
+ApplicationService --> ApplicationBuilder
+
+JobOpenings --> Address
+JobOpenings --> Mode
+JobOpenings --> ContractType
+JobOpenings --> Description
+JobOpenings --> JobReference
+JobOpenings --> TitleOrFunction
+JobOpenings --> VacanciesNumber
+
+JobOpeningBuilder --> JobOpenings
+
+JobOpeningService --> JobOpeningBuilder
+JobOpeningService --> JobOpeningRepository
+
+Candidates --> Curriculum
+Candidates --> TelephoneNumber
+
+CandidateBuilder --> Candidates
+
+CandidateService --> CandidateBuilder
+CandidateService --> CandidateRepository
+
+AddUserController --> Jobs4UPasswordPolicy
+
+RegisterCandidateController --> AddUserController
 
 @enduml

@@ -1,6 +1,7 @@
 package core.domain.jobOpening;
 
 import eapli.framework.domain.model.ValueObject;
+
 import java.util.Random;
 
 /**
@@ -34,6 +35,20 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
     }
 
     /**
+     * Constructs a new JobReference based on the provided company name.
+     *
+     * @param companyName The name of the company.
+     * @throws IllegalArgumentException If the company name is null or empty.
+     */
+    public JobReference(final String companyName, final String sequentialNumber) {
+        if (companyName == null || companyName.isEmpty() || sequentialNumber == null || sequentialNumber.length() != 6) {
+            throw new IllegalArgumentException("Company name should not be empty and sequential number should have exactly 6 characters.");
+        }
+        String companyReference = buildCompanyReference(companyName);
+        this.jobReference = buildJobReference1(companyReference, sequentialNumber);
+    }
+
+    /**
      * Builds the company reference from the company name.
      *
      * @param companyName The name of the company.
@@ -63,6 +78,17 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
     }
 
     /**
+     * Builds the complete job reference by combining the company reference and a numeric part.
+     *
+     * @param companyReference The company reference.
+     * @return The complete job reference.
+     */
+    public String buildJobReference1(final String companyReference, final String number) {
+        return companyReference + "-" + number;
+    }
+
+
+    /**
      * Creates a JobReference instance from an existing job reference string.
      *
      * @param jobReference The job reference string.
@@ -72,14 +98,37 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
         return new JobReference(jobReference);
     }
 
+    public static JobReference toJobReference(final String jobReference) {
+        if (jobReference == null || jobReference.isEmpty()) {
+            throw new IllegalArgumentException("Job reference should not be null or empty");
+        }
+
+        String[] parts = jobReference.split("-");
+
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Invalid job reference format");
+        }
+
+        String companyName = parts[0];
+        String sequentialNumber = parts[1];
+
+        if (sequentialNumber.length() != 6) {
+            throw new IllegalArgumentException("Sequential number should have exactly 6 characters");
+        }
+
+        return new JobReference(companyName, sequentialNumber);
+    }
+
+
     /**
      * Returns the job reference string.
      *
      * @return The job reference string.
      */
+
     @Override
     public String toString() {
-        return jobReference;
+        return "jobReference='" + jobReference;
     }
 
     /**
@@ -87,7 +136,7 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
      *
      * @param o The other job reference to compare to.
      * @return A negative integer, zero, or a positive integer if this job reference is less than,
-     *         equal to, or greater than the specified job reference, respectively.
+     * equal to, or greater than the specified job reference, respectively.
      */
     @Override
     public int compareTo(JobReference o) {

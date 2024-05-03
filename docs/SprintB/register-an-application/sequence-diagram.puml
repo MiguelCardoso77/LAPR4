@@ -5,44 +5,302 @@ skinparam shadowing false
 
 autonumber
 
+title SD - Register an Application
+
 'hide footbox
-participant ":{NameOfUC}Controller" as CTRL
-participant "ApplicationSession" as APPSESSIONC
-participant "appSession\n:ApplicationSession" as APPSESSIONI
-participant "currentSession\n:UserSession" as CURSESSION
 
-activate CTRL
-[o-> CTRL : create()
-    CTRL -> APPSESSIONC : getinstance()
+actor Operator
 
-    activate APPSESSIONC
-        APPSESSIONC --> CTRL : appSession
-    deactivate APPSESSIONC
+participant RegisterApplicationUI <<presentation>>
 
-    CTRL -> APPSESSIONI : getCurrentSession()
-    activate APPSESSIONI
-        APPSESSIONI --> CTRL : currentSession
-    deactivate APPSESSIONI
+participant RegisterCandidateController <<application>>
+participant AddJobOpeningController <<application>>
+participant ApplicationRegisterController <<application>>
+participant ListCandidatesController <<application>>
+participant ListJobOpeningController <<application>>
+participant AddUserController <<application>>
 
-    CTRL -> CURSESSION : isLoggedInWithRole(USER_ROLE)
-    activate CURSESSION
-        CURSESSION --> CTRL : answer
-    deactivate CURSESSION
+participant CandidateService <<service>>
+participant ApplicationService <<service>>
+participant JobOpeningService <<service>>
+participant AuthorizationService <<service>>
+participant UserManagementService <<service>>
 
-    alt answer = true
-        CTRL -> CTRL : doesOtherThing()
-        activate CTRL
-            [o<-- CTRL : ok
-        deactivate CTRL
-        autonumber stop
-        CTRL -[#white]> CURSESSION
-        autonumber resume
-    else
-        |||
-        [o<-- CTRL : illegalStateException("Not Authorized")
-        |||
-    end alt
+database CandidateRepository <<repository>>
+database ApplicationRepository <<repository>>
+database JobOpeningRepository <<repository>>
+database UserRepository <<repository>>
 
-deactivate CTRL
+participant CandidateBuilder <<userBuilder>>
+participant ApplicationBuilder <<userBuilder>>
+participant SystemUserBuilder <<userBuilder>>
+
+participant Jobs4PasswordPolicy <<passwordGenerator>>
+
+activate Operator
+
+Operator -> RegisterApplicationUI : asks to register an application for a job opening
+
+activate RegisterApplicationUI
+
+RegisterApplicationUI --> Operator : shows all the top folders(Job Openings)\n and asks to select one
+
+deactivate RegisterApplicationUI
+
+Operator -> RegisterApplicationUI : selects a folder
+
+activate RegisterApplicationUI
+
+RegisterApplicationUI --> Operator : shows all the subfolders(applications)\n on the chosen folder and asks to select one
+
+deactivate RegisterApplicationUI
+
+Operator -> RegisterApplicationUI : selects a subfolder
+
+activate RegisterApplicationUI
+
+RegisterApplicationUI -> ApplicationRegisterController : importCandidateFile(path)
+
+activate ApplicationRegisterController
+
+ApplicationRegisterController --> RegisterApplicationUI : candidateFileData
+
+deactivate ApplicationRegisterController
+
+RegisterApplicationUI -> AddJobOpeningController : verifyID(jobReference)
+
+activate AddJobOpeningController
+
+AddJobOpeningController -> JobOpeningService : verifyJobReference(jobReference)
+
+activate JobOpeningService
+
+JobOpeningService -> JobOpeningRepository : findJobOpening(jobReference)
+
+activate JobOpeningRepository
+
+JobOpeningRepository --> JobOpeningService : true/false
+
+deactivate JobOpeningRepository
+
+JobOpeningService --> AddJobOpeningController : true/false
+
+deactivate JobOpeningService
+
+AddJobOpeningController --> RegisterApplicationUI : true/false
+
+deactivate AddJobOpeningController
+
+RegisterApplicationUI -> AddUserController : getLoggedInUser()
+
+activate AddUserController
+
+AddUserController --> RegisterApplicationUI : loggedInUser
+
+deactivate AddUserController
+
+RegisterApplicationUI -> ListJobOpeningController : findJobOpeningByJobReference(jobReference)
+
+activate ListJobOpeningController
+
+ListJobOpeningController -> JobOpeningService : findJobOpening(jobReference)
+
+activate JobOpeningService
+
+JobOpeningService --> ListJobOpeningController : jobOpening
+
+deactivate JobOpeningService
+
+ListJobOpeningController --> RegisterApplicationUI : jobOpening
+
+deactivate ListJobOpeningController
+
+RegisterApplicationUI -> ApplicationRegisterController : findCVFile(path)
+
+activate ApplicationRegisterController
+
+ApplicationRegisterController --> RegisterApplicationUI : path
+
+deactivate ApplicationRegisterController
+
+RegisterApplicationUI -> ApplicationRegisterController : findAllFiles(path)
+
+activate ApplicationRegisterController
+
+ApplicationRegisterController --> RegisterApplicationUI : paths
+
+deactivate ApplicationRegisterController
+
+RegisterApplicationUI -> RegisterCandidateController : verifyTelephoneNumber(telephoneNumber)
+
+activate RegisterCandidateController
+
+RegisterCandidateController -> CandidateService : findCandidateByTelephoneNumber(telephoneNumber)
+
+activate CandidateService
+
+CandidateService -> CandidateRepository : findByTelephoneNumber(telephoneNumber)
+
+activate CandidateRepository
+
+CandidateRepository --> CandidateService : candidate
+
+deactivate CandidateRepository
+
+CandidateService --> RegisterCandidateController : candidate
+
+deactivate CandidateService
+
+RegisterCandidateController --> RegisterApplicationUI : candidate
+
+deactivate RegisterCandidateController
+
+alt the candidate is already registered in the system
+
+RegisterApplicationUI -> ListCandidatesController : findCandidateByTelephoneNumber(telephoneNumber)
+
+activate ListCandidatesController
+
+ListCandidatesController -> CandidateService : findCandidateByTelephoneNumber(telephoneNumber)
+
+activate CandidateService
+
+CandidateService -> CandidateRepository : findByTelephoneNumber(telephoneNumber)
+
+activate CandidateRepository
+
+CandidateRepository --> CandidateService : Candidate
+
+deactivate CandidateRepository
+
+CandidateService --> ListCandidatesController : candidate
+
+deactivate CandidateService
+
+ListCandidatesController --> RegisterApplicationUI : candidate
+
+deactivate ListCandidatesController
+
+else the candidate isn't registered in the system
+
+RegisterApplicationUI -> RegisterCandidateController : registerCandidate(firstName, lastName, emailAddress, roles, createdOn, telephoneNumber, cvPath)
+
+activate RegisterCandidateController
+
+RegisterCandidateController -> RegisterCandidateController : createSystemUser(firstName, lastName, email, roles,createdOn)
+
+RegisterCandidateController -> Jobs4PasswordPolicy : passwordGenerator(firstName)
+
+activate Jobs4PasswordPolicy
+
+Jobs4PasswordPolicy --> RegisterCandidateController : password
+
+deactivate Jobs4PasswordPolicy
+
+RegisterCandidateController -> AuthorizationService : ensureAuthenticatedUserHasAnyOf(role)
+
+    activate AuthorizationService
+
+    AuthorizationService --> RegisterCandidateController : true
+
+    deactivate AuthorizationService
+
+    RegisterCandidateController -> AddUserController : registerNewUser(username, password, firstName, lastName, emailAddress, roles, createdOn)
+
+    activate AddUserController
+
+    AddUserController -> UserManagementService : registerNewUser(username, password, firstName, lastName, emailAddress, roles, createdOn)
+
+    activate UserManagementService
+
+    UserManagementService -> SystemUserBuilder : build()
+
+    activate SystemUserBuilder
+
+    SystemUserBuilder --> UserManagementService : systemUser
+
+    deactivate SystemUserBuilder
+
+    UserManagementService -> UserRepository : save(systemUser)
+
+    activate UserRepository
+
+    UserRepository --> UserManagementService : true
+
+    deactivate UserRepository
+
+    UserManagementService --> AddUserController : systemUser
+
+    deactivate UserManagementService
+
+    AddUserController --> RegisterCandidateController : systemUser
+
+    deactivate AddUserController
+
+    RegisterCandidateController -> CandidateService : registerCandidate(systemUser, telephoneNumber, curriculum)
+
+    activate CandidateService
+
+    CandidateService -> CandidateBuilder : build()
+
+    activate CandidateBuilder
+
+    CandidateBuilder --> CandidateService : candidate
+
+    deactivate CandidateBuilder
+
+    CandidateService -> CandidateRepository : save(candidate)
+
+    activate CandidateRepository
+
+    CandidateRepository --> CandidateService : return true
+
+    deactivate CandidateRepository
+
+    CandidateService --> RegisterCandidateController : candidate
+
+    deactivate CandidateService
+
+    RegisterCandidateController --> RegisterApplicationUI : candidate
+
+    deactivate RegisterCandidateController
+
+end
+
+RegisterApplicationUI -> ApplicationRegisterController : registerApplication(rank, filePaths, jobReference, candidate, operator)
+
+activate ApplicationRegisterController
+
+ApplicationRegisterController -> ApplicationService : registerApplication(rank, filePaths, jobReference, candidate, operator)
+
+activate ApplicationService
+
+ApplicationService -> ApplicationBuilder : build()
+
+activate ApplicationBuilder
+
+ApplicationBuilder --> ApplicationService : application
+
+deactivate ApplicationBuilder
+
+ApplicationService -> ApplicationRepository : save(application)
+
+activate ApplicationRepository
+
+ApplicationRepository --> ApplicationService : return true
+
+deactivate ApplicationRepository
+
+ApplicationService --> ApplicationRegisterController : application
+
+deactivate ApplicationService
+
+ApplicationRegisterController --> RegisterApplicationUI : application
+
+RegisterApplicationUI --> Operator : displays operation's success
+
+deactivate RegisterApplicationUI
+
+deactivate Operator
 
 @enduml

@@ -32,21 +32,6 @@ public class ApplicationBuilder implements DomainFactory<Application> {
     private static final Logger LOGGER = LogManager.getLogger(Application.class);
 
     /**
-     * Sets all attributes of the ApplicationBuilder.
-     *
-     * @param idApplication         The application ID.
-     * @param rank                  The rank of the application.
-     * @param submissionDate        The submission date of the application.
-     * @param status                The status of the application.
-     * @param applicationDataFile   The data file associated with the application.
-     * @param filesAttachedContent  The content of files attached to the application.
-     * @param emailFilesAttached    The files attached to the application via email.
-     * @param emailContentFile      The content of the email attached to the application.
-     * @param jobReference          The reference to the job associated with the application.
-     * @param telephoneNumber       The telephone number of the candidate.
-     * @return                      The ApplicationBuilder instance with all attributes set.
-     */
-    /**
      * Sets all the attributes of the application builder.
      *
      * @param rank             the rank of the candidate in the application

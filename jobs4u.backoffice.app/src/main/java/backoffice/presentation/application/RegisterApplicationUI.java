@@ -78,7 +78,7 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
             throw new RuntimeException(e);
         }
 
-        JobReference jobReference = JobReference.toJobReference(candidateData.get(0));
+        JobReference jobReference = JobReference.stringToJobReference(candidateData.get(0));
 
         if (!jobOpeningController.verifyID(jobReference)) {
             try {

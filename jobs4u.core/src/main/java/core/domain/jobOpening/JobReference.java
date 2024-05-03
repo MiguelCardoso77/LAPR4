@@ -35,13 +35,19 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
      * @param companyName The name of the company.
      * @throws IllegalArgumentException If the company name is null or empty.
      */
-    public JobReference(final String companyName) {
+    public JobReference(final String companyName, final boolean generate) {
         if (companyName == null || companyName.isEmpty()) {
             throw new IllegalArgumentException("Company Number should not be empty");
         }
-        String companyReference = buildCompanyReference(companyName);
-        this.sequentialNumber = ++lastSequentialNumber;
-        this.jobReference = buildJobReference(companyReference);
+
+        if(generate){
+            String companyReference = buildCompanyReference(companyName);
+            this.sequentialNumber = ++lastSequentialNumber;
+            this.jobReference = buildJobReference(companyReference);
+        } else {
+            this.jobReference = companyName;
+        }
+
     }
 
     /**
@@ -77,28 +83,17 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
      * @return A JobReference instance.
      */
     public static JobReference valueOf(final String jobReference) {
-        return new JobReference(jobReference);
+        return new JobReference(jobReference, true);
     }
 
-    public static JobReference toJobReference(final String jobReference) {
-        if (jobReference == null || jobReference.isEmpty()) {
-            throw new IllegalArgumentException("Job reference should not be null or empty");
-        }
-
-        String[] parts = jobReference.split("-");
-
-        if (parts.length != 2) {
-            throw new IllegalArgumentException("Invalid job reference format");
-        }
-
-        String companyName = parts[0];
-        String sequentialNumber = parts[1];
-
-        if (sequentialNumber.length() != 6) {
-            throw new IllegalArgumentException("Sequential number should have exactly 6 characters");
-        }
-
-        return new JobReference(companyName);
+    /**
+     * Creates a JobReference instance from an existing job reference string.
+     *
+     * @param jobReference The job reference string.
+     * @return A JobReference instance.
+     */
+    public static JobReference stringToJobReference(final String jobReference){
+        return new JobReference(jobReference, false);
     }
 
 

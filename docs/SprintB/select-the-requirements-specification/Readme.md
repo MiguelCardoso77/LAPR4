@@ -86,7 +86,7 @@ As Customer Manager, I want to select the requirements specification to be used 
 
 ## 1.6. System Sequence Diagram (SSD)
 
-![1009-system-sequence-diagram.svg](1009-system-sequence-diagram.svg)
+![1009-system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ## 1.7. System Diagram (SD)
 

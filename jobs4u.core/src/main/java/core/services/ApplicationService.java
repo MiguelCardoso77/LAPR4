@@ -29,7 +29,7 @@ public class ApplicationService {
      */
     @Transactional
     public Application registerApplication(Rank rank,
-                                           ApplicationFiles applicationFiles, JobOpening jobReference,
+                                           String applicationFiles, JobOpening jobReference,
                                            Candidate candidate, SystemUser operator){
         ApplicationBuilder applicationBuilder = new ApplicationBuilder();
         applicationBuilder.withAll(rank, applicationFiles, jobReference, candidate, operator);

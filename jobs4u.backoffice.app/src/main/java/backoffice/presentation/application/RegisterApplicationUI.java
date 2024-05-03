@@ -2,7 +2,6 @@ package backoffice.presentation.application;
 
 import core.application.controllers.*;
 import core.domain.application.Application;
-import core.domain.application.ApplicationFiles;
 import core.domain.candidate.Candidate;
 import core.domain.candidate.TelephoneNumber;
 import core.domain.jobOpening.JobOpening;
@@ -13,7 +12,6 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.visitor.Visitor;
 import jakarta.transaction.InvalidTransactionException;
-import lombok.SneakyThrows;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,7 +34,6 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
     private final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     private final AddUserController addUserController = new AddUserController();
     private final Calendar createdOn = Calendar.getInstance();
-    private List<Path> filePaths = new ArrayList<>();
     private List<String> candidateData = new ArrayList<>();
     @Override
     public String headline(){
@@ -101,8 +98,7 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
             Path cvPath = applicationRegisterController.findCVFile(path);
             String pathCV = String.valueOf(cvPath);
 
-            filePaths = applicationRegisterController.findAllFiles(path);
-            ApplicationFiles applicationFiles = new ApplicationFiles(filePaths);
+            String applicationFiles = path.toString();
 
             Candidate applicationCandidate = candidate(emailAddress, firstName, lastName, telephoneNumber, pathCV);
 

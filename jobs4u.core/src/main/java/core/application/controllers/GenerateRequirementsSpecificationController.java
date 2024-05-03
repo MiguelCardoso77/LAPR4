@@ -60,5 +60,31 @@ public class GenerateRequirementsSpecificationController {
     }
 
 
+    public String readAndProcessProgrammingLanguages() {
+        List<String> selectedLanguages = new ArrayList<>();
+        while (true) {
+            displayProgrammingLanguages();
+            int progLang = Console.readInteger("Select one or more programming languages (Enter -1 to finish): ");
+            if (progLang == -1) {
+                break;
+            }
+            if (progLang < 1 || progLang > getProgrammingLanguages().size()) {
+                System.out.println("Invalid choice. Please enter a valid option.");
+                continue;
+            }
+            selectedLanguages.add(ProgrammingLanguages.values()[progLang - 1].toString());
+        }
+
+        StringBuilder progLangString = new StringBuilder();
+        progLangString.append("-> Programming Languages: ");
+        for (String lang : selectedLanguages) {
+            progLangString.append(lang).append(", ");
+        }
+        if (!selectedLanguages.isEmpty()) {
+            progLangString.setLength(progLangString.length() - 2);
+        }
+
+        return progLangString.toString();
+    }
 
 }

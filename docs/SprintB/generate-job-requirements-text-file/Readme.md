@@ -13,8 +13,18 @@ As Operator, I want to generate and export a template text file to help collect 
 
 **From the specifications document:**
 
+> A job requirement specification module should:
+>• Generate a template text file with the requirements to be evaluated and the possible
+answers for each requirement
+>• Evaluate if a text file with the requirements for a particular candidate is syntactically
+correct
+>• Evaluate a text file with the requirements for a particular candidate and provide the
+result, approved or rejected, and in case of rejection, include justification
 
 **From the client clarifications:**
+
+> Q102 Daniela – US2003 – Quem vai preencher as respostas no ficheiro template?
+A102 Será o Operador e, no âmbito da US2004, este submete o ficheiro já preenchido no sistema.
 
 ### 1.3. Acceptance Criteria
 
@@ -22,8 +32,8 @@ As Operator, I want to generate and export a template text file to help collect 
 
 ### 1.4. Found out Dependencies
 
-* This us depends on us1008.
-* 
+* This uc depends on uc1008.
+
 ### 1.5 Input and Output Data
 
 **Input Data:**
@@ -41,15 +51,15 @@ As Operator, I want to generate and export a template text file to help collect 
 
 ### 2.1 System Sequence Diagram (SSD)
 
-![System Sequence Diagram](2003-system-sequence-diagram.svg)
+![System Sequence Diagram](system-sequence-diagram.svg)
 
 ### 2.2 Sequence Diagram(SD)
 
-![Sequence Diagram](2003-sequence-diagram.svg)
+![Sequence Diagram](sequence-diagram.svg)
 
 ### 2.3 Class Diagram(CD)
 
-![Class Diagram](2003-class-diagram.svg)
+![Class Diagram](class-diagram.svg)
 
 ### 2.4 Applied patterns
 

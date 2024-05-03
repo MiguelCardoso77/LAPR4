@@ -2,11 +2,17 @@
 skinparam classAttributeIconSize 0
 top to bottom direction
 
+package "ui"{
 class GenerateRequirementsSpecificationUI{
 
 + doShow()
 + headline()
 }
+}
+
+package "customer"{
+
+    package "application"{
 
 class GenerateRequirementsSpecificationController{
 
@@ -18,6 +24,9 @@ class GenerateRequirementsSpecificationController{
 + readAndProcessProgrammingLanguages()
 
 }
+}
+
+package "domain"{
 
 class JobRequirementsSpecification{
 - Integer idRequirements
@@ -34,7 +43,7 @@ class JobRequirementsSpecification{
 + hasIdentity(Integer idRequirements)
 }
 
-
+}
 GenerateRequirementsSpecificationUI ->  GenerateRequirementsSpecificationController
 
 GenerateRequirementsSpecificationController --> JobRequirementsSpecification

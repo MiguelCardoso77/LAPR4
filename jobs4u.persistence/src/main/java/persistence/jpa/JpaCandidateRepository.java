@@ -32,7 +32,7 @@ public class JpaCandidateRepository extends JpaAutoTxRepository<Candidate, Telep
     @Override
     public Optional<Candidate> findByTelephoneNumber(final TelephoneNumber telephoneNumber){
         final Map<String, Object> params = new HashMap<>();
-        params.put("telephone number", telephoneNumber);
+        params.put("telephoneNumber", telephoneNumber);
         return matchOne("e.telephoneNumber=:telephoneNumber", params);
     }
 }

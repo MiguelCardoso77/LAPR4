@@ -12,21 +12,24 @@
 
 ### 1.2. Use Cases
 
-| **UC/US** | **Description**   |
-|:---------:|:------------------|
-|   1000    |                   |
-|   1001    | [1001](..%2F1001) |
-|   1002    | [1002](..%2F1002) |
-|   2000a   |                   |
-|   2001    | [2001](..%2F2001) |
-|   2002    | [2002](..%2F2002) |
-|   1005    |                   |
-|   1006    | [1006](..%2F1006) |
-|   1008    | [1008](..%2F1008) |
-|   1009    | [1009](..%2F1009) |
-|   1011    |                   |
-|   1012    |                   |
-|   2003    |                   |
+|               **UC/US**                | **Description**                                                                                                                                                   |
+|:--------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|            activate a user             | [activate-a-user](..%2Factivate-a-user)                                                                                                                           |
+|             add jobOpening             | [add-jobOpening](..%2Fadd-jobOpening)                                                                                                                             |
+|                add user                | [add-user](..%2Fadd-user)                                                                                                                                         |
+|    authentication and authorization    | [authentication-and-authorization](..%2Fauthentication-and-authorization)                                                                                         |
+|           deactivate a user            | [deactivate-a-user](..%2Fdeactivate-a-user)                                                                                                                       |
+|      deploy and configure plugin       | [deploy-and-configure-plugin](..%2Fdeploy-and-configure-plugin)                                                                                                   |
+|        display candidate´s data        | [display-candidate's-data](..%2Fdisplay-candidate%27s-data)                                                                                                       |
+|        generate interview model        | [generate-interview-model](..%2Fgenerate-interview-model)                                                                                                         |
+|    generate job interview text file    | [generate-job-requirements-text-file](..%2Fgenerate-job-requirements-text-file)                                                                                   |
+|         list backoffice users          | [list-backoffice-users](..%2Flist-backoffice-users)                                                                                                               |
+|    list job openings´s application     | [list-job-openings'-application](..%2Flist-job-openings%27-application)                                                                                           |
+|           register candidate           | [register-a-candidate](..%2Fregister-a-candidate)                                                                                                                 |
+|           register customer            | [register-a-customer](..%2Fregister-a-customer)                                                                                                                   |  
+|          register application          | [register-an-application](..%2Fregister-an-application)                                                                                                           |
+|         select interview model         | [select-interview-model](..%2Fselect-interview-model)                                                                                                             |
+| select the requirements specification  | [select-the-requirements-specification](..%2Fselect-the-requirements-specification)                                                                               |
 
 ## 2. Domain Model
 
@@ -197,11 +200,6 @@ The domain model is structured using UML notation. It consists of entities, aggr
 
 ![domain-model.svg](domain-model.svg)
 
-## 3. Class Diagram
-
-![class-diagram.svg](class-diagram.svg)
-
-----------------------------------------------------------------------
 
 ## 4. Glossary
 

@@ -1,40 +1,35 @@
 package core.domain.application;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
-/*
-class RankTest {
 
+public class RankTest {
     @Test
-    void testRankEquality() {
-        Rank rank1 = Rank.valueOf(1);
-        Rank rank2 = Rank.valueOf(1);
-        Rank rank3 = Rank.valueOf(2);
-
-        assertEquals(rank1, rank2); // Should be equal
-        assertNotEquals(rank1, rank3); // Should not be equal
+    public void testConstructor() {
+        String rankValue = "Manager";
+        Rank rank = new Rank(rankValue);
+        assertEquals(rankValue, rank.toString());
     }
 
     @Test
-    void testRankHashCode() {
-        Rank rank1 = Rank.valueOf(1);
-        Rank rank2 = Rank.valueOf(1);
+    public void testEquals() {
+        Rank rank1 = new Rank("Manager");
+        Rank rank2 = new Rank("Manager");
+        Rank rank3 = new Rank("Supervisor");
 
-        assertEquals(rank1.hashCode(), rank2.hashCode());
+        assertTrue(rank1.equals(rank2));
+        assertTrue(rank2.equals(rank1));
+        assertFalse(rank1.equals(rank3));
+        assertFalse(rank3.equals(rank1));
+        assertFalse(rank2.equals(rank3));
+        assertFalse(rank3.equals(rank2));
     }
 
     @Test
-    void testRankToString() {
-        Rank rank = Rank.valueOf(42);
-        assertEquals("42", rank.toString());
-    }
-
-    @Test
-    void testInvalidRank() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Rank.valueOf(-1);
-        });
+    public void testValueOf() {
+        String rankValue = "Developer";
+        Rank rank = Rank.valueOf(rankValue);
+        assertEquals(rankValue, rank.toString());
     }
 }
-
- */

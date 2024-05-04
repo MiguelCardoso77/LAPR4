@@ -2,7 +2,7 @@
 skinparam classAttributeIconSize 0
 top to bottom direction
 
-package "ui"{
+package "presentation"{
 
 class GenerateInterviewModelUI{
 + doShow()
@@ -34,36 +34,52 @@ class GenerateInterviewModelController{
 }
 
 package "domain" {
-class Jobinterview{
-- int id
-- Calendar createdOn
-- Time time
-- Score score
-- Result result
-- Application application
-- InterviewModel interviewModel
+    class JobInterview{
+    - int id
+    - Calendar createdOn
+    - Time time
+    - Score score
+    - Result result
+    - Application application
+    - InterviewModel interviewModel
 
-+ JobInterview( id,  createdOn,  time,  score,  result,  application,  interviewModel)
-+ JobInterview()
-+ identity()
-+ createdOn()
-+ time()
-+ application()
-+ interviewModel()
-+ changeInterviewModel( interviewModel)
-+ equals(Object o)
-+  hashCode()
-+ sameAs(other)
-+ compareTo( other)
+    + JobInterview( id,  createdOn,  time,  score,  result,  application,  interviewModel)
+    + JobInterview()
+    + identity()
+    + createdOn()
+    + time()
+    + application()
+    + interviewModel()
+    + changeInterviewModel( interviewModel)
+    + equals(Object o)
+    +  hashCode()
+    + sameAs(other)
+    + compareTo( other)
 
-}
+    }
+
+    enum QuestionType{
+        DATE,
+        DECIMAL_NUMBER,
+        INTEGER_NUMBER,
+        MULTIPLE_CHOICE,
+        NUMERIC_RANGE,
+        SINGLE_CHOICE,
+        SHORT_TEXT,
+        TIME,
+        TRUE_FALSE
+
+        + QuestionType(usage)
+        + toString()
+    }
 
 }
 }
 
 
 GenerateInterviewModelUI -> GenerateInterviewModelController
-GenerateInterviewModelController --> Jobinterview
+GenerateInterviewModelController --> JobInterview
+GenerateInterviewModelController --> QuestionType
 
 
 }

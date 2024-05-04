@@ -2,6 +2,8 @@
 skinparam linetype ortho
 top to bottom direction
 
+package "ui"{
+
 class ListJobOpeningApplicationsUI{
     + headline()
     + emptyMessage()
@@ -12,17 +14,24 @@ class ListJobOpeningApplicationsUI{
     + listHeader()
     + doShow()
 }
-
-
-class ListJobOpeningController {
-    + allJobOpening()
 }
 
-class ListJobOpeningApplicationsController{
-    + allApplicationsOfJobOpening(jobReference)
-    + findJobOpening(jobReference)
-}
 
+
+
+
+
+
+
+  package "Job Opening"{
+
+package "application"{
+  class ListJobOpeningController {
+      + allJobOpening()
+  }
+  }
+
+  package "domain " {
 class JobOpening {
    - Description description
    - VacanciesNumber vacanciesNumber
@@ -46,21 +55,39 @@ class JobOpening {
    + titleOrFunction()
    + company()
 }
+}
 
+
+package "repositories"{
 class JobOpeningRepository {
     + allJobOpenings()
 }
+}
 
+ package "services"{
 class JobOpeningService {
     + registerJobOpening(jobReference, description, vacanciesNumber,
     address, mode, contractType, titleOrFunction, company);
     + allJobOpenings()
 }
-
-class JobOpeningBuilder {
-    + withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction , company )
-    + build()
 }
+}
+
+
+
+
+
+package "Applications" {
+
+package "application" {
+
+
+class ListJobOpeningApplicationsController{
+    + allApplicationsOfJobOpening(jobReference)
+    + findJobOpening(jobReference)
+}
+}
+    package "domain"{
 
 class Application{
     - IdApplication idApplication
@@ -92,18 +119,19 @@ class Application{
     + toString()
 
 }
-
-class ApplicationBuilder{
-
-    + withAll( idApplication,  rank,  submissionDate,  status,  applicationDataFile,  filesAttachedContent,  emailFilesAttached,  emailContentFile,  jobReference ,  telephoneNumber) {
-    + build()
 }
+
+
+    package "repositories"{
 
 class ApplicationRepository{
 
     + allApplications()
 
 }
+}
+
+    package "services"{
 
 class ApplicationService{
 
@@ -111,25 +139,31 @@ class ApplicationService{
 
 }
 
+}
+}
 
 
 
+
+package "Auth"{
 
 class AuthorizationService {
     + authorizationService()
     + ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
 }
+}
 
 
 
 
 
 
-
+package "Persistence" {
 class PersistenceContext {
     + repositories()
     + PersistenceContext()
 }
+
 
 class RepositoryFactory{
     + newTransactionalContext()
@@ -143,6 +177,7 @@ class RepositoryFactory{
     + jobOpenings()
     + applications(TransactionalContext autoTx)
     + applications()
+}
 }
 
 ListJobOpeningApplicationsUI --> ListJobOpeningApplicationsController
@@ -158,13 +193,11 @@ ListJobOpeningController --> PersistenceContext
 
 ListJobOpeningApplicationsController ---> JobOpeningService
 JobOpeningService --> JobOpeningRepository
-JobOpeningService -> JobOpeningBuilder
-JobOpeningBuilder -> JobOpening
+JobOpeningRepository --> JobOpening
 
 ListJobOpeningApplicationsController -> ApplicationService
-ApplicationService -> ApplicationRepository
-ApplicationService --> ApplicationBuilder
-ApplicationBuilder --> Application
+ApplicationService --> ApplicationRepository
+ApplicationRepository --> Application
 
 
 

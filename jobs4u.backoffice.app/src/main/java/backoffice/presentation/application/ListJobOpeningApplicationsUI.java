@@ -135,9 +135,9 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
             if (!iterable1.iterator().hasNext()) {
                 System.out.println("There are no applications for this job opening ");
             } else {
-                System.out.printf("%-30s%-30s%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Submission Date", "Status", "Data File", "Job Reference");
+                System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status",  "Job Reference" , "Candidate");
                 for (Application application : iterable1) {
-                    System.out.printf("%-30s%-30s%-30s%-30s%-30s%-30s%n", application.identity(), application.rank(), application.submissionDate(), application.status(), application.dataFile(), application.jobReference());
+                    System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", application.identity(), application.rank(), "Submitted", application.jobReference().jobReference(), application.candidate().user().identity());
                 }
             }
 

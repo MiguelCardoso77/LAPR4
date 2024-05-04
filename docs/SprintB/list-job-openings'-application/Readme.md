@@ -25,7 +25,7 @@ A63. Tal como refere a descrição da US, devem ser listadas todas as candidatur
 
 ### 1.4. Found out Dependencies
 
-* There aren't any dependencies of other user stories.
+* None
 
 ### 1.5 Input and Output Data
 
@@ -63,6 +63,7 @@ A63. Tal como refere a descrição da US, devem ser listadas todas as candidatur
 
 ## 3. Implementation
 
+![Implementation Image](ImplementationImage.png)
 
 
 ## 4. Comments

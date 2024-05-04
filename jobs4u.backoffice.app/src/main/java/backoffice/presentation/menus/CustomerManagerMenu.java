@@ -10,6 +10,7 @@ import backoffice.presentation.interview.GenerateInterviewModelAction;
 import backoffice.presentation.interview.SelectInterviewModelAction;
 import backoffice.presentation.jobOpening.AddJobOpeningAction;
 import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationAction;
+import backoffice.presentation.requirements.GenerateRequirementsSpecificationAction;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
@@ -24,7 +25,8 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int ADD_JOB_OPENING = 5;
     private static final int GENERATE_INTERVIEW_MODEL = 6;
     private static final int SELECT_INTERVIEW_MODEL = 7;
-    private static final int SELECT_REQUIREMENTS_SPECIFICATIONS = 8;
+    private static final int GENERATE_REQUIREMENTS_SPECIFICATIONS = 8;
+    private static final int SELECT_REQUIREMENTS_SPECIFICATIONS = 9;
 
     @Override
     protected boolean doShow() {
@@ -43,6 +45,7 @@ public class CustomerManagerMenu extends AbstractUI {
 
         menu.addItem(GENERATE_INTERVIEW_MODEL, "Generate Interview Model", new GenerateInterviewModelAction());
         menu.addItem(SELECT_INTERVIEW_MODEL, "Select Interview Model", new SelectInterviewModelAction());
+        menu.addItem(GENERATE_REQUIREMENTS_SPECIFICATIONS, "Generate Requirements Specification", new GenerateRequirementsSpecificationAction());
         menu.addItem(SELECT_REQUIREMENTS_SPECIFICATIONS, "Select Requirements Specification", new SelectRequirementsSpecificationAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);

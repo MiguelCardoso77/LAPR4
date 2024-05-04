@@ -76,7 +76,7 @@ public class SelectInterviewModelUI extends AbstractUI {
                 System.out.println("No job opening selected");
             } else {
                 try {
-                    jobOpening = this.jobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());
+                    jobOpening = this.jobOpeningController.findJobOpeningByJobReference(list.get(option - 1 ).identity());
                 } catch (IntegrityViolationException | ConcurrencyException ex) {
                     LOGGER.error("Error performing the operation", ex);
                     System.out.println(

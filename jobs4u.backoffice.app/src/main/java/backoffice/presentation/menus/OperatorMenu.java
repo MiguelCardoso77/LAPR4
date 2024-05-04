@@ -4,6 +4,7 @@ import backoffice.presentation.application.RegisterApplicationAction;
 import backoffice.presentation.authz.ListUsersAction;
 import backoffice.presentation.candidate.ListCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
+import backoffice.presentation.requirements.GenerateRequirementsSpecificationAction;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
@@ -30,7 +31,7 @@ public class OperatorMenu extends AbstractUI {
         menu.addItem(LIST_ALL_CANDIDATES, "List all Candidates", new ListCandidatesAction());
         menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
         menu.addItem(REGISTER_APPLICATION, "Register Application", new RegisterApplicationAction());
-        //menu.addItem(COLLECT_DATA_FIELDS, "Collect data fields for candidates of a job opening", new CollectDataFieldsAction());
+        menu.addItem(COLLECT_DATA_FIELDS, "Collect data fields for candidates of a job opening", new GenerateRequirementsSpecificationAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

@@ -2,6 +2,7 @@ package backoffice.presentation.menus;
 
 //import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 //import backoffice.presentation.candidate.DisplayCandidateDataAction;
+import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
@@ -34,7 +35,7 @@ public class CustomerManagerMenu extends AbstractUI {
         final Menu menu = new Menu("Customer Manager Actions >");
 
         menu.addItem(DISPLAY_CANDIDATE_DATA, "Display Candidate Data", new DisplayCandidateDataAction());
-        //menu.addItem(LIST_ALL_APPLICATIONS_OF_JOB_OPENING, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
+        menu.addItem(LIST_ALL_APPLICATIONS_OF_JOB_OPENING, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
 
         menu.addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerAction());
         menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());

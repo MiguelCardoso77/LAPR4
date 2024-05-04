@@ -2,7 +2,7 @@ package backoffice.presentation.menus;
 
 //import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 import backoffice.presentation.authz.*;
-import backoffice.presentation.candidate.DisplayCandidateDataAction;
+//import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
 import backoffice.presentation.jobOpening.AddJobOpeningAction;
@@ -34,7 +34,7 @@ public class AdminMenu extends AbstractUI {
 
         menu.addItem(LIST_ALL_USERS, "List all Users", new ListUsersAction());
         menu.addItem(LIST_ALL_BACKOFFICE_USERS, "List all Backoffice Users", new ListBackofficeUsersAction());
-        menu.addItem(DISPLAY_CANDIDATE_DATA, "Display Candidate Data", new DisplayCandidateDataAction());
+        //menu.addItem(DISPLAY_CANDIDATE_DATA, "Display Candidate Data", new DisplayCandidateDataAction());
         //menu.addItem(LIST_ALL_APPLICATIONS_OF_JOB_OPENING, "List all applications of a job opening", new ListJobOpeningApplicationsAction() );
 
         menu.addItem(ADD_USER, "Add User", new AddUserUI()::show);

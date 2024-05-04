@@ -149,4 +149,19 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
         JobReference other = (JobReference) obj;
         return jobReference.equals(other.jobReference);
     }
+
+
+
+    public boolean sameAs(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        JobReference otherJobReference = (JobReference) other;
+        return jobReference.equals(otherJobReference.jobReference);
+    }
+
+
 }

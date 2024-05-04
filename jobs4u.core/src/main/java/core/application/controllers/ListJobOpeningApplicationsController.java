@@ -1,17 +1,13 @@
 package core.application.controllers;
 
 import core.domain.application.Application;
-import core.domain.customer.Customer;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import core.domain.user.Jobs4URoles;
-import core.persistence.PersistenceContext;
-import core.repositories.CustomerRepository;
 import core.services.ApplicationService;
 import core.services.JobOpeningService;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.application.UserManagementService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +38,14 @@ public class ListJobOpeningApplicationsController {
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
         for (Application a : allApplications) {
-            if (a.jobReference().equals(jobReference)) {
+            if (a.jobReference().sameAs(jobReference)) {
                 allApplicationsJobOpening.add(a);
             }
         }
-        return  allApplicationsJobOpening;
+        return allApplicationsJobOpening;
     }
+
+
 
     /**
      * Finds a job opening by its reference.

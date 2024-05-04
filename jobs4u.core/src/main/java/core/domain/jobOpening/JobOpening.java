@@ -3,6 +3,7 @@ package core.domain.jobOpening;
 import core.domain.company.Company;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.model.AggregateRoot;
+import eapli.framework.domain.model.DomainEntities;
 import jakarta.persistence.*;
 
 @Entity
@@ -57,22 +58,24 @@ public class JobOpening implements AggregateRoot<JobReference> {
         return jobReference;
     }
 
+
+
+
     @Override
-    public boolean sameAs(final Object other) {
-        if (this == other) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-
-        if (!(other instanceof JobOpening)) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
+        JobReference otherJobReference = (JobReference) obj;
+        return jobReference.equals(otherJobReference);
+    }
 
-        final JobOpening that = (JobOpening) other;
-
-        return jobReference.equals(that.jobReference) && description.equals(that.description)
-                && vacanciesNumber.equals(that.vacanciesNumber) && address.equals(that.address)
-                && mode.equals(that.mode) && contractType.equals(that.contractType)
-                && titleOrFunction.equals(that.titleOrFunction) && company.equals(company);
+    @Override
+    public boolean sameAs(Object other) {
+        return false;
     }
 
     public JobReference jobReference() {

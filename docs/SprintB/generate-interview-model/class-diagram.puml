@@ -1,0 +1,71 @@
+@startuml
+skinparam classAttributeIconSize 0
+top to bottom direction
+
+package "ui"{
+
+class GenerateInterviewModelUI{
++ doShow()
++ headline()
+
+}
+
+}
+
+package "customerManager"{
+
+package "application"{
+class GenerateInterviewModelController{
+
++ getQuestionTypes()
++ displayQuestionTypes()
++ writeListToFile(List<String> questionForFile, String filePath)
++ dateAnswer(String answer, String errorColor, String resetColor)
++ decimalNumberAnswer(String answer, String errorColor, String resetColor)
++ integerNumberAnswer(String answer, String errorColor, String resetColor)
++ multipleChoiceAnswer(String question, String errorColor, String resetColor)
++ numericRangeAnswer(String answer, String errorColor, String resetColor)
++ singleChoiceAnswer(String question, String answer, String errorColor, String resetColor)
++ shortTextAnswer(String answer, String errorColor, String resetColor)
++ timeAnswer(String answer, String errorColor, String resetColor)
++ trueFalseAnswer(String answer, String errorColor, String resetColor)
+}
+
+}
+
+package "domain" {
+class Jobinterview{
+- int id
+- Calendar createdOn
+- Time time
+- Score score
+- Result result
+- Application application
+- InterviewModel interviewModel
+
++ JobInterview( id,  createdOn,  time,  score,  result,  application,  interviewModel)
++ JobInterview()
++ identity()
++ createdOn()
++ time()
++ application()
++ interviewModel()
++ changeInterviewModel( interviewModel)
++ equals(Object o)
++  hashCode()
++ sameAs(other)
++ compareTo( other)
+
+}
+
+}
+}
+
+
+GenerateInterviewModelUI -> GenerateInterviewModelController
+GenerateInterviewModelController --> Jobinterview
+
+
+}
+
+@enduml

@@ -16,6 +16,8 @@ As Customer Manager, I want to generate and export a template text file to help 
 
 ### 1.3. Acceptance Criteria
 
+* None
+
 ### 1.4. Found out Dependencies
 
 * 1008 - Deploy and configure a plugin (i.e., Job Requirement Specification or Interview Model) to be used by the system
@@ -31,11 +33,11 @@ As Customer Manager, I want to generate and export a template text file to help 
 
 ### 1.6. System Sequence Diagram (SSD)
 
-[system-sequence-diagram.puml](system-sequence-diagram.puml)
+![system-sequence-diagram](system-sequence-diagram.svg)
 
 ### 1.7. Sequence Diagram (SD)
 
-[sequence-diagram.puml](sequence-diagram.puml)
+![sequence-diagram](sequence-diagram.svg)
 
 ### 1.8 Other Relevant Remarks
 
@@ -45,10 +47,14 @@ As Customer Manager, I want to generate and export a template text file to help 
 
 ### 2.1. Domain Model
 
+![domain-model](domain-model.svg)
+
+
 ### 2.2. Class Diagram
 
-## 3. Implementation
+![class-diagram](class-diagram.svg)
 
-## 4. Testing
+
+## 3. Implementation
 
 ## 5. Demonstration

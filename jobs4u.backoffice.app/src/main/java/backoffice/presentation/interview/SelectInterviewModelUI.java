@@ -1,14 +1,13 @@
 package backoffice.presentation.interview;
 
 import backoffice.presentation.jobOpening.AddJobOpeningUI;
-import core.application.controllers.ListJobInterviewsApplicationController;
-import core.application.controllers.ListJobOpeningApplicationsController;
-import core.application.controllers.ListJobOpeningController;
-import core.application.controllers.SelectInterviewModelController;
+import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.interview.InterviewModel;
+import core.domain.interview.InterviewModelBuilder;
 import core.domain.interview.JobInterview;
 import core.domain.jobOpening.JobOpening;
+import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -16,8 +15,14 @@ import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SelectInterviewModelUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
@@ -30,13 +35,12 @@ public class SelectInterviewModelUI extends AbstractUI {
 
     final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
 
+    final ListInterviewModelsController listInterviewModelsController = new ListInterviewModelsController();
     Iterable<Application> applicationList = new ArrayList<>();
 
     Iterable<JobInterview> jobInterviews = new ArrayList<>();
 
     final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
-
-    List<String> interviewModels = new ArrayList<>();
 
 
     @Override
@@ -51,10 +55,20 @@ public class SelectInterviewModelUI extends AbstractUI {
         showInterviewsOfApplication(application);
         JobInterview jobInterview = selectJobInterview();
 
-        listInterviewModels();
+        String interviewModel = selectInterviewModel();
+        List<String> data;
 
-        InterviewModel interviewModel = selectInterviewModel(interviewModels);
-        jobInterview.changeInterviewModel(interviewModel);
+        try {
+            data = listInterviewModelsController.importInterviewModel(Path.of(interviewModel));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        InterviewModel interviewModel1 = listInterviewModelsController.extractInterviewModelFromFile(data);
+
+        if (jobInterview != null) {
+            jobInterview.changeInterviewModel(interviewModel1);
+        }
 
         return false;
     }
@@ -76,7 +90,7 @@ public class SelectInterviewModelUI extends AbstractUI {
                 System.out.println("No job opening selected");
             } else {
                 try {
-                    jobOpening = this.jobOpeningController.findJobOpeningByJobReference(list.get(option - 1 ).identity());
+                    jobOpening = this.jobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());
                 } catch (IntegrityViolationException | ConcurrencyException ex) {
                     LOGGER.error("Error performing the operation", ex);
                     System.out.println(
@@ -148,25 +162,9 @@ public class SelectInterviewModelUI extends AbstractUI {
         return null;
     }
 
-    private void listInterviewModels() {
-        interviewModels = selectInterviewModelController.listInterviewModels();
-    }
+    private String selectInterviewModel() {
+        return selectInterviewModelController.listAndSelectInterviewModels();
 
-    private InterviewModel selectInterviewModel(List<String> listInterviewModels) {
-        InterviewModel interviewModel = null;
-
-        final int option = Console.readInteger("Enter the number of the Interview Model");
-        if (option == 0) {
-            System.out.println("No interview model selected");
-        } else {
-            try {
-                interviewModel = new InterviewModel(listInterviewModels.get(option));
-            } catch (IntegrityViolationException | ConcurrencyException ex) {
-                LOGGER.error("Error performing the operation", ex);
-                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-            }
-        }
-        return interviewModel;
     }
 
     @Override

@@ -32,12 +32,12 @@ public class JobInterview implements AggregateRoot<Integer> {
     @JoinColumn(name = "APPLICATION_ID")
     private Application application;
 
-    @Column(name = "INTERVIEW_MODEL")
+    @OneToOne
+    @JoinColumn(name = "INTERVIEW_MODEL")
     private InterviewModel interviewModel;
 
 
-    public JobInterview(int id, Calendar createdOn, Time time, Score score, Result result, Application application, InterviewModel interviewModel) {
-        this.id = id;
+    public JobInterview(Calendar createdOn, Time time, Score score, Result result, Application application, InterviewModel interviewModel) {
         this.createdOn = createdOn;
         this.time = time;
         this.score = score;
@@ -78,7 +78,13 @@ public class JobInterview implements AggregateRoot<Integer> {
         return interviewModel;
     }
 
-    public InterviewModel changeInterviewModel(InterviewModel interviewModel){ return this.interviewModel = interviewModel; }
+    public void changeInterviewModel(InterviewModel interviewModelToChange) {
+        if (interviewModelToChange != null) {
+            this.interviewModel = interviewModelToChange;
+        } else {
+            System.out.println("not able to change it");
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

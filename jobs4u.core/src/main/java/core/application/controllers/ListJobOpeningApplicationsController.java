@@ -25,7 +25,6 @@ public class ListJobOpeningApplicationsController {
     private final ApplicationService appServ = new ApplicationService();
 
 
-
     /**
      * Retrieves all applications associated with a specific job opening.
      *
@@ -44,8 +43,6 @@ public class ListJobOpeningApplicationsController {
         }
         return allApplicationsJobOpening;
     }
-
-
 
     /**
      * Finds a job opening by its reference.
@@ -70,10 +67,10 @@ public class ListJobOpeningApplicationsController {
      * @param id The ID of the application.
      * @return The application if found, otherwise null.
      */
-    public Application findApplicationByID(int id){
+    public Application findApplicationByID(int id) {
         Iterable<Application> allApplications = appServ.allApplications();
-        for(Application application : allApplications){
-            if (application.identity() == id){
+        for (Application application : allApplications) {
+            if (application.identity() == id) {
                 return application;
             }
         }

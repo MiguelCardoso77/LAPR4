@@ -1,5 +1,6 @@
 package core.persistence;
 
+import core.domain.interview.InterviewModel;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.pluginManagement.importer.LanguageImporterPluginRepository;
 import core.pluginManagement.language.LanguageRepository;
@@ -116,10 +117,18 @@ public interface RepositoryFactory {
 
     JobInterviewRepository jobInterviews(TransactionalContext autoTx);
     JobInterviewRepository jobInterviews();
+
     JobRequirementsSpecificationRepository jobRequirements(TransactionalContext autoTx);
     JobRequirementsSpecificationRepository jobRequirements();
+
     LanguageImporterPluginRepository languageImporterPlugins();
+
     LanguageRepository languages();
+
     LanguageTypeRepository languageTypes();
+
+
+    InterviewModelRepository interviewModelRepository(TransactionalContext autoTx);
+    InterviewModelRepository interviewModelRepository();
 
 }

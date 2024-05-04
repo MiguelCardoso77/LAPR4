@@ -120,7 +120,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return null;
     }
 
+    @Override
+    public InterviewModelRepository interviewModelRepository(TransactionalContext autoTx) {
+        return new JpaInterviewModelsRepository(autoTx);
+    }
 
+    @Override
+    public InterviewModelRepository interviewModelRepository() {
+        return new JpaInterviewModelsRepository(Application.settings().getPersistenceUnitName());
+    }
 
 
 }

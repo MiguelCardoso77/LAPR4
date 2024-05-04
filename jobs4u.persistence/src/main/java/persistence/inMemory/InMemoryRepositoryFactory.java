@@ -119,4 +119,15 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return null;
     }
 
+    @Override
+    public InterviewModelRepository interviewModelRepository(TransactionalContext autoTx) {
+        return new InMemoryInterviewModelsRepository();
+    }
+
+    @Override
+    public InterviewModelRepository interviewModelRepository() {
+        return null;
+    }
+
+
 }

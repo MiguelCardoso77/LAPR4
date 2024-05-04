@@ -15,21 +15,20 @@ public class JobInterviewBuilder implements DomainFactory<JobInterview> {
     private Application application;
     private InterviewModel interviewModel;
 
-    public JobInterviewBuilder withAll(int id, Calendar createdOn, int time, int score, String result,
+    public JobInterviewBuilder withAll(Calendar createdOn, int time, int score, String result,
                                        Application application, InterviewModel interviewModel) {
-        this.id = id;
         this.createdOn = createdOn;
         this.time = new Time(time);
         this.score = new Score(score);
         this.result = new Result(result);
         this.application = application;
-        this.interviewModel = interviewModel;
+        this.interviewModel = null;
         return this;
     }
 
     @Override
     public JobInterview build() {
-        return new JobInterview(id, createdOn, time, score, result, application, interviewModel);
+        return new JobInterview(createdOn, time, score, result, application, null);
     }
 
 }

@@ -17,8 +17,8 @@ public class JobsBootstrapper implements Action {
     public boolean execute() {
         CompanyBootstrapper companyBootstrapper = new CompanyBootstrapper();
 
-        registerJobOpening("FEUP", "Jogador da Bola", 3, "Estádio do Dragão", Mode.ON_SITE, ContractType.FULL_TIME, "Ponta de Lança", companyBootstrapper.controller.addCompany("FEUP"));
-        registerJobOpening("FMUP", "Chefe de Cozinha", 2, "Bar da Ae", Mode.ON_SITE, ContractType.FULL_TIME, "Chef", companyBootstrapper.controller.addCompany("FMUP"));
+        registerJobOpening("FEUP-000123", "Jogador da Bola", 3, "Estádio do Dragão", Mode.ON_SITE, ContractType.FULL_TIME, "Ponta de Lança", companyBootstrapper.controller.addCompany("FEUP"));
+        registerJobOpening("FMUP-000123", "Chefe de Cozinha", 2, "Bar da Ae", Mode.ON_SITE, ContractType.FULL_TIME, "Chef", companyBootstrapper.controller.addCompany("FMUP"));
         registerJobOpening("IBM-000123", "Software Engineer", 4, "IBM st.", Mode.HYBRID, ContractType.FULL_TIME, "Software Engineer", companyBootstrapper.controller.addCompany("IBM"));
 
         return true;

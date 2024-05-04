@@ -1,14 +1,21 @@
 package core.domain.interview;
 
+import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.ValueObject;
-import jakarta.persistence.Embeddable;
-
+import jakarta.persistence.*;
 /**
  * Represents an interview model, which is a value object.
  */
-@Embeddable
-public class InterviewModel implements ValueObject {
+@Entity
+@Table(name = "INTERVIEW_MODEL")
+public class InterviewModel implements AggregateRoot<Integer> {
+
+    @Column(name = "MODEL")
     private String interviewModel;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer idInterviewModel;
 
     /**
      * Constructs a new InterviewModel object with the specified interview model value.
@@ -16,6 +23,11 @@ public class InterviewModel implements ValueObject {
      * @param interviewModel The interview model value.
      */
     public InterviewModel(String interviewModel) {
+        this.interviewModel = interviewModel;
+    }
+
+    public InterviewModel(Integer idInterviewModel, String interviewModel) {
+        this.idInterviewModel = idInterviewModel;
         this.interviewModel = interviewModel;
     }
 
@@ -55,6 +67,11 @@ public class InterviewModel implements ValueObject {
         return this.interviewModel.hashCode();
     }
 
+    @Override
+    public boolean sameAs(Object other) {
+        return false;
+    }
+
     /**
      * Returns a string representation of this InterviewModel.
      *
@@ -62,7 +79,14 @@ public class InterviewModel implements ValueObject {
      */
     @Override
     public String toString() {
-        return interviewModel;
+        return "Model : " + interviewModel;
     }
 
+    @Override
+    public Integer identity() {
+        return idInterviewModel;
+    }
+    public String model() {
+        return interviewModel;
+    }
 }

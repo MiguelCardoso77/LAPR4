@@ -16,10 +16,10 @@ public class JobInterviewService {
     private final JobInterviewRepository jobInterviewRepository = PersistenceContext.repositories().jobInterviews();
 
     @Transactional
-    public JobInterview registerJobInterview(int id, Calendar createdOn, int time, int score, String result,
-                                             Application application, InterviewModel interviewModel) {
+    public JobInterview registerJobInterview(Calendar createdOn, int time, int score, String result,
+                                             Application application) {
         JobInterviewBuilder jobInterviewBuilder = new JobInterviewBuilder();
-        jobInterviewBuilder.withAll(id, createdOn, time, score, result, application, interviewModel);
+        jobInterviewBuilder.withAll(createdOn, time, score, result, application, null);
         JobInterview jobInterview = jobInterviewBuilder.build();
         return jobInterviewRepository.save(jobInterview);
     }

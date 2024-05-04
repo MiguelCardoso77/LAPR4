@@ -2,6 +2,7 @@ package core.domain.application;
 
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
 
 /**
  * Represents a rank or position.
@@ -10,6 +11,7 @@ import eapli.framework.validations.Preconditions;
  * @author Tomás Gonçalves
  */
 
+@Embeddable
 public class Rank implements ValueObject {
     private String rank;
 

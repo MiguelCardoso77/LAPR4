@@ -35,16 +35,15 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
         JobRequirementsSpecification jobRequirementsSpecification = selectJobRequirementsSpecification();
 
 
-
         return false;
     }
 
-    private void showJobOpenings(){
+    private void showJobOpenings() {
         final Iterable<JobOpening> iterable = listJobOpeningController.allJobOpening();
 
-        if(!iterable.iterator().hasNext()){
+        if (!iterable.iterator().hasNext()) {
             System.out.println("There are no job openings");
-        }else{
+        } else {
             int cont = 1;
             System.out.println("List of registered Job Openings");
             for (JobOpening jobOpening : iterable) {
@@ -54,12 +53,12 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
         }
     }
 
-    private void showJobRequirementsSpecification(){
+    private void showJobRequirementsSpecification() {
         final Iterable<JobRequirementsSpecification> iterable = listJobRequirementsSpecification.allJobRequirementsSpecification();
 
-        if(!iterable.iterator().hasNext()){
+        if (!iterable.iterator().hasNext()) {
             System.out.println("There are no job requirements specifications");
-        }else{
+        } else {
             int cont1 = 1;
             System.out.println("List of registered Job Requirements Specifications: \n");
             for (JobRequirementsSpecification jobRequirementsSpecification : iterable) {
@@ -69,18 +68,18 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
         }
     }
 
-    private JobRequirementsSpecification selectJobRequirementsSpecification(){
+    private JobRequirementsSpecification selectJobRequirementsSpecification() {
         final List<JobRequirementsSpecification> list = new ArrayList<>();
-        for(JobRequirementsSpecification jobRequirementsSpecification : listJobRequirementsSpecification.allJobRequirementsSpecification()){
+        for (JobRequirementsSpecification jobRequirementsSpecification : listJobRequirementsSpecification.allJobRequirementsSpecification()) {
             list.add(jobRequirementsSpecification);
         }
 
         JobRequirementsSpecification jobRequirementsSpecification = null;
         final int option = Console.readInteger("Enter the number of the job requirements specification");
-        if(option == 0){
+        if (option == 0) {
             System.out.println("No job requirements specifications selected");
-        }else{
-            try{
+        } else {
+            try {
                 jobRequirementsSpecification = this.listJobRequirementsSpecification.findJobRequirementSpecification(list.get(option - 1).identity());
             } catch (IntegrityViolationException | ConcurrencyException ex) {
                 LOGGER.error("Error performing the operation", ex);
@@ -91,22 +90,21 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
         return jobRequirementsSpecification;
     }
 
-    private JobOpening selectJobOpening(){
+    private JobOpening selectJobOpening() {
         final List<JobOpening> list = new ArrayList<>();
         for (JobOpening jobOpening : listJobOpeningController.allJobOpening()) {
             list.add(jobOpening);
         }
         JobOpening jobOpening = null;
         final int option = Console.readInteger("Enter the number of the job opening");
-        if(option == 0){
+        if (option == 0) {
             System.out.println("No job opening selected");
-        }else{
+        } else {
             try {
                 jobOpening = this.listJobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());
-            }catch (IntegrityViolationException | ConcurrencyException ex) {
+            } catch (IntegrityViolationException | ConcurrencyException ex) {
                 LOGGER.error("Error performing the operation", ex);
-                System.out.println(
-                        "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
+                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
             }
         }
         return jobOpening;

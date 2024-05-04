@@ -2,14 +2,11 @@ package core.domain.jobRequirementsSpecification;
 
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 import java.util.Objects;
 
 @Entity
-@Table(name = "JOB_REQUIREMENTS")
+@Table(name = "JOB_REQUIREMENTS_SPECIFICATION")
 public class JobRequirementsSpecification implements AggregateRoot<Integer> {
 
     @Id

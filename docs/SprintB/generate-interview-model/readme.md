@@ -55,6 +55,15 @@ As Customer Manager, I want to generate and export a template text file to help 
 ![class-diagram](class-diagram.svg)
 
 
-## 3. Implementation
+## 3. Demonstration
 
-## 5. Demonstration
+![Implementation Image](ImplementationImage1.png)
+![Implementation Image](ImplementationImage2.png)
+![Implementation Image](ImplementationImage3.png)
+
+## 4. Comments
+
+The use case has been fully developed
+
+
+

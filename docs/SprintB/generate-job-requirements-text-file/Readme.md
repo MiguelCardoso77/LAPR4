@@ -1,7 +1,6 @@
-# Want to generate and export a template text file to help collect data fields for candidates of a job opening
+# Generate and export a template text file to help collect data fields for candidates of a job opening
 
-================================================================================================
-
+--------
 
 ## 1. Requirements Engineering
 
@@ -32,7 +31,7 @@ A102 Será o Operador e, no âmbito da US2004, este submete o ficheiro já preen
 
 ### 1.4. Found out Dependencies
 
-* This uc depends on uc1008.
+* 1008 - Deploy and configure a plugin (i.e., Job Requirement Specification or Interview Model) to be used by the system
 
 ### 1.5 Input and Output Data
 
@@ -44,7 +43,7 @@ A102 Será o Operador e, no âmbito da US2004, este submete o ficheiro já preen
 
 **Output Data:**
 
-* text file
+    * Requirements . txt file
 
 
 ## 2. Design

@@ -35,7 +35,19 @@ public class ApplicationsBootstrapper implements Action {
         JobOpening jobOpening = jobOpenings.get(0);
         Candidate candidate = candidates.get(0);
         SystemUser operator = operators.get(0);
+
+        JobOpening jobOpening1 = jobOpenings.get(0);
+        Candidate candidate1 = candidates.get(1);
+
+        JobOpening jobOpening2 = jobOpenings.get(1);
+        Candidate candidate2 = candidates.get(2);
+
+
+
         registerApplication("9", path,jobOpening,candidate,operator);
+        registerApplication("1", path,jobOpening1,candidate1,operator);
+        registerApplication("2", path,jobOpening2,candidate1,operator);
+
 
         return true;
     }

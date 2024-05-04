@@ -65,14 +65,14 @@ A75. No contexto actual vamos assumir que o Customer Manager pode aceder (consul
 - Factory
 - Persistence Context
 
-## 3. Implementation
+## 3. Demonstration
 
 ![Implementation Image](ImplementationImage.png)
 
 
 ## 4. Comments
 
-
+The use case has been fully developed
 
 
 

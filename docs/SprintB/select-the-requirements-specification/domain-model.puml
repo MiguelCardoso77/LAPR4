@@ -3,7 +3,7 @@ hide methods
 left to right direction
 'skinparam linetype ortho
 
-Title "Domain Model - 1009"
+Title "Domain Model - Select Requirements Specification"
 
 skinparam class {
     LifeLineBorderColor DarkBlue
@@ -23,27 +23,23 @@ skinparam card {
     BorderColor Black
 }
 
-package "User Aggregate"{
-entity User <<entity>><<root>>
+package "Job Requirements Specification Aggregate"{
+entity JobRequirementsSpecification <<entity>><<root>>
 
-    card UserEmail <<Value Object>> {
-    }
-    card UserName <<Value Object>> {
-    }
-    card UserPassword <<Value Object>> {
-    }
-    card UserTelephoneNumber <<Value Object>> {
-    }
+    entity Requirements <<entity>>
 
-    User --> UserEmail
-    User --> UserName
-    User --> UserTelephoneNumber
-    User --> UserPassword
+        card YearsOfExperience <<ValueObject>>{
+        }
+        card AcademicDegree <<ValueObject>>{
+        }
+        card Skills <<ValueObject>>{
+        }
 
-}
+        Requirements --> YearsOfExperience
+        Requirements --> AcademicDegree
+        Requirements --> Skills
 
-package "Customer Manager Aggregate"{
-entity CustomerManager <<entity>><<root>>
+    JobRequirementsSpecification --> Requirements
 
 }
 
@@ -88,6 +84,25 @@ entity JobOpening <<entity>><<root>>
 
 }
 
+package "User Aggregate"{
+entity User <<entity>><<root>>
+
+    card UserEmail <<Value Object>> {
+    }
+    card UserName <<Value Object>> {
+    }
+    card UserPassword <<Value Object>> {
+    }
+    card Username<<Value Object>> {
+    }
+
+    User --> UserEmail
+    User --> UserName
+    User --> Username
+    User --> UserPassword
+
+}
+
 package "Process Aggregate"{
 entity Process <<entity>><<root>>
 
@@ -121,21 +136,18 @@ entity Process <<entity>><<root>>
 
 }
 
-package "Job Requirements Specification Aggregate"{
-entity JobRequirementsSpecification <<entity>><<root>>
-
-    card Requirements <<Value Object>>{
-    }
-
-        JobRequirementsSpecification --> Requirements
+package "Customer Manager Aggregate"{
+entity CustomerManager <<entity>><<root>>
 
 }
 
-JobRequirementsSpecification "1" <-- "N" JobOpening : associated
-
-CustomerManager "1" --> "N" JobOpening : manages
 CustomerManager ---> User
 
-JobOpening --> Process
+JobRequirementsSpecification "1" <--- "N" JobOpening : associated
+
+JobOpening  --> Process
+
+CustomerManager "1" ---> "N" JobOpening : manages
+
 
 @enduml

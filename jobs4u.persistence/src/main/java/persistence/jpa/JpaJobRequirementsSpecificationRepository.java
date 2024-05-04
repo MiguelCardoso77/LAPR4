@@ -3,7 +3,6 @@ package persistence.jpa;
 
 
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
-import core.domain.jobRequirementsSpecification.Requirements;
 import core.repositories.JobRequirementsSpecificationRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;

@@ -48,8 +48,18 @@ entity Candidate <<entity>><<root>>
 package "Job Requirements Specification Aggregate"{
 entity JobRequirementsSpecification <<entity>><<root>>
 
-    card Requirements <<Value Object>>{
-    }
+    entity Requirements <<entity>>
+
+        card YearsOfExperience <<ValueObject>>{
+        }
+        card AcademicDegree <<ValueObject>>{
+        }
+        card Skills <<ValueObject>>{
+        }
+
+        Requirements --> YearsOfExperience
+        Requirements --> AcademicDegree
+        Requirements --> Skills
 
     JobRequirementsSpecification --> Requirements
 

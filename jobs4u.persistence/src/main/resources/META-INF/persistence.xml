@@ -14,7 +14,7 @@
     <class>core.domain.company.Company</class>
     <class>core.domain.customer.Customer</class>
     <class>core.domain.jobRequirementsSpecification.JobRequirementsSpecification</class>
-
+    <class>core.domain.jobRequirementsSpecification.JobRequirementsSpecification</class>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
       <property name="jakarta.persistence.jdbc.user" value="sa"/>

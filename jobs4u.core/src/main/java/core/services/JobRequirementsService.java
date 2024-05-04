@@ -2,7 +2,6 @@ package core.services;
 
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecificationBuilder;
-import core.domain.jobRequirementsSpecification.Requirements;
 import core.persistence.PersistenceContext;
 import core.repositories.JobRequirementsSpecificationRepository;
 import jakarta.transaction.Transactional;
@@ -19,14 +18,15 @@ public class JobRequirementsService {
     /**
      * Registers a new job requirement specification.
      *
-     * @param idJobRequirement The ID of the job requirement.
-     * @param requirements      The requirements for the job.
+     * @param academicDegree The academic degree required for the job.
+     * @param experience     The minimum years of experience required for the job.
+     * @param knowledge      The specific knowledge or skills required for the job.
      * @return The registered job requirements specification.
      */
     @Transactional
-    public JobRequirementsSpecification registerJobRequirement(Integer idJobRequirement , Requirements requirements) {
+    public JobRequirementsSpecification registerJobRequirement(String academicDegree, String knowledge, int experience) {
         JobRequirementsSpecificationBuilder jobRequirementsSpecificationBuilder= new JobRequirementsSpecificationBuilder();
-        jobRequirementsSpecificationBuilder.withAll(requirements , idJobRequirement);
+        jobRequirementsSpecificationBuilder.withoutId(academicDegree, experience, knowledge);
         JobRequirementsSpecification jobRequirementsSpecification = jobRequirementsSpecificationBuilder.build();
         return jobRequirementsSpecificationRepository.save(jobRequirementsSpecification);
     }

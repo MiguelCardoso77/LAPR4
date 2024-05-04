@@ -131,7 +131,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         }
         if (jobOpeningApplication != null) {
 
-            final Iterable<Application> iterable1 = theController.allApplicationsOfJobOpening(jobOpeningApplication.identity());
+            final Iterable<Application> iterable1 = theController.allApplicationsOfJobOpening(jobOpeningApplication.jobReference());
             if (!iterable1.iterator().hasNext()) {
                 System.out.println("There are no applications for this job opening ");
             } else {

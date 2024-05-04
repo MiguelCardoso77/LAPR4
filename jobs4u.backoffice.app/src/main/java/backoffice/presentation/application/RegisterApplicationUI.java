@@ -70,7 +70,6 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
 
         try {
             candidateData = applicationRegisterController.importCandidateFile(path);
-            candidateData.toString();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

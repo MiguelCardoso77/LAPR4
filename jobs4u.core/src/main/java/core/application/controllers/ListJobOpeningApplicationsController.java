@@ -38,7 +38,7 @@ public class ListJobOpeningApplicationsController {
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
         for (Application a : allApplications) {
-            if (a.jobReference().sameAs(jobReference)) {
+            if (a.jobReference().sameReference(jobReference)) {
                 allApplicationsJobOpening.add(a);
             }
         }

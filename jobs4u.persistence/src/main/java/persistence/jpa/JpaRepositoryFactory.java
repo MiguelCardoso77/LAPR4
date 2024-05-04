@@ -1,6 +1,5 @@
 package persistence.jpa;
 
-import core.domain.interview.JobInterview;
 import core.pluginManagement.importer.LanguageImporterPluginRepository;
 import core.pluginManagement.language.LanguageRepository;
 import core.pluginManagement.language.LanguageTypeRepository;
@@ -120,6 +119,8 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     public LanguageTypeRepository languageTypes() {
         return null;
     }
+
+
 
 
 }

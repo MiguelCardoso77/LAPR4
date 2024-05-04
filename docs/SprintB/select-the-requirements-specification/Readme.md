@@ -1,4 +1,4 @@
-# 1009 - select the requirements specification to be used for a job opening.
+# Select the requirements specification to be used for a job opening.
 
 --------
 
@@ -47,100 +47,82 @@ As Customer Manager, I want to select the requirements specification to be used 
       88. Existe a US1002 e as US1009 e US1011. Penso que está claro qual a responsabilidade de cada uma. A criação dos modelos das entrevistas e dos requisitos é um caso de uso especifico e com um US especifica para registar no sistema os respectivos plugins (US1008).
 
 ## 1.3. Acceptance Criteria
-* AC1: Display all registered job openings: The system should be able to show all registered job openings so that the Customer Manager can select one.
 
-* AC2: Allow selection of a job opening: The system should allow the Customer Manager to select a job opening from the displayed list.
+* AC1: Display all registered job openings: 
 
-* AC3: Display all registered requirement specifications: The system should be able to show all registered requirement specifications so that the Customer Manager can select one or choose to proceed with an existing one.
+        The system should be able to show all registered job openings so that the Customer Manager can select one.
 
-* AC4: Allow selection of a requirement specification: The system should allow the Customer Manager to select a requirement specification from the displayed list or choose to proceed with an existing one if it's already defined.
+* AC2: Allow selection of a job opening: 
 
-* AC5: Confirm selected data: The system should display all chosen details to the Customer Manager and request confirmation before proceeding.
+        The system should allow the Customer Manager to select a job opening from the displayed list.
 
-* AC6: Display successful operation message: After the Customer Manager confirms the selected data, the system should display a message indicating that the operation was successful.
+* AC3: Display all registered requirement specifications: 
+
+        The system should be able to show all registered requirement specifications so that the Customer Manager can select one or choose to proceed with an existing one.
+
+* AC4: Allow selection of a requirement specification: 
+
+        The system should allow the Customer Manager to select a requirement specification from the displayed list or choose to proceed with an existing one if it's already defined.
+
+* AC5: Confirm selected data: 
+
+        The system should display all chosen details to the Customer Manager and request confirmation before proceeding.
+
+* AC6: Display successful operation message: 
+
+        After the Customer Manager confirms the selected data, the system should display a message indicating that the operation was successful.
   
-## 1.4. Found out Dependencies
+## 2. Analysis
 
-* 1002 - As Customer Manager, I want to register a job opening.
+The .md file is followed by a Class Diagram and a Sequence Diagram, with the purpose of illustrating the design decisions.
 
-* 1003 - As Customer Manager, I want to list job openings
+Serving as an overview, here will be presented some of the main concerns:
 
-* 1008 - As Language Engineer, I want to deploy and configure a plugin (i.e., Job Requirement Specification or Interview Model) to be used by the system.
+- Which classes must be accessed in order to implement this functionality?
 
-* 2002 - As Operator, I want to register an application of a candidate for a job opening and import all files received.
+- Which classes must be created in order to implement this functionality?
 
-## 1.5 Input and Output Data
+- Who has the responsibility of selecting the requirements specification?
 
-* Input Data:
+- Are there any required validations?
 
-      - Selection of Job Opening.
-      - Selection of Requirement Specification.
-      - Data Confirmation.
+- Who has the responsibility of selecting the requirements specification?
 
-  * Output Data:
+### 2.1. Main success scenario
 
-        - List of all job openings registered in the system
-        - List of all requirement specification registered in the system
-        - Chosen details
-        - (In)Success of the operation
+    The application is registered in the system.
 
-## 1.6. System Sequence Diagram (SSD)
+## 2.2. System Sequence Diagram (SSD)
 
-![1009-system-sequence-diagram.svg](system-sequence-diagram.svg)
+![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
-## 1.7. System Diagram (SD)
+## 2.3. System Diagram (SD)
 
-![1009-sequence-diagram.svg](sequence-diagram.svg)
+![sequence-diagram.svg](sequence-diagram.svg)
 
-## 1.8 Other Relevant Remarks
+## 2.4. Partial Domain Model
 
-None to specify
+![domain-model.svg](domain-model.svg)
 
-## 2.0. Domain Model
+## 3.0. Design
 
-----------------
+### 3.1. Partial Class Diagram
 
-### 2.1. Relevant Domain Model Excerpt
+![class-diagram.svg](class-diagram.svg)
 
-![1009-domain-model.svg](domain-model.svg)
+### 3.2. Applied Patterns
 
-### 2.2. Entities and Aggregates
+- Single Responsibility Principle + High Cohesion: Every class has only one responsibility, which leads to higher cohesion.
 
-Entities represent distinct objects with unique identities and lifecycles within the domain. Aggregates are clusters of associated entities and value objects that are treated as a unit for data changes.
+- Open/Closed Principle: By using interfaces, we are allowing classes to extend the behavior, but never modify the previous implementation.
 
-* Job Opening
+- Information Expert: A clear example would be the AddCustomerController, that by following the referred pattern, as well as the creator pattern, is responsible for creating the customer.
 
-      Represents job openings created by customers.
+- Low Coupling: All the classes are loosely coupled, not depending on concrete classes, rather depending on interfaces.
 
-* JobRequirementsSpecification
+- Controller: The controller serves as a bridge between the user interface and the domain.
 
-      Represents a set of application requirements that candidates must meet for a specific job opening. These specifications are designed and implemented by Language Engineers and used in the candidate screening process.
-
-* CustomerManager:
-
-      Represents employees of the Jobs4U company who manage relationships with customer entities. Customer Managers are responsible for registering job openings, setting up recruitment processes, and overseeing the selection of candidates for their assigned customers.
-* User
-
-        Represents all the users that are registered in the system.
-
-* Process
-
-        Represents the different stages in which a job offer can be found.
-
-### Associations
-
-JobOpening "N" --> "1" JobRequirementsSpecification
-
-CustomerManager "1" --> "N" JobOpening : manages
-
-CustomerManager ---> User
-
-JobOpening --> Process
-
-## 3.0. Class Diagram
+## 4.0. Integration and Demonstration
 
 ------------------
 
-### 3.1. Relevant Class Diagram Excerpt
-
-![1009-class-diagram.svg](class-diagram.svg)

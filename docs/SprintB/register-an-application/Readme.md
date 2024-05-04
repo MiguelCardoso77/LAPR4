@@ -147,9 +147,3 @@ None to specify
 ------------------
 
 ![img.png](img.png)
-
-## 5.0. Tests
-
-------------------------
-
-tabela de testes

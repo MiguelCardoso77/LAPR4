@@ -183,9 +183,3 @@ Serving as an overview, here will be presented some of the main concerns:
 ------------------
 
 ![img_2.png](img_2.png)
-
-## 5.0. Tests
-
-------------------------
-
-tabela de testes

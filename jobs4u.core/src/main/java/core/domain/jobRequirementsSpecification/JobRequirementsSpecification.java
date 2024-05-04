@@ -61,7 +61,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
     /**
      * Default constructor required by the ORM framework.
      */
-    public JobRequirementsSpecification(){
+    protected JobRequirementsSpecification(){
         //for ORM only
     }
     /**

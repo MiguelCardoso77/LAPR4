@@ -55,7 +55,6 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
 
         if(jobOpening != null){
             System.out.println("Requirements specifications selected!");
-            System.out.println(jobOpening);
         }else{
             System.out.println("Failed to select the requirements specifications.");
         }

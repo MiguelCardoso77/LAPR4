@@ -104,7 +104,6 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
             Application application = applicationRegisterController.registerApplication("to be specified", applicationFiles, jobOpening, applicationCandidate, operator);
             if(application != null){
                 System.out.println("Application registered successfully");
-                System.out.println(application);
             }else{
                 System.out.println("Failed to register application.");
             }

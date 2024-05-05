@@ -28,9 +28,7 @@ public class ApplicationService {
      * @return                  The registered application.
      */
     @Transactional
-    public Application registerApplication(Rank rank,
-                                           String applicationFiles, JobOpening jobReference,
-                                           Candidate candidate, SystemUser operator){
+    public Application registerApplication(Rank rank, String applicationFiles, JobOpening jobReference, Candidate candidate, SystemUser operator){
         ApplicationBuilder applicationBuilder = new ApplicationBuilder();
         applicationBuilder.withAll(rank, applicationFiles, jobReference, candidate, operator);
         Application application = applicationBuilder.build();

@@ -141,15 +141,8 @@ package "ANTLR Service Aggregate"{
 }
 
 
-package "Language Engineer Aggregate"{
-entity LanguageEngineer <<entity>><<root>>
-
-}
-
 
     Application "1" ---> "1" JobInterview
-
-    LanguageEngineer "1" ---> "N" InterviewModel : creates
 
     InterviewModel "1" <--- "N" JobInterview : uses
 

@@ -1,0 +1,113 @@
+@startuml
+skinparam linetype ortho
+'left to right direction
+
+class SelectInterviewModelUI {
+    + doShow()
+    + showJobOpenings()
+    + selectJobOpening()
+    + showApplicationsOfJobOpening(jobOpening)
+    + selectApplication()
+    + showInterviewsOfApplication(application)
+    + selectJobInterview()
+    + selectInterviewModel()
+    + headline()
+}
+
+class ListJobOpeningController {
+    + allJobOpening()
+    + findJobOpeningByJobReference(jobReference)
+}
+
+class ListJobOpeningApplicationsController {
+    + allApplicationsOfJobOpening(JobReference jobReference)
+    + findJobOpening(JobReference jobReference)
+    + findApplicationByID(int id)
+}
+
+class ListJobInterviewsApplicationController {
+    + allJobInterviewsOfApplication(Application application)
+    + findJobInterviewById(Integer identity)
+}
+
+class ListInterviewModelsController {
+    + allInterviewModels()
+    + importInterviewModel(Path path)
+    + extractInterviewModelFromFile(List<String> data)
+}
+
+class SelectInterviewModelController {
+    + showJobOpenings()
+    + showApplicationsOfJobOpening(JobOpening jobOpening)
+    + showInterviewsOfApplication(Application application)
+    + listAndSelectInterviewModels()
+}
+
+class JobOpeningService {
+    + registerJobOpening(JobReference jobReference, String description, int vacanciesNumber, String address, \n Mode mode, ContractType contractType, String titleOrFunction, Company company)
+    + findJobOpening(JobReference jobReference)
+    + verifyJobReference(JobReference jobReference)
+    + allJobOpenings()
+}
+
+class ApplicationService {
+    + registerApplication(Rank rank, String applicationFiles, \n JobOpening jobReference, Candidate candidate, SystemUser operator)
+    + findApplicationById(int applicationID)
+    + allApplications()
+}
+
+class JobInterviewService {
+    + registerJobInterview(Calendar createdOn, int time, int score, \n String result,Application application)
+    + allJobInterviews()
+}
+class JobInterviewRepository {
+    + allJobInterviews()
+}
+
+class ApplicationRepository {
+    + ofIdentity(Integer id)
+    + allApplications()
+}
+
+class JobOpeningRepository {
+    + ofIdentity(JobReference id)
+    + allJobOpenings()
+}
+
+class InterviewService {
+    + allInterviewModels()
+    + registerJobRequirement(String model)
+}
+
+class InterviewModelRepository {
+    + allInterviewModels()
+    + ofIdentity(Integer id)
+}
+
+SelectInterviewModelUI --> ListJobOpeningController
+SelectInterviewModelUI --> ListJobOpeningApplicationsController
+SelectInterviewModelUI --> ListJobInterviewsApplicationController
+SelectInterviewModelUI --> ListInterviewModelsController
+SelectInterviewModelUI --> SelectInterviewModelController
+
+ListJobOpeningController --> JobOpeningService
+JobOpeningService --> JobOpeningRepository
+ListJobOpeningApplicationsController --> JobOpeningService
+ListJobOpeningApplicationsController --> ApplicationService
+ApplicationService --> ApplicationRepository
+
+ListJobInterviewsApplicationController --> ApplicationService
+ListJobInterviewsApplicationController --> JobInterviewService
+
+JobInterviewService --> JobInterviewRepository
+
+ListInterviewModelsController --> InterviewService
+
+InterviewService --> InterviewModelRepository
+
+SelectInterviewModelController --> ListJobOpeningController
+SelectInterviewModelController --> ListJobOpeningApplicationsController
+SelectInterviewModelController --> ListJobInterviewsApplicationController
+
+
+@enduml

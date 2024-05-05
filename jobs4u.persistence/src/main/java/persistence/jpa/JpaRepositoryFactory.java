@@ -130,5 +130,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaInterviewModelsRepository(Application.settings().getPersistenceUnitName());
     }
 
+    @Override
+    public ProcessRepository processRepository(TransactionalContext autoTx) {
+            return new JpaProcessRepository(autoTx);
+    }
+
+    @Override
+    public ProcessRepository processRepository() {
+        return new JpaProcessRepository(Application.settings().getPersistenceUnitName());
+    }
+
+
 
 }

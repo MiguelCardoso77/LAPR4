@@ -131,4 +131,8 @@ public interface RepositoryFactory {
     InterviewModelRepository interviewModelRepository(TransactionalContext autoTx);
     InterviewModelRepository interviewModelRepository();
 
+    ProcessRepository processRepository(TransactionalContext autoTx);
+    ProcessRepository processRepository();
+
+
 }

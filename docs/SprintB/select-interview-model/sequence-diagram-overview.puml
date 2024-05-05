@@ -1,0 +1,228 @@
+@startuml
+autonumber
+
+
+actor "Customer Manager" as CM
+participant SelectInterviewModelUI <<presentation>>
+participant SelectInterviewModelController <<application>>
+participant ListJobOpeningController <<application>>
+participant JobOpeningService <<service>>
+database    JobOpeningRepository <<repository>>
+participant ListJobOpeningApplicationsController <<application>>
+participant ListJobInterviewsApplicationController <<application>>
+participant AuthorizationService <<service>>
+participant ApplicationService <<service>>
+database    ApplicationRepository <<repository>>
+participant ListInterviewModelsController  <<application>>
+
+participant JobInterviewService <<service>>
+database    JobInterviewRepository <<repository>>
+participant JobInterview <<JobInterview>>
+
+
+activate CM
+
+
+    CM -> SelectInterviewModelUI: select interview model
+
+        activate SelectInterviewModelUI
+
+    SelectInterviewModelUI -> SelectInterviewModelController : showJobOpenings()
+
+        activate SelectInterviewModelController
+
+    SelectInterviewModelController --> SelectInterviewModelUI : listOfJobOpenings
+
+        deactivate SelectInterviewModelController
+
+    SelectInterviewModelUI --> CM: asks to select a jobOpening
+
+        deactivate SelectInterviewModelUI
+
+    CM -> SelectInterviewModelUI : selects jobOpening
+
+        activate SelectInterviewModelUI
+
+    SelectInterviewModelUI -> ListJobOpeningController :findJobOpeningByJobReference(jobReference)
+
+        activate ListJobOpeningController
+
+    ListJobOpeningController -> JobOpeningService : findJobOpening(jobReference)
+
+        activate JobOpeningService
+
+    JobOpeningService -> JobOpeningRepository : allJobOpenings()
+
+        activate JobOpeningRepository
+
+    JobOpeningRepository --> JobOpeningService : listOfJobOpenings
+
+        deactivate JobOpeningRepository
+
+    JobOpeningService --> ListJobOpeningController: jobOpening
+
+        deactivate JobOpeningService
+
+    ListJobOpeningController --> SelectInterviewModelUI : jobOpening
+
+        deactivate ListJobOpeningController
+
+    SelectInterviewModelUI -> SelectInterviewModelController : showApplicationsOfJobOpening(jobOpening)
+
+        activate SelectInterviewModelController
+
+    SelectInterviewModelController -> ListJobOpeningApplicationsController : allApplicationsOfJobOpening(jobReference)
+
+        activate ListJobOpeningApplicationsController
+
+    ListJobOpeningApplicationsController -> AuthorizationService : ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+    AuthorizationService --> ListJobOpeningApplicationsController : true
+
+        deactivate AuthorizationService
+
+    ListJobOpeningApplicationsController -> ApplicationService : allApplications()
+
+        activate ApplicationService
+
+    ApplicationService -> ApplicationRepository : allApplications()
+
+        activate ApplicationRepository
+
+    ApplicationRepository --> ApplicationService: listOfApplications
+
+        deactivate ApplicationRepository
+
+    ApplicationService --> ListJobOpeningApplicationsController: listOfApplicationsOfJobOpening
+
+        deactivate ApplicationService
+
+    ListJobOpeningApplicationsController --> SelectInterviewModelController : listOfApplicationsOfJobOpening
+
+        deactivate ListJobOpeningApplicationsController
+
+    SelectInterviewModelController --> SelectInterviewModelUI : listOfApplicationsOfJobOpening
+
+        deactivate SelectInterviewModelController
+
+    SelectInterviewModelUI --> CM : asks to select an application
+
+        deactivate SelectInterviewModelUI
+
+    CM -> SelectInterviewModelUI : selects application
+
+        activate SelectInterviewModelUI
+
+    SelectInterviewModelUI -> ListJobOpeningApplicationsController : findApplicationByID(applicationID)
+
+        activate ListJobOpeningApplicationsController
+
+    ListJobOpeningApplicationsController -> ApplicationService : allApplications()
+
+        activate ApplicationService
+
+    ApplicationService -> ApplicationRepository : allApplications()
+
+        activate ApplicationRepository
+
+    ApplicationRepository --> ApplicationService : listOfApplications
+
+        deactivate ApplicationRepository
+
+    ApplicationService --> ListJobOpeningApplicationsController : listOfApplications
+
+        deactivate ApplicationService
+
+    ListJobOpeningApplicationsController --> SelectInterviewModelUI : application
+
+        deactivate ListJobOpeningApplicationsController
+
+    SelectInterviewModelUI -> SelectInterviewModelController : showInterviewsOfApplication(application)
+
+        activate SelectInterviewModelController
+
+    SelectInterviewModelController -> ListJobInterviewsApplicationController : allJobInterviewsOfApplication(application)
+
+        activate ListJobInterviewsApplicationController
+
+    ListJobInterviewsApplicationController -> AuthorizationService : ensureAuthenticatedUserHasAnyOf(roles)
+
+        activate AuthorizationService
+
+    AuthorizationService --> ListJobInterviewsApplicationController : true
+
+        deactivate AuthorizationService
+
+    ListJobInterviewsApplicationController -> JobInterviewService : allJobInterviews()
+
+        activate JobInterviewService
+
+    JobInterviewService -> JobInterviewRepository : allJobInterviews()
+
+        activate JobInterviewRepository
+
+    JobInterviewRepository --> JobInterviewService : listOfJobInterviews
+
+        deactivate JobInterviewRepository
+
+    JobInterviewService --> ListJobInterviewsApplicationController : listOfJobInterviews
+
+        deactivate JobInterviewService
+
+    ListJobInterviewsApplicationController --> SelectInterviewModelController : listOfJobInterviewsOfApplication
+
+        deactivate ListJobInterviewsApplicationController
+
+    SelectInterviewModelController --> SelectInterviewModelUI : listOfJobInterviewsOfApplication
+
+        deactivate SelectInterviewModelController
+
+    SelectInterviewModelUI --> CM : asks to select a jobInterview
+
+        deactivate SelectInterviewModelUI
+
+    CM -> SelectInterviewModelUI : selects jobInterview
+
+        activate SelectInterviewModelUI
+
+    SelectInterviewModelUI -> SelectInterviewModelController : listAndSelectInterviewModels()
+
+        activate SelectInterviewModelController
+
+    SelectInterviewModelController --> SelectInterviewModelUI : interviewModelString
+
+        deactivate SelectInterviewModelController
+
+    SelectInterviewModelUI -> ListInterviewModelsController : importInterviewModel(Path.of(interviewModelString))
+
+        activate ListInterviewModelsController
+
+    ListInterviewModelsController --> SelectInterviewModelUI : listOfData
+
+        deactivate ListInterviewModelsController
+
+    SelectInterviewModelUI -> ListInterviewModelsController : extractInterviewModelFromFile(data)
+
+        activate ListInterviewModelsController
+
+    ListInterviewModelsController --> SelectInterviewModelUI : interviewModel
+
+        deactivate ListInterviewModelsController
+
+    SelectInterviewModelUI  -> JobInterview : changeInterviewModel(interviewModel)
+
+        activate JobInterview
+
+    JobInterview --> SelectInterviewModelUI : true
+
+        deactivate JobInterview
+
+    SelectInterviewModelUI --> CM : shows operation's success
+
+        deactivate SelectInterviewModelUI
+
+        deactivate CM
+
+@enduml

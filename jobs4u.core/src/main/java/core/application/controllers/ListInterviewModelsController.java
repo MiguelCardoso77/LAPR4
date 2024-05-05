@@ -1,9 +1,7 @@
 package core.application.controllers;
 
 import core.domain.interview.InterviewModel;
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.services.InterviewService;
-import core.services.JobInterviewService;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,6 +18,7 @@ public class ListInterviewModelsController {
         public Iterable<InterviewModel> allInterviewModels(){
                 return service.allInterviewModels();
         }
+
 
         public static List<String> importInterviewModel(Path path) throws FileNotFoundException {
                 List<String> interviews = new ArrayList<>();

@@ -29,18 +29,20 @@ public class SelectInterviewModelUI extends AbstractUI {
 
     final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
 
-    Iterable<JobOpening> jobOpenings = new ArrayList<>();
-
     final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
 
     final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
 
     final ListInterviewModelsController listInterviewModelsController = new ListInterviewModelsController();
+
+    final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
+
+    Iterable<JobOpening> jobOpenings = new ArrayList<>();
+
     Iterable<Application> applicationList = new ArrayList<>();
 
     Iterable<JobInterview> jobInterviews = new ArrayList<>();
 
-    final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
 
 
     @Override
@@ -55,19 +57,19 @@ public class SelectInterviewModelUI extends AbstractUI {
         showInterviewsOfApplication(application);
         JobInterview jobInterview = selectJobInterview();
 
-        String interviewModel = selectInterviewModel();
+        String interviewModelString = selectInterviewModel();
         List<String> data;
 
         try {
-            data = listInterviewModelsController.importInterviewModel(Path.of(interviewModel));
+            data = listInterviewModelsController.importInterviewModel(Path.of(interviewModelString));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        InterviewModel interviewModel1 = listInterviewModelsController.extractInterviewModelFromFile(data);
+        InterviewModel interviewModel = listInterviewModelsController.extractInterviewModelFromFile(data);
 
         if (jobInterview != null) {
-            jobInterview.changeInterviewModel(interviewModel1);
+            jobInterview.changeInterviewModel(interviewModel);
         }
 
         return false;

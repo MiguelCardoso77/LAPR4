@@ -130,4 +130,14 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
 
+    @Override
+    public ProcessRepository processRepository(TransactionalContext autoTx) {
+        return new InMemoryProcessRepository();
+    }
+
+    @Override
+    public ProcessRepository processRepository() {
+        return null;
+    }
+
 }

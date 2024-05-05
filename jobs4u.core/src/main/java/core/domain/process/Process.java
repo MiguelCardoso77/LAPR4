@@ -1,7 +1,10 @@
 package core.domain.process;
+import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
+
+import java.util.Calendar;
 
 /**
  * Represents a process associated with a job opening.
@@ -20,22 +23,21 @@ public class Process implements AggregateRoot<Integer> {
     @Column(name = "PROCESS_STATE")
     private ProcessState processState;
 
-    @Column(name = "PROCESS_DATE")
-    private ProcessDate processDate;
+    @Temporal(TemporalType.DATE)
+    private Calendar processDate;
 
-    @Column(name = "JOB_REFERENCE")
-    private JobReference jobReference;
+    @OneToOne
+    @JoinColumn(name = "JOB_REFERENCE")
+    private JobOpening jobReference;
 
     /**
      * Constructs a Process object with the given parameters.
      *
-     * @param idProcess     the unique identifier of the process
      * @param processState  the state of the process
      * @param processDate   the date of the process
      * @param jobReference  the reference to the associated job opening
      */
-    public Process(Integer idProcess, ProcessState processState, ProcessDate processDate, JobReference jobReference){
-        this.idProcess = idProcess;
+    public Process(ProcessState processState, Calendar processDate, JobOpening jobReference){
         this.processState = processState;
         this.processDate = processDate;
         this.jobReference = jobReference;
@@ -99,12 +101,12 @@ public class Process implements AggregateRoot<Integer> {
      *
      * @return the process date
      */
-    public ProcessDate processDate() { return  this.processDate; }
+    public Calendar processDate() { return this.processDate; }
 
     /**
      * Retrieves the reference to the associated job opening.
      *
      * @return the job reference
      */
-    public JobReference jobReference() { return this.jobReference; }
+    public JobOpening jobReference() { return this.jobReference; }
 }

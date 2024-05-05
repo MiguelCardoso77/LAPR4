@@ -1,7 +1,8 @@
 @startuml
 skinparam linetype ortho
-left to right direction
+'left to right direction
 
+package "ui"{
 class CreateJobOpeningUI {
     + doShow()
     + showModes()
@@ -10,7 +11,10 @@ class CreateJobOpeningUI {
     vacanciesNumber, address, modes, contractTypes, \ntitleOrFunction)
     +headline()
 }
+}
+package "jobOpening" {
 
+package "application" {
 class CreateJobOpeningController {
     + repositories()
     + companies()
@@ -18,7 +22,9 @@ class CreateJobOpeningController {
     + addJobOpening(jobReference, description,
     vacanciesNumber, address, modes, contractTypes, \ntitleOrFunction)
 }
+}
 
+package "domain" {
 class JobOpening {
    - Description description
    - VacanciesNumber vacanciesNumber
@@ -41,45 +47,31 @@ class JobOpening {
    + titleOrFunction()
 }
 
-class JobOpeningRepository {
-    + allJobOpenings()
-}
-
-class JobOpeningService {
-    + registerJobOpening(jobReference, description, vacanciesNumber,
-    address, mode, contractType, titleOrFunction);
-    + allJobOpenings()
-}
 
 class JobOpeningBuilder {
     + withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction)
     + build()
 }
 
-
-class PersistenceContext {
-    + repositories()
-    + PersistenceContext()
+}
+package "repositories" {
+interface JobOpeningRepository {
+    + allJobOpenings()
+}
 }
 
-interface RepositoryFactory {
-    + newTransactionalContext()
-    + users(TransactionalContext autoTx)
-    + users()
-    + customerUsers(TransactionalContext autoTx)
-    + customerUsers()
-    + signupRequests(TransactionalContext autoTx)
-    + signupRequests()
-    + jobOpenings(TransactionalContext autoTx)
-    + jobOpenings()
-    + applications(TransactionalContext autoTx)
-    + applications()
+package "services" {
+class JobOpeningService {
+    + registerJobOpening(jobReference, description, vacanciesNumber,
+    address, mode, contractType, titleOrFunction);
+    + allJobOpenings()
+}
 }
 
+
+}
 
 CreateJobOpeningUI -> CreateJobOpeningController
-
-CreateJobOpeningController --> PersistenceContext
 
 CreateJobOpeningController -> JobOpeningService
 
@@ -89,6 +81,5 @@ JobOpeningService -> JobOpeningBuilder
 
 JobOpeningBuilder -> JobOpening
 
-PersistenceContext -> RepositoryFactory
 
 @enduml

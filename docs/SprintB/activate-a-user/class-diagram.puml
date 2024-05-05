@@ -1,36 +1,22 @@
 @startuml
 'skinparam linetype ortho
 left to right direction
-
+package "ui"{
 class ActivateUserUI {
     + doShow()
     + headline()
 }
+}
 
+package "authz" {
+package "application" {
 class ActivateUserController {
     + deactivatedUsers()
     + activateUser(systemUser)
 }
-
-interface RepositoryFactory {
-    + newTransactionalContext()
-    + users(TransactionalContext autoTx)
-    + users()
-    + customerUsers(TransactionalContext autoTx)
-    + customerUsers()
-    + signupRequests(TransactionalContext autoTx)
-    + signupRequests()
-    + jobOpenings(TransactionalContext autoTx)
-    + jobOpenings()
-    + applications(TransactionalContext autoTx)
-    + applications()
 }
 
-class PersistenceContext {
-    + repositories()
-    + PersistenceContext()
-}
-
+package "user" {
 class UserManagementService {
     + UserManagementService(userRepo, policy, encoder)
     + registerNewUser( username,  rawPassword,
@@ -45,16 +31,13 @@ class UserManagementService {
     + deactivateUser(user)
     + activateUser(user)
 }
-
+}
+}
 
 
 ActivateUserUI ---> ActivateUserController
 
 ActivateUserController ---> UserManagementService
 
-ActivateUserController ---> PersistenceContext
-
-
-PersistenceContext ---> RepositoryFactory
 
 @enduml

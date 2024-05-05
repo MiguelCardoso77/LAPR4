@@ -45,11 +45,11 @@ As Customer Manager, I want to register a job opening.
 
 ## 1.6. System Sequence Diagram (SSD)
 
-![1002-system-sequence-diagram.svg](1002-system-sequence-diagram.svg)
+![1002-system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ## 1.7. System Diagram (SD)
 
-![1002-sequence-diagram-overview.svg](1002-sequence-diagram-overview.svg)
+![1002-sequence-diagram-overview.svg](sequence-diagram-overview.svg)
 
 ## 1.8 Other Relevant Remarks
 
@@ -95,4 +95,4 @@ Entities represent distinct objects with unique identities and lifecycles within
 
 ### 3.1. Relevant Class Diagram Excerpt
 
-![1002-class-diagram.svg](1002-class-diagram.svg)
+![1002-class-diagram.svg](class-diagram.svg)

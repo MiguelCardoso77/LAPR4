@@ -26,6 +26,12 @@ public class InterviewModel implements AggregateRoot<Integer> {
         this.interviewModel = interviewModel;
     }
 
+    /**
+     * Constructs a new InterviewModel object with the specified ID and interview model value.
+     *
+     * @param idInterviewModel The ID of the interview model.
+     * @param interviewModel   The interview model value.
+     */
     public InterviewModel(Integer idInterviewModel, String interviewModel) {
         this.idInterviewModel = idInterviewModel;
         this.interviewModel = interviewModel;
@@ -67,6 +73,12 @@ public class InterviewModel implements AggregateRoot<Integer> {
         return this.interviewModel.hashCode();
     }
 
+    /**
+     * Checks if this InterviewModel is the same as another object.
+     *
+     * @param other The object to compare to.
+     * @return True if this InterviewModel is the same as the other object, false otherwise.
+     */
     @Override
     public boolean sameAs(Object other) {
         return false;
@@ -82,10 +94,21 @@ public class InterviewModel implements AggregateRoot<Integer> {
         return "Model : " + interviewModel;
     }
 
+    /**
+     * Retrieves the identity of this InterviewModel.
+     *
+     * @return The identity of this InterviewModel.
+     */
     @Override
     public Integer identity() {
         return idInterviewModel;
     }
+
+    /**
+     * Retrieves the interview model value.
+     *
+     * @return The interview model value.
+     */
     public String model() {
         return interviewModel;
     }

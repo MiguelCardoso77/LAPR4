@@ -2,6 +2,7 @@
 skinparam linetype ortho
 'left to right direction
 
+package "ui"{
 class SelectInterviewModelUI {
     + doShow()
     + showJobOpenings()
@@ -13,7 +14,9 @@ class SelectInterviewModelUI {
     + selectInterviewModel()
     + headline()
 }
-
+}
+package "interviewModel"{
+package "application" {
 class ListJobOpeningController {
     + allJobOpening()
     + findJobOpeningByJobReference(jobReference)
@@ -43,6 +46,10 @@ class SelectInterviewModelController {
     + listAndSelectInterviewModels()
 }
 
+}
+
+
+package "services" {
 class JobOpeningService {
     + registerJobOpening(JobReference jobReference, String description, int vacanciesNumber, String address, \n Mode mode, ContractType contractType, String titleOrFunction, Company company)
     + findJobOpening(JobReference jobReference)
@@ -60,6 +67,15 @@ class JobInterviewService {
     + registerJobInterview(Calendar createdOn, int time, int score, \n String result,Application application)
     + allJobInterviews()
 }
+class InterviewService {
+    + allInterviewModels()
+    + registerJobRequirement(String model)
+}
+
+}
+
+
+package "repositories" {
 class JobInterviewRepository {
     + allJobInterviews()
 }
@@ -73,16 +89,16 @@ class JobOpeningRepository {
     + ofIdentity(JobReference id)
     + allJobOpenings()
 }
-
-class InterviewService {
-    + allInterviewModels()
-    + registerJobRequirement(String model)
-}
-
 class InterviewModelRepository {
     + allInterviewModels()
     + ofIdentity(Integer id)
 }
+
+}
+}
+
+
+
 
 SelectInterviewModelUI --> ListJobOpeningController
 SelectInterviewModelUI --> ListJobOpeningApplicationsController

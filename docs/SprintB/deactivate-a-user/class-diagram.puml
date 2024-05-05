@@ -2,35 +2,22 @@
 'skinparam linetype ortho
 left to right direction
 
+package "ui" {
 class DeactivateUserUI {
     + doShow()
     + headline()
 }
+}
 
+package "authz"{
+package "application" {
 class DeactivateController {
     + activeUsers()
     + deactivateUser(systemUser)
 }
-
-interface RepositoryFactory {
-    + newTransactionalContext()
-    + users(TransactionalContext autoTx)
-    + users()
-    + customerUsers(TransactionalContext autoTx)
-    + customerUsers()
-    + signupRequests(TransactionalContext autoTx)
-    + signupRequests()
-    + jobOpenings(TransactionalContext autoTx)
-    + jobOpenings()
-    + applications(TransactionalContext autoTx)
-    + applications()
 }
 
-class PersistenceContext {
-    + repositories()
-    + PersistenceContext()
-}
-
+package "user"  {
 class UserManagementService {
     + UserManagementService(userRepo, policy, encoder)
     + registerNewUser( username,  rawPassword,
@@ -45,14 +32,12 @@ class UserManagementService {
     + deactivateUser(user)
     + activateUser(user)
 }
+}
+}
 
 DeactivateUserUI ---> DeactivateController
 
 DeactivateController ---> UserManagementService
 
-DeactivateController ---> PersistenceContext
-
-
-PersistenceContext ---> RepositoryFactory
 
 @enduml

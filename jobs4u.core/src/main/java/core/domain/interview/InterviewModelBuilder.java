@@ -1,6 +1,5 @@
 package core.domain.interview;
 
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.validations.Preconditions;
 
 public class InterviewModelBuilder {

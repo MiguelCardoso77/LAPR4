@@ -2,6 +2,7 @@
 'skinparam linetype ortho
 left to right direction
 
+package "ui" {
 class AddUserUI {
     + doShow()
     + showRoles(roleTypes)
@@ -10,7 +11,9 @@ class AddUserUI {
     + buildOperatorAvailableRoles(roleTypes)
     +  headline()
 }
-
+}
+package "authz"{
+package "application" {
 class AddUserController {
     + passwordGenerator(name)
     + addUser(username, password, firstName,
@@ -21,32 +24,10 @@ class AddUserController {
     + getRoleTypes()
     + getAllRoles()
 }
-
-class Jobs4UPasswordPolicy {
-    + isSatisfiedBy(rawPassword)
-    + passwordGenerator(name)
-    + strength(rawPassword)
 }
 
-interface RepositoryFactory {
-    + newTransactionalContext()
-    + users(TransactionalContext autoTx)
-    + users()
-    + customerUsers(TransactionalContext autoTx)
-    + customerUsers()
-    + signupRequests(TransactionalContext autoTx)
-    + signupRequests()
-    + jobOpenings(TransactionalContext autoTx)
-    + jobOpenings()
-    + applications(TransactionalContext autoTx)
-    + applications()
-}
 
-class PersistenceContext {
-    + repositories()
-    + PersistenceContext()
-}
-
+package "user" {
 class UserManagementService {
     + UserManagementService(userRepo, policy, encoder)
     + registerNewUser( username,  rawPassword,
@@ -62,15 +43,20 @@ class UserManagementService {
     + activateUser(user)
 }
 
+class Jobs4UPasswordPolicy {
+    + isSatisfiedBy(rawPassword)
+    + passwordGenerator(name)
+    + strength(rawPassword)
+}
+}
+
+}
+
 
 AddUserUI ---> AddUserController
 
 AddUserController ---> Jobs4UPasswordPolicy
 
 AddUserController ---> UserManagementService
-
-AddUserController ---> PersistenceContext
-
-PersistenceContext ---> RepositoryFactory
 
 @enduml

@@ -33,13 +33,14 @@ As Customer Manager, I want to register a job opening.
 * Input Data:
 
       - Selection of Job Opening.
-      - Selection of Requirement Specification.
+      - modes 
+      - contract
+      - companies
       - Data Confirmation.
 
 * Output Data:
 
       - List of all job openings registered in the system
-      - List of all requirement specification registered in the system
       - Chosen details
       - (In)Success of the operation
 
@@ -61,7 +62,7 @@ None to specify
 
 ### 2.1. Relevant Domain Model Excerpt
 
-![1002-domain-model.svg](1009-domain-model.svg)
+![1002-domain-model.svg](domain-model.svg)
 
 ### 2.2. Entities and Aggregates
 
@@ -71,16 +72,9 @@ Entities represent distinct objects with unique identities and lifecycles within
 
       Represents job openings created by customers.
 
-* JobRequirementsSpecification
-
-      Represents a set of application requirements that candidates must meet for a specific job opening. These specifications are designed and implemented by Language Engineers and used in the candidate screening process.
-
 * CustomerManager:
 
       Represents employees of the Jobs4U company who manage relationships with customer entities. Customer Managers are responsible for registering job openings, setting up recruitment processes, and overseeing the selection of candidates for their assigned customers.
-* User
-
-        Represents all the users that are registered in the system.
 
 * Process
 

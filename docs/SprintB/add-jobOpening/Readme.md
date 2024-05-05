@@ -6,15 +6,6 @@
 
 As Customer Manager, I want to register a job opening.
 
-## 1.2. Customer Specifications and Clarifications
-
-### From the specifications document:
-
-      Job vacancies (job openings) must include a Job Requirement Specification. This represents a set of application requirements that the applicants must achieve. For instance, we could define a job requirement specification named "front end junior programmer", were candidates must have at least 2 years of experience, a degree in computer science or similar program, and knowledge in, at least, one of the following programming languages: java, javascript, typescript. Usually this information can be collected from the curriculum vitae of the candidate.
-
-### From the client clarifications:
-
-
 ## 1.3. Acceptance Criteria
 
 * The system must be able to:
@@ -26,7 +17,7 @@ As Customer Manager, I want to register a job opening.
 
 ## 1.4. Found out Dependencies
 
-* 1002 - As Customer Manager, I want to register a job opening.
+  None
 
 ## 1.5 Input and Output Data
 
@@ -79,8 +70,6 @@ Entities represent distinct objects with unique identities and lifecycles within
 * Process
 
         Represents the different stages in which a job offer can be found.
-
-### Associations
 
 
 ## 3.0. Class Diagram

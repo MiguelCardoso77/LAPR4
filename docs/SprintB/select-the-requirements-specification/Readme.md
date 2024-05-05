@@ -121,8 +121,3 @@ Serving as an overview, here will be presented some of the main concerns:
 - Low Coupling: All the classes are loosely coupled, not depending on concrete classes, rather depending on interfaces.
 
 - Controller: The controller serves as a bridge between the user interface and the domain.
-
-## 4.0. Integration and Demonstration
-
-------------------
-

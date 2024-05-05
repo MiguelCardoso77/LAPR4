@@ -14,7 +14,7 @@
 | 4 – Correct      | The engineering process is correct. Code and design are completely aligned. Failures in the application of good practices and techniques are almost meaningless.                                                                                                                                                               |
 | 5 - Exceptional  | The engineering process is correct (order of activities). Code and design are completely aligned. Very good justification of the process followed/applied. Application of good practices and techniques is exemplary.                                                                                                          |
 
-**Selected Level:** Not applicable
+**Selected Level:** 4
 
 **Justification and Evidences:**
 
@@ -64,7 +64,7 @@ Team git repository available at :
 | 4 – Correct       | There is evidence of a team decision-making process in which students actively participate and which results in the assignment of tasks in a clear and timely manner.                                                                                 |
 | 5 - Exceptional   | There is evidence of a team decision-making process in which students actively participate and which results in the assignment of tasks in a clear and timely manner. There is evidence of group tasks such as integration and deployment activities. |
 
-**Selected Level:** 4
+**Selected Level:** 5
 
 **Justification and Evidences:**
 

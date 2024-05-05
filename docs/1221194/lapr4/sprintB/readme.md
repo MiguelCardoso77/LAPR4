@@ -14,7 +14,7 @@
 | 4 – Correct      | 	The engineering process is correct. Code and design are completely aligned. Failures in the application of good practices and techniques are almost meaningless.                                                                                                                                                               |
 | 5 - Exceptional  | 	The engineering process is correct (order of activities). Code and design are completely aligned. Very good justification of the process followed/applied. Application of good practices and techniques is exemplary.                                                                                                          |
 
-**Selected Level:** Not applicable
+**Selected Level:** 4
 
 **Justification and Evidences:**
 
@@ -32,7 +32,7 @@
 | 4 – Correct	       | Frequent use of the repository: messages that are mostly significant but sometimes fail to connect to issues/tasks. Use task/issue management boards correctly.                    |
 | 5 - Exceptional    | 	Frequent use of the repository: mostly significant messages and (virtually) no failures in connection to issues/tasks. They use task/issue management boards in an exemplary way. |
 
-**Selected Level:** 4
+**Selected Level:** 5
 
 **Justification and Evidences:**
 
@@ -71,7 +71,7 @@ https://github.com/Departamento-de-Engenharia-Informatica/sem4pi-23-24-2dd5/issu
 | 4 – Correct	| There is evidence of a team decision-making process in which students actively participate and which results in the assignment of tasks in a clear and timely manner. |
 | 5 - Exceptional |	There is evidence of a team decision-making process in which students actively participate and which results in the assignment of tasks in a clear and timely manner. There is evidence of group tasks such as integration and deployment activities. |
 
-**Selected Level:** 4
+**Selected Level:** 5
 
 **Justification and Evidences:**
 

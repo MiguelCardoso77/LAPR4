@@ -45,4 +45,9 @@ public class RankCandidatesController {
 
         return interviews;
     }
+
+    public Application updateRank(int rank, Application application) {
+        application.updateRank(rank);
+        return applicationRepository.save(application);
+    }
 }

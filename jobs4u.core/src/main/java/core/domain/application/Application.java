@@ -11,7 +11,6 @@ import jakarta.persistence.*;
 import java.util.Calendar;
 
 /**
- *
  * @author 1220812@isep.ipp.pt
  */
 
@@ -84,7 +83,7 @@ public class Application implements AggregateRoot<Integer> {
      */
     public Application(final Rank rank, final Calendar createdOn,
                        final String applicationFiles, final JobOpening jobReference,
-                       final Candidate candidate, final SystemUser operator){
+                       final Candidate candidate, final SystemUser operator) {
         Preconditions.noneNull(rank, createdOn, applicationFiles, jobReference, candidate);
         this.rank = rank;
         this.submissionDate = createdOn;
@@ -160,7 +159,7 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return the rank of the candidate
      */
-    public Rank rank(){
+    public Rank rank() {
         return this.rank;
     }
 
@@ -169,7 +168,7 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return the submission date of the application
      */
-    public Calendar submissionDate(){
+    public Calendar submissionDate() {
         return this.submissionDate;
     }
 
@@ -178,7 +177,7 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return the status of the application
      */
-    public Status status(){
+    public Status status() {
         return this.status;
     }
 
@@ -187,7 +186,7 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return the files attached to the application
      */
-    public String dataFile(){
+    public String dataFile() {
         return this.applicationFiles;
     }
 
@@ -196,7 +195,7 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return the operator who registered the application
      */
-    public SystemUser operator(){
+    public SystemUser operator() {
         return this.operator;
     }
 
@@ -205,16 +204,21 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return the candidate who submitted the application
      */
-    public Candidate candidate(){
+    public Candidate candidate() {
         return this.candidate;
     }
+
     /**
      * Retrieves the job reference of the job opening.
      *
      * @return the job reference of the associated job opening
      */
-    public JobOpening jobReference(){
+    public JobOpening jobReference() {
         return this.jobReference;
+    }
+
+    public void updateRank(int rank) {
+        this.rank = new Rank(rank);
     }
 
     /**

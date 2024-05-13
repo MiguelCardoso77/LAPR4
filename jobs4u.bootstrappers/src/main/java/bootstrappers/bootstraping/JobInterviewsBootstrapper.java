@@ -23,9 +23,11 @@ public class JobInterviewsBootstrapper implements Action {
         Application application = applications.get(0);
         int time = 140;
         int score = 20;
-        String result = "well done";
+        String result = "Not approved";
 
-        registerJobInterview(createdOn,time, score, result, application);
+        registerJobInterview(createdOn,time, score, result, applications.get(1));
+        registerJobInterview(createdOn, 20, 80, "Passed", applications.get(0));
+        registerJobInterview(createdOn, 20, 90, "Passed", applications.get(1));
 
         return true;
     }

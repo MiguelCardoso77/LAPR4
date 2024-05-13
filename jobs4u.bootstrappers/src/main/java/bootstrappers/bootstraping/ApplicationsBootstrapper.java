@@ -10,6 +10,7 @@ import core.repositories.JobOpeningRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.actions.Action;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class ApplicationsBootstrapper implements Action {
         List<Candidate> candidates = (List<Candidate>) candidateRepository.allCandidates();
         List<SystemUser> users = (List<SystemUser>) userRepository.findAll();
         List<SystemUser> operators = new ArrayList<>();
-        for (SystemUser user : users){
-            if (user.hasAny(Jobs4URoles.OPERATOR)){
+        for (SystemUser user : users) {
+            if (user.hasAny(Jobs4URoles.OPERATOR)) {
                 operators.add(user);
             }
         }
@@ -43,17 +44,16 @@ public class ApplicationsBootstrapper implements Action {
         Candidate candidate2 = candidates.get(2);
 
 
-
-        registerApplication("9", path,jobOpening,candidate,operator);
-        registerApplication("1", path,jobOpening1,candidate1,operator);
-        registerApplication("2", path,jobOpening2,candidate1,operator);
+        registerApplication("9", "/project/FEU1", jobOpening, candidate, operator);
+        registerApplication("1", "/project/FMU1", jobOpening1, candidate1, operator);
+        registerApplication("3", "/project/FMU2", jobOpening1, candidate2, operator);
+        registerApplication("2", "/project/IBM1", jobOpening2, candidate1, operator);
 
 
         return true;
     }
 
-    private void registerApplication(String rank, String applicationFiles, JobOpening jobReference,
-                                     Candidate candidate, SystemUser operator){
-        controller.registerApplication(rank,applicationFiles, jobReference,candidate,operator);
+    private void registerApplication(String rank, String applicationFiles, JobOpening jobReference, Candidate candidate, SystemUser operator) {
+        controller.registerApplication(rank, applicationFiles, jobReference, candidate, operator);
     }
 }

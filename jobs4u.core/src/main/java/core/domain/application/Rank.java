@@ -28,6 +28,13 @@ public class Rank implements ValueObject {
         this.rank = rank;
     }
 
+    public Rank(final int rank) {
+        Preconditions.nonNull(rank);
+        Preconditions.nonNegative(rank);
+
+        this.rank = String.valueOf(rank);
+    }
+
     /**
      * Default constructor for ORM (Object-Relational Mapping).
      */

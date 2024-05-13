@@ -76,9 +76,48 @@ as other data/information that may not be part of the system).
 *  None to specify 
 
 ## 2. Analysis and Design
+To find out more details about the analysis and design of Application, Job Opening or Job Interview, please refer to the following documents:
+
+[Register an Application](..%2F..%2FSprintB%2Fregister-an-application%2FReadme.md)
+
+[Add a Job Opening](..%2F..%2FSprintB%2Fadd-jobOpening%2FReadme.md)
+
+[Select Interview Model for Job Interview](..%2F..%2FSprintB%2Fselect-interview-model%2FReadme.md)[select-interview-model](..%2F..%2FSprintB%2Fselect-interview-model)
 
 ### 2.1. Domain Model
 
 ### 2.2. Class Diagram
+![class-diagram.svg](class-diagram.svg)
 
 ## 3. Implementation
+
+Most of the implementation of this user story was done in the UI layer, in the `RankCandidatesForJobOpeningUI` class. The `doShow` method was implemented to allow the customer manager to rank the candidates for a job opening.
+The `RankCandidatesController` class is mainly used to access the repositories to retrieve and update data.
+
+```java
+    @Override
+    protected boolean doShow() {
+        JobOpening selectedJob = selectJobOpening();
+        Application selectedApplication = selectApplication(selectedJob);
+        Score selectedInterview = getLastJobInterview(selectedApplication);
+
+        System.out.println(The score of the last interview for the selected application is " + selectedInterview);
+
+        if (selectedInterview == null) {
+            String response = Console.readLine("Do you still want to rank the application? (Yes/No): ");
+            if (!response.equalsIgnoreCase("yes")) {
+                return false;
+            }
+        }
+
+        int rank = Console.readInteger("Insert the new rank for this candidate: ");
+
+        updateRank(rank, selectedApplication);
+
+        return true;
+    }
+```
+
+## 4. Testing
+
+## 5. Demonstration

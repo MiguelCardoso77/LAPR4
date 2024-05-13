@@ -1,0 +1,91 @@
+@startuml
+autonumber
+
+actor CustomerManager
+
+participant RankCandidatesUI <<presentation>>
+participant RankCandidatesController <<controller>>
+
+database JobOpeningRepository <<repository>>
+database ApplicationRepository <<repository>>
+database JobInterviewRepository <<repository>>
+
+activate CustomerManager
+
+    CustomerManager -> RankCandidatesUI : asks to rank candidates
+    activate RankCandidatesUI
+
+        RankCandidatesUI -> RankCandidatesController : getAllJobOpenings()
+        activate RankCandidatesController
+
+            RankCandidatesController -> JobOpeningRepository : findAll()
+            activate JobOpeningRepository
+
+                JobOpeningRepository --> RankCandidatesController : jobOpenings
+            deactivate JobOpeningRepository
+
+            RankCandidatesController --> RankCandidatesUI : jobOpenings
+        deactivate RankCandidatesController
+
+        RankCandidatesUI -> CustomerManager : lists job opening and asks to select one
+    deactivate RankCandidatesUI
+
+    CustomerManager -> RankCandidatesUI : selects job opening
+    activate RankCandidatesUI
+
+        RankCandidatesUI -> RankCandidatesController : getApplicationsForJobOpening(selectedJobOpening)
+        activate RankCandidatesController
+
+            RankCandidatesController -> ApplicationRepository : findByJobOpening(selectedJobOpening)
+            activate ApplicationRepository
+
+                ApplicationRepository --> RankCandidatesController : applications
+            deactivate ApplicationRepository
+
+            RankCandidatesController --> RankCandidatesUI : applications
+        deactivate RankCandidatesController
+
+        RankCandidatesUI --> CustomerManager : lists applications and asks to select one
+    deactivate RankCandidatesUI
+
+    CustomerManager -> RankCandidatesUI : selects application
+    activate RankCandidatesUI
+
+        RankCandidatesUI -> RankCandidatesController : getInterviewsForApplication(selectedApplication)
+        activate RankCandidatesController
+            note right of RankCandidatesController
+            The application might not have interviews but the customer manager can still rank it.
+            end note
+            RankCandidatesController -> JobInterviewRepository : findByApplication(selectedApplication)
+            activate JobInterviewRepository
+
+                JobInterviewRepository --> RankCandidatesController : interviews
+            deactivate JobInterviewRepository
+
+            RankCandidatesController --> RankCandidatesUI : interviews
+        deactivate RankCandidatesController
+
+        RankCandidatesUI --> CustomerManager : shows interview score for the selected \napplication and asks to rank it
+    deactivate RankCandidatesUI
+
+    CustomerManager -> RankCandidatesUI : ranks the application
+    activate RankCandidatesUI
+
+        RankCandidatesUI -> RankCandidatesController : updateRank(rank, selectedApplication)
+        activate RankCandidatesController
+
+            RankCandidatesController -> ApplicationRepository : save(selectedApplication)
+            activate ApplicationRepository
+
+                ApplicationRepository --> RankCandidatesController : successful operation
+            deactivate ApplicationRepository
+
+            RankCandidatesController --> RankCandidatesUI : successful operation
+        deactivate RankCandidatesController
+
+        RankCandidatesUI --> CustomerManager : shows success message
+    deactivate RankCandidatesUI
+
+deactivate CustomerManager
+
+@enduml

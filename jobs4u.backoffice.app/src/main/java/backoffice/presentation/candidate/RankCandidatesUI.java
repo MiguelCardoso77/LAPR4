@@ -9,6 +9,7 @@ import core.domain.jobOpening.JobOpening;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class RankCandidatesUI extends AbstractUI {
@@ -18,10 +19,18 @@ public class RankCandidatesUI extends AbstractUI {
     protected boolean doShow() {
         JobOpening selectedJob = selectJobOpening();
         Application selectedApplication = selectApplication(selectedJob);
-        Score selectedInterview = selectJobInterview(selectedApplication);
+        Score selectedInterview = getLastJobInterview(selectedApplication);
 
-        System.out.println(ConsoleColors.GREEN + "The score of the selected application is" + selectedInterview + ConsoleColors.RESET);
-        int rank = Console.readInteger("Insert the new rank of the candidate: ");
+        System.out.println(ConsoleColors.GREEN + "\nThe score of the last interview for the selected application is " + ConsoleColors.RESET + selectedInterview);
+
+        if (selectedInterview == null) {
+            String response = Console.readLine("Do you still want to rank the application? (Yes/No): ");
+            if (!response.equalsIgnoreCase("yes")) {
+                return false;
+            }
+        }
+
+        int rank = Console.readInteger("Insert the new rank for this candidate: ");
 
         updateRank(rank, selectedApplication);
 
@@ -65,7 +74,7 @@ public class RankCandidatesUI extends AbstractUI {
         return applications.get(selectedApplicationIndex - 1);
     }
 
-    private Score selectJobInterview(Application selectedApplication) {
+    private Score getLastJobInterview(Application selectedApplication) {
         List<JobInterview> interviews = theController.getInterviewsForApplication(selectedApplication);
 
         if (interviews.isEmpty()) {
@@ -73,22 +82,16 @@ public class RankCandidatesUI extends AbstractUI {
             return null;
         }
 
-        System.out.println("\nJob Interviews:");
-        for (int i = 0; i < interviews.size(); i++) {
-            System.out.println((i + 1) + " - " + interviews.get(i).identity());
-        }
+        interviews.sort(Comparator.comparing(JobInterview::createdOn));
 
-        int selectedInterviewIndex = Console.readInteger("Please select a job interview by entering its number: ");
-        if (selectedInterviewIndex < 1 || selectedInterviewIndex > interviews.size()) {
-            System.out.println(ConsoleColors.RED + "Invalid number. Please enter a number between 1 and " + interviews.size() + ConsoleColors.RESET);
-        }
+        JobInterview mostRecentInterview = interviews.get(interviews.size() - 1);
 
-        return interviews.get(selectedInterviewIndex - 1).score();
+        return mostRecentInterview.score();
     }
 
     private void updateRank(int rank, Application selectedApplication) {
         Application newApplication = theController.updateRank(rank, selectedApplication);
-        System.out.println("Rank was updated to " + newApplication.rank() + " for the application " + newApplication.dataFile());
+        System.out.println("Success: Rank was updated to " + newApplication.rank() + " for the application " + newApplication.dataFile());
     }
 
     @Override

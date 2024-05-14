@@ -3,6 +3,7 @@ package core.domain.interview;
 import core.domain.application.Application;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
+import eapli.framework.validations.Preconditions;
 import jakarta.persistence.*;
 
 import java.util.Calendar;
@@ -36,6 +37,9 @@ public class JobInterview implements AggregateRoot<Integer> {
     @JoinColumn(name = "INTERVIEW_MODEL")
     private InterviewModel interviewModel;
 
+    @Column(name = "INTERVIEW_ANSWERS")
+    private InterviewAnswers interviewAnswers;
+
 
     /**
      * Constructs a job interview with the specified attributes.
@@ -47,13 +51,14 @@ public class JobInterview implements AggregateRoot<Integer> {
      * @param application    the application associated with the interview
      * @param interviewModel the interview model used for the interview
      */
-    public JobInterview(Calendar createdOn, Time time, Score score, Result result, Application application, InterviewModel interviewModel) {
+    public JobInterview(Calendar createdOn, Time time, Score score, Result result, Application application, InterviewModel interviewModel, InterviewAnswers interviewAnswers) {
         this.createdOn = createdOn;
         this.time = time;
         this.score = score;
         this.result = result;
         this.application = application;
         this.interviewModel = interviewModel;
+        this.interviewAnswers = interviewAnswers;
     }
 
     /**
@@ -126,6 +131,10 @@ public class JobInterview implements AggregateRoot<Integer> {
         return interviewModel;
     }
 
+    public InterviewAnswers interviewAnswers() {
+        return interviewAnswers;
+    }
+
     /**
      * Changes the interview model used for the interview.
      *
@@ -137,6 +146,11 @@ public class JobInterview implements AggregateRoot<Integer> {
         } else {
             System.out.println("not able to change it");
         }
+    }
+
+    public void uploadInterviewAnswers(InterviewAnswers interviewAnswers) {
+        Preconditions.nonNull(interviewAnswers, "Interview answers cannot be null");
+        this.interviewAnswers = interviewAnswers;
     }
 
     /**
@@ -186,5 +200,19 @@ public class JobInterview implements AggregateRoot<Integer> {
     @Override
     public int compareTo(Integer other) {
         return AggregateRoot.super.compareTo(other);
+    }
+
+    @Override
+    public String toString() {
+        return "JobInterview{" +
+                "id=" + id +
+                ", createdOn=" + createdOn +
+                ", time=" + time +
+                ", score=" + score +
+                ", result=" + result +
+                ", application=" + application +
+                ", interviewModel=" + interviewModel +
+                ", interviewAnswers=" + interviewAnswers +
+                '}';
     }
 }

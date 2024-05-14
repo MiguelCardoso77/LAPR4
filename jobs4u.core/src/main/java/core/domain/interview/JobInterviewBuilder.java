@@ -45,7 +45,7 @@ public class JobInterviewBuilder implements DomainFactory<JobInterview> {
      */
     @Override
     public JobInterview build() {
-        return new JobInterview(createdOn, time, score, result, application, null);
+        return new JobInterview(createdOn, time, score, result, application, null, null);
     }
 
 }

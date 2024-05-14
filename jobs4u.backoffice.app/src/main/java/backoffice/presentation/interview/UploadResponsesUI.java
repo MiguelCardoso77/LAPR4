@@ -20,6 +20,8 @@ public class UploadResponsesUI extends AbstractUI {
 
         List<String> responses = theController.readFile(path);
 
+        System.out.println(theController.uploadResponses(responses, jobInterview));
+
         return true;
     }
 

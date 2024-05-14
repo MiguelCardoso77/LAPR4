@@ -1,5 +1,6 @@
 package core.application.controllers;
 
+import core.domain.interview.InterviewAnswers;
 import core.domain.interview.JobInterview;
 import core.persistence.PersistenceContext;
 import core.repositories.JobInterviewRepository;
@@ -25,5 +26,12 @@ public class UploadResponsesController {
 
     public JobInterview findInterviewByID(int jobInterviewID) {
         return jobInterviewRepository.ofIdentity(jobInterviewID).orElse(null);
+    }
+
+    public JobInterview uploadResponses(List<String> responses, JobInterview jobInterview) {
+        InterviewAnswers interviewAnswers = new InterviewAnswers(responses);
+
+        jobInterview.uploadInterviewAnswers(interviewAnswers);
+        return jobInterviewRepository.save(jobInterview);
     }
 }

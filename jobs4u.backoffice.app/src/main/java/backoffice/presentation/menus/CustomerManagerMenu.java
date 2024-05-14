@@ -9,6 +9,7 @@ import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
 import backoffice.presentation.interview.GenerateInterviewModelAction;
 import backoffice.presentation.interview.SelectInterviewModelAction;
+import backoffice.presentation.interview.UploadResponsesAction;
 import backoffice.presentation.jobOpening.AddJobOpeningAction;
 import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationAction;
 import backoffice.presentation.requirements.GenerateRequirementsSpecificationAction;
@@ -29,6 +30,7 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int GENERATE_REQUIREMENTS_SPECIFICATIONS = 8;
     private static final int SELECT_REQUIREMENTS_SPECIFICATIONS = 9;
     private static final int RANK_CANDIDATES = 10;
+    private static final int UPLOAD_INTERVIEW_RESPONSES = 11;
 
     @Override
     protected boolean doShow() {
@@ -51,6 +53,7 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(SELECT_REQUIREMENTS_SPECIFICATIONS, "Select Requirements Specification", new SelectRequirementsSpecificationAction());
 
         menu.addItem(RANK_CANDIDATES, "Rank Candidates", new RankCandidatesAction());
+        menu.addItem(UPLOAD_INTERVIEW_RESPONSES, "Upload Interview Responses", new UploadResponsesAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

@@ -16,8 +16,6 @@ public class UploadResponsesUI extends AbstractUI {
         JobInterview jobInterview = theController.findInterviewByID(jobInterviewID);
 
         String path = Console.readLine("Enter the path to the file with the responses: ");
-        path = "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt";
-
         List<String> responses = theController.readFile(path);
 
         System.out.println(theController.uploadResponses(responses, jobInterview));

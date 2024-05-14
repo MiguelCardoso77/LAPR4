@@ -85,6 +85,7 @@ To find out more details about the analysis and design of Application, Job Openi
 [Select Interview Model for Job Interview](..%2F..%2FSprintB%2Fselect-interview-model%2FReadme.md)[select-interview-model](..%2F..%2FSprintB%2Fselect-interview-model)
 
 ### 2.1. Domain Model
+![domain-model.svg](domain-model.svg)
 
 ### 2.2. Class Diagram
 ![class-diagram.svg](class-diagram.svg)

@@ -1,0 +1,101 @@
+@startuml
+hide methods
+left to right direction
+
+Title "Domain Model - Uploading a Text File with Responses to a Job Interview"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
+package "JobInterview Aggregate"{
+entity JobInterview <<entity>><<root>>
+
+     card InterviewResults <<Value Object>> {
+     }
+     card Score <<Value Object>> {
+     }
+     card InterviewTime <<Value Object>> {
+     }
+     card InterviewDate <<Value Object>> {
+     }
+
+     JobInterview --> InterviewResults
+     JobInterview --> Score
+     JobInterview --> InterviewTime
+     JobInterview --> InterviewDate
+
+}
+
+package "Candidate Aggregate"{
+entity Candidate <<entity>><<root>>
+
+    card Curriculum <<Value Object>> {
+    }
+    card TelephoneNumber <<Value Object>>{
+    }
+
+    Candidate --> Curriculum
+    Candidate --> TelephoneNumber
+}
+
+package "User Aggregate"{
+entity User <<entity>><<root>>
+
+    card UserEmail <<Value Object>> {
+    }
+    card UserName <<Value Object>> {
+    }
+    card UserPassword <<Value Object>> {
+    }
+    card Username<<Value Object>> {
+    }
+
+    User --> UserEmail
+    User --> UserName
+    User --> Username
+    User --> UserPassword
+
+}
+
+package "Interview Model Aggregate"{
+entity InterviewModel <<entity>><<root>>
+
+    card Plugin <<Value Object>> {
+    }
+
+    InterviewModel --> Plugin
+
+}
+
+package "ANTLR Service Aggregate"{
+    entity ANTLR <<entity>><<root>>
+
+}
+
+package "Language Engineer Aggregate"{
+entity LanguageEngineer <<entity>><<root>>
+
+}
+
+Candidate ----> User
+InterviewModel "1" <--- "N" JobInterview : uses
+ANTLR ---> InterviewModel : processes
+LanguageEngineer "1" ---> "N" InterviewModel : creates
+LanguageEngineer ---> User
+
+@enduml

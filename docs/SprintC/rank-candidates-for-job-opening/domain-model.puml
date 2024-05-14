@@ -12,6 +12,16 @@ skinparam class {
     BorderColor black
 }
 
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
 package "Job Opening Aggregate"{
 entity JobOpening <<entity>><<root>>
 

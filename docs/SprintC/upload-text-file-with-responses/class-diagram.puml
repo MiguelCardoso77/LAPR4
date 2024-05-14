@@ -1,0 +1,123 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
+
+Title "Class Diagram - Uploading Responses for a Job Interview"
+
+package "presentation" {
+    class UploadResponsesUI {
+        + doShow()
+        + headline()
+    }
+}
+
+package "application" {
+    class UploadResponsesController {
+        + readFile(path)
+        + findInterviewByID(interviewID)
+        + uploadResponses(responses, jobInterview)
+    }
+}
+
+package "repositories" {
+    interface JobInterviewRepository {
+        + allInterviews()
+    }
+}
+
+package "domain" {
+    class JobInterview {
+        + JobInterview(createdOn, time, score, result, application, interviewModel)
+        + identity()
+        + createdOn()
+        + time()
+        + score()
+        + result()
+        + application()
+        + interviewModel()
+        + changeInterviewModel(interviewModelToChange)
+        + hashCode()
+        + sameAs(otherObject)
+        + equals(jobInterview)
+    }
+
+    class Application {
+            + Application(rank, createdOn, applicationFiles, jobReference, candidate, operator)
+            + sameAs(otherApplication)
+            + equals(otherApplication)
+            + hashCode()
+            + compareTo(otherApplication)
+            + identity()
+            + rank()
+            + submissionDate()
+            + status()
+            + dataFile()
+            + operator()
+            + candidate()
+            + jobReference()
+            + updateRank(rank)
+            + toString()
+        }
+
+    package "jobInterview" {
+        class InterviewModel {
+            + InterviewModel(questions)
+            + questions()
+            + hashCode()
+            + sameAs(otherObject)
+            + equals(interviewModel)
+        }
+
+        class InterviewAnswers {
+            + InterviewModel(questions)
+            + questions()
+            + hashCode()
+            + sameAs(otherObject)
+            + equals(interviewModel)
+        }
+
+        class Result {
+            + InterviewModel(questions)
+            + questions()
+            + hashCode()
+            + sameAs(otherObject)
+            + equals(interviewModel)
+        }
+
+        class Score {
+            + InterviewModel(questions)
+            + questions()
+            + hashCode()
+            + sameAs(otherObject)
+            + equals(interviewModel)
+        }
+
+        class Time {
+            + InterviewModel(questions)
+            + questions()
+            + hashCode()
+            + sameAs(otherObject)
+            + equals(interviewModel)
+        }
+    }
+}
+
+UploadResponsesUI --> UploadResponsesController
+
+UploadResponsesController --> JobInterviewRepository
+
+JobInterviewRepository --> JobInterview : stores
+
+JobInterview --> Application : associated to
+JobInterview --> InterviewModel : has
+JobInterview --> InterviewAnswers : has
+JobInterview --> Result : has
+JobInterview --> Score : has
+JobInterview --> Time : has
+
+@enduml

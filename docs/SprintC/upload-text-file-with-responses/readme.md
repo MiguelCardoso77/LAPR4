@@ -38,6 +38,7 @@ As Customer Manager, I want to upload a text file with the candidate responses f
 ## 2. Analysis and Design
 
 ### 2.1. Domain Model
+![domain-model.svg](domain-model.svg)
 
 ### 2.2. Class Diagram
 

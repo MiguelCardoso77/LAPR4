@@ -1,6 +1,7 @@
 package backoffice.presentation.interview;
 
 import core.application.controllers.UploadResponsesController;
+import core.domain.interview.JobInterview;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -11,6 +12,9 @@ public class UploadResponsesUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+        int jobInterviewID = Console.readInteger("Enter the Job Interview ID: ");
+        JobInterview jobInterview = theController.findInterviewByID(jobInterviewID);
+
         String path = Console.readLine("Enter the path to the file with the responses: ");
         path = "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt";
 

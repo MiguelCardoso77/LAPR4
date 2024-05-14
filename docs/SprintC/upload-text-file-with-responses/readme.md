@@ -10,6 +10,15 @@ As Customer Manager, I want to upload a text file with the candidate responses f
 
 ### 1.2. Customer Specifications and Clarifications
 
+**From the specifications document:**
+
+> **NFR09(LPROG) - Requirement Specifications and Interview Models:**
+> 
+> The support for this functionality must follow specific technical requirements, 
+specified in LPROG. The ANTLR tool should be used (https://www.antlr.org/).
+
+**From the client clarifications:**
+
 ### 1.3. Acceptance Criteria
 
 ### 1.4. Found out Dependencies
@@ -21,13 +30,15 @@ As Customer Manager, I want to upload a text file with the candidate responses f
 
 **Input Data:**
 
+    * Job Interview ID
     * Path to the text file
 
 **Output Data:**
 
-    * (In)Success of the operation**
+    * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
+![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ### 1.7. Sequence Diagram (SD)
 

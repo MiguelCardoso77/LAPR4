@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Uploading a Text File with Responses
+
+autonumber
+
+actor "Customer Manager" as CMAN
+participant ":System" as System
+
+activate CMAN
+
+    CMAN -> System : asks to upload a text file with candidate responses
+    activate System
+
+
+       System --> CMAN : requests the job interview id
+    deactivate System
+
+    CMAN -> System : provides the job interview id
+    activate System
+
+       System --> CMAN : requests the text file
+    deactivate System
+
+    CMAN -> System : uploads the text file
+    activate System
+
+       System --> CMAN : confirms the upload success
+    deactivate System
+
+deactivate CMAN
+
+@enduml

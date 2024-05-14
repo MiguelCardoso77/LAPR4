@@ -10,6 +10,8 @@ As Customer Manager, I want to rank the candidates for a job opening.
 
 ### 1.2. Customer Specifications and Clarifications
 
+**From the client clarifications:**
+
 > **Question 17:**
 > 
 > Relativamente à secção 2.2.1, é na fase de Analysis que as entrevistas são avaliadas e é esse 

@@ -1,11 +1,89 @@
 @startuml
-'https://plantuml.com/sequence-diagram
-
 autonumber
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+actor CustomerManager
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+participant UploadResponsesUI <<presentation>>
+participant UploadResponsesController <<controller>>
+
+database JobInterviewRepository <<repository>>
+
+activate CustomerManager
+
+    CustomerManager -> UploadResponsesUI : asks to rank candidates
+    activate UploadResponsesUI
+
+        UploadResponsesUI -> UploadResponsesController : getAllJobOpenings()
+        activate UploadResponsesController
+
+            UploadResponsesController -> JobOpeningRepository : findAll()
+            activate JobOpeningRepository
+
+                JobOpeningRepository --> UploadResponsesController : jobOpenings
+            deactivate JobOpeningRepository
+
+            UploadResponsesController --> UploadResponsesUI : jobOpenings
+        deactivate UploadResponsesController
+
+        UploadResponsesUI -> CustomerManager : lists job opening and asks to select one
+    deactivate UploadResponsesUI
+
+    CustomerManager -> UploadResponsesUI : selects job opening
+    activate UploadResponsesUI
+
+        UploadResponsesUI -> UploadResponsesController : getApplicationsForJobOpening(selectedJobOpening)
+        activate UploadResponsesController
+
+            UploadResponsesController -> ApplicationRepository : findByJobOpening(selectedJobOpening)
+            activate ApplicationRepository
+
+                ApplicationRepository --> UploadResponsesController : applications
+            deactivate ApplicationRepository
+
+            UploadResponsesController --> UploadResponsesUI : applications
+        deactivate UploadResponsesController
+
+        UploadResponsesUI --> CustomerManager : lists applications and asks to select one
+    deactivate UploadResponsesUI
+
+    CustomerManager -> UploadResponsesUI : selects application
+    activate UploadResponsesUI
+
+        UploadResponsesUI -> UploadResponsesController : getInterviewsForApplication(selectedApplication)
+        activate UploadResponsesController
+            note right of UploadResponsesController
+            The application might not have interviews but the customer manager can still rank it.
+            end note
+            UploadResponsesController -> JobInterviewRepository : findByApplication(selectedApplication)
+            activate JobInterviewRepository
+
+                JobInterviewRepository --> UploadResponsesController : interviews
+            deactivate JobInterviewRepository
+
+            UploadResponsesController --> UploadResponsesUI : interviews
+        deactivate UploadResponsesController
+
+        UploadResponsesUI --> CustomerManager : shows interview score for the selected \napplication and asks to rank it
+    deactivate UploadResponsesUI
+
+    CustomerManager -> UploadResponsesUI : ranks the application
+    activate UploadResponsesUI
+
+        UploadResponsesUI -> UploadResponsesController : updateRank(rank, selectedApplication)
+        activate UploadResponsesController
+
+            UploadResponsesController -> JobInterviewRepository : save(updatedJobInterview)
+            activate JobInterviewRepository
+
+                JobInterviewRepository --> UploadResponsesController : successful operation
+            deactivate JobInterviewRepository
+
+            UploadResponsesController --> UploadResponsesUI : successful operation
+        deactivate UploadResponsesController
+
+        UploadResponsesUI --> CustomerManager : shows success message
+    deactivate UploadResponsesUI
+
+deactivate CustomerManager
+
 @enduml

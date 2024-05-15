@@ -41,6 +41,7 @@ specified in LPROG. The ANTLR tool should be used (https://www.antlr.org/).
 ![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ### 1.7. Sequence Diagram (SD)
+![sequence-diagram.svg](sequence-diagram.svg)
 
 ### 1.8 Other Relevant Remarks
 
@@ -55,6 +56,30 @@ specified in LPROG. The ANTLR tool should be used (https://www.antlr.org/).
 ![class-diagram.svg](class-diagram.svg)
 
 ## 3. Implementation
+
+These are the three methods code in the `UploadResponsesController` that are used by the UI for this use case.
+
+```java
+    public List<String> readFile(String filePath) {
+        try {
+            return Files.readAllLines(Paths.get(filePath));
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public JobInterview findInterviewByID(int jobInterviewID) {
+        return jobInterviewRepository.ofIdentity(jobInterviewID).orElse(null);
+    }
+
+    public JobInterview uploadResponses(List<String> responses, JobInterview jobInterview) {
+        InterviewAnswers interviewAnswers = new InterviewAnswers(responses);
+
+        jobInterview.uploadInterviewAnswers(interviewAnswers);
+        return jobInterviewRepository.save(jobInterview);
+    }
+```
 
 ## 4. Testing
 

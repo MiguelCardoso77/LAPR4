@@ -10,66 +10,42 @@ database JobInterviewRepository <<repository>>
 
 activate CustomerManager
 
-    CustomerManager -> UploadResponsesUI : asks to rank candidates
+    CustomerManager -> UploadResponsesUI : asks to upload candidate responses
     activate UploadResponsesUI
 
-        UploadResponsesUI -> UploadResponsesController : getAllJobOpenings()
-        activate UploadResponsesController
-
-            UploadResponsesController -> JobOpeningRepository : findAll()
-            activate JobOpeningRepository
-
-                JobOpeningRepository --> UploadResponsesController : jobOpenings
-            deactivate JobOpeningRepository
-
-            UploadResponsesController --> UploadResponsesUI : jobOpenings
-        deactivate UploadResponsesController
-
-        UploadResponsesUI -> CustomerManager : lists job opening and asks to select one
+        UploadResponsesUI -> CustomerManager : requests job interview id
     deactivate UploadResponsesUI
 
-    CustomerManager -> UploadResponsesUI : selects job opening
+    CustomerManager -> UploadResponsesUI : inserts id
     activate UploadResponsesUI
 
-        UploadResponsesUI -> UploadResponsesController : getApplicationsForJobOpening(selectedJobOpening)
+        UploadResponsesUI -> UploadResponsesController : findInterviewByID(jobInterviewID)
         activate UploadResponsesController
 
-            UploadResponsesController -> ApplicationRepository : findByJobOpening(selectedJobOpening)
-            activate ApplicationRepository
-
-                ApplicationRepository --> UploadResponsesController : applications
-            deactivate ApplicationRepository
-
-            UploadResponsesController --> UploadResponsesUI : applications
-        deactivate UploadResponsesController
-
-        UploadResponsesUI --> CustomerManager : lists applications and asks to select one
-    deactivate UploadResponsesUI
-
-    CustomerManager -> UploadResponsesUI : selects application
-    activate UploadResponsesUI
-
-        UploadResponsesUI -> UploadResponsesController : getInterviewsForApplication(selectedApplication)
-        activate UploadResponsesController
-            note right of UploadResponsesController
-            The application might not have interviews but the customer manager can still rank it.
-            end note
-            UploadResponsesController -> JobInterviewRepository : findByApplication(selectedApplication)
+            UploadResponsesController -> JobInterviewRepository : ofIdentity(jobInterviewID)
             activate JobInterviewRepository
 
-                JobInterviewRepository --> UploadResponsesController : interviews
+                JobInterviewRepository --> UploadResponsesController : jobInterview
             deactivate JobInterviewRepository
 
-            UploadResponsesController --> UploadResponsesUI : interviews
+            UploadResponsesController --> UploadResponsesUI : jobInterview
+        deactivate UploadResponsesController
+
+        UploadResponsesUI --> CustomerManager : requests file path
+    deactivate UploadResponsesUI
+
+    CustomerManager -> UploadResponsesUI : inserts file path
+    activate UploadResponsesUI
+
+        UploadResponsesUI -> UploadResponsesController : readFile(path)
+        activate UploadResponsesController
+
+            UploadResponsesController --> UploadResponsesUI : responses
         deactivate UploadResponsesController
 
         UploadResponsesUI --> CustomerManager : shows interview score for the selected \napplication and asks to rank it
-    deactivate UploadResponsesUI
 
-    CustomerManager -> UploadResponsesUI : ranks the application
-    activate UploadResponsesUI
-
-        UploadResponsesUI -> UploadResponsesController : updateRank(rank, selectedApplication)
+        UploadResponsesUI -> UploadResponsesController : uploadResponses(responses, jobInterview)
         activate UploadResponsesController
 
             UploadResponsesController -> JobInterviewRepository : save(updatedJobInterview)

@@ -24,8 +24,6 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
     CompanyRepository companyRepository = PersistenceContext.repositories().companies();
     @Override
     public boolean execute() {
-        registerAdmin("admin", TestDataConstants.PASSWORD1, "Jane", "Doe Admin", "jane.doe@email.local");
-
         registerAdmin("AdminEx", "ExAdmin1", "Admin", "Example", "exadmin@gmail.com");
         registerCustomerManager("CustomerManagerEx", "ExCustomerManager1", "CustomerManager", "Example", "excustomermanager@gmail.com");
         registerLanguageEngineer("LanguageEngineerEx", "ExLanguageEngineer1", "LanguageEngineer", "Example", "exlanguageengineer@gmail.com");
@@ -33,6 +31,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
 
         registerBootstrapCandidate("CandidateOne", "ExampleOne", "candidateOne@gmail.com", "910920930", "curriculumPathOne");
         registerBootstrapCandidate("CandidateTwo", "ExampleTwo", "candidateTwo@gmail.com", "940950960", "curriculumpPathTwo");
+        registerBootstrapCandidate("CandidateThree", "ExampleThree", "candidateThree@gmail.com", "970980990", "curriculumPathThree");
         registerBootstrapCandidate("John", "Doe", "johndoe@email.com", "961234567", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
 
         registerCustomer("CustomerOne", "ExampleOne", "customerOne@gmail.com");

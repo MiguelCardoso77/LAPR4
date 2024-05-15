@@ -13,6 +13,10 @@ public class CompanyBootstrapper implements Action {
     public boolean execute(){
         registerCompany("Porto");
         registerCompany("ISEP");
+        registerCompany("FEUP");
+        registerCompany("FMUP");
+        registerCompany("IBM");
+
         return true;
     }
 

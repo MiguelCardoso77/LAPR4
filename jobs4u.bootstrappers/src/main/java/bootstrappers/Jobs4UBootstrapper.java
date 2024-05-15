@@ -52,7 +52,7 @@ public class Jobs4UBootstrapper implements Action {
         // execute all bootstrapping
         boolean ret = true;
         for (final Action boot : actions) {
-            System.out.println("Bootstrapping " + nameOfEntity(boot) + "...");
+            System.out.println("\nBootstrapping " + nameOfEntity(boot) + "...");
             ret &= boot.execute();
         }
         return ret;

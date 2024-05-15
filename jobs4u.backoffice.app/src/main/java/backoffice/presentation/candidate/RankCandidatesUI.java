@@ -14,27 +14,49 @@ import java.util.List;
 
 public class RankCandidatesUI extends AbstractUI {
     private final RankCandidatesController theController = new RankCandidatesController();
+    private final boolean RANK_ALL_APPLICATIONS = true;
 
     @Override
     protected boolean doShow() {
         JobOpening selectedJob = selectJobOpening();
-        Application selectedApplication = selectApplication(selectedJob);
-        Score selectedInterview = getLastJobInterview(selectedApplication);
 
-        System.out.println(ConsoleColors.GREEN + "\nThe score of the last interview for the selected application is " + ConsoleColors.RESET + selectedInterview);
+        List<Application> applications = allApplicationsForJobOpening(selectedJob);
+        if (applications.isEmpty()) {
+            System.out.println(ConsoleColors.RED + "No applications found for the selected job opening." + ConsoleColors.RESET);
+            return false;
+        }
+
+        if (RANK_ALL_APPLICATIONS) {
+
+            for (Application application : applications) {
+                rankApplication(application);
+            }
+
+        } else {
+
+            rankApplication(applications.get(0));
+
+        }
+
+        return true;
+    }
+
+    private void rankApplication(Application application) {
+        System.out.println("\nNow ranking, Application: " + application.dataFile());
+
+        Score selectedInterview = getLastJobInterview(application);
+        System.out.println(ConsoleColors.GREEN + "The score of the last interview for this application is " + ConsoleColors.RESET + selectedInterview);
 
         if (selectedInterview == null) {
             String response = Console.readLine("Do you still want to rank the application? (Yes/No): ");
             if (!response.equalsIgnoreCase("yes")) {
-                return false;
+                return;
             }
         }
 
         int rank = Console.readInteger("Insert the new rank for this candidate: ");
 
-        updateRank(rank, selectedApplication);
-
-        return true;
+        updateRank(rank, application);
     }
 
     private JobOpening selectJobOpening() {
@@ -53,25 +75,8 @@ public class RankCandidatesUI extends AbstractUI {
         return jobOpenings.get(selectedNumber - 1);
     }
 
-    private Application selectApplication(JobOpening selectedJob) {
-        List<Application> applications = theController.getApplicationsForJobOpening(selectedJob);
-
-        if (applications.isEmpty()) {
-            System.out.println(ConsoleColors.RED + "No applications found for the selected job opening." + ConsoleColors.RESET);
-            return null;
-        }
-
-        System.out.println("\nApplications:");
-        for (int i = 0; i < applications.size(); i++) {
-            System.out.println((i + 1) + " - " + applications.get(i).dataFile());
-        }
-
-        int selectedApplicationIndex = Console.readInteger("Please select an application by entering its number: ");
-        if (selectedApplicationIndex < 1 || selectedApplicationIndex > applications.size()) {
-            System.out.println(ConsoleColors.RED + "Invalid number. Please enter a number between 1 and " + applications.size() + ConsoleColors.RESET);
-        }
-
-        return applications.get(selectedApplicationIndex - 1);
+    private List<Application> allApplicationsForJobOpening(JobOpening selectedJob) {
+        return theController.getApplicationsForJobOpening(selectedJob);
     }
 
     private Score getLastJobInterview(Application selectedApplication) {
@@ -96,6 +101,6 @@ public class RankCandidatesUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Rank Candidates";
+        return "Rank Candidates, (Ranking All Candidates: " + RANK_ALL_APPLICATIONS + ")";
     }
 }

@@ -36,6 +36,74 @@ is not essential for the candidate's rank, what criteria is to be used when rank
 he/she may have during the process (including CV and other attached documents and the interviews as well 
 as other data/information that may not be part of the system).
 
+> **Question 148:**
+> 
+> A minha questão é relativa a como o ranking é feito. O customer manager dá uma nota a cada candidatura e o sistema 
+ordena por ordem crescente sendo assim atribuído o ranking de cada candidatura? Se for assim, a nota terá que escala? 
+Caso ainda seja assim ele só pode atribuir uma nota quando tiver conhecimento de todas? Ou pode ir colocando e o ranking 
+só é atribuído quando todas as candidaturas já estiverem avaliadas?
+> 
+> **Answer:**
+> Ver Q17. A ordenação dos candidatos (ranking) é da responsabilidade do customer manager. Ele pode basear-se no resultado 
+das entrevistas e de outra informação, mas o ranking não é automático. Não há nota nem escala a usar. As candidaturas são 
+ordenadas.
+
+> **Question 152:**
+> 
+> In US 1013, as mentioned before, the customer manager will decide the rank of each candidate's application for a job opening. 
+As such, our team would like to know what is the scale of this rank and a bit of information about how it works. First of all, 
+is the ranking a point system, in which the customer manager will award points to each application, making it so the the ranking 
+is ordered by how many points each application has, or will the customer manager simply assign a place in the rank? For the 
+second option, what I am picturing is the program asking the customer manager what position to place each candidate in, one by 
+one, and the customer manager awarding, 1st, 2nd place and etc.. Second of all, if it is indeed a point system, is there a 
+universal scale it should follow?
+> 
+> **Answer:**
+> See Q148.
+ 
+> **Question 155:**
+> 
+> Is there a limit on rank entries? Let's say that 100 candidates apply for a job opening. Does the Customer Manager have to sort all 100 candidates?
+> 
+> **Answer:**
+> The order of candidates should include at least all the first candidates within the vacancy number and some following candidates. 
+At the moment, I do not know exactly the number of the following candidates to be ordered. Therefore, I would like for it to 
+be a global configuration property in the system. It could be a number representing a magnitude from the vacancy number. For 
+instance, 1 could mean exactly the same number of vacancies, 2 the double, 0,5 half the number of vacancies. The remainder of 
+the candidates could be just tagged as not ranked.
+ 
+> **Question 157:**
+> 
+> Rank the candidates for a job Opening is the same as rank the job Applications for a Job Opening, knowing that I can only know 
+the candidates throw the job application?
+> 
+> **Answer:**
+> In the context of a job opening, a candidate is someone that made an application to that job opening. But the same person can be a candidate to other job openings.
+ 
+> **Question 158:**
+> 
+> How is the ranking done? The customer manager selects a job opening and is shown the different candidates, and they assign a rank to each one. 
+And the ranking process end when he assigns a rank to all candidates?
+> 
+> **Answer:**
+> Once again, I do not have specific requirements for UI/UX. But I can provide some ideas. Being a console application limits the UI/UX. However, 
+I see this functionality similar to the way people enter recipients for an email, for instance. In the case of the recipients of an email 
+I simply write their emails separated by a comma. Could it be similar in this case?
+ 
+> **Question 159:**
+> 
+> When a customer manager starts the ranking process, he can stop and continue later? Or the ranking process must be done in one go?
+> 
+> **Answer:**
+> See Q158. I guess it may depend on how you implement the solution. But, in the case it may work as a “long operation” be aware of when and how to conclude the “operation”
+ 
+> **Question 160:**
+> 
+> The customer manager can change the rank of a candidate after assigning it?
+> 
+> **Answer:**
+> See Q159. That should be possible if none of the interested parties were yet notified of the results.
+
 ### 1.3. Acceptance Criteria
 
 * AC1: Manually ranking candidates:
@@ -84,7 +152,7 @@ To find out more details about the analysis and design of Application, Job Openi
 
 [Add a Job Opening](..%2F..%2FSprintB%2Fadd-jobOpening%2FReadme.md)
 
-[Select Interview Model for Job Interview](..%2F..%2FSprintB%2Fselect-interview-model%2FReadme.md)[select-interview-model](..%2F..%2FSprintB%2Fselect-interview-model)
+[Select Interview Model for Job Interview](..%2F..%2FSprintB%2Fselect-interview-model%2FReadme.md)
 
 ### 2.1. Domain Model
 ![domain-model.svg](domain-model.svg)

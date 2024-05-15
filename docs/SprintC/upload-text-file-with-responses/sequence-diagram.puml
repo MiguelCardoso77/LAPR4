@@ -43,8 +43,6 @@ activate CustomerManager
             UploadResponsesController --> UploadResponsesUI : responses
         deactivate UploadResponsesController
 
-        UploadResponsesUI --> CustomerManager : shows interview score for the selected \napplication and asks to rank it
-
         UploadResponsesUI -> UploadResponsesController : uploadResponses(responses, jobInterview)
         activate UploadResponsesController
 

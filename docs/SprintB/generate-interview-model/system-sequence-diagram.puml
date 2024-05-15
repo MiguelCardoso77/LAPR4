@@ -1,0 +1,64 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Generate Interview Model
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ":System" as System
+
+activate CM
+
+    CM -> System : asks to generate interview model
+    activate System
+
+        System --> CM : requests candidate telephoneNumber
+    deactivate System
+
+    CM -> System : provides candidate telephoneNumber
+    activate System
+
+        System --> CM: requests number of questions
+    deactivate System
+
+    CM -> System : provides number of questions
+loop while (questions left)
+    activate System
+
+        System --> CM : requests questionType
+    deactivate System
+
+    CM -> System : provides questionType
+    activate System
+
+        System --> CM : requests question
+    deactivate System
+
+    CM -> System : provides question
+    activate System
+
+        System --> CM : requests answer
+    deactivate System
+
+    CM -> System : provides answer
+    activate System
+
+        System --> CM : requests question score
+    deactivate System
+
+    CM -> System : provides question score
+    activate System
+end loop
+
+        System --> CM : creates file and shows operation success
+    deactivate System
+
+deactivate CM
+
+
+
+
+@enduml

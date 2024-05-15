@@ -1,0 +1,43 @@
+@startuml
+'skinparam linetype ortho
+left to right direction
+package "ui"{
+class ActivateUserUI {
+    + doShow()
+    + headline()
+}
+}
+
+package "authz" {
+package "application" {
+class ActivateUserController {
+    + deactivatedUsers()
+    + activateUser(systemUser)
+}
+}
+
+package "user" {
+class UserManagementService {
+    + UserManagementService(userRepo, policy, encoder)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles, createdOn)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles)
+    + registerUser(username, password, name, email, roles)
+    + activeUsers()
+    + deactivatedUsers()
+    + allUsers()
+    + userOfIdentity(id)
+    + deactivateUser(user)
+    + activateUser(user)
+}
+}
+}
+
+
+ActivateUserUI ---> ActivateUserController
+
+ActivateUserController ---> UserManagementService
+
+
+@enduml

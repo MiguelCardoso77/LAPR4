@@ -1,6 +1,8 @@
 package persistence.jpa;
 
-import core.domain.interview.JobInterview;
+import core.pluginManagement.importer.LanguageImporterPluginRepository;
+import core.pluginManagement.language.LanguageRepository;
+import core.pluginManagement.language.LanguageTypeRepository;
 import core.repositories.*;
 import infrastructure.Application;
 import core.persistence.RepositoryFactory;
@@ -103,7 +105,40 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaJobRequirementsSpecificationRepository(Application.settings().getPersistenceUnitName());
     }
 
+    @Override
+    public LanguageImporterPluginRepository languageImporterPlugins() {
+        return null;
+    }
 
+    @Override
+    public LanguageRepository languages() {
+        return null;
+    }
+
+    @Override
+    public LanguageTypeRepository languageTypes() {
+        return null;
+    }
+
+    @Override
+    public InterviewModelRepository interviewModelRepository(TransactionalContext autoTx) {
+        return new JpaInterviewModelsRepository(autoTx);
+    }
+
+    @Override
+    public InterviewModelRepository interviewModelRepository() {
+        return new JpaInterviewModelsRepository(Application.settings().getPersistenceUnitName());
+    }
+
+    @Override
+    public ProcessRepository processRepository(TransactionalContext autoTx) {
+            return new JpaProcessRepository(autoTx);
+    }
+
+    @Override
+    public ProcessRepository processRepository() {
+        return new JpaProcessRepository(Application.settings().getPersistenceUnitName());
+    }
 
 
 

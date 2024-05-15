@@ -31,10 +31,21 @@ import java.util.Optional;
  * @author Jorge Santos ajs@isep.ipp.pt 02/04/2016
  */
 public interface CustomerRepository extends DomainRepository<EmailAddress, Customer> {
+    /**
+     * Find a customer by their email address.
+     *
+     * @param emailAddress the email address of the customer to find
+     * @return an {@link Optional} containing the customer if found, or empty if not found
+     */
 
     default Optional<Customer> findByEmailAddress(final EmailAddress emailAddress) {
         return ofIdentity(emailAddress);
     }
 
+    /**
+     * Retrieve all active customers.
+     *
+     * @return an iterable collection of active customers
+     */
     public Iterable<Customer> findAllActive();
 }

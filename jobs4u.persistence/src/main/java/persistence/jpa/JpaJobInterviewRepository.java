@@ -17,6 +17,6 @@ public class JpaJobInterviewRepository extends JpaAutoTxRepository<JobInterview,
 
     @Override
     public Iterable<JobInterview> allJobInterviews() {
-        return allJobInterviews();
+        return findAll();
     }
 }

@@ -8,6 +8,8 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 /**
  * A controller class for listing companies.
+ *
+ * @author 1220812@isep.ipp.pt
  */
 public class ListCompaniesController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -19,15 +21,9 @@ public class ListCompaniesController {
      * @return the found company, or null if not found
      */
     public Company findCompany(int companyNumber) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
-        Iterable<Company> allCompanies = companyService.allCompanies();
-        for (Company c : allCompanies) {
-            if (c.identity()==(companyNumber)) {
-                return c;
-            }
-        }
-        return null;
+        return companyService.findCompany(companyNumber);
     }
+
     /**
      * Retrieves all companies.
      *

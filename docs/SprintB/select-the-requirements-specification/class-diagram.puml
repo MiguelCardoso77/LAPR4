@@ -1,0 +1,111 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+Title "Class Diagram - Select Requirement Specification"
+
+package "ui"{
+    class SelectRequirementsSpecificationUI{
+    + doShow()
+    + showJobOpenings()
+    + selectFile()
+    + selectJobOpening()
+    }
+}
+
+package "Job Requirements Specifications"{
+    package "application"{
+        class ListJobRequirementsSpecificationController{
+            + allJobRequirementsSpecification()
+            + findJobRequirementSpecification(id)
+            + importRequirementsSpecification(path)
+            + extractSpecificationFromFile(data)
+        }
+    package "domain"{
+        class JobRequirementsSpecification{
+            - idRequirements
+            - academicDegree
+            - experience
+            - knowledge
+            + JobRequirementsSpecification(id, academicDegree, experience, knowledge)
+            + JobRequirementsSpecification(academicDegree, experience, knowledge)
+            JobRequirementsSpecification()
+            + equals()
+            + hashcode
+            + sameAs()
+            + compareTo()
+            + academicDegree()
+            + knowledge()
+            + experience()
+            + identity()
+            + toString()
+            }
+        }
+
+        class JobRequirementsSpecificationBuilder{
+            - idRequirements
+            - academicDegree
+            - experience
+            - knowledge
+            + withAll(idRequirements, academicDegree, experience, knowledge)
+            + withoutId(academicDegree, experience, knowledge)
+            + build()
+        }
+    }
+
+    package "services"{
+        class JobRequirementsService{
+        + registerJobRequirement(academicDegree, knowledge, experience)
+        + allJobRequirementsSpecification()
+        + findJobRequirementSpecification(id)
+        + verifyJobRequirementsSpecification(jobRequirementSpecification)
+        }
+    }
+
+    package "repositories"{
+        Interface JobRequirementsSpecificationRepository{
+            allJobRequirementsSpecification()
+            ofIdentity(id)
+        }
+    }
+}
+
+package "Job Opening"{
+    package "application"{
+        class ListJobOpeningController{
+            + allJobOpenings()
+            + findJobOpeningByJobReference(jobReference)
+        }
+    }
+
+    package "services"{
+        class JobOpeningService{
+            + registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company)
+            + findJobOpening(jobReference)
+            + verifyJobReference(jobReference)
+            + AllJobOpenings()
+        }
+    }
+
+    package "repositories"{
+        Interface JobOpeningRepository{
+            ofIdentity(id)
+            allJobOpenings()
+        }
+    }
+}
+
+SelectRequirementsSpecificationUI --> ListJobRequirementsSpecificationController
+SelectRequirementsSpecificationUI --> ListJobOpeningController
+
+ListJobRequirementsSpecificationController --> JobRequirementsService
+
+JobRequirementsService --> JobRequirementsSpecificationRepository
+JobRequirementsService --> JobRequirementsSpecificationBuilder
+
+JobRequirementsSpecificationBuilder --> JobRequirementsSpecification
+
+ListJobOpeningController --> JobOpeningService
+
+JobOpeningService --> JobOpeningRepository
+
+@enduml

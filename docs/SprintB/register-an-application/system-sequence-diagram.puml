@@ -1,0 +1,38 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - 2002
+
+autonumber
+
+actor "Operator" as OP
+participant ": System" as System
+
+activate OP
+
+    OP -> System : asks to register an application for a job opening
+    activate System
+
+        System --> OP : shows all the subfolders(applications)\n on the chosen folder and asks to select one
+    deactivate System
+
+     OP -> System : selects a folder
+     activate System
+
+     System --> OP : shows all the subfolders(applications)\n on the chosen folder and asks to select one
+
+     deactivate System
+
+     OP -> System : selects a subfolder
+
+    activate System
+
+        System --> OP : Displays operation's success
+
+    deactivate System
+
+deactivate OP
+
+@enduml

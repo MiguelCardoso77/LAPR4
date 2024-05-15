@@ -1,6 +1,10 @@
 package core.domain.jobOpening;
 
 import eapli.framework.domain.model.ValueObject;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Transient;
+
 import java.util.Random;
 
 /**
@@ -11,6 +15,12 @@ import java.util.Random;
 public class JobReference implements ValueObject, Comparable<JobReference> {
 
     private String jobReference;
+
+    @Transient
+    private static int lastSequentialNumber = 0;
+
+    @Transient
+    private int sequentialNumber;
 
     /**
      * Default constructor for ORM (Object-Relational Mapping) purposes.
@@ -25,12 +35,19 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
      * @param companyName The name of the company.
      * @throws IllegalArgumentException If the company name is null or empty.
      */
-    public JobReference(final String companyName) {
+    public JobReference(final String companyName, final boolean generate) {
         if (companyName == null || companyName.isEmpty()) {
             throw new IllegalArgumentException("Company Number should not be empty");
         }
-        String companyReference = buildCompanyReference(companyName);
-        this.jobReference = buildJobReference(companyReference);
+
+        if(generate){
+            String companyReference = buildCompanyReference(companyName);
+            this.sequentialNumber = ++lastSequentialNumber;
+            this.jobReference = buildJobReference(companyReference);
+        } else {
+            this.jobReference = companyName;
+        }
+
     }
 
     /**
@@ -50,16 +67,13 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
     }
 
     /**
-     * Builds the complete job reference by combining the company reference and a random numeric part.
+     * Builds the complete job reference by combining the company reference and a numeric part.
      *
      * @param companyReference The company reference.
      * @return The complete job reference.
      */
     public String buildJobReference(final String companyReference) {
-        Random rand = new Random(); // Generate random 5 digit code
-        int randomPart = rand.nextInt(90000) + 10000;
-
-        return companyReference + "-" + randomPart;
+        return companyReference + "-" + String.format("%06d", sequentialNumber);
     }
 
     /**
@@ -69,14 +83,26 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
      * @return A JobReference instance.
      */
     public static JobReference valueOf(final String jobReference) {
-        return new JobReference(jobReference);
+        return new JobReference(jobReference, true);
     }
+
+    /**
+     * Creates a JobReference instance from an existing job reference string.
+     *
+     * @param jobReference The job reference string.
+     * @return A JobReference instance.
+     */
+    public static JobReference stringToJobReference(final String jobReference){
+        return new JobReference(jobReference, false);
+    }
+
 
     /**
      * Returns the job reference string.
      *
      * @return The job reference string.
      */
+
     @Override
     public String toString() {
         return jobReference;
@@ -87,7 +113,7 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
      *
      * @param o The other job reference to compare to.
      * @return A negative integer, zero, or a positive integer if this job reference is less than,
-     *         equal to, or greater than the specified job reference, respectively.
+     * equal to, or greater than the specified job reference, respectively.
      */
     @Override
     public int compareTo(JobReference o) {
@@ -123,4 +149,6 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
         JobReference other = (JobReference) obj;
         return jobReference.equals(other.jobReference);
     }
+
+
 }

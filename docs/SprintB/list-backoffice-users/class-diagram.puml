@@ -1,0 +1,46 @@
+@startuml
+'skinparam linetype ortho
+left to right direction
+
+package "ui"{
+class ListBackofficeUsersUI {
+    + elements()
+    + headline()
+    + emptyMessage()
+    + elementPrinter()
+    + elementName()
+    + listHeader()
+    + doShow()
+}
+}
+package "authz"{
+package "application"{
+class ListUsersController {
+    + allUsers()
+    + allBackofficeUsers()
+}
+}
+
+package "user"{
+class UserManagementService {
+    + UserManagementService(userRepo, policy, encoder)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles, createdOn)
+    + registerNewUser( username,  rawPassword,
+    firstName,  lastName,  email, roles)
+    + registerUser(username, password, name, email, roles)
+    + activeUsers()
+    + deactivatedUsers()
+    + allUsers()
+    + userOfIdentity(id)
+    + deactivateUser(user)
+    + activateUser(user)
+}
+}
+}
+ListBackofficeUsersUI ---> ListUsersController
+
+ListUsersController ---> UserManagementService
+
+
+@enduml

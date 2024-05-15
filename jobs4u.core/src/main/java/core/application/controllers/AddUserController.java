@@ -26,7 +26,6 @@ public class AddUserController {
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final UserManagementService userSvc = AuthzRegistry.userService();
-    private final CustomerService customerService = new CustomerService();
 
     /**
      * Get existing RoleTypes available to the user.

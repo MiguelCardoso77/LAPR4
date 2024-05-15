@@ -143,6 +143,178 @@ The .md file is followed by a Class Diagram and a Sequence Diagram, with the pur
 
 ## 3. Implementation
 
+The implementation of this use case is centered around the creation of a new Candidate entity. The Candidate entity is responsible for encapsulating the candidate's information, such as their curriculum, telephone number, and system user. 
+The Candidate entity is also responsible for managing the candidate's identity, which is represented by their telephone number.
+
+````java
+  /**
+   * Represents a candidate entity in the system.
+   *
+   * @author Miguel Cardoso
+   */
+  @Entity
+  @Table(name = "CANDIDATE")
+  public class Candidate implements AggregateRoot<TelephoneNumber> {
+      @EmbeddedId
+      @Column(name = "TELEPHONE_NUMBER")
+      private TelephoneNumber telephoneNumber;
+  
+      @Column(name = "CURRICULUM")
+      private Curriculum curriculum;
+  
+      @OneToOne
+      @JoinColumn(name = "EMAIL")
+      private SystemUser systemUser;
+  
+      /**
+       * Constructs a new Candidate object with the specified user, telephone number, and curriculum.
+       *
+       * @param user            The system user associated with the candidate.
+       * @param telephoneNumber The telephone number of the candidate.
+       * @param curriculum      The curriculum of the candidate.
+       */
+      public Candidate(final SystemUser user, final TelephoneNumber telephoneNumber, final Curriculum curriculum) {
+          Preconditions.nonNull(user);
+          Preconditions.nonNull(telephoneNumber);
+          Preconditions.nonNull(curriculum);
+  
+          this.systemUser = user;
+          this.telephoneNumber = telephoneNumber;
+          this.curriculum = curriculum;
+      }
+  
+      protected Candidate() {
+          // for ORM only
+      }
+  
+      /**
+       * Retrieves the system user associated with this candidate.
+       *
+       * @return The system user.
+       */
+      public SystemUser user() {
+          return this.systemUser;
+      }
+  
+      /**
+       * Retrieves the curriculum of this candidate.
+       *
+       * @return The curriculum.
+       */
+      public Curriculum curriculum() {
+          return this.curriculum;
+      }
+  
+      /**
+       * Retrieves the identity of this candidate, which is represented by their telephone number.
+       *
+       * @return The telephone number representing the identity of this candidate.
+       */
+      @Override
+      public TelephoneNumber identity() {
+          return telephoneNumber;
+      }
+  
+      /**
+       * Checks if this candidate is equal to another object.
+       *
+       * @param other The object to compare.
+       * @return True if the objects are equal, false otherwise.
+       */
+      @Override
+      public boolean sameAs(Object other) {
+          if (this == other) {
+              return true;
+          }
+          if (other == null || getClass() != other.getClass()) {
+              return false;
+          }
+          final Candidate candidate = (Candidate) other;
+          return telephoneNumber.equals(candidate.telephoneNumber) && curriculum.equals(candidate.curriculum);
+      }
+  
+      /**
+       * Checks if this candidate is equal to another object.
+       *
+       * @param o The object to compare.
+       * @return True if the objects are equal, false otherwise.
+       */
+      @Override
+      public boolean equals(Object o) {
+          if (this == o) {
+              return true;
+          }
+          if (o == null || getClass() != o.getClass()) {
+              return false;
+          }
+  
+          Candidate that = (Candidate) o;
+  
+          return telephoneNumber.equals(that.telephoneNumber) && curriculum.equals(that.curriculum);
+      }
+  
+      /**
+       * Returns a string representation of this candidate.
+       *
+       * @return A string representation of this candidate.
+       */
+      @Override
+      public String toString() {
+          return "Candidate{" +
+                  "telephoneNumber=" + telephoneNumber +
+                  ", curriculum=" + curriculum +
+                  ", systemUser=" + systemUser.toString() +
+                  '}';
+      }
+  }
+````
+
 ## 4. Testing
 
+We made several tests for the domain classes used mainly in this use case. Here are some examples of them:
+
+```java
+    @Test
+    public void testTelephoneNumberCreation_ValidNumber() {
+        String phoneNumber = "123456789";
+
+        TelephoneNumber telephoneNumber = new TelephoneNumber(phoneNumber);
+
+        assertEquals(phoneNumber, telephoneNumber.toString());
+    }
+
+    @Test
+    public void testTelephoneNumberCreation_NullNumber() {
+        assertThrows(IllegalArgumentException.class, () -> new TelephoneNumber(null));
+    }
+
+    @Test
+    public void testTelephoneNumberCreation_EmptyNumber() {
+        assertThrows(IllegalArgumentException.class, () -> new TelephoneNumber(""));
+    }
+
+    @Test
+    public void testTelephoneNumberEquality_SameNumber() {
+        String phoneNumber = "123456789";
+        TelephoneNumber telephoneNumber1 = new TelephoneNumber(phoneNumber);
+        TelephoneNumber telephoneNumber2 = new TelephoneNumber(phoneNumber);
+
+        assertEquals(telephoneNumber1, telephoneNumber2);
+    }
+
+    @Test
+    public void testTelephoneNumberEquality_DifferentNumber() {
+        TelephoneNumber telephoneNumber1 = new TelephoneNumber("123456789");
+        TelephoneNumber telephoneNumber2 = new TelephoneNumber("987654321");
+
+        assertNotEquals(telephoneNumber1, telephoneNumber2);
+    }
+```
+
 ## 5. Demonstration
+![register-a-candidate.png](register-a-candidate.png)
+
+Once the candidate is registered and the user is created, the system will display a success message.
+We can then check the database to verify that the candidate was successfully created.
+
+![dataBase-check.png](dataBase-check.png)

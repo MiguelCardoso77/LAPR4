@@ -95,7 +95,7 @@ aceitar esse login.
 ![customerAppLogin-system-sequence-diagram.svg](log-in-to-customerApp%2FcustomerAppLogin-system-sequence-diagram.svg)
 
 ### 1.7. Sequence Diagram (SD)
-![login-sequence-diagram.svg](login-sequence-diagram.svg)
+![login-sequence-diagram.svg](sequence-diagram.svg)
 
 ### 1.8 Other Relevant Remarks
 
@@ -112,10 +112,10 @@ Within this ecosystem, the SystemUser entity embodies a user within our system, 
 the user's role, dictating their permissions and access levels.
 
 ### 2.1. Domain Model
-![login-domain-model.svg](login-domain-model.svg)
+![login-domain-model.svg](domain-model.svg)
 
 ### 2.2. Class Diagram
-![login-class-diagram.svg](login-class-diagram.svg)
+![login-class-diagram.svg](class-diagram.svg)
 
 ## 3. Implementation
 
@@ -208,3 +208,12 @@ We created tests to ensure the password policy is working as expected, as well a
 ```
 
 ## 5. Demonstration
+![log-in-to-backoffice.png](log-in-to-backoffice%2Flog-in-to-backoffice.png)
+
+----------------
+
+![log-in-to-candidateApp.png](log-in-to-candidateApp%2Flog-in-to-candidateApp.png)
+
+----------------
+
+![log-in-to-customerApp.png](log-in-to-customerApp%2Flog-in-to-customerApp.png)

@@ -1,0 +1,205 @@
+@startuml
+skinparam linetype ortho
+top to bottom direction
+
+package "ui"{
+
+class ListJobOpeningApplicationsUI{
+    + headline()
+    + emptyMessage()
+    + elementsApp()
+    + elements()
+    + elementPrinter()
+    + elementName()
+    + listHeader()
+    + doShow()
+}
+}
+
+
+
+
+
+
+
+
+  package "Job Opening"{
+
+package "application"{
+  class ListJobOpeningController {
+      + allJobOpening()
+  }
+  }
+
+  package "domain " {
+class JobOpening {
+   - Description description
+   - VacanciesNumber vacanciesNumber
+   - Address address
+   - Mode mode
+   - ContractType contractType
+   - TitleOrFunction titleOrFunction
+   - JobReference jobReference
+   - Company company
+
+   + JobOpening(jobReference, description,
+   vacanciesNumber, address, modes, contractTypes, \n titleOrFunction , company)
+   + identity()
+   + sameAs(object)
+   + jobReference()
+   + description()
+   + vacanciesNumber()
+   + address()
+   + mode()
+   + contractType()
+   + titleOrFunction()
+   + company()
+}
+}
+
+
+package "repositories"{
+class JobOpeningRepository {
+    + allJobOpenings()
+}
+}
+
+ package "services"{
+class JobOpeningService {
+    + registerJobOpening(jobReference, description, vacanciesNumber,
+    address, mode, contractType, titleOrFunction, company);
+    + allJobOpenings()
+}
+}
+}
+
+
+
+
+
+package "Applications" {
+
+package "application" {
+
+
+class ListJobOpeningApplicationsController{
+    + allApplicationsOfJobOpening(jobReference)
+    + findJobOpening(jobReference)
+}
+}
+    package "domain"{
+
+class Application{
+    - IdApplication idApplication
+    - Rank rank
+    - SubmissionDate submissionDate
+    - Status status
+    - ApplicationDataFile applicationDataFile
+    - FilesAttachedContent filesAttachedContent
+    - EmailsFilesAttached emailsFilesAttached
+    - EmailContentFile emailContentFile
+    - JobReference jobReference
+    - TelephoneNumber telephoneNumber
+
+    + Application(idApplication,  rank,  submissionDate,  status, \n applicationDataFile,  filesAttachedContent, emailFilesAttached,  emailContentFile,\n  jobReference,  telephoneNumber)
+    + sameAs(other)
+    + compareTo(other)
+    + identity()
+    + hasIdentity (id)
+    + telephoneNumber()
+    + idApplication()
+    + rank()
+    + submissionDate()
+    + status()
+    + applicationDataFile()
+    + filesAttachedContent()
+    + emailFilesAttached()
+    + emailContentFile()
+    + jobReference()
+    + toString()
+
+}
+}
+
+
+    package "repositories"{
+
+class ApplicationRepository{
+
+    + allApplications()
+
+}
+}
+
+    package "services"{
+
+class ApplicationService{
+
+    + allApplication()
+
+}
+
+}
+}
+
+
+
+
+package "Auth"{
+
+class AuthorizationService {
+    + authorizationService()
+    + ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.POWER_USER)
+}
+}
+
+
+
+
+
+
+package "Persistence" {
+class PersistenceContext {
+    + repositories()
+    + PersistenceContext()
+}
+
+
+class RepositoryFactory{
+    + newTransactionalContext()
+    + users(TransactionalContext autoTx)
+    + users()
+    + customerUsers(TransactionalContext autoTx)
+    + customerUsers()
+    + signupRequests(TransactionalContext autoTx)
+    + signupRequests()
+    + jobOpenings(TransactionalContext autoTx)
+    + jobOpenings()
+    + applications(TransactionalContext autoTx)
+    + applications()
+}
+}
+
+ListJobOpeningApplicationsUI --> ListJobOpeningApplicationsController
+ListJobOpeningApplicationsUI ----> ListJobOpeningController
+ListJobOpeningApplicationsController --> AuthorizationService
+ListJobOpeningApplicationsController ---> PersistenceContext
+PersistenceContext -> RepositoryFactory
+
+ListJobOpeningController ----> JobOpeningService
+ListJobOpeningController --> AuthorizationService
+ListJobOpeningController --> PersistenceContext
+
+
+ListJobOpeningApplicationsController ---> JobOpeningService
+JobOpeningService --> JobOpeningRepository
+JobOpeningRepository --> JobOpening
+
+ListJobOpeningApplicationsController -> ApplicationService
+ApplicationService --> ApplicationRepository
+ApplicationRepository --> Application
+
+
+
+
+@enduml

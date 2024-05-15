@@ -1,12 +1,14 @@
 package core.application.controllers;
 
 import core.domain.candidate.Candidate;
+import core.domain.candidate.TelephoneNumber;
 import core.domain.user.Jobs4UPasswordPolicy;
 import core.domain.user.Jobs4URoles;
 import core.services.CandidateService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
+import eapli.framework.infrastructure.authz.domain.model.Name;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
@@ -22,6 +24,8 @@ import java.util.Set;
 @UseCaseController
 public class RegisterCandidateController {
     private final UserManagementService userService = AuthzRegistry.userService();
+
+    private final CandidateService candidateService = new CandidateService();
     private final Jobs4UPasswordPolicy passwordPolicy = new Jobs4UPasswordPolicy();
 
     /**
@@ -44,11 +48,11 @@ public class RegisterCandidateController {
     /**
      * Creates a new system user for the candidate.
      *
-     * @param firstName  the first name of the candidate
-     * @param lastName   the last name of the candidate
-     * @param email      the email of the candidate
-     * @param roles      the roles of the candidate
-     * @param createdOn  the date when the candidate was created
+     * @param firstName the first name of the candidate
+     * @param lastName  the last name of the candidate
+     * @param email     the email of the candidate
+     * @param roles     the roles of the candidate
+     * @param createdOn the date when the candidate was created
      * @return the created system user
      */
     private SystemUser createSystemUser(final String firstName, final String lastName, final String email, final Set<Role> roles, final Calendar createdOn) {
@@ -75,8 +79,11 @@ public class RegisterCandidateController {
         Preconditions.nonNull(telephoneNumber);
         Preconditions.nonNull(curriculum);
 
-        CandidateService candidateService = new CandidateService();
-
         return candidateService.registerCandidate(newUser, telephoneNumber, curriculum);
     }
+
+    public boolean verifyTelephoneNumber(TelephoneNumber telephoneNumber){
+        return candidateService.findCandidateByTelephoneNumber(telephoneNumber) != null;
+    }
+
 }

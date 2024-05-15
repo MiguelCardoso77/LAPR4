@@ -1,0 +1,155 @@
+@startuml
+hide methods
+left to right direction
+'skinparam linetype ortho
+
+Title "Domain Model"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
+package "JobInterview Aggregate"{
+entity JobInterview <<entity>><<root>>
+
+     card InterviewResults <<Value Object>> {
+     }
+     card Score <<Value Object>> {
+     }
+     card InterviewTime <<Value Object>> {
+     }
+     card InterviewDate <<Value Object>> {
+     }
+
+     JobInterview --> InterviewResults
+     JobInterview --> Score
+     JobInterview --> InterviewTime
+     JobInterview --> InterviewDate
+
+}
+
+package "Job Opening Aggregate"{
+entity JobOpening <<entity>><<root>>
+
+    card JobReference <<Value Object>> {
+    }
+    card TitleOrFunction <<Value Object>> {
+    }
+    card ContractType <<Value Object>> {
+    }
+    card Mode <<Value Object>> {
+    }
+    card Address <<Value Object>> {
+    }
+    card VacanciesNumber <<Value Object>> {
+    }
+    card Description <<Value Object>> {
+    }
+
+    JobOpening --> JobReference
+    JobOpening --> TitleOrFunction
+    JobOpening --> ContractType
+    JobOpening --> Mode
+    JobOpening --> Address
+    JobOpening --> VacanciesNumber
+    JobOpening --> Description
+
+    note right of ContractType
+        Can be one of the following:
+        - full-time
+        - part-time
+    end note
+
+    note right of Mode
+         Can be one of the following:
+         - remote
+         - hybrid
+         - onsite
+    end note
+
+}
+
+
+package "Application Aggregate"{
+entity Application <<entity>><<root>>
+
+    card ApplicationFiles <<Value Object>>{
+    }
+    card Status <<Value Object>>{
+    }
+    card SubmissionDate <<Value Object>>{
+    }
+    card Rank <<Value Object>>{
+    }
+
+    Application --> ApplicationFiles
+    Application --> Status
+    Application --> SubmissionDate
+    Application --> Rank
+
+    note right of Status
+        Can be one of the following:
+        - submitted
+        - pending
+        - accepted
+        - declined
+    end note
+
+    note right of ApplicationFiles
+        Can be one of the following:
+        - text file with the contents of the email
+        - file for each file attached to the email
+        - text file with the contents of each file attached to the email
+        - text file with the data of the application and candidate
+    end note
+
+}
+
+package "Interview Model Aggregate"{
+entity InterviewModel <<entity>><<root>>
+
+    card Plugin <<Value Object>> {
+    }
+
+    InterviewModel --> Plugin
+
+}
+
+
+package "Customer Manager Aggregate"{
+entity CustomerManager <<entity>><<root>>
+
+}
+
+package "ANTLR Service Aggregate"{
+    entity ANTLR <<entity>><<root>>
+
+}
+
+
+
+    Application "1" ---> "1" JobInterview
+
+    InterviewModel "1" <--- "N" JobInterview : uses
+
+    ANTLR ---> InterviewModel : processes
+
+    CustomerManager "1" ---> "N" JobOpening : manages
+
+    JobOpening "1" <-- "N " Application : has
+
+@enduml

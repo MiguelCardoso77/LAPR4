@@ -1,16 +1,16 @@
-# 2002 - register an application of a candidate for a job opening and import all files received.
+# register an application of a candidate for a job opening and import all files received.
 
 --------
 
 ## 1.1. User Story Description
 
 As Operator, I want to register an application of a candidate for a job opening and  import all files received.
+
 ## 1.2. Customer Specifications and Clarifications
 
 ### From the specifications document:
 
-Import the data from the file that was processed by the Application File Bot in Req 2001. The Files should be kept in the shared folder, but the Backoffice application needs to know the references to the file locations.
-
+    Import the data from the file that was processed by the Application File Bot in Req 2001. The Files should be kept in the shared folder, but the Backoffice application needs to know the references to the file locations.
 
 ### From the client clarifications:
 
@@ -54,6 +54,14 @@ Import the data from the file that was processed by the Application File Bot in 
 
       100. Tem de haver um registo que indique que o candidato em questão fez a candidatura e têm de ser registados/importados para o sistema todos os ficheiros submetidos.
 
+* Question:
+
+      133. Número da candidatura- na Q24 é referido um número que identifica uma candidatura a uma job reference. Esse número é diferente em todas as candidaturas, independentemente da job reference? Poderá servir como id da candidatura?
+
+* Answer:
+
+      133. Para além da Q24 veja por favor os exemplos de ficheiros disponibilizados pelo applications email bot. Sim, podemos considerar que esse número é único, nunca se repetindo.
+
 
 ## 1.3. Acceptance Criteria
 
@@ -81,89 +89,61 @@ Import the data from the file that was processed by the Application File Bot in 
 
 * AC6: Register new candidates in the system
 
-## 1.4. Found out Dependencies
 
-* G007 -  As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
+## 2. Analysis
 
-* 2001 -  As Operator, I want to register an application of a candidate for a job opening and import all files received.
+The .md file is followed by a Class Diagram and a Sequence Diagram, with the purpose of illustrating the design decisions.
 
-## 1.5 Input and Output Data
+Serving as an overview, here will be presented some of the main concerns:
 
-* Input Data:
+- Which classes must be accessed in order to implement this functionality?
 
-      - Customer´s first name
-      - Customer's last name
-      - Customer's email
-      - Data Confirmation.
+- Which classes must be created in order to implement this functionality?
 
-* Output Data:
+- Who has the responsibility of registering the application?
 
-      - All the inputed data
-      - (In)Success of the operation
+- Are there any required validations?
 
-## 1.6. System Sequence Diagram (SSD)
+- Who has the responsibility of saving the application?
 
-![2002-system-sequence-diagram.svg](2002-system-sequence-diagram.svg)
+### 2.1. Main success scenario
 
-## 1.7. System Diagram (SD)
+    The application is registered in the system.
 
-![2002-sequence-diagram.svg](2002-sequence-diagram.svg)
+## 2.2. System Sequence Diagram (SSD)
 
-## 1.8 Other Relevant Remarks
+![2002-system-sequence-diagram.svg](system-sequence-diagram.svg)
+
+## 2.3. System Diagram (SD)
+
+![2002-sequence-diagram.svg](sequence-diagram.svg)
+
+## 2.4. Partial Domain Model
+
+![domain-model.svg](domain-model.svg)
 
 None to specify
 
-## 2.0. Domain Model
+## 3.0. Design
 
-----------------
+### 3.1. Partial Class Diagram
 
-### 2.1. Relevant Domain Model Excerpt
+![class-diagram.svg](class-diagram.svg)
 
-![2002-domain-model.svg](2002-domain-model.svg)
+### 3.2. Applied Patterns
 
-### 2.2. Entities and Aggregates
+- Single Responsibility Principle + High Cohesion: Every class has only one responsibility, which leads to higher cohesion.
 
-Entities represent distinct objects with unique identities and lifecycles within the domain. Aggregates are clusters of associated entities and value objects that are treated as a unit for data changes.
+- Open/Closed Principle: By using interfaces, we are allowing classes to extend the behavior, but never modify the previous implementation.
 
+- Information Expert: A clear example would be the AddCustomerController, that by following the referred pattern, as well as the creator pattern, is responsible for creating the customer.
 
-* Candidate
+- Low Coupling: All the classes are loosely coupled, not depending on concrete classes, rather depending on interfaces.
 
-      Represents individuals applying for job openings.
+- Controller: The controller serves as a bridge between the user interface and the domain.
 
-* Job Opening
-
-      Represents job openings created by customers.
-
-* Process
-
-      Represents the different stages in which a job offer can be found.
-
-* Application
-
-      Represents job applications submitted by candidates.
-
-* Operator
-
-      Represents employees responsible for monitoring and managing the automated processes within the talent acquisition system. Operators oversee the processing of candidate applications, handle exceptions, and ensure the smooth operation of the system.
-
-### Associations
-
-Application "N" --> "1" JobOpening : has
-
-JobOpening  --> Process
-
-Application "N" ---> "1" Candidate
-
-Operator --> User
-
-Candidate --> User
-
-Operator "1" ---> "N" Application : registers
-
-## 3.0. Class Diagram
+## 4.0. Integration and Demonstration
 
 ------------------
 
-### 3.1. Relevant Class Diagram Excerpt
-
-![2002-class-diagram.svg](2002-class-diagram.svg)
+![img.png](img.png)

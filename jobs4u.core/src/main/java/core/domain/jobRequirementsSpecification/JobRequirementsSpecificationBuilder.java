@@ -1,37 +1,71 @@
 package core.domain.jobRequirementsSpecification;
 
 
-import core.domain.jobOpening.JobOpening;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import eapli.framework.validations.Preconditions;
+
+/**
+ * Builder class for creating instances of JobRequirementsSpecification.
+ * Allows for fluent construction of JobRequirementsSpecification objects with specified attributes.
+ *
+ * Usage:
+ * JobRequirementsSpecificationBuilder builder = new JobRequirementsSpecificationBuilder();
+ * JobRequirementsSpecification requirements = builder.withAll(1, "Bachelor's Degree", 2, "Java programming").build();
+ *
+ * @author 1220812@isep.ipp.pt
+ */
 
 public class JobRequirementsSpecificationBuilder {
 
-    private static final Logger LOGGER = LogManager.getLogger(JobOpening.class);
     private Integer idRequirements;
-    private Requirements requirements;
+    private String academicDegree;
 
+    private int experience;
 
-    public JobRequirementsSpecificationBuilder withAll(Requirements requirements, Integer idRequirements) {
-        this.requirements = requirements;
+    private String knowledge;
+
+    /**
+     * Sets all attributes required to build a JobRequirementsSpecification.
+     *
+     * @param idRequirements The ID of the job requirements specification.
+     * @param academicDegree The academic degree required for the job.
+     * @param experience The minimum years of experience required for the job.
+     * @param knowledge The specific knowledge or skills required for the job.
+     * @return This JobRequirementsSpecificationBuilder instance.
+     */
+    public JobRequirementsSpecificationBuilder withAll(final Integer idRequirements, final String academicDegree, final int experience, final String knowledge) {
         this.idRequirements = idRequirements;
+        this.academicDegree = academicDegree;
+        this.experience = experience;
+        this.knowledge = knowledge;
+        return this;
+    }
+    /**
+     * Sets all attributes required to build a JobRequirementsSpecification.
+     *
+     * @param academicDegree The academic degree required for the job.
+     * @param experience The minimum years of experience required for the job.
+     * @param knowledge The specific knowledge or skills required for the job.
+     * @return This JobRequirementsSpecificationBuilder instance.
+     */
+    public JobRequirementsSpecificationBuilder withoutId( final String academicDegree, final int experience, final String knowledge) {
+        this.academicDegree = academicDegree;
+        this.experience = experience;
+        this.knowledge = knowledge;
         return this;
     }
 
-
+    /**
+     * Builds a new JobRequirementsSpecification based on the provided attributes.
+     * Preconditions ensure that all required attributes are set.
+     *
+     * @return The constructed JobRequirementsSpecification object.
+     * @throws IllegalStateException if any required attribute is not set.
+     */
     public JobRequirementsSpecification build() {
-        JobRequirementsSpecification jobRequirementsSpecification;
+        Preconditions.nonNull(academicDegree);
+        Preconditions.nonNull(experience);
+        Preconditions.nonNull(knowledge);
 
-        if (idRequirements == null || requirements == null) {
-            LOGGER.error("Missing mandatory information to build a JobRequirementsSpecification");
-            return null;
-        } else {
-            LOGGER.debug("Building JobRequirementSpecification with requirements {}, idRequirements {}", requirements, idRequirements);
-            jobRequirementsSpecification = new JobRequirementsSpecification(requirements, idRequirements);
-        }
-
-        return jobRequirementsSpecification;
+        return new JobRequirementsSpecification(idRequirements, academicDegree, experience, knowledge);
     }
-
-
 }

@@ -9,6 +9,8 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 /**
  * A controller class for adding a new company.
+ *
+ * @author 1220812@isep.ipp.pt
  */
 @UseCaseController
 public class AddCompanyController {
@@ -20,9 +22,6 @@ public class AddCompanyController {
      * @param companyName   the company name
      * @return the added company
      */
-    public Company addCompany(String companyName, int companyNumber){
-        return companyService.registerCompany(companyName, companyNumber);
-    }
     public Company addCompany(String companyName){
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.BOOTSTRAP);
 

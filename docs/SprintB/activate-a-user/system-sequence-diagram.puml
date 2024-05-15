@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ": System" as System
+
+activate CM
+
+    CM -> System : asks to activate a user
+    activate System
+
+       System --> CM : asks to select a user to activate
+    deactivate System
+
+    CM -> System : selects user
+    activate System
+
+        System --> CM : displays operation success
+        deactivate System
+
+@enduml

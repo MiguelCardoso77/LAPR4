@@ -18,9 +18,6 @@ participant AddUserController<<application>>
 participant ListCompaniesController<<application>>
 participant AddCompanyController<<application>>
 
-participant PersistenceContext <<persistence>>
-participant RepositoryFactory <<factory>>
-
 participant Jobs4PasswordPolicy<<password generator>>
 
 participant AuthorizationService <<service>>

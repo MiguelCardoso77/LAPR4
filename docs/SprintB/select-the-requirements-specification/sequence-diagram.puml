@@ -1,0 +1,140 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+title SD - Select the Requirements Specifications
+
+'hide footbox
+
+actor CustomerManager
+
+participant SelectRequirementsSpecificationUI <<presentation>>
+
+participant ListJobRequirementsSpecificationController <<application>>
+participant ListJobOpeningController <<application>>
+
+participant JobOpeningService <<service>>
+participant JobRequirementsService <<service>>
+
+database JobOpeningRepository <<repository>>
+database JobRequirementsSpecificationRepository <<repository>>
+
+participant JobRequirementsSpecificationBuilder <<builder>>
+
+participant JobOpening <<domain>>
+
+activate CustomerManager
+
+CustomerManager -> SelectRequirementsSpecificationUI : Requests to select a requirements specification
+
+activate SelectRequirementsSpecificationUI
+
+SelectRequirementsSpecificationUI -> ListJobOpeningController : allJobOpenings()
+
+activate ListJobOpeningController
+
+ListJobOpeningController -> JobOpeningService : allJobOpenings()
+
+activate JobOpeningService
+
+JobOpeningService -> JobOpeningRepository : findAll()
+
+activate JobOpeningRepository
+
+JobOpeningRepository --> JobOpeningService : jobOpenings
+
+
+deactivate JobOpeningRepository
+
+JobOpeningService --> ListJobOpeningController : jobOpenings
+
+deactivate JobOpeningService
+
+ListJobOpeningController --> SelectRequirementsSpecificationUI : jobOpenings
+
+deactivate ListJobOpeningController
+
+
+SelectRequirementsSpecificationUI --> CustomerManager : Displays all job openings registered in the system and asks to select one
+
+deactivate SelectRequirementsSpecificationUI
+
+CustomerManager -> SelectRequirementsSpecificationUI : Selects the job opening
+
+activate SelectRequirementsSpecificationUI
+
+SelectRequirementsSpecificationUI -> ListJobRequirementsSpecificationController : importRequirementsSpecifications(path)
+
+activate ListJobRequirementsSpecificationController
+
+ListJobRequirementsSpecificationController --> SelectRequirementsSpecificationUI : requirementSpecifications
+
+deactivate ListJobRequirementsSpecificationController
+
+SelectRequirementsSpecificationUI --> CustomerManager : Displays all requirement specifications registered in the system and asks to select one
+
+deactivate SelectRequirementsSpecificationUI
+
+CustomerManager -> SelectRequirementsSpecificationUI : Selects the requirement specification
+
+activate SelectRequirementsSpecificationUI
+
+SelectRequirementsSpecificationUI -> ListJobRequirementsSpecificationController : extractSpecificationFromFile(data)
+
+activate ListJobRequirementsSpecificationController
+
+ListJobRequirementsSpecificationController -> JobRequirementsService : registerJobRequirement(academicDegree, knowledge, experience)
+
+activate JobRequirementsService
+
+JobRequirementsService -> JobRequirementsSpecificationBuilder : build()
+
+activate JobRequirementsSpecificationBuilder
+
+JobRequirementsSpecificationBuilder --> JobRequirementsService : jobRequirementSpecification
+
+deactivate JobRequirementsSpecificationBuilder
+
+JobRequirementsService -> JobRequirementsSpecificationRepository : save(jobRequirementSpecification)
+
+activate JobRequirementsSpecificationRepository
+
+JobRequirementsSpecificationRepository --> JobRequirementsService : true
+
+deactivate JobRequirementsSpecificationRepository
+
+JobRequirementsService --> ListJobRequirementsSpecificationController : jobRequirementSpecification
+
+deactivate JobRequirementsService
+
+ListJobRequirementsSpecificationController --> SelectRequirementsSpecificationUI : jobRequirementSpecification
+
+deactivate ListJobRequirementsSpecificationController
+
+SelectRequirementsSpecificationUI -> ListJobRequirementsSpecificationController : updateJobRequirementSpecification(jobRequirementSpecification)
+
+activate ListJobRequirementsSpecificationController
+
+ListJobRequirementsSpecificationController -> JobOpening : updateJobRequirementSpecification(jobRequirementSpecification)
+
+activate JobOpening
+
+JobOpening --> ListJobRequirementsSpecificationController : jobOpening
+
+deactivate JobOpening
+
+ListJobRequirementsSpecificationController --> SelectRequirementsSpecificationUI : JobOpening
+
+deactivate ListJobRequirementsSpecificationController
+
+
+SelectRequirementsSpecificationUI --> CustomerManager : Displays operation's success
+
+deactivate SelectRequirementsSpecificationUI
+
+deactivate CustomerManager
+
+@enduml

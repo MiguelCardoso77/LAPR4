@@ -1,0 +1,76 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Operator" as OP
+participant GenerateRequirementsSpecificationUI
+participant GenerateRequirementsSpecificationController
+
+
+activate OP
+
+    OP -> GenerateRequirementsSpecificationUI : asks to generate and export a template text file to help collect data fields for candidates of a job opening
+
+    activate GenerateRequirementsSpecificationUI
+
+    GenerateRequirementsSpecificationUI -> GenerateRequirementsSpecificationController: displayAcademicDegree()
+
+    activate GenerateRequirementsSpecificationController
+
+    GenerateRequirementsSpecificationController --> GenerateRequirementsSpecificationUI :list of academic degree
+
+    deactivate GenerateRequirementsSpecificationController
+
+    GenerateRequirementsSpecificationUI -> OP : display all academic degrees and asks to select one degree
+
+    deactivate GenerateRequirementsSpecificationUI
+
+    OP -> GenerateRequirementsSpecificationUI : select a degree
+
+    activate GenerateRequirementsSpecificationUI
+
+    GenerateRequirementsSpecificationUI -> GenerateRequirementsSpecificationController : readAndProcessProgrammingLanguages()
+
+    activate GenerateRequirementsSpecificationController
+
+    GenerateRequirementsSpecificationController --> GenerateRequirementsSpecificationUI : list of programming languages
+
+    deactivate GenerateRequirementsSpecificationController
+
+loop
+    GenerateRequirementsSpecificationUI --> OP : display all programming languages and asks to select a programming language
+
+    deactivate GenerateRequirementsSpecificationUI
+
+    OP -> GenerateRequirementsSpecificationUI : select a programming language
+
+    activate GenerateRequirementsSpecificationUI
+
+end loop
+
+    GenerateRequirementsSpecificationUI --> OP : asks to write experience in years
+
+        deactivate GenerateRequirementsSpecificationUI
+
+
+    OP -> GenerateRequirementsSpecificationUI : write experience in years
+
+    activate GenerateRequirementsSpecificationUI
+
+    GenerateRequirementsSpecificationUI --> OP : asks to write file's name
+
+    deactivate GenerateRequirementsSpecificationUI
+
+    OP -> GenerateRequirementsSpecificationUI : write file's name
+
+    activate GenerateRequirementsSpecificationUI
+
+    GenerateRequirementsSpecificationUI --> OP : generate and export the text file
+
+    deactivate GenerateRequirementsSpecificationUI
+
+
+@enduml

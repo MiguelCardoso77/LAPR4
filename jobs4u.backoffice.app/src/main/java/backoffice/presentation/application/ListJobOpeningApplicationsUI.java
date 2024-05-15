@@ -17,6 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * User interface for listing all applications of a job opening.
+ *
+ * @author Tomás Gonçalves
+ */
+
 public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
     private final ListJobOpeningApplicationsController theController = new ListJobOpeningApplicationsController();
 
@@ -25,20 +31,43 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ListJobOpeningApplicationsUI.class);
 
+    /**
+     * Generates the headline for this UI.
+     *
+     * @return The headline string.
+ * */
     @Override
     public String headline() {
         return "List All Applications of a Job Opening";
     }
-
+    /**
+     * Provides the message to display when no applications are found.
+     *
+     * @return The message indicating no applications found.
+ */
     @Override
     protected String emptyMessage() {
         return "No applications found for this job opening.";
     }
 
+
+    /**
+     * Retrieves all applications for a specific job opening.
+     *
+     * @param jobReference The reference to the job opening.
+     * @return Iterable of applications for the specified job opening.
+     */
     protected Iterable<Application> elementsApp(JobReference jobReference) {
         return theController.allApplicationsOfJobOpening(jobReference);
     }
 
+
+
+    /**
+     * Retrieves all job openings.
+     *
+     * @return Iterable of all job openings.
+     */
     @Override
     protected Iterable<JobOpening> elements() {
         return theController1.allJobOpening();
@@ -49,6 +78,12 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         return null;
     }
 
+
+    /**
+     * Specifies the name of the elements being listed.
+     *
+     * @return The name of the elements being listed.
+     */
     @Override
     protected String elementName() {
         return "Application";
@@ -59,6 +94,12 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         return String.format("#  %-30s%-30s%-30s", "ID", "Submission Date", "Rank");
     }
 
+
+    /**
+     * Displays all applications of a selected job opening.
+     *
+     * @return true if the operation is successful, otherwise false.
+     */
     @Override
     public boolean doShow() {
         final List<JobOpening> list = new ArrayList<>();
@@ -88,19 +129,20 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
                 }
             }
         }
+        if (jobOpeningApplication != null) {
 
-        final Iterable<Application> iterable1 = elementsApp(jobOpeningApplication.jobReference());
-        if(!iterable1.iterator().hasNext()){
-            System.out.println("There is no applications for this job opening ");
-        }else {
-
-
-            for (Application application : iterable1) {
-                System.out.printf("%-30s%-30s%-30s%-30s%-30s", application.idApplication(), application.rank(), application.submissionDate(), application.status(), application.applicationDataFile());
-                System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", application.applicationDataFile(), application.filesAttachedContent(), application.emailFilesAttached(), application.emailContentFile(), application.jobReference());
+            final Iterable<Application> iterable1 = theController.allApplicationsOfJobOpening(jobOpeningApplication.jobReference());
+            if (!iterable1.iterator().hasNext()) {
+                System.out.println("There are no applications for this job opening ");
+            } else {
+                System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status",  "Job Reference" , "Candidate");
+                for (Application application : iterable1) {
+                    System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", application.identity(), application.rank(), "Submitted", application.jobReference().jobReference(), application.candidate().user().identity());
+                }
             }
-        }
 
+        }
         return true;
     }
 }
+

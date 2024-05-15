@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 /**
  * A service class for managing operations related to companies.
+ *
+ * @author 1220812@isep.ipp.pt
  */
 @Service
 public class CompanyService {
@@ -18,14 +20,6 @@ public class CompanyService {
      * @param companyName   the company name
      * @return the registered company
      */
-    @Transactional
-    public Company registerCompany(String companyName, int companyNumber) {
-        CompanyBuilder companyBuilder = new CompanyBuilder();
-        companyBuilder.withCompanyName(companyName).withCompanyNumber(companyNumber);
-        Company company = companyBuilder.build();
-        return companyRepository.save(company);
-    }
-
     @Transactional
     public Company registerCompany(String companyName) {
         CompanyBuilder companyBuilder = new CompanyBuilder();
@@ -58,7 +52,4 @@ public class CompanyService {
     public Iterable<Company> allCompanies(){
         return companyRepository.allCompanies();
     }
-
-
-
 }

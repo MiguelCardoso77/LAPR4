@@ -4,6 +4,7 @@ import core.application.controllers.AddJobOpeningController;
 import core.application.controllers.ListCompaniesController;
 import core.domain.company.Company;
 import core.domain.jobOpening.ContractType;
+import core.domain.jobOpening.JobReference;
 import core.domain.jobOpening.Mode;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
@@ -39,7 +40,7 @@ public class AddJobOpeningUI extends AbstractUI {
         showCompanies();
         Company company = selectCompany();
 
-        final String jobReference = company.companyName().toString();
+        final JobReference jobReference = new JobReference(company.companyName().toString(), true);
 
         try {
             this.theController.addJobOpening(jobReference, description, vacanciesNumber, address, modes, contractTypes, titleOrFunction, company);

@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Select Requirements Specification
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ": System" as System
+
+activate CM    
+
+    CM -> System : Requests to select a requirements specification
+    activate System
+
+        System --> CM : Displays all job openings registered in the system and asks to select one
+    deactivate System
+
+    CM -> System : Selects the job opening
+
+    activate System
+
+        System --> CM : Displays all requirement specifications registered in the system and asks to select one
+    deactivate System
+
+    CM -> System : Selects the requirement specification
+
+        activate System
+
+        System --> CM : Displays operation's success
+    deactivate System
+
+@enduml

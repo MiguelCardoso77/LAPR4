@@ -1,0 +1,4 @@
+# Requirements:
+-> Academic Degree: Bachelor
+-> Programming Languages: Java
+-> Years of Experience: 3

@@ -1,0 +1,4 @@
+# Requirements:
+-> Academic Degree: Master
+-> Programming Languages: Java, C#
+-> Years of Experience: 7

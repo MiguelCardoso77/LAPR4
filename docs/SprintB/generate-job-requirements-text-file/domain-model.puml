@@ -1,0 +1,37 @@
+@startuml
+hide methods
+left to right direction
+'skinparam linetype ortho
+
+Title "Domain Model"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+
+package "Job Requirements Specification Aggregate"{
+entity JobRequirementsSpecification <<entity>><<root>>
+
+    card Requirements <<Value Object>>{
+    }
+
+    JobRequirementsSpecification --> Requirements
+
+}
+
+package "Operator Aggregate"{
+    entity Operator <<entity>><<root>>
+
+}
+
+Operator-> JobRequirementsSpecification
+
+
+@enduml

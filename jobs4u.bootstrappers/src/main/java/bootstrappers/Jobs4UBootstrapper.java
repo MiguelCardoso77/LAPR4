@@ -1,8 +1,6 @@
 package bootstrappers;
 
-import bootstrappers.bootstraping.CompanyBootstrapper;
-import bootstrappers.bootstraping.JobsBootstrapper;
-import bootstrappers.bootstraping.MasterUsersBootstrapper;
+import bootstrappers.bootstraping.*;
 import core.persistence.PersistenceContext;
 import core.domain.user.Jobs4URoles;
 import core.domain.user.UserBuilderHelper;
@@ -40,7 +38,12 @@ public class Jobs4UBootstrapper implements Action {
         final Action[] actions = {
                 new CompanyBootstrapper(),
                 new MasterUsersBootstrapper(),
-                new JobsBootstrapper()};
+                new JobsBootstrapper(),
+                new ProcessBootstrapper(),
+                new ApplicationsBootstrapper(),
+                new JobInterviewsBootstrapper(),
+                new RequirementsBootstrapper()};
+
 
 
         registerBootstrapAccount();

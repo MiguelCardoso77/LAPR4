@@ -1,10 +1,18 @@
 package backoffice.presentation.menus;
 
+//import backoffice.presentation.application.ListJobOpeningApplicationsAction;
+//import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 import backoffice.presentation.candidate.DisplayCandidateDataAction;
+import backoffice.presentation.candidate.RankCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
+import backoffice.presentation.interview.GenerateInterviewModelAction;
+import backoffice.presentation.interview.SelectInterviewModelAction;
+import backoffice.presentation.interview.UploadResponsesAction;
 import backoffice.presentation.jobOpening.AddJobOpeningAction;
+import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationAction;
+import backoffice.presentation.requirements.GenerateRequirementsSpecificationAction;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
@@ -17,6 +25,12 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int REGISTER_CUSTOMER = 3;
     private static final int REGISTER_CANDIDATE = 4;
     private static final int ADD_JOB_OPENING = 5;
+    private static final int GENERATE_INTERVIEW_MODEL = 6;
+    private static final int SELECT_INTERVIEW_MODEL = 7;
+    private static final int GENERATE_REQUIREMENTS_SPECIFICATIONS = 8;
+    private static final int SELECT_REQUIREMENTS_SPECIFICATIONS = 9;
+    private static final int RANK_CANDIDATES = 10;
+    private static final int UPLOAD_INTERVIEW_RESPONSES = 11;
 
     @Override
     protected boolean doShow() {
@@ -32,6 +46,14 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerAction());
         menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
         menu.addItem(ADD_JOB_OPENING, "Add Job Opening", new AddJobOpeningAction());
+
+        menu.addItem(GENERATE_INTERVIEW_MODEL, "Generate Interview Model", new GenerateInterviewModelAction());
+        menu.addItem(SELECT_INTERVIEW_MODEL, "Select Interview Model", new SelectInterviewModelAction());
+        menu.addItem(GENERATE_REQUIREMENTS_SPECIFICATIONS, "Generate Requirements Specification", new GenerateRequirementsSpecificationAction());
+        menu.addItem(SELECT_REQUIREMENTS_SPECIFICATIONS, "Select Requirements Specification", new SelectRequirementsSpecificationAction());
+
+        menu.addItem(RANK_CANDIDATES, "Rank Candidates", new RankCandidatesAction());
+        menu.addItem(UPLOAD_INTERVIEW_RESPONSES, "Upload Interview Responses", new UploadResponsesAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

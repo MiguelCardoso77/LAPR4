@@ -211,7 +211,7 @@ int main(int argc,char *argv[]) {
           
           // Create the directory
 
-          char createDirectory[BUF_LEN];
+          char createDirectory[BUF_LEN*2];
           snprintf(createDirectory, sizeof(createDirectory), "./%s/%s/", outputDirectory, folderName);
 
           pid_t mkdir = fork();
@@ -224,7 +224,7 @@ int main(int argc,char *argv[]) {
           
           // Copy the file to the new directory
 
-          char copyFiles[BUF_LEN];
+          char copyFiles[BUF_LEN*2];
           snprintf(copyFiles, sizeof(copyFiles), "./%s/%s", inputDirectory, fileName);
           
           pid_t copy = fork();
@@ -287,8 +287,8 @@ int main(int argc,char *argv[]) {
         children_occupied(pid_available);
         write(fd[process][1],file,BUF_LEN);       // Send the file to the child
 
-        char candidateReport[BUF_LEN];
-        char candidateFolder[BUF_LEN];
+        char candidateReport[BUF_LEN*5];
+        char candidateFolder[BUF_LEN*2];
         char id[BUF_LEN];
         char *candidate = extractCandidateID(file);
         strcpy(id, candidate);

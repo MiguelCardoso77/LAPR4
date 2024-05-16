@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RankCandidatesUI extends AbstractUI {
     private final RankCandidatesController theController = new RankCandidatesController();
-    private final boolean RANK_ALL_APPLICATIONS = true;
+    private final boolean RANK_ONLY_NOT_RANKED = false;
 
     @Override
     protected boolean doShow() {
@@ -26,7 +26,7 @@ public class RankCandidatesUI extends AbstractUI {
             return false;
         }
 
-        if (RANK_ALL_APPLICATIONS) {
+        if (!RANK_ONLY_NOT_RANKED) {
 
             for (Application application : applications) {
                 rankApplication(application);
@@ -34,7 +34,16 @@ public class RankCandidatesUI extends AbstractUI {
 
         } else {
 
-            rankApplication(applications.get(0));
+            List<Application> nonRankedApplications = theController.filterByNonRankedApplications(applications);
+
+            if (nonRankedApplications.isEmpty()) {
+                System.out.println(ConsoleColors.RED + "No non-ranked applications found for the selected job opening." + ConsoleColors.RESET);
+                return false;
+            }
+
+            for (Application application : nonRankedApplications) {
+                rankApplication(application);
+            }
 
         }
 
@@ -101,6 +110,6 @@ public class RankCandidatesUI extends AbstractUI {
 
     @Override
     public String headline() {
-        return "Rank Candidates, (Ranking All Candidates: " + RANK_ALL_APPLICATIONS + ")";
+        return "Rank Candidates, (Ranking Only Not Ranked: " + RANK_ONLY_NOT_RANKED + ")";
     }
 }

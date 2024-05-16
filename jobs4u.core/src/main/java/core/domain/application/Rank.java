@@ -42,6 +42,10 @@ public class Rank implements ValueObject {
         // for ORM
     }
 
+    public boolean isRanked() {
+        return !this.rank.equals("Not Ranked");
+    }
+
     /**
      * Creates a `Rank` instance from a given integer value.
      *

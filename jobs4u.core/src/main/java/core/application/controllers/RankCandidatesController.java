@@ -50,4 +50,16 @@ public class RankCandidatesController {
         application.updateRank(rank);
         return applicationRepository.save(application);
     }
+
+    public List<Application> filterByNonRankedApplications(List<Application> applications) {
+        List<Application> filteredApplications = new ArrayList<>();
+
+        for (Application a : applications) {
+            if (!a.rank().isRanked()) {
+                filteredApplications.add(a);
+            }
+        }
+
+        return filteredApplications;
+    }
 }

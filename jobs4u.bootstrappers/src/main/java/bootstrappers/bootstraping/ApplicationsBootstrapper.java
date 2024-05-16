@@ -36,12 +36,12 @@ public class ApplicationsBootstrapper implements Action {
 
 
         registerApplication("1", "FEUPApp1", jobOpenings.get(0), candidates.get(0), operator);
-        registerApplication("2", "FEUPApp2", jobOpenings.get(0), candidates.get(1), operator);
-        registerApplication("3", "FEUPApp3", jobOpenings.get(0), candidates.get(2), operator);
+        registerApplication("Not Ranked", "FEUPApp2", jobOpenings.get(0), candidates.get(1), operator);
+        registerApplication("Not Ranked", "FEUPApp3", jobOpenings.get(0), candidates.get(2), operator);
         registerApplication("4", "FEUP2App1", jobOpenings.get(1), candidates.get(0), operator);
-        registerApplication("5", "FEUP2App2", jobOpenings.get(1), candidates.get(1), operator);
+        registerApplication("Not Ranked", "FEUP2App2", jobOpenings.get(1), candidates.get(1), operator);
         registerApplication("6", "FEUP2App2", jobOpenings.get(1), candidates.get(2), operator);
-        registerApplication("7", "ISEPApp1", jobOpenings.get(2), candidates.get(0), operator);
+        registerApplication("Not Ranked", "ISEPApp1", jobOpenings.get(2), candidates.get(0), operator);
         registerApplication("8", "ISEPApp1", jobOpenings.get(2), candidates.get(1), operator);
 
         return true;

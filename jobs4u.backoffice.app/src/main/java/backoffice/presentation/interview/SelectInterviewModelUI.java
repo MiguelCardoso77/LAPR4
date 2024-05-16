@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class SelectInterviewModelUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
 
-    final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
+    final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
 
     final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
 
@@ -37,12 +37,13 @@ public class SelectInterviewModelUI extends AbstractUI {
 
     final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
 
+    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
+
     Iterable<JobOpening> jobOpenings = new ArrayList<>();
 
     Iterable<Application> applicationList = new ArrayList<>();
 
     Iterable<JobInterview> jobInterviews = new ArrayList<>();
-
 
 
     @Override
@@ -80,29 +81,7 @@ public class SelectInterviewModelUI extends AbstractUI {
     }
 
     private JobOpening selectJobOpening() {
-        final List<JobOpening> list = new ArrayList<>();
-        if (jobOpenings.iterator().hasNext()) {
-            for (JobOpening jobOpening : jobOpenings) {
-                list.add(jobOpening);
-            }
-
-            JobOpening jobOpening = null;
-            final int option = Console.readInteger("Enter the number of the job opening");
-            if (option == 0) {
-                System.out.println("No job opening selected");
-            } else {
-                try {
-                    jobOpening = this.jobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println(
-                            "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
-            }
-
-            return jobOpening;
-        }
-        return null;
+        return selectJobOpeningController.selectJobOpening();
     }
 
     private void showApplicationsOfJobOpening(JobOpening jobOpening) {

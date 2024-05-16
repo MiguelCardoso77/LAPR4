@@ -12,6 +12,7 @@ import backoffice.presentation.interview.SelectInterviewModelAction;
 import backoffice.presentation.interview.UploadResponsesAction;
 import backoffice.presentation.jobOpening.AddJobOpeningAction;
 import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationAction;
+import backoffice.presentation.process.ChangeProcessStatusAction;
 import backoffice.presentation.requirements.GenerateRequirementsSpecificationAction;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
@@ -31,6 +32,8 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int SELECT_REQUIREMENTS_SPECIFICATIONS = 9;
     private static final int RANK_CANDIDATES = 10;
     private static final int UPLOAD_INTERVIEW_RESPONSES = 11;
+    private static final int CHANGE_PROCESS_STATUS = 12;
+
 
     @Override
     protected boolean doShow() {
@@ -54,6 +57,9 @@ public class CustomerManagerMenu extends AbstractUI {
 
         menu.addItem(RANK_CANDIDATES, "Rank Candidates", new RankCandidatesAction());
         menu.addItem(UPLOAD_INTERVIEW_RESPONSES, "Upload Interview Responses", new UploadResponsesAction());
+
+        menu.addItem(CHANGE_PROCESS_STATUS, "Change Process Status", new ChangeProcessStatusAction());
+
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

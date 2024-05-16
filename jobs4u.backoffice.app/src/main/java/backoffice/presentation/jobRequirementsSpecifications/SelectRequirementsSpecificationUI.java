@@ -5,6 +5,7 @@ import core.application.controllers.ListJobOpeningController;
 import core.application.controllers.ListJobRequirementsSpecificationController;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.services.JobOpeningService;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -33,6 +34,8 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
     private final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     private final ListJobRequirementsSpecificationController listJobRequirementsSpecification = new ListJobRequirementsSpecificationController();
 
+    private final JobOpeningService service = new JobOpeningService();
+
     @Override
     protected boolean doShow() {
 
@@ -51,9 +54,13 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
 
         JobRequirementsSpecification jobRequirementsSpecification = listJobRequirementsSpecification.extractSpecificationFromFile(data);
 
-        jobOpening.updateJobRequirements(jobRequirementsSpecification);
+        JobOpening updatedJobOpening = service.updateJobRequirements(jobOpening.jobReference(), jobRequirementsSpecification);
 
-        if(jobOpening != null){
+        System.out.println(jobRequirementsSpecification);
+        System.out.println(updatedJobOpening);
+
+        if(updatedJobOpening.jobRequirementsSpecification().identity() != null){
+            System.out.println(updatedJobOpening.jobRequirementsSpecification());
             System.out.println("Requirements specifications selected!");
         }else{
             System.out.println("Failed to select the requirements specifications.");

@@ -2,6 +2,7 @@ package core.services;
 
 import core.domain.company.Company;
 import core.domain.jobOpening.*;
+import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.repositories.JobOpeningRepository;
 import core.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -49,6 +50,23 @@ public class JobOpeningService {
             if(jobOpening.identity().equals(jobReference)){
                 return jobOpening;
             }
+        }
+        return null;
+    }
+    /**
+     * Updates the job requirements specification for the job opening.
+     *
+     * @param jobReference               The reference of the job opening.
+     * @param jobRequirementsSpecification The new job requirements specification.
+     * @return JobOpening if the update was successful, null otherwise.
+     */
+    @Transactional
+    public JobOpening updateJobRequirements(JobReference jobReference, JobRequirementsSpecification jobRequirementsSpecification) {
+        JobOpening jobOpening = jobOpeningRepository.ofIdentity(jobReference).orElse(null);
+        if (jobOpening != null) {
+            jobOpening.updateJobRequirements(jobRequirementsSpecification);
+            jobOpeningRepository.save(jobOpening);
+            return jobOpening;
         }
         return null;
     }

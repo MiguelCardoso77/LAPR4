@@ -189,7 +189,12 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public void updateJobRequirements(JobRequirementsSpecification jobRequirementsSpecification){
         this.jobRequirementsSpecification = jobRequirementsSpecification;
     }
-
+    /**
+     * Checks if the given job reference is the same as the job reference of this job opening.
+     *
+     * @param jobReference The job reference to compare.
+     * @return True if the job reference matches the job reference of this job opening, false otherwise.
+     */
     public boolean sameReference(JobReference jobReference){
         String jobReference1 = String.valueOf(jobReference);
         String jobOpeningReference = String.valueOf(this.jobReference);
@@ -198,7 +203,14 @@ public class JobOpening implements AggregateRoot<JobReference> {
         }
         return false;
     }
-
+    /**
+     * Returns a string representation of this job opening.
+     *
+     * The string representation includes the job reference, description, vacancies number, address, mode,
+     * contract type, title or function, associated company, and job requirements specification.
+     *
+     * @return A string representation of this job opening.
+     */
     @Override
     public String toString() {
         return "jobReference=" + jobReference +

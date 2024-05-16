@@ -3,6 +3,7 @@ import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 
 import java.util.Calendar;
 
@@ -29,6 +30,11 @@ public class Process implements AggregateRoot<Integer> {
     @OneToOne
     @JoinColumn(name = "JOB_REFERENCE")
     private JobOpening jobReference;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PROCESS_STATUS")
+    private ProcessStatus processStatus;
+
 
     /**
      * Constructs a Process object with the given parameters.
@@ -96,6 +102,8 @@ public class Process implements AggregateRoot<Integer> {
      */
     public ProcessState processState() { return this.processState; }
 
+    public ProcessStatus processStatus() { return this.processStatus; }
+
     /**
      * Retrieves the date of the process.
      *
@@ -109,4 +117,12 @@ public class Process implements AggregateRoot<Integer> {
      * @return the job reference
      */
     public JobOpening jobReference() { return this.jobReference; }
+
+    public void changeProcessStatus(ProcessStatus processStatus) { this.processStatus = processStatus; }
+
+    public void changeProcessState(ProcessState processState) { this.processState = processState; }
+
+
+
+
 }

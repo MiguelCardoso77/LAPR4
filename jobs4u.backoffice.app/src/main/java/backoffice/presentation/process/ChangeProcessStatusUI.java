@@ -1,0 +1,178 @@
+package backoffice.presentation.process;
+
+import core.application.controllers.*;
+import core.domain.jobOpening.JobOpening;
+import core.domain.process.Process;
+import core.domain.process.ProcessState;
+import core.domain.process.ProcessStatus;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.io.util.Console;
+import eapli.framework.presentation.console.AbstractUI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ChangeProcessStatusUI extends AbstractUI {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeProcessStatusUI.class);
+    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
+    final ChangeProcessStatusController changeProcessStatusController = new ChangeProcessStatusController();
+    final ChangeProcessStateController changeProcessStateController = new ChangeProcessStateController();
+    final ListProcessJobOpeningController listProcessJobOpeningController = new ListProcessJobOpeningController();
+    Iterable<JobOpening> jobOpenings = new ArrayList<>();
+    Iterable<Process> processes = new ArrayList<>();
+
+
+    @Override
+    protected boolean doShow() {
+
+        showJobOpenings();
+
+        JobOpening jobOpening = selectJobOpening();
+
+        showProcessOfJobOpening(jobOpening);
+
+        Process process = selectProcess();
+
+        if (process != null) {
+            selectStatus(process);
+        }
+        return false;
+    }
+
+    private void showJobOpenings() {
+        jobOpenings = changeProcessStatusController.showJobOpenings();
+    }
+
+    private JobOpening selectJobOpening() {
+        return selectJobOpeningController.selectJobOpening();
+    }
+
+    private void showProcessOfJobOpening(JobOpening jobOpening) {
+        processes = changeProcessStatusController.showProcessOfJobOpening(jobOpening);
+    }
+
+    private Process selectProcess() {
+        final List<Process> list = new ArrayList<>();
+        if (processes.iterator().hasNext()) {
+            for (Process process : processes) {
+                list.add(process);
+            }
+
+            Process process = null;
+            final int option = Console.readInteger("Enter the number of the process");
+            if (option == 0) {
+                System.out.println("No processes selected");
+            } else {
+                try {
+                    process = listProcessJobOpeningController.findProcessById(list.get(option - 1).identity());
+                } catch (IntegrityViolationException | ConcurrencyException ex) {
+                    LOGGER.error("Error performing the operation", ex);
+                    System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
+                }
+            }
+
+            return process;
+        }
+        return null;
+    }
+
+    private void selectStatus(Process process) {
+
+        ProcessState state = process.processState();
+        String name = state.name();
+        final int optionMove = Console.readInteger("Do you want to move: \n 1 - Back \n 2 - Forward \n" + "Choose an option: ");
+
+        if (optionMove == 1){
+            switch (name) {
+                case "APPLICATION":
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                case "SCREENING":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    changeProcessState(ProcessState.APPLICATION, process);
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                case "INTERVIEWS":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    changeProcessState(ProcessState.SCREENING, process);
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                case "ANALYSIS":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    changeProcessState(ProcessState.INTERVIEWS, process);
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                case "RESULT":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    changeProcessState(ProcessState.ANALYSIS, process);
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                default:
+                    System.out.println("State not valid! \n");
+                    break;
+            }
+
+        }else if (optionMove == 2){
+            switch (name) {
+                case "APPLICATION":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    changeProcessState(ProcessState.SCREENING, process);
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                case "SCREENING":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    changeProcessState(ProcessState.INTERVIEWS, process);
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                case "INTERVIEWS":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    changeProcessState(ProcessState.ANALYSIS, process);
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                case "ANALYSIS":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    changeProcessState(ProcessState.RESULT, process);
+                    changeProcessStatus(ProcessStatus.OPEN, process);
+
+                    break;
+                case "RESULT":
+                    changeProcessStatus(ProcessStatus.CLOSE, process);
+
+                    break;
+                default:
+                    System.out.println("State not valid! \n");
+                    break;
+            }
+        } else {
+            System.out.println("Option not valid! \n Please try again. \n\n ");
+            selectStatus(process);
+        }
+    }
+
+    public void changeProcessStatus(ProcessStatus processStatus, Process process){
+        Process newProcess = changeProcessStatusController.changeProcessStatus(processStatus,process);
+        System.out.println("Success: Status was updated to " + newProcess.processStatus() + " for the process " + newProcess.identity());
+    }
+    public void changeProcessState(ProcessState processState, Process process){
+        Process newProcess = changeProcessStateController.changeProcessStatus(processState,process);
+        System.out.println("Success: State was updated to " + newProcess.processState() + " for the process " + newProcess.identity());
+    }
+
+
+    @Override
+    public String headline() {
+        return "change status of a phase of a job opening";
+    }
+}

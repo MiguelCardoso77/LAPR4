@@ -103,6 +103,37 @@ I simply write their emails separated by a comma. Could it be similar in this ca
 > 
 > **Answer:**
 > See Q159. That should be possible if none of the interested parties were yet notified of the results.
+ 
+> **Question 162:**
+> 
+> When the analysis phase ends, the ranking need to have all the candidates? or can the customer manager rank only 
+some of the candidates?
+> 
+> **Answer:**
+> See Q149. All the candidates should be ranked before moving to the result phase.
+
+> **Question 163:**
+> 
+> When the customer manager is ranking the candidates, in terms of UI, should we display information 
+from the application such as interview score, etc... or just the candidate's name and email?
+> 
+> **Answer:**
+> As stated before, I do not have specific requirements for the UI/UX. Use best practices. However, I would like it to be possible for the 
+Customer Manager to have 2 or more instances of the application running, so that he/she could, for instance, see the interviews grades and, 
+at the same time, register the order/ranking of the candidates.
+ 
+> **Question 165:**
+> 
+> Mr. Client mentioned in Q155 that the system should have ranking configurations so that the Customer Manager 
+doesn't have to rank all the candidates for a job opening, and that the ones that haven't been manually ranked are to be tagged 
+with "not ranked". However, in Q162, you've said that all the candidates must be ranked before the result phase starts. 
+Can you clarify this situation?
+> 
+> **Answer:**
+> The customer manager must evaluate all the candidates. It is the only way he/she can produce a ranking/order for the candidates 
+and select the “best” candidates to be included in the vacancies for the job opening. In Q155 I was only proposing a way to avoid recording 
+in the system a lot of details that will not have any impact on the next activities. The term “not ranked” maybe is not the best. 
+Maybe “rank not recorded” or something similar could be more appropriated.
 
 ### 1.3. Acceptance Criteria
 
@@ -114,11 +145,20 @@ I simply write their emails separated by a comma. Could it be similar in this ca
 
         The fact that no interviews are available should not block the customer manager from ranking that application.
 
+* AC3: Moving to the result phase:
+
+        All candidates should be ranked before moving to the result phase.
+
+* AC4: Ranking configurations:
+
+        The system should have ranking configurations so that the Customer Manager doesn't have to rank all the candidates for a job opening, 
+        and that the ones that haven't been manually ranked are to be tagged with "not ranked".
+
 ### 1.4. Found out Dependencies
 
 * G007 - As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
 * 1002 - As Customer Manager, I want to register a job opening.
-* 2002 As Operator, I want to register an application of a candidate for a job opening and import all files received.
+* 2002 - As Operator, I want to register an application of a candidate for a job opening and import all files received.
 
 ### 1.5. Input and Output Data
 

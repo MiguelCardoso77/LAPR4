@@ -45,27 +45,23 @@ activate CustomerManager
             RankCandidatesController --> RankCandidatesUI : applications
         deactivate RankCandidatesController
 
-        RankCandidatesUI --> CustomerManager : lists applications and asks to select one
-    deactivate RankCandidatesUI
+loop while ranking all applications
 
-    CustomerManager -> RankCandidatesUI : selects application
-    activate RankCandidatesUI
-
-        RankCandidatesUI -> RankCandidatesController : getInterviewsForApplication(selectedApplication)
+        RankCandidatesUI -> RankCandidatesController : getLastJobInterview(currentApplication)
         activate RankCandidatesController
             note right of RankCandidatesController
             The application might not have interviews but the customer manager can still rank it.
             end note
-            RankCandidatesController -> JobInterviewRepository : findByApplication(selectedApplication)
+            RankCandidatesController -> JobInterviewRepository : findByApplication(currentApplication)
             activate JobInterviewRepository
 
-                JobInterviewRepository --> RankCandidatesController : interviews
+                JobInterviewRepository --> RankCandidatesController : interview
             deactivate JobInterviewRepository
 
-            RankCandidatesController --> RankCandidatesUI : interviews
+            RankCandidatesController --> RankCandidatesUI : interview
         deactivate RankCandidatesController
 
-        RankCandidatesUI --> CustomerManager : shows interview score for the selected \napplication and asks to rank it
+        RankCandidatesUI --> CustomerManager : shows interview score for the current \napplication and asks to rank it
     deactivate RankCandidatesUI
 
     CustomerManager -> RankCandidatesUI : ranks the application
@@ -85,6 +81,8 @@ activate CustomerManager
 
         RankCandidatesUI --> CustomerManager : shows success message
     deactivate RankCandidatesUI
+
+end loop
 
 deactivate CustomerManager
 

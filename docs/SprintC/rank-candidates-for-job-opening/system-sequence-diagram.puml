@@ -22,13 +22,9 @@ activate CMAN
     CMAN -> System : selects job opening
     activate System
 
-        System --> CMAN : lists applications for the selected job opening \nand asks to select one
-    deactivate System
+loop while ranking all applications
 
-    CMAN -> System : selects application
-    activate System
-
-        System --> CMAN : shows interview score for the selected \napplication and asks to rank it
+        System --> CMAN : lists one of the applications for the selected job opening
     deactivate System
 
     CMAN -> System : ranks the application
@@ -36,6 +32,7 @@ activate CMAN
 
         System --> CMAN : displays operation success message
     deactivate System
+end loop
 
 deactivate CMAN
 

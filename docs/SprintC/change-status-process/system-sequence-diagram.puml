@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Ranking candidates
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ":System" as System
+
+activate CM
+
+    CM -> System : asks to change status of a phase of a job opening
+    activate System
+
+
+       System --> CM : lists job opening and asks to select one
+    deactivate System
+
+    CM -> System : selects job opening
+    activate System
+
+        System --> CM : lists phases for the selected job opening \nand asks to select one
+    deactivate System
+
+    CM -> System : selects phase
+    activate System
+
+        System --> CM : shows status update options for the selected \nphase and asks to select one
+    deactivate System
+
+    CM -> System : selects status update option
+    activate System
+
+        System --> CM : displays operation success message
+    deactivate System
+
+deactivate CM
+
+@enduml

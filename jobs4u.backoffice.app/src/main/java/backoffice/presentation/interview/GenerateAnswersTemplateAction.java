@@ -7,11 +7,11 @@ import eapli.framework.actions.Action;
  * It implements the {@link eapli.framework.actions.Action} interface
  * to define the execution behavior.
  */
-public class GenerateInterviewModelAction implements Action {
+public class GenerateAnswersTemplateAction implements Action {
 
     /**
      * Executes the action to generate an interview model.
-     * It creates an instance of {@link GenerateInterviewModelUI} and
+     * It creates an instance of {@link GenerateAnswersTemplateUI} and
      * invokes its show() method to display the UI for generating
      * the interview model.
      *
@@ -19,6 +19,6 @@ public class GenerateInterviewModelAction implements Action {
      */
     @Override
     public boolean execute() {
-        return new GenerateInterviewModelUI().show();
+        return new GenerateAnswersTemplateUI().show();
     }
 }

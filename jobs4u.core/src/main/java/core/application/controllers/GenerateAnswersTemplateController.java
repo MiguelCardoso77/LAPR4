@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GenerateInterviewModelController {
+public class GenerateAnswersTemplateController {
     private final JobInterviewRepository jobInterviewRepository = PersistenceContext.repositories().jobInterviews();
 
     public List<String> readFile(String filePath) {
@@ -55,8 +55,14 @@ public class GenerateInterviewModelController {
     public List<String> processLines(List<String> lines) {
         List<String> processedLines = new ArrayList<>();
         for (String line : lines) {
-            if (line.contains(">")) {
-                processedLines.add(line.substring(0, line.indexOf(">") + 1));
+            int firstIndex = line.indexOf(">");
+            if (firstIndex != -1) {
+                int secondIndex = line.indexOf(">", firstIndex + 1);
+                if (secondIndex != -1) {
+                    processedLines.add(line.substring(0, secondIndex + 1));
+                } else {
+                    processedLines.add(line);
+                }
             } else {
                 processedLines.add(line);
             }

@@ -7,7 +7,7 @@ import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.candidate.RankCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
-import backoffice.presentation.interview.GenerateInterviewModelAction;
+import backoffice.presentation.interview.GenerateAnswersTemplateAction;
 import backoffice.presentation.interview.SelectInterviewModelAction;
 import backoffice.presentation.interview.UploadResponsesAction;
 import backoffice.presentation.jobOpening.AddJobOpeningAction;
@@ -36,8 +36,6 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int CHANGE_PROCESS_STATUS = 12;
     private static final int VERIFICATION_REQUIREMENTS = 13;
 
-
-
     @Override
     protected boolean doShow() {
         return true;
@@ -51,7 +49,7 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(REGISTER_CUSTOMER, "Register Customer", new RegisterCustomerAction());
         menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
         menu.addItem(ADD_JOB_OPENING, "Add Job Opening", new AddJobOpeningAction());
-        menu.addItem(GENERATE_INTERVIEW_MODEL, "Generate Interview Model", new GenerateInterviewModelAction());
+        menu.addItem(GENERATE_INTERVIEW_MODEL, "Generate Answers Template", new GenerateAnswersTemplateAction());
         menu.addItem(SELECT_INTERVIEW_MODEL, "Select Interview Model", new SelectInterviewModelAction());
         menu.addItem(GENERATE_REQUIREMENTS_SPECIFICATIONS, "Generate Requirements Specification", new GenerateRequirementsSpecificationAction());
         menu.addItem(SELECT_REQUIREMENTS_SPECIFICATIONS, "Select Requirements Specification", new SelectRequirementsSpecificationAction());

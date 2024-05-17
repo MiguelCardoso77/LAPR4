@@ -1,0 +1,163 @@
+@startuml
+hide methods
+left to right direction
+'skinparam linetype ortho
+
+Title "Domain Model"
+
+skinparam class {
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFFF
+    ArrowColor grey
+    BorderColor black
+}
+
+skinparam packageStyle rectangle
+
+skinparam card {
+    LifeLineBorderColor Green
+    LifeLineBackgroundColor APPLICATION
+    BackgroundColor #F0FFDD
+    ArrowColor DarkGrey
+    BorderColor Black
+}
+
+package "Job Requirements Specification Aggregate"{
+entity JobRequirementsSpecification <<entity>><<root>>
+
+    entity Requirements <<entity>>
+
+    JobRequirementsSpecification --> Requirements
+
+}
+
+package "Job Opening Aggregate"{
+entity JobOpening <<entity>><<root>>
+
+    card JobReference <<Value Object>> {
+    }
+    card TitleOrFunction <<Value Object>> {
+    }
+    card ContractType <<Value Object>> {
+    }
+    card Mode <<Value Object>> {
+    }
+    card Address <<Value Object>> {
+    }
+    card VacanciesNumber <<Value Object>> {
+    }
+    card Description <<Value Object>> {
+    }
+
+    JobOpening --> JobReference
+    JobOpening --> TitleOrFunction
+    JobOpening --> ContractType
+    JobOpening --> Mode
+    JobOpening --> Address
+    JobOpening --> VacanciesNumber
+    JobOpening --> Description
+
+    note right of ContractType
+        Can be one of the following:
+        - full-time
+        - part-time
+    end note
+
+    note right of Mode
+         Can be one of the following:
+         - remote
+         - hybrid
+         - onsite
+    end note
+
+}
+
+package "Application Aggregate"{
+entity Application <<entity>><<root>>
+
+    card ApplicationFiles <<Value Object>>{
+    }
+    card Status <<Value Object>>{
+    }
+    card SubmissionDate <<Value Object>>{
+    }
+    card Rank <<Value Object>>{
+    }
+
+    Application --> ApplicationFiles
+    Application --> Status
+    Application --> SubmissionDate
+    Application --> Rank
+
+    note right of Status
+        Can be one of the following:
+        - submitted
+        - pending
+        - accepted
+        - declined
+    end note
+
+    note right of ApplicationFiles
+        Can be one of the following:
+        - text file with the contents of the email
+        - file for each file attached to the email
+        - text file with the contents of each file attached to the email
+        - text file with the data of the application and candidate
+    end note
+
+}
+
+package "Customer Aggregate"{
+entity Customer <<entity>><<root>>
+
+    card EmailAddress <<Value Object>>{
+    }
+
+    Customer --> EmailAddress
+}
+
+package "Process Aggregate"{
+entity Process <<entity>><<root>>
+
+    card ProcessState <<Value Object>> {
+    }
+    card ProcessDate <<Value Object>> {
+    }
+
+    Process --> ProcessState
+    Process --> ProcessDate
+
+    note right of ProcessDate
+        Can be one of the following:
+        - applicationStartDate
+        - applicationEndDate
+        - ScreeningStartDate
+        - ScreeningEndDate
+        - InterviewsStartDate
+        - InterviewsEndDate
+        - AnalysisStartDate
+        - AnalysisEndDate
+        - ResultDate
+    end note
+
+    note right of ProcessState
+        Can be one of the following:
+        - Application
+        - Screening
+        - Interviews
+        - Analysis
+        - Result
+    end note
+
+}
+
+JobOpening "1" <-- "N " Application : has
+JobOpening "N" ---> "1" Customer : associated
+
+JobOpening  --> Process
+
+
+JobRequirementsSpecification "1" <--- "N" JobOpening : associated
+
+@enduml

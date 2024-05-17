@@ -1,0 +1,20 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Customer" as C
+participant ": System" as S
+
+activate C
+
+    C -> S: asks to list all of his job openings
+    activate S
+
+        S --> C : shows all of the customers's job openings.
+        deactivate S
+@enduml

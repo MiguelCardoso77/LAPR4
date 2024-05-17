@@ -18,15 +18,13 @@ public class JobRequirementsService {
     /**
      * Registers a new job requirement specification.
      *
-     * @param academicDegree The academic degree required for the job.
-     * @param experience     The minimum years of experience required for the job.
-     * @param knowledge      The specific knowledge or skills required for the job.
+     * @param jobRequirementsPath The path for the job requirements specification file.
      * @return The registered job requirements specification.
      */
     @Transactional
-    public JobRequirementsSpecification registerJobRequirement(String academicDegree, String knowledge, int experience) {
+    public JobRequirementsSpecification registerJobRequirement(String jobRequirementsPath) {
         JobRequirementsSpecificationBuilder jobRequirementsSpecificationBuilder= new JobRequirementsSpecificationBuilder();
-        jobRequirementsSpecificationBuilder.withoutId(academicDegree, experience, knowledge);
+        jobRequirementsSpecificationBuilder.withoutId(jobRequirementsPath);
         JobRequirementsSpecification jobRequirementsSpecification = jobRequirementsSpecificationBuilder.build();
         return jobRequirementsSpecificationRepository.save(jobRequirementsSpecification);
     }

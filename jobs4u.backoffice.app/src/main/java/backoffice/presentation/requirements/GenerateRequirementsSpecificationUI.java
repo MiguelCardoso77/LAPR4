@@ -1,15 +1,12 @@
 package backoffice.presentation.requirements;
 
 import core.application.controllers.GenerateRequirementsSpecificationController;
-import core.domain.interview.QuestionType;
 import core.domain.jobRequirementsSpecification.AcademicDegree;
-import core.domain.jobRequirementsSpecification.ProgrammingLanguages;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class GenerateRequirementsSpecificationUI extends AbstractUI {
     private final GenerateRequirementsSpecificationController theController = new GenerateRequirementsSpecificationController();

@@ -96,7 +96,7 @@ public class VerificationRequirementsUI extends AbstractUI {
 
         if(applicationToVerify != null) {
 
-
+            /*
             String file = jobOpeningApplication.jobRequirementsSpecification().toString();
 
             String degree = jobOpeningApplication.jobRequirementsSpecification().academicDegree();
@@ -134,6 +134,7 @@ public class VerificationRequirementsUI extends AbstractUI {
 
             }
 
+             */
 
 
         }
@@ -157,3 +158,4 @@ public class VerificationRequirementsUI extends AbstractUI {
 
 
 }
+

@@ -22,40 +22,17 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idRequirements;
 
-    @Column(name = "ACADAMEIC_DEGREE")
-    private String academicDegree;
-
-    @Column(name = "EXPERIENCE_YEARS")
-    private int experience;
-
-    @Column(name = "LANGUAGE")
-    private String knowledge;
+    @Column(name = "JOB_REQUIREMENTS_PATH")
+    private String jobRequirementsSpecificationFile;
     /**
      * Constructs a new JobRequirementsSpecification with the specified academic degree, experience, and knowledge.
      *
      * @param id             The Job Requirements specification identifier
-     * @param academicDegree The academic degree required for the job.
-     * @param experience     The minimum years of experience required for the job.
-     * @param knowledge      The specific knowledge or skills required for the job.
+     * @param jobRequirementsSpecificationFile The Job Requirements Specification path
      */
-    public JobRequirementsSpecification(final Integer id, final String academicDegree, final int experience, final String knowledge) {
-        this.idRequirements = idRequirements;
-        this.academicDegree = academicDegree;
-        this.experience = experience;
-        this.knowledge = knowledge;
-    }
-
-    /**
-     * Constructs a new JobRequirementsSpecification with the specified academic degree, experience, and knowledge.
-     *
-     * @param academicDegree The academic degree required for the job.
-     * @param experience     The minimum years of experience required for the job.
-     * @param knowledge      The specific knowledge or skills required for the job.
-     */
-    public JobRequirementsSpecification(final String academicDegree, final int experience, final String knowledge) {
-        this.academicDegree = academicDegree;
-        this.experience = experience;
-        this.knowledge = knowledge;
+    public JobRequirementsSpecification(final Integer id, final String jobRequirementsSpecificationFile) {
+        this.idRequirements = id;
+        this.jobRequirementsSpecificationFile = jobRequirementsSpecificationFile;
     }
 
     /**
@@ -75,7 +52,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JobRequirementsSpecification that = (JobRequirementsSpecification) o;
-        return experience == that.experience && Objects.equals(idRequirements, that.idRequirements) && Objects.equals(academicDegree, that.academicDegree) && Objects.equals(knowledge, that.knowledge);
+        return idRequirements == that.idRequirements && jobRequirementsSpecificationFile == that.jobRequirementsSpecificationFile;
     }
     /**
      * Returns a hash code value for this JobRequirementsSpecification.
@@ -84,7 +61,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(idRequirements, academicDegree, experience, knowledge);
+        return Objects.hash(idRequirements, jobRequirementsSpecificationFile);
     }
     /**
      * Checks if this JobRequirementsSpecification is the same as another object.
@@ -109,30 +86,11 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
     public int compareTo(Integer other) {
         return AggregateRoot.super.compareTo(other);
     }
-    /**
-     * Retrieves the academic degree required for the job.
-     *
-     * @return The academic degree.
-     */
-    public String academicDegree(){
-        return academicDegree;
+
+    public String jobRequirementsPath(){
+        return this.jobRequirementsSpecificationFile;
     }
-    /**
-     * Retrieves the specific knowledge or skills required for the job.
-     *
-     * @return The required knowledge or skills.
-     */
-    public String knowledge(){
-        return knowledge;
-    }
-    /**
-     * Retrieves the minimum years of experience required for the job.
-     *
-     * @return The minimum years of experience.
-     */
-    public int experience(){
-        return experience;
-    }
+
     /**
      * Retrieves the identity of this JobRequirementsSpecification.
      *
@@ -155,12 +113,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
 
     @Override
     public String toString() {
-        return "JobRequirementsSpecification:" +
-                " idRequirements = " + idRequirements +
-                ", academicDegree = " + academicDegree +
-                ", experience = " + experience +
-                ", knowledge = " + knowledge;
+        return "idRequirements=" + idRequirements +
+                ", jobRequirementsSpecificationFile='" + jobRequirementsSpecificationFile;
     }
 }
-
-

@@ -42,41 +42,7 @@ public class ListJobRequirementsSpecificationController {
         return service.findJobRequirementsSpecification(id);
     }
 
-    /**
-     * Imports job requirements specifications from a file.
-     *
-     * @param path The path to the file containing job requirements specifications.
-     * @return A list of strings representing the imported job requirements specifications.
-     * @throws FileNotFoundException if the file specified by the path is not found.
-     */
-    public static List<String> importRequirementsSpecification(Path path) throws FileNotFoundException {
-        List<String> requirements = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(path.toFile()))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(":");
-                if (parts.length == 2) {
-                    String value = parts[1].trim();
-                    requirements.add(value);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return requirements;
+    public JobRequirementsSpecification registerJobRequirementsSpecification(String jobRequirementsFilePath){
+        return service.registerJobRequirement(jobRequirementsFilePath);
     }
-    /**
-     * Extracts a job requirements specification from imported data.
-     *
-     * @param data A list of strings representing the imported data.
-     * @return The extracted JobRequirementsSpecification object.
-     */
-    public JobRequirementsSpecification extractSpecificationFromFile(List<String> data){
-        String academicDegree = data.get(0);
-        Integer experience =  Integer.parseInt(data.get(2));
-        String knowledge = data.get(1);
-        return service.registerJobRequirement(academicDegree, knowledge, experience);
-    }
-
 }

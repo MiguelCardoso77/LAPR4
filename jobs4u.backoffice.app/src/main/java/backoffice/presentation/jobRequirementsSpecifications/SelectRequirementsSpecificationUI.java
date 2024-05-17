@@ -44,23 +44,11 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
 
         String path = selectFile();
 
-        List<String> data;
-
-        try {
-            data = listJobRequirementsSpecification.importRequirementsSpecification(Path.of(path));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        JobRequirementsSpecification jobRequirementsSpecification = listJobRequirementsSpecification.extractSpecificationFromFile(data);
+        JobRequirementsSpecification jobRequirementsSpecification = listJobRequirementsSpecification.registerJobRequirementsSpecification(path);
 
         JobOpening updatedJobOpening = service.updateJobRequirements(jobOpening.jobReference(), jobRequirementsSpecification);
 
-        System.out.println(jobRequirementsSpecification);
-        System.out.println(updatedJobOpening);
-
         if(updatedJobOpening.jobRequirementsSpecification().identity() != null){
-            System.out.println(updatedJobOpening.jobRequirementsSpecification());
             System.out.println("Requirements specifications selected!");
         }else{
             System.out.println("Failed to select the requirements specifications.");

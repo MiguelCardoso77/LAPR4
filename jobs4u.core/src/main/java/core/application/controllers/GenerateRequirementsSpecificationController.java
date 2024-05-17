@@ -1,6 +1,5 @@
 package core.application.controllers;
 
-import core.domain.interview.QuestionType;
 import core.domain.jobRequirementsSpecification.AcademicDegree;
 import core.domain.jobRequirementsSpecification.ProgrammingLanguages;
 import eapli.framework.io.util.Console;
@@ -10,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class GenerateRequirementsSpecificationController {
 

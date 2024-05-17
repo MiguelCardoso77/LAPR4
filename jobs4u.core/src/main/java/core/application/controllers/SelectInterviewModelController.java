@@ -5,6 +5,7 @@ import core.domain.interview.InterviewModel;
 import core.domain.interview.JobInterview;
 import core.domain.jobOpening.JobOpening;
 import core.persistence.PersistenceContext;
+import core.repositories.InterviewModelRepository;
 import core.services.JobInterviewService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.io.util.Console;
@@ -23,6 +24,7 @@ public class SelectInterviewModelController {
     final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
     final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
+    final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
     final JobInterviewService service = new JobInterviewService();
     List<Application> applicationList = new ArrayList<>();
     Iterable<JobInterview> jobInterviews = new ArrayList<>();
@@ -49,10 +51,10 @@ public class SelectInterviewModelController {
         } else {
             int cont = 1;
             System.out.println("List of registered Applications: \n");
-            System.out.printf("%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status",  "Job Reference" );
+            System.out.printf("%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status", "Job Reference");
 
             for (Application application : applicationList) {
-                System.out.printf("%-30s%-30s%-30s%-30s%n",cont, application.rank(), "Submitted",
+                System.out.printf("%-30s%-30s%-30s%-30s%n", cont, application.rank(), "Submitted",
                         application.jobReference().jobReference());
                 cont++;
             }
@@ -77,39 +79,25 @@ public class SelectInterviewModelController {
         return jobInterviews;
     }
 
-    public String listAndSelectInterviewModels(){
-        Path directory = Paths.get("jobs4u.core/src/main/resources/interviewModels");
-        List<String> files;
-        try {
-            files = Files.list(directory)
-                    .map(Path::toString)
-                    .collect(Collectors.toList());
-            if (files.isEmpty()) {
-                System.out.println("No files found.");
-                return null;
-            }
-            System.out.println("List of files:");
-            for (int i = 0; i < files.size(); i++) {
-                System.out.println((i + 1) + ". " + files.get(i));
-            }
-
-            int option;
-            do {
-                option = Console.readInteger("Enter the number of the file you want to select (0 to cancel): ");
-                if (option < 0 || option > files.size()) {
-                    System.out.println("Invalid option. Please select a number between 1 and " + files.size() + ".");
-                }
-            } while (option < 0 || option > files.size());
-
-            return (option == 0) ? null : files.get(option - 1);
-
-        } catch (IOException e){
-            e.printStackTrace();
+    public InterviewModel listAndSelectInterviewModels() {
+        List<InterviewModel> interviewModels = (List<InterviewModel>) interviewModelRepository.findAll();
+        int cont = 0;
+        for (InterviewModel interviewModel : interviewModels) {
+            System.out.println("id: " + cont + " - " + interviewModel);
+            cont++;
         }
-        return null;
+        int option;
+        do {
+            option = Console.readInteger("Enter the number of the file you want to select (0 to cancel): ");
+            if (option < 0 || option > interviewModels.size()) {
+                System.out.println("Invalid option. Please select a number between 1 and " + interviewModels.size() + ".");
+            }
+        } while (option < 0 || option > interviewModels.size());
+
+        return (option == 0) ? null : interviewModels.get(option - 1);
     }
 
     public void updateInterviewModel(InterviewModel interviewModel, Integer id) {
-        service.updateInterviewModel(interviewModel,id);
+        service.updateInterviewModel(interviewModel, id);
     }
 }

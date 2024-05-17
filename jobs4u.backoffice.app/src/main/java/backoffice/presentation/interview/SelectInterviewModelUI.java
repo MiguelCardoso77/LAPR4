@@ -52,16 +52,7 @@ public class SelectInterviewModelUI extends AbstractUI {
         showInterviewsOfApplication(application);
         JobInterview jobInterview = selectJobInterview();
 
-        String interviewModelString = selectInterviewModel();
-        List<String> data;
-
-        try {
-            data = listInterviewModelsController.importInterviewModel(Path.of(interviewModelString));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        InterviewModel interviewModel = listInterviewModelsController.extractInterviewModelFromFile(data);
+        InterviewModel interviewModel = selectInterviewModel();
 
         if (jobInterview != null) {
             selectInterviewModelController.updateInterviewModel(interviewModel, jobInterview.identity());
@@ -137,7 +128,7 @@ public class SelectInterviewModelUI extends AbstractUI {
         return null;
     }
 
-    private String selectInterviewModel() {
+    private InterviewModel selectInterviewModel() {
         return selectInterviewModelController.listAndSelectInterviewModels();
 
     }

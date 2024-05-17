@@ -50,17 +50,6 @@ entity JobRequirementsSpecification <<entity>><<root>>
 
     entity Requirements <<entity>>
 
-        card YearsOfExperience <<ValueObject>>{
-        }
-        card AcademicDegree <<ValueObject>>{
-        }
-        card Skills <<ValueObject>>{
-        }
-
-        Requirements --> YearsOfExperience
-        Requirements --> AcademicDegree
-        Requirements --> Skills
-
     JobRequirementsSpecification --> Requirements
 
 }
@@ -157,6 +146,8 @@ entity Process <<entity>><<root>>
 
     note right of ProcessDate
         Can be one of the following:
+        - applicationStartDate
+        - applicationEndDate
         - ScreeningStartDate
         - ScreeningEndDate
         - InterviewsStartDate

@@ -8,6 +8,7 @@ import core.repositories.JobInterviewRepository;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +33,25 @@ public class GenerateInterviewModelController {
         }
     }
 
+    public List<JobInterview> findAllInterviews() {
+        return (List<JobInterview>) jobInterviewRepository.allJobInterviews();
+    }
+
     public InterviewModel getInterviewModelByJobInterviewID(int jobInterviewID) {
         Optional<JobInterview> jobInterview = jobInterviewRepository.ofIdentity(jobInterviewID);
+
         return jobInterview.get().interviewModel();
+    }
+
+    public List<String> processLines(List<String> lines) {
+        List<String> processedLines = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains(">")) {
+                processedLines.add(line.substring(0, line.indexOf(">") + 1));
+            } else {
+                processedLines.add(line);
+            }
+        }
+        return processedLines;
     }
 }

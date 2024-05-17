@@ -1,15 +1,11 @@
 package backoffice.presentation.interview;
 
-import console.presentation.utils.ConsoleColors;
 import core.application.controllers.GenerateInterviewModelController;
-import core.domain.application.Application;
 import core.domain.interview.InterviewModel;
 import core.domain.interview.JobInterview;
-import core.domain.interview.QuestionType;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,20 +31,23 @@ public class GenerateInterviewModelUI extends AbstractUI {
      * to enter the name of the file where the questions will be saved.
      *
      * @return true if the interview model is successfully generated and saved,
-     *         false otherwise.
+     * false otherwise.
      */
     @Override
     protected boolean doShow() {
+        List<JobInterview> allJobInterviews = theController.findAllInterviews();
+
+        System.out.println("Job Interviews: ");
+        for (JobInterview jobInterview : allJobInterviews) {
+            System.out.println("ID: " + jobInterview.identity() + " - " + jobInterview.interviewModel());
+        }
+
         int jobInterviewID = Console.readInteger("Choose a Job Interview: ");
         InterviewModel interviewModel = theController.getInterviewModelByJobInterviewID(jobInterviewID);
 
-        List<String> templateLines = new ArrayList<>();
-
         List<String> model = theController.readFile(interviewModel.model());
-        for (String line : model) {
-            System.out.println(line);
-            templateLines.add(line);
-        }
+        List<String> templateLines = theController.processLines(model);
+
 
         String fileName = Console.readLine("Enter the name of the file: ");
         theController.writeListToFile(templateLines, "jobs4u.core/src/main/resources/answeringTemplates/" + fileName + ".txt");

@@ -1,6 +1,7 @@
 package bootstrappers.bootstraping;
 
 import core.application.controllers.AddJobInterviewController;
+import core.application.controllers.SelectInterviewModelController;
 import core.domain.application.Application;
 import core.domain.interview.InterviewModel;
 import core.persistence.PersistenceContext;
@@ -28,17 +29,14 @@ public class JobInterviewsBootstrapper implements Action {
         registerJobInterview(createdOn, 40, 40, "Not approved", applications.get(4));
         registerJobInterview(createdOn, 40, 50, "Passed", applications.get(5));
 
-        registerWithInterviewModel(createdOn, 20, 80, "Passed", applications.get(0), new InterviewModel("jobs4u.core/src/main/resources/interviewModels/interviewModel1.txt"));
+        registerJobInterview(createdOn, 20, 80, "Passed", applications.get(0));
+        //"jobs4u.core/src/main/resources/interviewModels/interviewModel1.txt"
 
         return true;
     }
 
     private void registerJobInterview(Calendar createdOn, Integer time, Integer score, String result, Application application){
         controller.addJobInterview(createdOn, time, score, result, application);
-    }
-
-    private void registerWithInterviewModel(Calendar createdOn, Integer time, Integer score, String result, Application application, InterviewModel interviewModel){
-        jobInterviewService.registerJobInterview2(createdOn, time, score, result, application, interviewModel);
     }
 }
 

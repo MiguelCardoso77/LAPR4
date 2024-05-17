@@ -26,14 +26,6 @@ public class JobInterviewService {
         return jobInterviewRepository.save(jobInterview);
     }
 
-    @Transactional
-    public JobInterview registerJobInterview2(Calendar createdOn, int time, int score, String result, Application application, InterviewModel interviewModel) {
-        JobInterviewBuilder jobInterviewBuilder = new JobInterviewBuilder();
-        jobInterviewBuilder.withAll(createdOn, time, score, result, application, interviewModel);
-        JobInterview jobInterview = jobInterviewBuilder.build();
-        return jobInterviewRepository.save(jobInterview);
-    }
-
     public Iterable<JobInterview> allJobInterviews() {
         return jobInterviewRepository.allJobInterviews();
     }

@@ -2,8 +2,10 @@ package bootstrappers.bootstraping;
 
 import core.application.controllers.AddJobInterviewController;
 import core.domain.application.Application;
+import core.domain.interview.InterviewModel;
 import core.persistence.PersistenceContext;
 import core.repositories.ApplicationRepository;
+import core.services.JobInterviewService;
 import eapli.framework.actions.Action;
 
 import java.util.Calendar;
@@ -12,6 +14,7 @@ import java.util.List;
 public class JobInterviewsBootstrapper implements Action {
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
     private final AddJobInterviewController controller = new AddJobInterviewController();
+    private final JobInterviewService jobInterviewService = new JobInterviewService();
 
     @Override
     public boolean execute() {
@@ -25,11 +28,17 @@ public class JobInterviewsBootstrapper implements Action {
         registerJobInterview(createdOn, 40, 40, "Not approved", applications.get(4));
         registerJobInterview(createdOn, 40, 50, "Passed", applications.get(5));
 
+        registerWithInterviewModel(createdOn, 20, 80, "Passed", applications.get(0), new InterviewModel("jobs4u.core/src/main/resources/interviewModels/interviewModel1.txt"));
+
         return true;
     }
 
     private void registerJobInterview(Calendar createdOn, Integer time, Integer score, String result, Application application){
         controller.addJobInterview(createdOn, time, score, result, application);
+    }
+
+    private void registerWithInterviewModel(Calendar createdOn, Integer time, Integer score, String result, Application application, InterviewModel interviewModel){
+        jobInterviewService.registerJobInterview2(createdOn, time, score, result, application, interviewModel);
     }
 }
 

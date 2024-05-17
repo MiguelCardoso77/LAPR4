@@ -4,10 +4,8 @@ import backoffice.presentation.jobOpening.AddJobOpeningUI;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.interview.InterviewModel;
-import core.domain.interview.InterviewModelBuilder;
 import core.domain.interview.JobInterview;
 import core.domain.jobOpening.JobOpening;
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -16,13 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SelectInterviewModelUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
@@ -70,7 +64,7 @@ public class SelectInterviewModelUI extends AbstractUI {
         InterviewModel interviewModel = listInterviewModelsController.extractInterviewModelFromFile(data);
 
         if (jobInterview != null) {
-            jobInterview.changeInterviewModel(interviewModel);
+            selectInterviewModelController.updateInterviewModel(interviewModel, jobInterview.identity());
         }
 
         return false;

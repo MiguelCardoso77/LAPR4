@@ -41,6 +41,6 @@ public class ListInterviewModelsController {
 
         public InterviewModel extractInterviewModelFromFile(List<String> data){
                 String model = data.get(0);
-                return service.registerJobRequirement(model);
+                return service.registerInterviewModel(model);
         }
 }

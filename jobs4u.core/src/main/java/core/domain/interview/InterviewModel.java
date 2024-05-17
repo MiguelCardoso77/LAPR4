@@ -1,5 +1,6 @@
 package core.domain.interview;
 
+import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.ValueObject;
 import jakarta.persistence.*;
@@ -112,4 +113,5 @@ public class InterviewModel implements AggregateRoot<Integer> {
     public String model() {
         return interviewModel;
     }
+
 }

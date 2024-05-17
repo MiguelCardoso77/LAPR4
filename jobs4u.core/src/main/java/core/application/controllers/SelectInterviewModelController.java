@@ -1,8 +1,11 @@
 package core.application.controllers;
 
 import core.domain.application.Application;
+import core.domain.interview.InterviewModel;
 import core.domain.interview.JobInterview;
 import core.domain.jobOpening.JobOpening;
+import core.persistence.PersistenceContext;
+import core.services.JobInterviewService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.io.util.Console;
 
@@ -20,6 +23,7 @@ public class SelectInterviewModelController {
     final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
     final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
+    final JobInterviewService service = new JobInterviewService();
     List<Application> applicationList = new ArrayList<>();
     Iterable<JobInterview> jobInterviews = new ArrayList<>();
     Iterable<JobOpening> iterable = jobOpeningController.allJobOpening();
@@ -105,4 +109,7 @@ public class SelectInterviewModelController {
         return null;
     }
 
+    public void updateInterviewModel(InterviewModel interviewModel, Integer id) {
+        service.updateInterviewModel(interviewModel,id);
+    }
 }

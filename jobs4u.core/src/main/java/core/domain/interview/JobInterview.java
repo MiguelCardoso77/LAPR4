@@ -140,7 +140,7 @@ public class JobInterview implements AggregateRoot<Integer> {
      *
      * @param interviewModelToChange the new interview model
      */
-    public void changeInterviewModel(InterviewModel interviewModelToChange) {
+    public void updateInterviewModel(InterviewModel interviewModelToChange) {
         if (interviewModelToChange != null) {
             this.interviewModel = interviewModelToChange;
         } else {

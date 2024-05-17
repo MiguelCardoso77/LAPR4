@@ -15,6 +15,11 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * UI class for changing the status of a process in the job opening context.
+ *
+ * @author Diana Neves
+ */
 public class ChangeProcessStatusUI extends AbstractUI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChangeProcessStatusUI.class);
@@ -25,16 +30,17 @@ public class ChangeProcessStatusUI extends AbstractUI {
     Iterable<JobOpening> jobOpenings = new ArrayList<>();
     Iterable<Process> processes = new ArrayList<>();
 
-
+    /**
+     * Displays the UI for changing the process status.
+     *
+     * @return false to indicate the UI should not loop.
+     */
     @Override
     protected boolean doShow() {
 
         showJobOpenings();
-
         JobOpening jobOpening = selectJobOpening();
-
         showProcessOfJobOpening(jobOpening);
-
         Process process = selectProcess();
 
         if (process != null) {
@@ -43,18 +49,36 @@ public class ChangeProcessStatusUI extends AbstractUI {
         return false;
     }
 
+    /**
+     * Displays the list of job openings.
+     */
     private void showJobOpenings() {
         jobOpenings = changeProcessStatusController.showJobOpenings();
     }
 
+    /**
+     * Prompts the user to select a job opening.
+     *
+     * @return the selected job opening.
+     */
     private JobOpening selectJobOpening() {
         return selectJobOpeningController.selectJobOpening();
     }
 
+    /**
+     * Displays the processes of the selected job opening.
+     *
+     * @param jobOpening the selected job opening.
+     */
     private void showProcessOfJobOpening(JobOpening jobOpening) {
         processes = changeProcessStatusController.showProcessOfJobOpening(jobOpening);
     }
 
+    /**
+     * Prompts the user to select a process.
+     *
+     * @return the selected process.
+     */
     private Process selectProcess() {
         final List<Process> list = new ArrayList<>();
         if (processes.iterator().hasNext()) {
@@ -80,6 +104,11 @@ public class ChangeProcessStatusUI extends AbstractUI {
         return null;
     }
 
+    /**
+     * Prompts the user to select a status change for the process.
+     *
+     * @param process the selected process.
+     */
     private void selectStatus(Process process) {
 
         ProcessState state = process.processState();
@@ -161,16 +190,33 @@ public class ChangeProcessStatusUI extends AbstractUI {
         }
     }
 
+    /**
+     * Changes the status of the process.
+     *
+     * @param processStatus the new status.
+     * @param process the process to change.
+     */
     public void changeProcessStatus(ProcessStatus processStatus, Process process){
         Process newProcess = changeProcessStatusController.changeProcessStatus(processStatus,process);
         System.out.println("Success: Status was updated to " + newProcess.processStatus() + " for the process " + newProcess.identity());
     }
+
+    /**
+     * Changes the state of the process.
+     *
+     * @param processState the new state.
+     * @param process the process to change.
+     */
     public void changeProcessState(ProcessState processState, Process process){
         Process newProcess = changeProcessStateController.changeProcessStatus(processState,process);
         System.out.println("Success: State was updated to " + newProcess.processState() + " for the process " + newProcess.identity());
     }
 
-
+    /**
+     * Returns the headline for the UI.
+     *
+     * @return the headline.
+     */
     @Override
     public String headline() {
         return "change status of a phase of a job opening";

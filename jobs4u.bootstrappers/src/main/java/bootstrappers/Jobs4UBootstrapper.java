@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:S106")
 public class Jobs4UBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(Jobs4UBootstrapper.class);
-    private static final String BOOTSTRAP = "bootstrap@gmail.com";
+    private static final String BOOTSTRAP = "bootstrapmachine@gmail.com";
     private static final String BOOTSTRAP_PWD = "Bootstrap9000";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -35,6 +35,10 @@ public class Jobs4UBootstrapper implements Action {
 
     @Override
     public boolean execute() {
+        System.out.println("Bootstrapping MasterUser...");
+        registerBootstrapAccount();
+        authenticateForBootstrapping();
+
         final Action[] actions = {
                 new CompanyBootstrapper(),
                 new MasterUsersBootstrapper(),
@@ -44,11 +48,6 @@ public class Jobs4UBootstrapper implements Action {
                 new ApplicationsBootstrapper(),
                 new JobInterviewsBootstrapper(),
                 new RequirementsBootstrapper()};
-
-
-
-        registerBootstrapAccount();
-        authenticateForBootstrapping();
 
         // execute all bootstrapping
         boolean ret = true;

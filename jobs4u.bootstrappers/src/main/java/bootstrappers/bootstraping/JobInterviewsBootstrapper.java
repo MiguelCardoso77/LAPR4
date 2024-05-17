@@ -6,6 +6,7 @@ import core.domain.application.Application;
 import core.domain.interview.InterviewModel;
 import core.persistence.PersistenceContext;
 import core.repositories.ApplicationRepository;
+import core.repositories.InterviewModelRepository;
 import core.services.JobInterviewService;
 import eapli.framework.actions.Action;
 
@@ -14,13 +15,15 @@ import java.util.List;
 
 public class JobInterviewsBootstrapper implements Action {
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
+    private final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
     private final AddJobInterviewController controller = new AddJobInterviewController();
-    private final JobInterviewService jobInterviewService = new JobInterviewService();
+    private final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
 
     @Override
     public boolean execute() {
         Calendar createdOn = Calendar.getInstance();
         List<Application> applications = (List<Application>) applicationRepository.allApplications();
+        List<InterviewModel> interviewModels = (List<InterviewModel>) interviewModelRepository.findAll();
 
         registerJobInterview(createdOn, 20, 80, "Passed", applications.get(0));
         registerJobInterview(createdOn,20, 30, "Not approved", applications.get(1));
@@ -29,8 +32,9 @@ public class JobInterviewsBootstrapper implements Action {
         registerJobInterview(createdOn, 40, 40, "Not approved", applications.get(4));
         registerJobInterview(createdOn, 40, 50, "Passed", applications.get(5));
 
-        registerJobInterview(createdOn, 20, 80, "Passed", applications.get(0));
-        //"jobs4u.core/src/main/resources/interviewModels/interviewModel1.txt"
+        selectInterviewModelController.updateInterviewModel(interviewModels.get(0), 1);
+        selectInterviewModelController.updateInterviewModel(interviewModels.get(1), 3);
+        selectInterviewModelController.updateInterviewModel(interviewModels.get(2), 4);
 
         return true;
     }

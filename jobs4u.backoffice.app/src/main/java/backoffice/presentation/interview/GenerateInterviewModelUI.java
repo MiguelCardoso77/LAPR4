@@ -35,14 +35,14 @@ public class GenerateInterviewModelUI extends AbstractUI {
      */
     @Override
     protected boolean doShow() {
-        List<JobInterview> allJobInterviews = theController.findAllInterviews();
+        List<JobInterview> allJobInterviews = theController.findAllInterviewsWithModelAssigned();
 
         System.out.println("Job Interviews: ");
         for (JobInterview jobInterview : allJobInterviews) {
             System.out.println("ID: " + jobInterview.identity() + " - " + jobInterview.interviewModel());
         }
 
-        int jobInterviewID = Console.readInteger("Choose a Job Interview: ");
+        int jobInterviewID = Console.readInteger("\nChoose a Job Interview: ");
         InterviewModel interviewModel = theController.getInterviewModelByJobInterviewID(jobInterviewID);
 
         List<String> model = theController.readFile(interviewModel.model());

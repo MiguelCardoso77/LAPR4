@@ -33,8 +33,17 @@ public class GenerateInterviewModelController {
         }
     }
 
-    public List<JobInterview> findAllInterviews() {
-        return (List<JobInterview>) jobInterviewRepository.allJobInterviews();
+    public List<JobInterview> findAllInterviewsWithModelAssigned() {
+        List<JobInterview> allJobInterviews = (List<JobInterview>) jobInterviewRepository.allJobInterviews();
+        List<JobInterview> filteredJobInterviews = new ArrayList<>();
+
+        for (JobInterview jobInterview : allJobInterviews) {
+            if (jobInterview.interviewModel() != null) {
+                filteredJobInterviews.add(jobInterview);
+            }
+        }
+
+        return filteredJobInterviews;
     }
 
     public InterviewModel getInterviewModelByJobInterviewID(int jobInterviewID) {

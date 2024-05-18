@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD)
+
+actor "Customer Manager" as CM
+participant ": System" as S
+
+activate CM
+
+CM -> S : Asks to execute the job interviews evaluation process
+
+activate S
+
+S --> CM : Shows the list of Job Openings in \n"Analysis" phase and asks to select one
+
+deactivate S
+
+CM -> S :  Selects the job opening
+
+activate S
+
+S --> CM : Shows the list of all the applications on \nthe selected job opening and asks to select one
+
+deactivate S
+
+CM -> S : Selects the application
+
+activate S
+
+S --> CM : Displays operation's success
+
+deactivate S
+
+@enduml

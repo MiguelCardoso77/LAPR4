@@ -1,12 +1,12 @@
 package core.application.controllers;
 
+import core.domain.jobOpening.JobReference;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.services.JobOpeningService;
 import core.services.JobRequirementsService;
+import eapli.framework.io.util.Console;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,8 @@ import java.util.List;
 public class ListJobRequirementsSpecificationController {
 
     private final JobRequirementsService service = new JobRequirementsService();
+
+    private final JobOpeningService jobOpeningService = new JobOpeningService();
 
     /**
      * Retrieves all job requirements specifications.
@@ -45,4 +47,24 @@ public class ListJobRequirementsSpecificationController {
     public JobRequirementsSpecification registerJobRequirementsSpecification(String jobRequirementsFilePath){
         return service.registerJobRequirement(jobRequirementsFilePath);
     }
+
+    public JobRequirementsSpecification listAndSelectJobRequirementsSpecification(){
+        List<JobRequirementsSpecification> jobRequirementsSpecifications = (List<JobRequirementsSpecification>) service.allJobRequirementsSpecification();
+        for (JobRequirementsSpecification requirement :jobRequirementsSpecifications) {
+            System.out.println(requirement);
+        }
+        int option;
+        do{
+            option = Console.readInteger("Enter the number of the file you want to select (0 to cancel): ");
+            if (option < 0 || option > jobRequirementsSpecifications.size()) {
+                System.out.println("Invalid option. Please select a number between 1 and " + jobRequirementsSpecifications.size() + ".");
+            }
+        }while (option < 0 || option > jobRequirementsSpecifications.size());
+        return (option == 0) ? null : jobRequirementsSpecifications.get(option - 1);
+    }
+
+    public void updateJobOpening(JobReference jobReference, JobRequirementsSpecification jobRequirementsSpecification){
+        jobOpeningService.updateJobRequirements(jobReference, jobRequirementsSpecification);
+    }
+
 }

@@ -25,13 +25,21 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
     @Column(name = "JOB_REQUIREMENTS_PATH")
     private String jobRequirementsSpecificationFile;
     /**
-     * Constructs a new JobRequirementsSpecification with the specified academic degree, experience, and knowledge.
+     * Constructs a new JobRequirementsSpecification with the specified job requirements specification file path and id.
      *
      * @param id             The Job Requirements specification identifier
      * @param jobRequirementsSpecificationFile The Job Requirements Specification path
      */
     public JobRequirementsSpecification(final Integer id, final String jobRequirementsSpecificationFile) {
         this.idRequirements = id;
+        this.jobRequirementsSpecificationFile = jobRequirementsSpecificationFile;
+    }
+    /**
+     * Constructs a new JobRequirementsSpecification with the specified job requirements specification file path.
+     *
+     * @param jobRequirementsSpecificationFile The Job Requirements Specification path
+     */
+    public JobRequirementsSpecification(final String jobRequirementsSpecificationFile){
         this.jobRequirementsSpecificationFile = jobRequirementsSpecificationFile;
     }
 
@@ -113,7 +121,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
 
     @Override
     public String toString() {
-        return "idRequirements=" + idRequirements +
-                ", jobRequirementsSpecificationFile='" + jobRequirementsSpecificationFile;
+        return "id = " + idRequirements +
+                ", path = " + jobRequirementsSpecificationFile;
     }
 }

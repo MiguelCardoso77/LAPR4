@@ -1,6 +1,5 @@
 package bootstrap;
 
-import bootstrappers.Jobs4USmokeTester;
 import console.BaseApplication;
 import bootstrappers.Jobs4UBootstrapper;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -22,7 +21,6 @@ public class Jobs4UBootstrap extends BaseApplication {
     protected void doMain(final String[] args) {
         System.out.println("\n\n------- MASTER DATA -------");
         new Jobs4UBootstrapper().execute();
-
     }
 
     @Override

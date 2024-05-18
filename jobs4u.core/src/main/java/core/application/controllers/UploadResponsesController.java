@@ -32,6 +32,7 @@ public class UploadResponsesController {
         InterviewAnswers interviewAnswers = new InterviewAnswers(responses);
 
         jobInterview.uploadInterviewAnswers(interviewAnswers);
+        System.out.println("\nResponses uploaded successfully!");
         return jobInterviewRepository.save(jobInterview);
     }
 }

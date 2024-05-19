@@ -1,6 +1,7 @@
 package backoffice.presentation.jobRequirementsSpecifications;
 
 import backoffice.presentation.jobOpening.AddJobOpeningUI;
+import console.presentation.utils.ConsoleColors;
 import core.application.controllers.ListJobOpeningController;
 import core.application.controllers.ListJobRequirementsSpecificationController;
 import core.domain.jobOpening.JobOpening;
@@ -38,29 +39,29 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-
         showJobOpenings();
         JobOpening jobOpening = selectJobOpening();
 
+        System.out.println("\nAvailable Requirements Specifications: ");
         JobRequirementsSpecification jobRequirementsSpecification = showAndSelectRequirement();
 
         JobOpening updatedJobOpening = service.updateJobRequirements(jobOpening.jobReference(), jobRequirementsSpecification);
 
-        if(updatedJobOpening.jobRequirementsSpecification().identity() != null){
-            System.out.println("Requirements specifications selected!");
-        }else{
-            System.out.println("Failed to select the requirements specifications.");
+        if (updatedJobOpening.jobRequirementsSpecification().identity() != null) {
+            System.out.println(ConsoleColors.GREEN + "\nRequirements specifications selected!" + ConsoleColors.RESET);
+        } else {
+            System.out.println(ConsoleColors.RED + "\nFailed to select the requirements specifications." + ConsoleColors.RESET);
         }
 
         return false;
     }
 
-    private void showJobOpenings(){
+    private void showJobOpenings() {
         final Iterable<JobOpening> iterable = listJobOpeningController.allJobOpening();
 
-        if(!iterable.iterator().hasNext()){
+        if (!iterable.iterator().hasNext()) {
             System.out.println("There are no job openings");
-        }else{
+        } else {
             int cont = 1;
             System.out.println("List of registered Job Openings");
             for (JobOpening jobOpening : iterable) {
@@ -70,7 +71,7 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
         }
     }
 
-    private JobRequirementsSpecification showAndSelectRequirement(){
+    private JobRequirementsSpecification showAndSelectRequirement() {
         return listJobRequirementsSpecification.listAndSelectJobRequirementsSpecification();
     }
 

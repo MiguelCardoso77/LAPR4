@@ -39,13 +39,16 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
+
         showJobOpenings();
         JobOpening jobOpening = selectJobOpening();
 
         System.out.println("\nAvailable Requirements Specifications: ");
-        JobRequirementsSpecification jobRequirementsSpecification = showAndSelectRequirement();
+        showJobRequirements();
 
-        JobOpening updatedJobOpening = service.updateJobRequirements(jobOpening.jobReference(), jobRequirementsSpecification);
+        JobRequirementsSpecification jobRequirementsSpecification = selectRequirement();
+
+        JobOpening updatedJobOpening = listJobRequirementsSpecification.updateJobOpening(jobOpening.jobReference(), jobRequirementsSpecification);
 
         if (updatedJobOpening.jobRequirementsSpecification().identity() != null) {
             System.out.println(ConsoleColors.GREEN + "\nRequirements specifications selected!" + ConsoleColors.RESET);
@@ -56,12 +59,12 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
         return false;
     }
 
-    private void showJobOpenings() {
+    private void showJobOpenings(){
         final Iterable<JobOpening> iterable = listJobOpeningController.allJobOpening();
 
-        if (!iterable.iterator().hasNext()) {
+        if(!iterable.iterator().hasNext()){
             System.out.println("There are no job openings");
-        } else {
+        }else{
             int cont = 1;
             System.out.println("List of registered Job Openings");
             for (JobOpening jobOpening : iterable) {
@@ -71,8 +74,38 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
         }
     }
 
-    private JobRequirementsSpecification showAndSelectRequirement() {
-        return listJobRequirementsSpecification.listAndSelectJobRequirementsSpecification();
+    private void showJobRequirements(){
+        final Iterable<JobRequirementsSpecification> iterable = listJobRequirementsSpecification.allJobRequirementsSpecification();
+
+        if(!iterable.iterator().hasNext()){
+            System.out.println("There are no job requirements registered");
+        }else{
+            System.out.println("List of registered job requirements");
+            for (JobRequirementsSpecification jobRequirementsSpecification : iterable) {
+                System.out.printf("%-6s%-30s%n", jobRequirementsSpecification.identity(), jobRequirementsSpecification.jobRequirementsPath());
+            }
+        }
+    }
+
+    private JobRequirementsSpecification selectRequirement(){
+        final List<JobRequirementsSpecification> list = new ArrayList<>();
+        for (JobRequirementsSpecification requirement : listJobRequirementsSpecification.allJobRequirementsSpecification()) {
+            list.add(requirement);
+        }
+        JobRequirementsSpecification jobRequirementsSpecification = null;
+        final int option = Console.readInteger("Enter the number of the file you want to select (0 to cancel): ");
+        if (option == 0) {
+            System.out.println("No job requirement specification selected");
+            System.exit(0);
+        } else {
+            try {
+                jobRequirementsSpecification = this.listJobRequirementsSpecification.findJobRequirementSpecification(list.get(option - 1).identity());
+            } catch (IntegrityViolationException | ConcurrencyException ex ){
+                LOGGER.error("Error performing the operation", ex);
+                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
+            }
+        }
+        return jobRequirementsSpecification;
     }
 
     private JobOpening selectJobOpening() {
@@ -84,6 +117,7 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
         final int option = Console.readInteger("Enter the number of the job opening");
         if (option == 0) {
             System.out.println("No job opening selected");
+            System.exit(0);
         } else {
             try {
                 jobOpening = this.listJobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());

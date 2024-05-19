@@ -46,7 +46,7 @@ public class JobRequirementsService {
     public JobRequirementsSpecification findJobRequirementsSpecification(Integer id){
         Iterable<JobRequirementsSpecification> jobRequirementsSpecifications = jobRequirementsSpecificationRepository.allJobRequirementsSpecification();
         for (JobRequirementsSpecification jobRequirementsSpecification : jobRequirementsSpecifications) {
-            if(jobRequirementsSpecification.identity().equals(jobRequirementsSpecification)){
+            if(id.equals(jobRequirementsSpecification.identity())){
                 return jobRequirementsSpecification;
             }
         }

@@ -1,4 +1,4 @@
 # Requirements:
 -> Academic Degree: Master
--> Programming Languages: Java, C#
+-> Languages: French, Portuguese
 -> Years of Experience: 7

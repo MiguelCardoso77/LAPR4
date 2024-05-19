@@ -12,8 +12,7 @@ public class AddRequirementsBootstrapper implements Action {
         registerJobRequirementSpecification("jobs4u.core/src/main/resources/requirements/requirements1.txt");
         registerJobRequirementSpecification("jobs4u.core/src/main/resources/requirements/requirements2.txt");
         registerJobRequirementSpecification("jobs4u.core/src/main/resources/requirements/requirements3.txt");
-        registerJobRequirementSpecification("jobs4u.core/src/main/resources/requirements/requirements5.txt");
-
+        registerJobRequirementSpecification("jobs4u.core/src/main/resources/requirements/requirements4.txt");
 
         return true;
     }

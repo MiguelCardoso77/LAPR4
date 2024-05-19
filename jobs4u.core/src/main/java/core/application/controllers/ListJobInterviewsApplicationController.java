@@ -13,9 +13,6 @@ import java.util.List;
 
 public class ListJobInterviewsApplicationController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
-    private final ApplicationService applicationService = new ApplicationService();
-
     private final JobInterviewService jobInterviewService = new JobInterviewService();
 
     public Iterable<JobInterview> allJobInterviewsOfApplication(Application application){

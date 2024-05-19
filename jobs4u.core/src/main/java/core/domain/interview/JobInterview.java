@@ -33,7 +33,7 @@ public class JobInterview implements AggregateRoot<Integer> {
     @JoinColumn(name = "APPLICATION_ID")
     private Application application;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "INTERVIEW_MODEL")
     private InterviewModel interviewModel;
 

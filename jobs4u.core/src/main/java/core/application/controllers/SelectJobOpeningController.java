@@ -13,7 +13,6 @@ import java.util.List;
 public class SelectJobOpeningController {
     final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectJobOpeningController.class);
-
     Iterable<JobOpening> jobOpenings = jobOpeningController.allJobOpening();
 
     public JobOpening selectJobOpening() {
@@ -41,8 +40,5 @@ public class SelectJobOpeningController {
         }
         return null;
     }
-
-
-
 
 }

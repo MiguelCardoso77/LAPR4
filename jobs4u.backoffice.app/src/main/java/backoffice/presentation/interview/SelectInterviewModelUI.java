@@ -13,32 +13,17 @@ import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SelectInterviewModelUI extends AbstractUI {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
-
-    final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
-
-    final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
 
     final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
-
-    final ListInterviewModelsController listInterviewModelsController = new ListInterviewModelsController();
-
     final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
-
     final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
 
     Iterable<JobOpening> jobOpenings = new ArrayList<>();
-
     Iterable<Application> applicationList = new ArrayList<>();
-
-    Iterable<JobInterview> jobInterviews = new ArrayList<>();
-
 
     @Override
     protected boolean doShow() {
@@ -46,19 +31,29 @@ public class SelectInterviewModelUI extends AbstractUI {
         showJobOpenings();
         JobOpening jobOpening = selectJobOpening();
 
-        showApplicationsOfJobOpening(jobOpening);
-        Application application = selectApplication();
-
-        showInterviewsOfApplication(application);
-        JobInterview jobInterview = selectJobInterview();
-
         InterviewModel interviewModel = selectInterviewModel();
 
-        if (jobInterview != null) {
-            selectInterviewModelController.updateInterviewModel(interviewModel, jobInterview.identity());
-        }
+        applicationsOfJobOpening(jobOpening);
+
+        updateInterviewModel(interviewModel);
 
         return false;
+    }
+
+    private void updateInterviewModel(InterviewModel interviewModel) {
+        if (!applicationList.iterator().hasNext()) {
+            System.out.println("It's not possible to perform this operation. ");
+            doShow();
+        } else {
+            for (Application application : applicationList) {
+                Iterable<JobInterview> jobInterviews = listJobInterviewsApplicationController.allJobInterviewsOfApplication(application);
+                for (JobInterview jobInterview : jobInterviews) {
+                    if (jobInterview != null) {
+                        selectInterviewModelController.updateInterviewModel(interviewModel, jobInterview.identity());
+                    }
+                }
+            }
+        }
     }
 
     private void showJobOpenings() {
@@ -69,63 +64,8 @@ public class SelectInterviewModelUI extends AbstractUI {
         return selectJobOpeningController.selectJobOpening();
     }
 
-    private void showApplicationsOfJobOpening(JobOpening jobOpening) {
-        applicationList = selectInterviewModelController.showApplicationsOfJobOpening(jobOpening);
-    }
-
-    private Application selectApplication() {
-        final List<Application> list = new ArrayList<>();
-        if (applicationList.iterator().hasNext()) {
-            for (Application application : applicationList) {
-                list.add(application);
-            }
-
-            Application application = null;
-            final int option = Console.readInteger("Enter the number of the application");
-            if (option == 0) {
-                System.out.println("No applications selected");
-            } else {
-                try {
-                    application = this.jobOpeningApplicationsController.findApplicationByID(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println(
-                            "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
-            }
-            return application;
-        }
-
-        return null;
-    }
-
-    private void showInterviewsOfApplication(Application application) {
-        jobInterviews = selectInterviewModelController.showInterviewsOfApplication(application);
-    }
-
-    private JobInterview selectJobInterview() {
-        final List<JobInterview> list = new ArrayList<>();
-        if (jobInterviews.iterator().hasNext()) {
-            for (JobInterview jobInterview : jobInterviews) {
-                list.add(jobInterview);
-            }
-
-            JobInterview jobInterview = null;
-            final int option = Console.readInteger("Enter the number of the jobInterview");
-            if (option == 0) {
-                System.out.println("No job interviews selected");
-            } else {
-                try {
-                    jobInterview = listJobInterviewsApplicationController.findJobInterviewById(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
-            }
-
-            return jobInterview;
-        }
-        return null;
+    private void applicationsOfJobOpening(JobOpening jobOpening) {
+        applicationList = selectInterviewModelController.applicationsOfJobOpening(jobOpening);
     }
 
     private InterviewModel selectInterviewModel() {

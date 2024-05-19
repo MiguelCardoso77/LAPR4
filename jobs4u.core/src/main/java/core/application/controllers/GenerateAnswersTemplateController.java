@@ -27,9 +27,9 @@ public class GenerateAnswersTemplateController {
     public void writeListToFile(List<String> questionForFile, String filePath) {
         try {
             Files.write(Paths.get(filePath), questionForFile);
-            System.out.println("File created successfully.");
+            System.out.println("\nFile created successfully.");
         } catch (IOException e) {
-            System.err.println("Error writing to file.");
+            System.err.println("\nError writing to file.");
         }
     }
 

@@ -118,8 +118,8 @@ public class ChangeProcessStatusUI extends AbstractUI {
         if (optionMove == 1){
             switch (name) {
                 case "APPLICATION":
-                    changeProcessStatus(ProcessStatus.OPEN, process);
-
+                    System.out.println("You cannot move backwards because this is the first state of the process");
+                    System.out.println("Status of the process: " + process.processStatus().toString());
                     break;
                 case "SCREENING":
                     changeProcessStatus(ProcessStatus.CLOSE, process);

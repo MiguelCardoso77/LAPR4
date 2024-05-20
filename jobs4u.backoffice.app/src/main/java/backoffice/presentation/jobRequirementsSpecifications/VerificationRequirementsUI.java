@@ -34,61 +34,25 @@ public class VerificationRequirementsUI extends AbstractUI {
         Application applicationToVerify = selectApplication(jobOpeningApplication);
 
         if (applicationToVerify != null) {
+
             CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
             JobRequirementsSpecification jobOpeningRequirement = jobOpeningApplication.jobRequirementsSpecification();
             System.out.println(jobOpeningRequirement.jobRequirementsPath());
 
-/*
+
             List<String> typeRequirements = verificationRequirementsController.typeRequirements(jobOpeningRequirement.jobRequirementsPath());
 
             for(String requirements:  typeRequirements){
                 System.out.println(requirements);
             }
-*/
-            //boolean acceptedApplication = verificationRequirementsController.verifyCandidate(typeRequirements, jobOpeningRequirement);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            boolean acceptedApplication = verificationRequirementsController.verifyCandidate(typeRequirements, candidateRequirements.candidateRequirements());
 
 
 
             /*String degree = theController3.findDegree(candidateRequirements.candidateRequirements());
 
-
-
-
             boolean degreeCorrect = theController3.verifyDegree(jobOpeningRequirements.jobRequirementsPath(), degree);
-
 
             List<String> progLang = theController3.findProgrammingLanguages(candidateRequirements.candidateRequirements());
 

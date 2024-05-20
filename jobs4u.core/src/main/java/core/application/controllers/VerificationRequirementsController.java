@@ -24,7 +24,6 @@ public class VerificationRequirementsController {
     public List<String> typeRequirements(List<String> candidateRequirements) {
         List<String> requirements = new ArrayList<>();
 
-
         for (String line : candidateRequirements) {
             int startIndex = line.indexOf("->");
             int endIndex = line.indexOf(":");
@@ -53,21 +52,7 @@ public class VerificationRequirementsController {
         return null;
     }
 
-    public boolean verifyCandidate( List<String> typeRequirements , JobRequirementsSpecification jobOpeningRequirement ){
-        for (String requirement : typeRequirements) {
-
-
-
-
-
-
-
-
-        }
-
-
-
-
+    public boolean verifyCandidate( List<String> typeRequirements , List<String> candidateRequirements ){
 
 
         return false;

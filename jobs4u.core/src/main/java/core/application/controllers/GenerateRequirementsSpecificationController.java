@@ -1,8 +1,13 @@
 package core.application.controllers;
 
+import core.domain.jobOpening.JobOpening;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.persistence.PersistenceContext;
+import core.repositories.JobOpeningRepository;
 import core.repositories.JobRequirementsSpecificationRepository;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.io.util.Console;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +19,8 @@ import java.util.Optional;
 public class GenerateRequirementsSpecificationController {
 
     private final JobRequirementsSpecificationRepository jobRequirementsSpecificationRepository = PersistenceContext.repositories().jobRequirements();
+
+    private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
 
 
     public List<String> readFile(String filePath) {
@@ -35,45 +42,37 @@ public class GenerateRequirementsSpecificationController {
         }
     }
 
-    public List<JobRequirementsSpecification> findAllJobRequirementsAssigned() {
-        Iterable<JobRequirementsSpecification> allJobRequirementsSpecification = jobRequirementsSpecificationRepository.allJobRequirementsSpecification();
-        List<JobRequirementsSpecification> filteredJobRequirementsSpecification = new ArrayList<>();
+    public List<JobOpening> findAllJobOpeningAssigned() {
+        Iterable<JobOpening> allJobOpening = jobOpeningRepository.allJobOpenings();
+        List<JobOpening> filteredJobOpening = new ArrayList<>();
 
-        for (JobRequirementsSpecification jobRequirementsSpecification : allJobRequirementsSpecification) {
-            if (jobRequirementsSpecification.jobRequirementsPath() != null) {
-                filteredJobRequirementsSpecification.add(jobRequirementsSpecification);
+        for (JobOpening jobOpening : allJobOpening) {
+            if (jobOpening.jobRequirementsSpecification() != null) {
+                filteredJobOpening.add(jobOpening);
             }
         }
 
-        return filteredJobRequirementsSpecification;
+        return filteredJobOpening;
     }
 
-    public JobRequirementsSpecification getJobRequirementByID(int idRequirements) {
-        Optional<JobRequirementsSpecification> jobRequirementsSpecification = jobRequirementsSpecificationRepository.ofIdentity(idRequirements);
 
-        return jobRequirementsSpecification.get();
 
-    }
+
 
     public List<String> processLines(List<String> lines) {
         List<String> processedLines = new ArrayList<>();
         for (String line : lines) {
-            int firstIndex = line.indexOf(">");
+            int firstIndex = line.indexOf(":");
             if (firstIndex != -1) {
-                int secondIndex = line.indexOf(">", firstIndex + 1);
-                if (secondIndex != -1) {
-                    processedLines.add(line.substring(0, secondIndex + 1));
-                } else {
-                    processedLines.add(line);
-                }
+                // Keep everything up to and including the first ":"
+                processedLines.add(line.substring(0, firstIndex + 1));
             } else {
+                // Add the line as is if no ":" is found
                 processedLines.add(line);
             }
         }
         return processedLines;
     }
-
-
     /*public List<String> getAcademicDegree() {
         List<String> academicDegree = new ArrayList<>();
         for (AcademicDegree type : AcademicDegree.values()) {

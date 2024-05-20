@@ -24,22 +24,25 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
         List<JobOpening> requirements = generateRequirementsAnswersTemplateController.findAllJobOpeningsWithJobRequirements();
 
         int cont = 1;
-        System.out.println("Job Opening: ");
-        for (JobOpening jobOpening : requirements) {
-            System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.company());
-            cont++;
+        if (requirements.isEmpty()) {
+            System.out.println("there are no job openings with requirements");
+        } else {
+            System.out.println("Job Opening: ");
+            for (JobOpening jobOpening : requirements) {
+                System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.company());
+                cont++;
+            }
+            JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
+
+            applications = listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobOpening.jobReference());
+            Application application = selectApplication();
+
+            String path = Console.readLine("\nEnter the path to the file with the responses: ");
+            List<String> responses = uploadRequirementsAnswersController.readFile(path);
+
+            uploadRequirementsAnswersController.uploadResponses(responses, application);
+
         }
-        JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
-
-        applications = listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobOpening.jobReference());
-        Application application = selectApplication();
-
-        String path = Console.readLine("\nEnter the path to the file with the responses: ");
-        List<String> responses = uploadRequirementsAnswersController.readFile(path);
-
-        System.out.println(uploadRequirementsAnswersController.uploadResponses(responses, application));
-
-
         return true;
     }
 

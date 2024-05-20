@@ -1,0 +1,5 @@
+# Questions:
+-> Short Answer: <What company owns the Packet Tracer software?>
+-> Time: <Estimate how much time it would take to configure a router.>
+-> Date: <When was the first version of Packet Tracer released?>
+-> Integer Number: <How many devices can be connected to a switch with 24 ports?>

@@ -140,21 +140,20 @@ entity Process <<entity>><<root>>
     }
     card ProcessDate <<Value Object>> {
     }
+    card ProcessStatus <<Value Object>>{
+    }
 
     Process --> ProcessState
     Process --> ProcessDate
+    Process --> ProcessStatus
 
     note right of ProcessDate
         Can be one of the following:
         - applicationStartDate
-        - applicationEndDate
         - ScreeningStartDate
-        - ScreeningEndDate
         - InterviewsStartDate
-        - InterviewsEndDate
         - AnalysisStartDate
-        - AnalysisEndDate
-        - ResultDate
+        - ResultStartDate
     end note
 
     note right of ProcessState
@@ -164,6 +163,12 @@ entity Process <<entity>><<root>>
         - Interviews
         - Analysis
         - Result
+    end note
+
+    note right of ProcessStatus
+        Can be one of the following:
+        - Open
+        - Close
     end note
 
 }

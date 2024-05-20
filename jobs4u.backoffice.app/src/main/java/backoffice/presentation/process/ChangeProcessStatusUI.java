@@ -21,14 +21,10 @@ import java.util.List;
  * @author Diana Neves
  */
 public class ChangeProcessStatusUI extends AbstractUI {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ChangeProcessStatusUI.class);
-    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     final ChangeProcessStatusController changeProcessStatusController = new ChangeProcessStatusController();
     final ChangeProcessStateController changeProcessStateController = new ChangeProcessStateController();
-    final ListProcessJobOpeningController listProcessJobOpeningController = new ListProcessJobOpeningController();
-    Iterable<JobOpening> jobOpenings = new ArrayList<>();
-    Iterable<Process> processes = new ArrayList<>();
+    final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
 
     /**
      * Displays the UI for changing the process status.
@@ -38,78 +34,65 @@ public class ChangeProcessStatusUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
+        System.out.println("\nAvailable Job Openings: ");
         showJobOpenings();
         JobOpening jobOpening = selectJobOpening();
-        showProcessOfJobOpening(jobOpening);
-        Process process = selectProcess();
 
-        if (process != null) {
-            selectStatus(process);
-        }
+        selectStatus(jobOpening);
+
         return false;
     }
 
     /**
      * Displays the list of job openings.
      */
-    private void showJobOpenings() {
-        jobOpenings = changeProcessStatusController.showJobOpenings();
-    }
+    private void showJobOpenings(){
+        final Iterable<JobOpening> iterable = jobOpeningController.allJobOpening();
 
-    /**
-     * Prompts the user to select a job opening.
-     *
-     * @return the selected job opening.
-     */
-    private JobOpening selectJobOpening() {
-        return selectJobOpeningController.selectJobOpening();
-    }
+        if(!iterable.iterator().hasNext()){
+            System.out.println("There are no job openings");
+        }else{
+            int cont = 1;
+            System.out.println("List of registered Job Openings");
+            for (JobOpening jobOpening : iterable) {
+                // TO DO: Mostrar apenas as que estao na fase analysis
+                System.out.printf("%-6s%-30s%n", cont, jobOpening.identity());
+                cont++;
 
-    /**
-     * Displays the processes of the selected job opening.
-     *
-     * @param jobOpening the selected job opening.
-     */
-    private void showProcessOfJobOpening(JobOpening jobOpening) {
-        processes = changeProcessStatusController.showProcessOfJobOpening(jobOpening);
-    }
-
-    /**
-     * Prompts the user to select a process.
-     *
-     * @return the selected process.
-     */
-    private Process selectProcess() {
-        final List<Process> list = new ArrayList<>();
-        if (processes.iterator().hasNext()) {
-            for (Process process : processes) {
-                list.add(process);
             }
-
-            Process process = null;
-            final int option = Console.readInteger("Enter the number of the process");
-            if (option == 0) {
-                System.out.println("No processes selected");
-            } else {
-                try {
-                    process = listProcessJobOpeningController.findProcessById(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
-            }
-
-            return process;
         }
-        return null;
     }
 
     /**
-     * Prompts the user to select a status change for the process.
+     * Method to select one job opening from all the registered in system
      *
-     * @param process the selected process.
+     * @return selected job opening
      */
-    private void selectStatus(Process process) {
+
+    private JobOpening selectJobOpening() {
+        final List<JobOpening> list = new ArrayList<>();
+        for (JobOpening jobOpening : jobOpeningController.allJobOpening()) {
+            list.add(jobOpening);
+        }
+        JobOpening jobOpening = null;
+        final int option = Console.readInteger("Enter the number of the job opening");
+        if (option == 0) {
+            System.out.println("No job opening selected");
+            System.exit(0);
+        } else {
+            try {
+                jobOpening = this.jobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());
+            } catch (IntegrityViolationException | ConcurrencyException ex) {
+                LOGGER.error("Error performing the operation", ex);
+                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
+            }
+        }
+        return jobOpening;
+    }
+
+    private void selectStatus(JobOpening jobOpening) {
+
+        Process process = jobOpening.process();
 
         ProcessState state = process.processState();
         String name = state.name();
@@ -186,7 +169,7 @@ public class ChangeProcessStatusUI extends AbstractUI {
             }
         } else {
             System.out.println("Option not valid! \n Please try again. \n\n ");
-            selectStatus(process);
+            selectStatus(jobOpening);
         }
     }
 

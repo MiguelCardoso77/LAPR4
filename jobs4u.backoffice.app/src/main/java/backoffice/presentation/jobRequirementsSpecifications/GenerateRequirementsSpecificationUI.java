@@ -1,4 +1,4 @@
-package backoffice.presentation.requirements;
+package backoffice.presentation.jobRequirementsSpecifications;
 
 import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationUI;
 import core.application.controllers.GenerateAnswersTemplateController;

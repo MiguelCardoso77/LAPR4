@@ -2,13 +2,18 @@ package core.domain.jobOpening;
 
 import core.domain.company.Company;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.domain.process.Process;
+import core.domain.process.ProcessBuilder;
+import core.domain.process.ProcessState;
+import core.domain.process.ProcessStatus;
 import eapli.framework.domain.model.DomainFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Calendar;
+
 /**
  * A builder class for creating instances of {@link JobOpening}.
- * <p>
  * This builder provides methods for setting various attributes of a job opening
  * and constructs the {@code JobOpening} object when all mandatory information is provided.
  *
@@ -24,8 +29,8 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private ContractType contractType;
     private TitleOrFunction titleOrFunction;
     private Company company;
-
     private JobRequirementsSpecification jobRequirementsSpecification;
+    private Process process;
 
     /**
      * Sets all attributes of the job opening.
@@ -38,12 +43,11 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
      * @param contractType               The contract type of the job opening.
      * @param titleOrFunction            The title or function of the job opening.
      * @param company                    The company offering the job opening.
-     * @param jobRequirementsSpecification The job requirements specification for the job opening.
      * @return This builder instance.
      */
     public JobOpeningBuilder withAll(JobReference jobReference, String description, int vacanciesNumber,
                                      String address, Mode mode, ContractType contractType, String titleOrFunction,
-                                    Company company, JobRequirementsSpecification jobRequirementsSpecification) {
+                                    Company company, JobRequirementsSpecification jobRequirementsSpecification, Process process) {
         this.jobReference = jobReference;
         this.description = new Description(description);
         this.vacanciesNumber = new VacanciesNumber(vacanciesNumber);
@@ -53,6 +57,7 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
         this.titleOrFunction = new TitleOrFunction(titleOrFunction);
         this.company = company;
         this.jobRequirementsSpecification = null;
+        this.process = process;
         return this;
     }
     /**
@@ -68,9 +73,8 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
             return null;
         } else {
             LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}, company {}", jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
-            jobOpening = new JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company, null);
+            jobOpening = new JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company, null, process);
         }
-
         return jobOpening;
     }
 }

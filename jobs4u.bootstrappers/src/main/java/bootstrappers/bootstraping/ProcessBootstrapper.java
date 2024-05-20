@@ -19,14 +19,13 @@ public class ProcessBootstrapper implements Action {
     public boolean execute() {
         List<JobOpening> jobOpenings = (List<JobOpening>) jobOpeningRepository.allJobOpenings();
 
-        registerProcess(ProcessState.APPLICATION, jobOpenings.get(0));
-        registerProcess(ProcessState.ANALYSIS, jobOpenings.get(1));
-        registerProcess(ProcessState.INTERVIEWS, jobOpenings.get(2));
+        registerProcess(ProcessState.APPLICATION);
+        registerProcess(ProcessState.ANALYSIS);
+        registerProcess(ProcessState.INTERVIEWS);
 
         return true;
     }
-
-    private void registerProcess(ProcessState processState, JobOpening jobReference) {
-        controller.registerProcess(processState, jobReference);
+    private void registerProcess(ProcessState processState) {
+        controller.registerProcess(processState);
     }
 }

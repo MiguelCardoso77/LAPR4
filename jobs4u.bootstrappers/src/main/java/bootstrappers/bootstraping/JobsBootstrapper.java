@@ -8,6 +8,9 @@ import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import core.domain.jobOpening.Mode;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.domain.process.Process;
+import core.domain.process.ProcessState;
+import core.domain.process.ProcessStatus;
 import core.persistence.PersistenceContext;
 import core.repositories.CompanyRepository;
 import core.repositories.JobOpeningRepository;
@@ -16,6 +19,7 @@ import eapli.framework.actions.Action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class JobsBootstrapper implements Action {
@@ -51,6 +55,7 @@ public class JobsBootstrapper implements Action {
 
     private void registerJobOpening(String companyName, String description, int vacanciesNumber, String address, Mode mode, ContractType contractType, String titleOrFunction, Company company) {
         JobReference jobReference = new JobReference(companyName, true);
+        Process process = new Process(ProcessState.APPLICATION, Calendar.getInstance(), ProcessStatus.OPEN);
         controller.addJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
         LOGGER.debug("»»» %s", jobReference);
     }

@@ -1,10 +1,9 @@
 package core.services;
 
-import core.domain.jobOpening.JobOpening;
-import core.domain.jobOpening.JobReference;
 import core.domain.process.Process;
 import core.domain.process.ProcessBuilder;
 import core.domain.process.ProcessState;
+import core.domain.process.ProcessStatus;
 import core.persistence.PersistenceContext;
 import core.repositories.ProcessRepository;
 import jakarta.transaction.Transactional;
@@ -14,9 +13,9 @@ public class ProcessService {
     private final ProcessRepository processRepository = PersistenceContext.repositories().processRepository();
 
     @Transactional
-    public Process registerProcess(ProcessState processState, JobOpening jobReference){
+    public Process registerProcess(ProcessState processState){
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.withAll(processState, jobReference);
+        processBuilder.withoutID(processState, ProcessStatus.OPEN);
         Process process = processBuilder.build();
         return processRepository.save(process);
     }

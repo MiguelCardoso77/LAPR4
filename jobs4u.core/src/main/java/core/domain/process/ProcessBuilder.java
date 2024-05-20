@@ -12,22 +12,37 @@ import java.util.Calendar;
  */
 public class ProcessBuilder implements DomainFactory<Process> {
     private static final Logger LOGGER = LogManager.getLogger(JobOpening.class);
-
+    private Integer idProcess;
     private ProcessState processState;
     private Calendar processDate;
-    private JobOpening jobReference;
-
+    private ProcessStatus processStatus;
     /**
      * Sets all attributes of the builder.
      *
      * @param processState  the state of the process
-     * @param jobReference  the reference to the associated job opening
+     * @param id            the id of the process
+     * @param processStatus the status of the process
+     *
      * @return this builder instance
      */
-    public ProcessBuilder withAll(ProcessState processState, JobOpening jobReference){
+    public ProcessBuilder withAll(Integer id, ProcessState processState, ProcessStatus processStatus){
+        this.idProcess = id;
         this.processState = processState;
         this.processDate = Calendar.getInstance();
-        this.jobReference = jobReference;
+        this.processStatus = processStatus;
+        return this;
+    }
+    /**
+     * Sets all attributes of the builder.
+     *
+     * @param processState  the state of the process
+     *
+     * @return this builder instance
+     */
+    public ProcessBuilder withoutID(ProcessState processState, ProcessStatus processStatus){
+        this.processState = processState;
+        this.processDate = Calendar.getInstance();
+        this.processStatus = processStatus;
         return this;
     }
 
@@ -40,12 +55,12 @@ public class ProcessBuilder implements DomainFactory<Process> {
     public Process build() {
         Process process;
 
-        if (processState == null || processDate == null || jobReference == null ) {
+        if (processState == null || processDate == null) {
             LOGGER.error("Missing mandatory information to build a Process");
             return null;
         } else {
-            LOGGER.debug("Building Process with processState{}, processDate{}, jobReference {}", processState, processDate, jobReference );
-            process = new Process(processState, processDate, jobReference);
+            LOGGER.debug("Building Process with processState{}, processDate{} and processStatus{}", processState, processDate, processStatus);
+            process = new Process(idProcess, processState, processDate, processStatus);
         }
         return process;
     }

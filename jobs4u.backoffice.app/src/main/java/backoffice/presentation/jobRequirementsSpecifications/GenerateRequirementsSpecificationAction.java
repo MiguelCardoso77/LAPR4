@@ -1,4 +1,4 @@
-package backoffice.presentation.requirements;
+package backoffice.presentation.jobRequirementsSpecifications;
 
 import eapli.framework.actions.Action;
 

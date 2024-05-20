@@ -220,6 +220,8 @@ public class Application implements AggregateRoot<Integer> {
         return this.jobReference;
     }
 
+    public CandidateRequirements candidateRequirements() { return this.candidateRequirements; }
+
     public void updateRank(int rank) {
         this.rank = new Rank(rank);
     }

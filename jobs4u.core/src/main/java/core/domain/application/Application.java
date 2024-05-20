@@ -71,6 +71,9 @@ public class Application implements AggregateRoot<Integer> {
     @JoinColumn(name = "OPERATOR_EMAIL")
     private SystemUser operator;
 
+    @Column(name = "Candidate_Requirements")
+    private CandidateRequirements candidateRequirements;
+
     /**
      * Constructs an application with the specified parameters.
      *
@@ -235,5 +238,10 @@ public class Application implements AggregateRoot<Integer> {
                 ", submitted for the job opening " + jobReference +
                 ", by the candidate " + candidate +
                 ", registered by " + operator;
+    }
+
+    public void uploadCandidateRequirements(CandidateRequirements candidateRequirements) {
+        Preconditions.nonNull(candidateRequirements, "Candidate Requirements answers cannot be null");
+        this.candidateRequirements = candidateRequirements;
     }
 }

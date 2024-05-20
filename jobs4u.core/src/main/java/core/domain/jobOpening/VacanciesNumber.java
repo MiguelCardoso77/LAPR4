@@ -2,6 +2,7 @@ package core.domain.jobOpening;
 
 import eapli.framework.domain.model.ValueObject;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Table;
 
 /**
  * Represents the number of vacancies in a job opening.
@@ -9,6 +10,7 @@ import jakarta.persistence.Embeddable;
  * @author Diana Neves
  */
 @Embeddable
+@Table(name = "VACANCIES_NUMBER")
 public class VacanciesNumber implements ValueObject, Comparable<VacanciesNumber> {
     private int number;
 

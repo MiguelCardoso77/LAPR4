@@ -8,12 +8,25 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 public class ListJobOpeningController {
-
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
-
     private final JobOpeningService jobserv = new JobOpeningService();
 
+
+    public Iterable<JobOpening> showJobOpenings() {
+        Iterable<JobOpening> iterable = allJobOpening();
+
+        if (!iterable.iterator().hasNext()) {
+            System.out.println("There are no Job Openings");
+        } else {
+            int cont = 1;
+            System.out.println("List of registered Job Openings: \n");
+            for (JobOpening jobOpening : iterable) {
+                System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.company());
+                cont++;
+            }
+        }
+        return iterable;
+    }
 
     public Iterable<JobOpening> allJobOpening() {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
@@ -23,6 +36,5 @@ public class ListJobOpeningController {
     public JobOpening findJobOpeningByJobReference(JobReference jobReference){
         return jobserv.findJobOpening(jobReference);
     }
-
 
 }

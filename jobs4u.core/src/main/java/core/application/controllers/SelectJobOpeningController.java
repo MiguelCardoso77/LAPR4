@@ -12,7 +12,6 @@ import java.util.List;
 
 public class SelectJobOpeningController {
     final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
-    private static final Logger LOGGER = LoggerFactory.getLogger(SelectJobOpeningController.class);
     Iterable<JobOpening> jobOpenings = jobOpeningController.allJobOpening();
 
     public JobOpening selectJobOpening() {
@@ -30,7 +29,6 @@ public class SelectJobOpeningController {
                 try {
                     jobOpening = jobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());
                 } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
                     System.out.println(
                             "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
                 }

@@ -1,8 +1,12 @@
 package backoffice.presentation.requirements;
 
+import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationUI;
+import core.application.controllers.GenerateAnswersTemplateController;
 import core.application.controllers.GenerateRequirementsSpecificationController;
+import core.application.controllers.SelectJobOpeningController;
 import core.domain.interview.InterviewModel;
 import core.domain.interview.JobInterview;
+import core.domain.jobOpening.JobOpening;
 import core.domain.jobRequirementsSpecification.AcademicDegree;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.io.util.Console;
@@ -13,59 +17,32 @@ import java.util.List;
 
 public class GenerateRequirementsSpecificationUI extends AbstractUI {
     private final GenerateRequirementsSpecificationController theController = new GenerateRequirementsSpecificationController();
+    private final SelectJobOpeningController theController1 = new SelectJobOpeningController();
 
     @Override
     protected boolean doShow() {
 
-        List<JobRequirementsSpecification> allJobRequirementsSpecification = theController.findAllJobRequirementsAssigned();
+        List<JobOpening> allJobOpening = theController.findAllJobOpeningAssigned();
 
-        System.out.println("Job Requirements: ");
-        for (JobRequirementsSpecification jobRequirementsSpecification : allJobRequirementsSpecification) {
-            System.out.println("ID: " + jobRequirementsSpecification.identity() + " - " + jobRequirementsSpecification.jobRequirementsPath());
+
+        System.out.println("Job Opening: ");
+        for (JobOpening jobOpening : allJobOpening) {
+            System.out.println("ID: " + jobOpening.identity() + " - " + jobOpening.jobRequirementsSpecification());
         }
 
-        int idRequirements = Console.readInteger("\nChoose a Job Requirement: ");
-        JobRequirementsSpecification jobRequirementsSpecification = theController.getJobRequirementByID(idRequirements);
 
-        List<String> model = theController.readFile(jobRequirementsSpecification.jobRequirementsPath());
+
+        JobOpening jobopening = theController1.selectJobOpening();
+
+        List<String> model = theController.readFile(jobopening.jobRequirementsSpecification().jobRequirementsPath());
         List<String> templateLines = theController.processLines(model);
+        String jobReference = String.valueOf(jobopening.jobReference());
+        int id = jobopening.jobRequirementsSpecification().identity();
 
-        String fileName = "jobRequirementsSpecification-id-" + idRequirements + "-answerTemplate";
-        theController.writeListToFile(templateLines, "jobs4u.core/src/main/resources/requirements/" + fileName + ".txt");
+        String fileName = jobReference + "-requirementsAnswers-" + id  ;
+        theController.writeListToFile(templateLines, "jobs4u.core/src/main/resources/jobOpeningRequirements/" + fileName + ".txt");
 
         return true;
-
-
-        /*List<String> requirementsForFile = new ArrayList<>();
-        String title = "# Requirements:";
-        requirementsForFile.add(title);
-
-
-
-        theController.displayAcademicDegree();
-        int degree = Console.readInteger("Select the degree: ");
-        String degreeString = "-> Academic Degree: " + AcademicDegree.values()[degree - 1];
-
-        String progLangString = theController.readAndProcessProgrammingLanguages();
-
-
-
-
-        int experience = Console.readInteger("Write your experience in years");
-        String experienceString = "-> Years of Experience: " + experience;
-
-        requirementsForFile.add(degreeString);
-        requirementsForFile.add(progLangString);
-        requirementsForFile.add(experienceString);
-
-        String fileName = Console.readLine("Enter the name of the file: ");
-        theController.writeListToFile(requirementsForFile, "jobs4u.core/src/main/resources/requirements/" + fileName + ".txt");
-
-
-*/
-
-
-
 
     }
 

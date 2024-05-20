@@ -35,7 +35,7 @@ public class ApplicationsBootstrapper implements Action {
         SystemUser operator = operators.get(0);
 
 
-        registerApplication("1", "FEUPApp1", jobOpenings.get(0), candidates.get(0), operator);
+        registerApplication("1", "fileBot_OutputDirectory/IBM-000123/1", jobOpenings.get(0), candidates.get(0), operator);
         registerApplication("Not Ranked", "FEUPApp2", jobOpenings.get(0), candidates.get(1), operator);
         registerApplication("Not Ranked", "FEUPApp3", jobOpenings.get(0), candidates.get(2), operator);
         registerApplication("4", "FEUP2App1", jobOpenings.get(1), candidates.get(0), operator);

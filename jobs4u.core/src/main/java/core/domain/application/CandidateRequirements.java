@@ -29,6 +29,10 @@ public class CandidateRequirements implements ValueObject {
         return this.candidateRequirements.equals(that.candidateRequirements);
     }
 
+    public List<String> candidateRequirements(){
+        return this.candidateRequirements;
+    }
+
     @Override
     public int hashCode(){ return this.candidateRequirements.hashCode(); }
 

@@ -24,6 +24,11 @@
             <artifactId>jobs4u.core</artifactId>
             <version>0.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>persistence</groupId>
+            <artifactId>jobs4u.persistence</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

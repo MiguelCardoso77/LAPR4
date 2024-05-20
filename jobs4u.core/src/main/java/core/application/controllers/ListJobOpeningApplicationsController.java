@@ -3,11 +3,8 @@ package core.application.controllers;
 import core.domain.application.Application;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
-import core.domain.user.Jobs4URoles;
 import core.services.ApplicationService;
 import core.services.JobOpeningService;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +84,4 @@ public class ListJobOpeningApplicationsController {
         }
         return null;
     }
-
-
 }

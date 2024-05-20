@@ -1,0 +1,5 @@
+# Questions:
+-> True/False: <Is Java a programming language?> True
+-> Short Answer: <What is the name of the CEO of Microsoft?> <Marco>
+-> Integer Number: <How many years of experience do you have?> 5
+-> Decimal Number: <What is the value of 3/2?> 1.5

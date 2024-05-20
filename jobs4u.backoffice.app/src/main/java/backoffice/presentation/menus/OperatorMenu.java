@@ -5,7 +5,7 @@ import backoffice.presentation.application.UploadRequirementsAnswersAction;
 import backoffice.presentation.authz.ListUsersAction;
 import backoffice.presentation.candidate.ListCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
-import backoffice.presentation.requirements.GenerateRequirementsSpecificationAction;
+import backoffice.presentation.jobRequirementsSpecifications.GenerateRequirementsSpecificationAction;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
@@ -19,7 +19,6 @@ public class OperatorMenu extends AbstractUI {
     private static final int REGISTER_APPLICATION = 4;
     private static final int COLLECT_DATA_FIELDS = 5;
     private static final int UPLOAD_REQUIREMENTS = 6;
-
 
     @Override
     protected boolean doShow() {

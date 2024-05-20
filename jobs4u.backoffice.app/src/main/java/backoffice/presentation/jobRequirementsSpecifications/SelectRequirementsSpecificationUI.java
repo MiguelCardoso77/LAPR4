@@ -34,11 +34,10 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
 
     private final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     private final ListJobRequirementsSpecificationController listJobRequirementsSpecification = new ListJobRequirementsSpecificationController();
-
-    private final JobOpeningService service = new JobOpeningService();
-
     @Override
     protected boolean doShow() {
+
+        System.out.println("\nAvailable Job Openings: ");
 
         showJobOpenings();
         JobOpening jobOpening = selectJobOpening();

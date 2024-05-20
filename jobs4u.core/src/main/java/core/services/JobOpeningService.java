@@ -3,10 +3,16 @@ package core.services;
 import core.domain.company.Company;
 import core.domain.jobOpening.*;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.domain.process.Process;
+import core.domain.process.ProcessBuilder;
+import core.domain.process.ProcessState;
+import core.domain.process.ProcessStatus;
 import core.repositories.JobOpeningRepository;
 import core.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.Calendar;
 
 /**
  * Service class for managing job openings.
@@ -17,6 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class JobOpeningService {
     private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
+    private final ProcessService processService = new ProcessService();
     /**
      * Registers a new job opening.
      *
@@ -34,7 +41,8 @@ public class JobOpeningService {
     public JobOpening registerJobOpening(JobReference jobReference, String description, int vacanciesNumber, String address,
                                          Mode mode, ContractType contractType, String titleOrFunction, Company company) {
         JobOpeningBuilder jobOpeningBuilder = new JobOpeningBuilder();
-        jobOpeningBuilder.withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company, null);
+        Process process = processService.registerProcess(ProcessState.APPLICATION);
+        jobOpeningBuilder.withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company, null, process);
         JobOpening jobOpening = jobOpeningBuilder.build();
         return jobOpeningRepository.save(jobOpening);
     }

@@ -12,10 +12,10 @@ public class AddProcessController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final ProcessService processService = new ProcessService();
 
-    public Process registerProcess(ProcessState processState, JobOpening jobReference){
+    public Process registerProcess(ProcessState processState){
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.ADMIN);
 
-        return processService.registerProcess(processState, jobReference);
+        return processService.registerProcess(processState);
     }
 
 

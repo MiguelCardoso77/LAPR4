@@ -1,6 +1,7 @@
 package backoffice.presentation.menus;
 
 import backoffice.presentation.application.RegisterApplicationAction;
+import backoffice.presentation.application.UploadRequirementsAnswersAction;
 import backoffice.presentation.authz.ListUsersAction;
 import backoffice.presentation.candidate.ListCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
@@ -17,6 +18,7 @@ public class OperatorMenu extends AbstractUI {
     private static final int REGISTER_CANDIDATE = 3;
     private static final int REGISTER_APPLICATION = 4;
     private static final int COLLECT_DATA_FIELDS = 5;
+    private static final int UPLOAD_REQUIREMENTS = 6;
 
 
     @Override
@@ -32,6 +34,7 @@ public class OperatorMenu extends AbstractUI {
         menu.addItem(REGISTER_CANDIDATE, "Register Candidate", new RegisterCandidateAction());
         menu.addItem(REGISTER_APPLICATION, "Register Application", new RegisterApplicationAction());
         menu.addItem(COLLECT_DATA_FIELDS, "Collect data fields for candidates of a job opening", new GenerateRequirementsSpecificationAction());
+        menu.addItem(UPLOAD_REQUIREMENTS, "Upload the requirements of a candidate ", new UploadRequirementsAnswersAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

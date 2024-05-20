@@ -21,7 +21,7 @@ public class SelectInterviewModelUI extends AbstractUI {
     final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
     final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
     final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
-
+    final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     Iterable<JobOpening> jobOpenings = new ArrayList<>();
     Iterable<Application> applicationList = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class SelectInterviewModelUI extends AbstractUI {
     }
 
     private void showJobOpenings() {
-        jobOpenings = selectInterviewModelController.showJobOpenings();
+        jobOpenings = listJobOpeningController.showJobOpenings();
     }
 
     private JobOpening selectJobOpening() {

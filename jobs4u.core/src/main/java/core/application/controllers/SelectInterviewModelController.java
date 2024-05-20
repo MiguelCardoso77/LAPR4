@@ -21,21 +21,7 @@ public class SelectInterviewModelController {
     final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
     final JobInterviewService service = new JobInterviewService();
     List<Application> applicationList = new ArrayList<>();
-    Iterable<JobOpening> iterable = jobOpeningController.allJobOpening();
 
-    public Iterable<JobOpening> showJobOpenings() {
-        if (!iterable.iterator().hasNext()) {
-            System.out.println("There are no Job Openings");
-        } else {
-            int cont = 1;
-            System.out.println("List of registered Job Openings: \n");
-            for (JobOpening jobOpening : iterable) {
-                System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.company());
-                cont++;
-            }
-        }
-        return iterable;
-    }
 
     public Iterable<Application> applicationsOfJobOpening(JobOpening jobOpening) {
         return applicationList = (List<Application>) jobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpening.identity());
@@ -43,7 +29,7 @@ public class SelectInterviewModelController {
 
     public InterviewModel listAndSelectInterviewModels() {
         List<InterviewModel> interviewModels = (List<InterviewModel>) interviewModelRepository.findAll();
-        int cont = 0;
+        int cont = 1;
         for (InterviewModel interviewModel : interviewModels) {
             System.out.println("id: " + cont + " - " + interviewModel);
             cont++;

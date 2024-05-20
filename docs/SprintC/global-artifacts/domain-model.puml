@@ -170,7 +170,6 @@ entity Process <<entity>><<root>>
         - Open
         - Close
     end note
-
 }
 
 package "Application Aggregate"{

@@ -10,11 +10,8 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class VerificationRequirementsUI extends AbstractUI {
 
@@ -87,7 +84,7 @@ public class VerificationRequirementsUI extends AbstractUI {
      * @return Iterable of all job openings.
      */
     protected Iterable<JobOpening> elements() {
-        return listJobOpeningController.allJobOpening();
+        return listJobOpeningController.allJobOpenings();
     }
 
     @Override

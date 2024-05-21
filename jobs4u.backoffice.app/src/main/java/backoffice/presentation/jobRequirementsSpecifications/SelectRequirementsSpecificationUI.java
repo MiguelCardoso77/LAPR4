@@ -6,7 +6,6 @@ import core.application.controllers.ListJobOpeningController;
 import core.application.controllers.ListJobRequirementsSpecificationController;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
-import core.services.JobOpeningService;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -14,16 +13,8 @@ import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 /**
  * @author 1220812@isep.ipp.pt
@@ -59,7 +50,7 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
     }
 
     private void showJobOpenings(){
-        final Iterable<JobOpening> iterable = listJobOpeningController.allJobOpening();
+        final Iterable<JobOpening> iterable = listJobOpeningController.allJobOpenings();
 
         if(!iterable.iterator().hasNext()){
             System.out.println("There are no job openings");
@@ -109,7 +100,7 @@ public class SelectRequirementsSpecificationUI extends AbstractUI {
 
     private JobOpening selectJobOpening() {
         final List<JobOpening> list = new ArrayList<>();
-        for (JobOpening jobOpening : listJobOpeningController.allJobOpening()) {
+        for (JobOpening jobOpening : listJobOpeningController.allJobOpenings()) {
             list.add(jobOpening);
         }
         JobOpening jobOpening = null;

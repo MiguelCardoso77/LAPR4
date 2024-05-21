@@ -1,7 +1,9 @@
 package backoffice.presentation.candidate;
 
 import console.presentation.utils.ConsoleColors;
+import core.application.controllers.ListJobOpeningController;
 import core.application.controllers.RankCandidatesController;
+import core.application.controllers.SelectJobOpeningController;
 import core.domain.application.Application;
 import core.domain.interview.JobInterview;
 import core.domain.interview.Score;
@@ -13,14 +15,15 @@ import java.util.Comparator;
 import java.util.List;
 
 public class RankCandidatesUI extends AbstractUI {
+    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final RankCandidatesController theController = new RankCandidatesController();
     private final boolean RANK_ONLY_NOT_RANKED = false;
 
     @Override
     protected boolean doShow() {
-        JobOpening selectedJob = selectJobOpening();
+        JobOpening selectedJob = selectJobOpeningController.selectJobOpeningAnalysis();
 
-        List<Application> applications = allApplicationsForJobOpening(selectedJob);
+        List<Application> applications = theController.findApplicationsForJobOpening(selectedJob);
         if (applications.isEmpty()) {
             System.out.println(ConsoleColors.RED + "No applications found for the selected job opening." + ConsoleColors.RESET);
             return false;
@@ -68,28 +71,8 @@ public class RankCandidatesUI extends AbstractUI {
         updateRank(rank, application);
     }
 
-    private JobOpening selectJobOpening() {
-        List<JobOpening> jobOpenings = theController.getAllJobOpenings();
-
-        System.out.println("Job Openings:");
-        for (int i = 0; i < jobOpenings.size(); i++) {
-            System.out.println((i + 1) + " - " + jobOpenings.get(i).jobReference());
-        }
-
-        int selectedNumber = Console.readInteger("Please select a job opening by entering its number: ");
-        if (selectedNumber < 1 || selectedNumber > jobOpenings.size()) {
-            System.out.println(ConsoleColors.RED + "Invalid number. Please enter a number between 1 and " + jobOpenings.size() + ConsoleColors.RESET);
-        }
-
-        return jobOpenings.get(selectedNumber - 1);
-    }
-
-    private List<Application> allApplicationsForJobOpening(JobOpening selectedJob) {
-        return theController.getApplicationsForJobOpening(selectedJob);
-    }
-
     private Score getLastJobInterview(Application selectedApplication) {
-        List<JobInterview> interviews = theController.getInterviewsForApplication(selectedApplication);
+        List<JobInterview> interviews = theController.findInterviewsForApplication(selectedApplication);
 
         if (interviews.isEmpty()) {
             System.out.println(ConsoleColors.RED + "No interviews found for the selected application." + ConsoleColors.RESET);

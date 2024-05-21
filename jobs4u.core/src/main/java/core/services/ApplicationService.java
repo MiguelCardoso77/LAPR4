@@ -7,6 +7,10 @@ import core.persistence.PersistenceContext;
 import core.repositories.ApplicationRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service class for managing job applications.
@@ -14,6 +18,7 @@ import jakarta.transaction.Transactional;
  *
  * @author 1220812@isep.ipp.pt
  */
+@Service
 public class ApplicationService {
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
 
@@ -58,5 +63,22 @@ public class ApplicationService {
      */
     public Iterable<Application> allApplications() {
         return applicationRepository.allApplications();
+    }
+
+    public List<Application> findApplicationsForJobOpening(JobOpening jobOpening) {
+        List<Application> applications = new ArrayList<>();
+
+        for (Application a : applicationRepository.allApplications()) {
+            if (a.jobReference().jobReference().equals(jobOpening.jobReference())) {
+                applications.add(a);
+            }
+        }
+
+        return applications;
+    }
+
+    public Application updateRank(int rank, Application application) {
+        application.updateRank(rank);
+        return applicationRepository.save(application);
     }
 }

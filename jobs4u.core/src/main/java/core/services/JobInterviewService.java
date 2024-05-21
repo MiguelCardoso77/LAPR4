@@ -10,7 +10,10 @@ import core.repositories.JobInterviewRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
 /**
  * Service class for handling job interview related operations.
  *
@@ -81,5 +84,17 @@ public class JobInterviewService {
             return jobInterview;
         }
         return null;
+    }
+
+    public List<JobInterview> findInterviewsForApplication(Application application) {
+        List<JobInterview> interviews = new ArrayList<>();
+
+        for (JobInterview i : jobInterviewRepository.allJobInterviews()) {
+            if (i.application().identity().equals(application.identity())) {
+                interviews.add(i);
+            }
+        }
+
+        return interviews;
     }
 }

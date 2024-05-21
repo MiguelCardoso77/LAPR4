@@ -10,7 +10,6 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 public class ListJobOpeningController {
     private final JobOpeningService jobserv = new JobOpeningService();
 
-
     public Iterable<JobOpening> showJobOpenings() {
         Iterable<JobOpening> iterable = allJobOpening();
 

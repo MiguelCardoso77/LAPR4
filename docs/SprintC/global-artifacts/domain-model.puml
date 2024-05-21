@@ -259,7 +259,7 @@ package "Company Aggregate" {
     JobOpening  --> Process
 
     Application "N" ---> "1" Candidate
-    Application "1" ---> "1" JobInterview
+    Application "1" <--- "1" JobInterview
 
     JobRequirementsSpecification "1" <--- "N" JobOpening : associated
 

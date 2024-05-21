@@ -3,6 +3,7 @@ package backoffice.presentation.menus;
 import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 import backoffice.presentation.application.UploadRequirementsAnswersAction;
 import backoffice.presentation.candidate.DisplayCandidateDataAction;
+import backoffice.presentation.candidate.NotifyCandidatesAction;
 import backoffice.presentation.candidate.RankCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
@@ -37,6 +38,7 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int VERIFICATION_REQUIREMENTS = 13;
     private static final int INTERVIEWS_PROCESS_EVALUATION = 14;
     private static final int UPLOAD_CANDIDATE_REQUIREMENTS = 15;
+    private static final int NOTIFY_CANDIDATES = 16;
 
 
     @Override
@@ -62,6 +64,7 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(VERIFICATION_REQUIREMENTS, "Verify requirements of applications of a job  opening", new VerificationRequirementsAction());
         menu.addItem(INTERVIEWS_PROCESS_EVALUATION, "Execute the job interview evaluation process", new JobInterviewEvaluationAction());
         menu.addItem(UPLOAD_CANDIDATE_REQUIREMENTS, "Upload the requirements of a candidate ", new UploadRequirementsAnswersAction());
+        menu.addItem(NOTIFY_CANDIDATES, "Notify Candidates", new NotifyCandidatesAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

@@ -4,11 +4,11 @@ import core.domain.user.Jobs4UPasswordPolicy;
 import core.persistence.PersistenceContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
+import eapli.framework.io.util.Console;
 import followUp.server.Server;
 import infrastructure.AppSettings;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class FollowUpServer {
     private static final int PORT = 1010;
@@ -16,14 +16,13 @@ public class FollowUpServer {
     public static void main(String[] args) throws InterruptedException {
         try {
             Server server = new Server(PORT);
-            System.out.println("At any time, press ENTER to stop server");
             init();
             Thread thread = new Thread(server);
             thread.setDaemon(true);
             thread.start();
-            Scanner sc = new Scanner(System.in);
-            System.out.println("At any time, press ENTER to stop server");
-            sc.nextLine();
+
+            Console.readLine("To stop the server press 'ENTER'...");
+
             server.stop();
             stop(thread);
         } catch (IOException e) {

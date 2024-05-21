@@ -1,5 +1,7 @@
 package followUp.server;
 
+import core.domain.email.Email;
+
 import java.io.IOException;
 import java.net.Socket;
 
@@ -13,7 +15,7 @@ public class SimpleHandler extends Handler{
         System.out.println("Connection established!");
         try {
 
-            Object message = this.input.readObject();
+            Email message = (Email) this.input.readObject();
             System.out.println("Received: " + message);
 
         } catch (IOException | ClassNotFoundException e) {

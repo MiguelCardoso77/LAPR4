@@ -31,11 +31,11 @@ public abstract class Handler implements Runnable {
             handle();
             ServerSemaphore.getInstance().exitCriticalSection();
         } catch (Exception e) {
-            LOGGER.error("There was an error during handler. Closing connection...");
+            LOGGER.error("There was an error during handler. Closing connection...", e);
             try {
                 socket.close();
             } catch (IOException ex) {
-                LOGGER.error("There was an error closing socket. Ignoring closing...");
+                LOGGER.error("There was an error closing socket. Ignoring closing...", ex);
                 return;
             }
             LOGGER.info("Socket closed successfully!");

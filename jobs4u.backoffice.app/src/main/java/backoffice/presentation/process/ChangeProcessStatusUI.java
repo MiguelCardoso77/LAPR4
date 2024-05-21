@@ -21,10 +21,9 @@ import java.util.List;
  * @author Diana Neves
  */
 public class ChangeProcessStatusUI extends AbstractUI {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeProcessStatusUI.class);
     final ChangeProcessStatusController changeProcessStatusController = new ChangeProcessStatusController();
+    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     final ChangeProcessStateController changeProcessStateController = new ChangeProcessStateController();
-    final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
 
     /**
      * Displays the UI for changing the process status.
@@ -35,65 +34,15 @@ public class ChangeProcessStatusUI extends AbstractUI {
     protected boolean doShow() {
 
         System.out.println("\nAvailable Job Openings: ");
-        showJobOpenings();
-        JobOpening jobOpening = selectJobOpening();
-
+        JobOpening jobOpening = selectJobOpeningController.selectJobOpeningAnalysis();
         selectStatus(jobOpening);
 
         return false;
     }
 
-    /**
-     * Displays the list of job openings.
-     */
-    private void showJobOpenings(){
-        final Iterable<JobOpening> iterable = jobOpeningController.allJobOpening();
-
-        if(!iterable.iterator().hasNext()){
-            System.out.println("There are no job openings");
-        }else{
-            int cont = 1;
-            System.out.println("List of registered Job Openings");
-            for (JobOpening jobOpening : iterable) {
-                // TO DO: Mostrar apenas as que estao na fase analysis
-                System.out.printf("%-6s%-30s%n", cont, jobOpening.identity());
-                cont++;
-
-            }
-        }
-    }
-
-    /**
-     * Method to select one job opening from all the registered in system
-     *
-     * @return selected job opening
-     */
-
-    private JobOpening selectJobOpening() {
-        final List<JobOpening> list = new ArrayList<>();
-        for (JobOpening jobOpening : jobOpeningController.allJobOpening()) {
-            list.add(jobOpening);
-        }
-        JobOpening jobOpening = null;
-        final int option = Console.readInteger("Enter the number of the job opening");
-        if (option == 0) {
-            System.out.println("No job opening selected");
-            System.exit(0);
-        } else {
-            try {
-                jobOpening = this.jobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());
-            } catch (IntegrityViolationException | ConcurrencyException ex) {
-                LOGGER.error("Error performing the operation", ex);
-                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-            }
-        }
-        return jobOpening;
-    }
-
     private void selectStatus(JobOpening jobOpening) {
 
         Process process = jobOpening.process();
-
         ProcessState state = process.processState();
         String name = state.name();
         final int optionMove = Console.readInteger("Do you want to move: \n 1 - Back \n 2 - Forward \n" + "Choose an option: ");

@@ -1,6 +1,7 @@
 package backoffice.presentation.menus;
 
 import backoffice.presentation.application.ListJobOpeningApplicationsAction;
+import backoffice.presentation.application.UploadRequirementsAnswersAction;
 import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.candidate.RankCandidatesAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
@@ -34,8 +35,9 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int UPLOAD_INTERVIEW_RESPONSES = 11;
     private static final int CHANGE_PROCESS_STATUS = 12;
     private static final int VERIFICATION_REQUIREMENTS = 13;
-
     private static final int INTERVIEWS_PROCESS_EVALUATION = 14;
+    private static final int UPLOAD_CANDIDATE_REQUIREMENTS = 15;
+
 
     @Override
     protected boolean doShow() {
@@ -59,6 +61,8 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(CHANGE_PROCESS_STATUS, "Change Process Status", new ChangeProcessStatusAction());
         menu.addItem(VERIFICATION_REQUIREMENTS, "Verify requirements of applications of a job  opening", new VerificationRequirementsAction());
         menu.addItem(INTERVIEWS_PROCESS_EVALUATION, "Execute the job interview evaluation process", new JobInterviewEvaluationAction());
+        menu.addItem(UPLOAD_CANDIDATE_REQUIREMENTS, "Upload the requirements of a candidate ", new UploadRequirementsAnswersAction());
+
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;

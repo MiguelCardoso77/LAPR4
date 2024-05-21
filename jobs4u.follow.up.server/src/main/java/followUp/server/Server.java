@@ -3,14 +3,11 @@ package followUp.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Server implements Runnable {
     private static final ThreadGroup serverThreadGroup = new ThreadGroup("server-thread-group");
     private final ServerSocket socket;
     private boolean running;
-    private final List<SimpleHandler> handlers = new ArrayList<>();
 
     public Server(int port) throws IOException {
         socket = new ServerSocket(port);
@@ -22,19 +19,8 @@ public class Server implements Runnable {
         while (running) {
             try {
                 Socket connection = socket.accept();
-
-                if (!running) {
-                    for (SimpleHandler handler : handlers) {
-                        handler.sendShutdownSignal();
-                    }
-                    return;
-                }
-
+                if (!running) return; //Force exit new connections TODO: Add exit handler to communicate server shutdown
                 ServerSemaphore.getInstance().enterCriticalSection();
-
-                SimpleHandler handler = new SimpleHandler(connection);
-                handlers.add(handler);
-
                 Thread thread = new Thread(serverThreadGroup, new SimpleHandler(connection));
                 thread.start();
             } catch (IOException e) {

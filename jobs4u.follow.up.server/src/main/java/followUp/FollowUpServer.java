@@ -17,7 +17,7 @@ public class FollowUpServer {
         try {
             Server server = new Server(PORT);
             System.out.println("At any time, press ENTER to stop server");
-            start();
+            init();
             Thread thread = new Thread(server);
             thread.setDaemon(true);
             thread.start();
@@ -32,7 +32,7 @@ public class FollowUpServer {
         }
     }
 
-    public static void start() {
+    public static void init() {
         System.out.println("Initializing server...");
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new AppSettings();

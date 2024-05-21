@@ -22,7 +22,6 @@ public class ServerSemaphore {
         return instance;
     }
 
-
     public void enterCriticalSection() throws InterruptedException {
         this.semaphore.acquire();
     }
@@ -30,6 +29,5 @@ public class ServerSemaphore {
     public void exitCriticalSection() {
         this.semaphore.release();
     }
-
 
 }

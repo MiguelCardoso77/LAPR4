@@ -16,7 +16,6 @@ import java.util.List;
 @UseCaseController
 public class SelectInterviewModelController {
 
-    final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
     final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
     final JobInterviewService service = new JobInterviewService();

@@ -30,7 +30,7 @@ public class SelectJobOpeningController {
         return selectorPart(jobOpenings);
     }
 
-    private JobOpening selectorPart(List<JobOpening> list) {
+    public JobOpening selectorPart(List<JobOpening> list) {
         JobOpening jobOpening = null;
 
         final int option = Console.readInteger("\nEnter the number of the job opening: ");

@@ -24,6 +24,7 @@ public class Process implements AggregateRoot<Integer> {
 
     @Temporal(TemporalType.DATE)
     private Calendar processDate;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "PROCESS_STATUS")
     private ProcessStatus processStatus;

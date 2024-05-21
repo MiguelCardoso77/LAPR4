@@ -5,6 +5,9 @@ import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import core.services.ApplicationService;
 import core.services.JobOpeningService;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.io.util.Console;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +54,21 @@ public class ListJobOpeningApplicationsController {
         }
 
         return iterable;
+    }
+
+    public Application selectApplication() {
+        Application application = null;
+        final int option = Console.readInteger("Enter the id of the application");
+        if (option == 0) {
+            System.out.println("No application selected");
+        } else {
+            try {
+                application = findApplicationByID(option);
+            } catch (IntegrityViolationException | ConcurrencyException ex) {
+                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
+            }
+        }
+        return application;
     }
 
     /**

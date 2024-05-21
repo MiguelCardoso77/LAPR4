@@ -32,10 +32,10 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
                 System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.company());
                 cont++;
             }
-            JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
+            JobOpening jobOpening = selectJobOpeningController.selectorPart(requirements);
 
             applications = listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobOpening.jobReference());
-            Application application = selectApplication();
+            Application application = listJobOpeningApplicationsController.selectApplication();
 
             String path = Console.readLine("\nEnter the path to the file with the responses: ");
             List<String> responses = uploadRequirementsAnswersController.readFile(path);
@@ -46,20 +46,6 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
         return true;
     }
 
-    public Application selectApplication() {
-        Application application = null;
-        final int option = Console.readInteger("Enter the id of the application");
-        if (option == 0) {
-            System.out.println("No application selected");
-        } else {
-            try {
-                application = listJobOpeningApplicationsController.findApplicationByID(option);
-            } catch (IntegrityViolationException | ConcurrencyException ex) {
-                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-            }
-        }
-        return application;
-    }
 
     @Override
     public String headline() {

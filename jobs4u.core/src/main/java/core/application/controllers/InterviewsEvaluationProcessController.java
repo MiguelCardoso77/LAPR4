@@ -5,6 +5,8 @@ import core.domain.interview.Score;
 import core.services.JobInterviewService;
 import eapli.framework.application.UseCaseController;
 
+import java.util.List;
+
 /**
  * Controller for managing the interview evaluation process.
  *
@@ -30,7 +32,20 @@ public class InterviewsEvaluationProcessController {
      * @param jobInterview the JobInterview object to be evaluated
      * @return the Score resulting from the evaluation of the job interview
      */
-    public Score interviewEvaluationProcess(JobInterview jobInterview){
+    public Score interviewEvaluation(JobInterview jobInterview){
         return null;
+    }
+
+    /**
+     * Executes the evaluation process for all the job interviews associated to the selected job opening
+     *
+     * @param jobOpeningInterviews list of job interviews to be evaluated
+     */
+
+    public void evaluationProcessExecution(List<JobInterview> jobOpeningInterviews){
+        for (JobInterview interview : jobOpeningInterviews) {
+            Score score = interviewEvaluation(interview);
+            interviewScoreUpdate(score, interview);
+        }
     }
 }

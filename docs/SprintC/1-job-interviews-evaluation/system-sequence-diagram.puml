@@ -24,14 +24,6 @@ CM -> S :  Selects the job opening
 
 activate S
 
-S --> CM : Shows the list of all the applications on \nthe selected job opening and asks to select one
-
-deactivate S
-
-CM -> S : Selects the application
-
-activate S
-
 S --> CM : Displays operation's success
 
 deactivate S

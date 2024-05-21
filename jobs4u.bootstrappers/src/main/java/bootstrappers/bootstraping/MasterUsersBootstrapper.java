@@ -24,10 +24,10 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
     CompanyRepository companyRepository = PersistenceContext.repositories().companies();
     @Override
     public boolean execute() {
-        registerAdmin("AdminEx", "ExAdmin1", "Admin", "Example", "exadmin@jobs4u.com");
-        registerCustomerManager("CustomerManagerEx", "ExCustomerManager1", "CustomerManager", "Example", "excustomermanager@jobs4u.com");
-        registerLanguageEngineer("LanguageEngineerEx", "ExLanguageEngineer1", "LanguageEngineer", "Example", "exlanguageengineer@jobs4u.com");
-        registerOperator("OperatorEx", "ExOperator1", "Operator", "Example", "exoperator@jobs4u.com");
+        registerAdmin("AdminEx", "ExAdmin1", "Admin", "Example", "admin@jobs4u.com");
+        registerCustomerManager("CustomerManagerEx", "ExCustomerManager1", "CustomerManager", "Example", "customermanager@jobs4u.com");
+        registerLanguageEngineer("LanguageEngineerEx", "ExLanguageEngineer1", "LanguageEngineer", "Example", "languageengineer@jobs4u.com");
+        registerOperator("OperatorEx", "ExOperator1", "Operator", "Example", "operator@jobs4u.com");
 
         registerBootstrapCandidate("CandidateOne", "ExampleOne", "candidateOne@jobs4u.com", "910920930", "curriculumPathOne");
         registerBootstrapCandidate("CandidateTwo", "ExampleTwo", "candidateTwo@jobs4u.com", "940950960", "curriculumpPathTwo");
@@ -72,7 +72,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
     }
 
     private void registerCustomer(final String firstName, final String lastName, final String email){
-        Optional<SystemUser> currentUser = userRepository.ofIdentity(Username.valueOf("excustomermanager@jobs4u.com"));
+        Optional<SystemUser> currentUser = userRepository.ofIdentity(Username.valueOf("customermanager@jobs4u.com"));
         Optional<Company> company = companyRepository.ofIdentity(1);
 
         SystemUser customerManager = currentUser.get();

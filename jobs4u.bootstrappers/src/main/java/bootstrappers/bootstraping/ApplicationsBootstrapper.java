@@ -4,6 +4,7 @@ import core.application.controllers.ApplicationRegisterController;
 import core.application.controllers.UploadRequirementsAnswersController;
 import core.domain.application.Application;
 import core.domain.application.CandidateRequirements;
+import core.domain.application.Status;
 import core.domain.candidate.Candidate;
 import core.domain.jobOpening.JobOpening;
 import core.domain.user.Jobs4URoles;
@@ -60,6 +61,15 @@ public class ApplicationsBootstrapper implements Action {
         addRequirements("jobs4u.core/src/main/resources/requirements/requirements4.txt", applications.get(6));
         addRequirements("jobs4u.core/src/main/resources/requirements/requirements4.txt", applications.get(7));
 
+        changeApplicationStatus(applications.get(0), Status.ACCEPTED);
+        changeApplicationStatus(applications.get(1), Status.DECLINED);
+        changeApplicationStatus(applications.get(2), Status.ACCEPTED);
+        changeApplicationStatus(applications.get(3), Status.PENDING);
+        changeApplicationStatus(applications.get(4), Status.PENDING);
+        changeApplicationStatus(applications.get(5), Status.PENDING);
+        changeApplicationStatus(applications.get(6), Status.SUBMITTED);
+        changeApplicationStatus(applications.get(7), Status.SUBMITTED);
+
         return true;
     }
 
@@ -70,6 +80,11 @@ public class ApplicationsBootstrapper implements Action {
     private void addRequirements(String candidateRequirementsPath, Application application) {
         List<String> requirements = uploadRequirementsAnswersController.readFile(candidateRequirementsPath);
         uploadRequirementsAnswersController.uploadResponses(requirements, application);
+    }
+
+    private void changeApplicationStatus(Application application, Status status) {
+        application.changeStatus(status);
+        applicationRepository.save(application);
     }
 
 }

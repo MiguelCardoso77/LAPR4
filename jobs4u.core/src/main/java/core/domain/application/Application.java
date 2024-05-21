@@ -226,6 +226,10 @@ public class Application implements AggregateRoot<Integer> {
         this.rank = new Rank(rank);
     }
 
+    public void changeStatus(Status status) {
+        this.status = status;
+    }
+
     /**
      * Generates a string representation of this application.
      *

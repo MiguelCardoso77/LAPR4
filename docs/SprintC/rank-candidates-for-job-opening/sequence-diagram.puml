@@ -4,6 +4,8 @@ autonumber
 actor CustomerManager
 
 participant RankCandidatesUI <<presentation>>
+participant SelectJobOpeningController <<controller>>
+participant ListJobOpeningController <<controller>>
 participant RankCandidatesController <<controller>>
 
 participant JobOpeningService <<service>>
@@ -19,29 +21,17 @@ activate CustomerManager
     CustomerManager -> RankCandidatesUI : asks to rank candidates
     activate RankCandidatesUI
 
-        RankCandidatesUI -> RankCandidatesController : findAllJobOpenings()
-        activate RankCandidatesController
+        RankCandidatesUI -> SelectJobOpeningController : selectJobOpeningAnalysis()
+        activate SelectJobOpeningController
 
-            RankCandidatesController -> JobOpeningService : findAllJobOpenings()
-            activate JobOpeningService
+            SelectJobOpeningController -> ListJobOpeningController : showJobOpenings()
+            activate ListJobOpeningController
 
-                 JobOpeningService -> JobOpeningRepository : findAll()
-                 activate JobOpeningRepository
+                ListJobOpeningController --> SelectJobOpeningController : jobOpenings
+            deactivate ListJobOpeningController
 
-                     JobOpeningRepository --> JobOpeningService : jobOpenings
-                 deactivate JobOpeningRepository
-
-                JobOpeningService --> RankCandidatesController : jobOpenings
-            deactivate JobOpeningService
-
-            RankCandidatesController -> JobOpeningService : filterAnalysisState(jobOpenings)
-            activate JobOpeningService
-
-                    JobOpeningService --> RankCandidatesController : filteredJobOpenings
-            deactivate JobOpeningService
-
-            RankCandidatesController --> RankCandidatesUI : filteredJobOpenings
-        deactivate RankCandidatesController
+            SelectJobOpeningController --> RankCandidatesUI : jobOpenings
+        deactivate SelectJobOpeningController
 
         RankCandidatesUI -> CustomerManager : lists job opening and asks to select one
     deactivate RankCandidatesUI
@@ -66,6 +56,14 @@ activate CustomerManager
 
             RankCandidatesController --> RankCandidatesUI : applications
         deactivate RankCandidatesController
+
+alt rankOnlyNonRanked config is set to true
+        RankCandidatesUI -> RankCandidatesController : filterByNonRankedApplications(applications)
+        activate RankCandidatesController
+
+            RankCandidatesController --> RankCandidatesUI : filteredApplications
+        deactivate RankCandidatesController
+end alt
 
 loop while ranking all applications
 
@@ -95,6 +93,16 @@ loop while ranking all applications
 
     CustomerManager -> RankCandidatesUI : ranks the application
     activate RankCandidatesUI
+
+note right of RankCandidatesUI
+If the return is true, the user will be prompted to insert another rank.
+end note
+
+        RankCandidatesUI -> RankCandidatesController : isRankAlreadyAssigned(rank)
+        activate RankCandidatesController
+
+            RankCandidatesController --> RankCandidatesUI : returns false
+        deactivate RankCandidatesController
 
         RankCandidatesUI -> RankCandidatesController : updateRank(rank, selectedApplication)
         activate RankCandidatesController

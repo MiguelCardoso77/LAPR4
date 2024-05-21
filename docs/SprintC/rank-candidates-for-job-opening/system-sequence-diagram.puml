@@ -24,7 +24,7 @@ activate CMAN
 
 loop while ranking all applications
 
-        System --> CMAN : lists one of the applications for the selected job opening
+        System --> CMAN : lists one of the applications for the selected job opening\n and the score of the last interview
     deactivate System
 
     CMAN -> System : ranks the application

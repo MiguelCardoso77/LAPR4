@@ -2,6 +2,7 @@ package backoffice.presentation.interview;
 
 import backoffice.presentation.jobOpening.AddJobOpeningUI;
 import core.application.controllers.InterviewsEvaluationProcessController;
+import core.application.controllers.ListJobInterviewsApplicationController;
 import core.application.controllers.ListJobOpeningApplicationsController;
 import core.application.controllers.ListJobOpeningController;
 import core.domain.application.Application;
@@ -27,6 +28,7 @@ public class JobInterviewEvaluationUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
     final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
     final ListJobOpeningApplicationsController applicationsController = new ListJobOpeningApplicationsController();
+    final ListJobInterviewsApplicationController jobInterviewsApplicationController = new ListJobInterviewsApplicationController();
     final InterviewsEvaluationProcessController evaluationProcessController = new InterviewsEvaluationProcessController();
     @Override
     protected boolean doShow() {
@@ -34,8 +36,6 @@ public class JobInterviewEvaluationUI extends AbstractUI {
         System.out.println("\nAvailable Job Openings: ");
         showJobOpenings();
         JobOpening jobOpening = selectJobOpening();
-
-
 
 
 

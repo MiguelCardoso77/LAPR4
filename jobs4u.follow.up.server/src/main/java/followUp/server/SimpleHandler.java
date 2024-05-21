@@ -10,9 +10,12 @@ public class SimpleHandler extends Handler{
 
     @Override
     public void handle() {
-        System.out.println("Hello World! I am Alive!");
+        System.out.println("Connection established!");
         try {
-            System.out.println(this.input.readObject().toString());
+
+            Object message = this.input.readObject();
+            System.out.println("Received: " + message);
+
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

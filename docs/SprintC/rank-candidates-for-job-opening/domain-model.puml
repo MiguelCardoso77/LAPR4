@@ -63,6 +63,45 @@ entity JobOpening <<entity>><<root>>
 
 }
 
+package "Process Aggregate"{
+entity Process <<entity>><<root>>
+
+    card ProcessState <<Value Object>> {
+    }
+    card ProcessDate <<Value Object>> {
+    }
+    card ProcessStatus <<Value Object>>{
+    }
+
+    Process --> ProcessState
+    Process --> ProcessDate
+    Process --> ProcessStatus
+
+    note right of ProcessDate
+        Can be one of the following:
+        - applicationStartDate
+        - ScreeningStartDate
+        - InterviewsStartDate
+        - AnalysisStartDate
+        - ResultStartDate
+    end note
+
+    note right of ProcessState
+        Can be one of the following:
+        - Application
+        - Screening
+        - Interviews
+        - Analysis
+        - Result
+    end note
+
+    note right of ProcessStatus
+        Can be one of the following:
+        - Open
+        - Close
+    end note
+}
+
 package "JobInterview Aggregate"{
 entity JobInterview <<entity>><<root>>
 
@@ -152,5 +191,6 @@ Application "1" ---> "1" JobInterview
 JobOpening "1" <-- "N " Application : has
 Application "N" ---> "1" Candidate
 Candidate --> User
+JobOpening  --> Process
 
 @enduml

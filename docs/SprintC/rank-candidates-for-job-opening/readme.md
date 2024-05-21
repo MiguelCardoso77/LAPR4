@@ -135,21 +135,57 @@ and select the “best” candidates to be included in the vacancies for the job
 in the system a lot of details that will not have any impact on the next activities. The term “not ranked” maybe is not the best. 
 Maybe “rank not recorded” or something similar could be more appropriated.
 
+> **Question 183:**
+> 
+> When ranking the candidates, the customer manager makes decisions based on their CV and other relevant documents. My question is: 
+should there be an option for the customer manager to view the relevant documents before ranking a candidate? Or has the
+customer manager already made the decision before ranking the candidates and purely uses this functionality to assign the 
+previously planned ranking?
+> 
+> **Answer:**
+> Once again this could be only a UX/UI issue. Please refer to Q17, Q163 and Q140. Also note that there is US1021 for listing application data.
+ 
+> **Question 192:**
+> 
+> I'm struggling to understang the global configurations defined for US1013. All candidates must be ranked, so that all of 
+them can be notified. Are the global configurations only for persistence purposes? Example: all candidates are ranked and 
+notified, so if 0.5 is in the global definition, then only half of the number of vancancies must be persisted in the system. 
+Is this the scenario that Mr. Client has in mind?
+> 
+> **Answer:**
+> I am assuming you refer to Q155. Suppose you have 2 vacancies. You have 80 candidates. If you configure the property as 
+1 you need to rank (record in the system) the 2 first candidates plus 2 other candidates. If the property is 0,5 you should 
+rank the 2 first candidates plus 1 third candidate. If the property is 2, you should rank the 2 first candidates plus 4 extra 
+candidates. This is a way to assure that you do not have to record in the system the rank of all the possible candidates, but 
+only a number that includes the ones required to fulfill the vacancies plus some extra (according to the property) for possible 
+exceptions (such as someone leaving the application). But my suggestion was only to help in the UI/UX. You may use any other option.
+ 
+> **Question 198:**
+> 
+> The ranking of candidates should be save in an array to be able to do easier the result phase?
+> 
+> **Answer:**
+> This question is about the design/implementation of the solution. I have no specific opinion regarding this specific question.
+
 ### 1.3. Acceptance Criteria
 
 * AC1: Manually ranking candidates:
 
         The customer manager should manually rank the candidates.
 
-* AC2: Ranking without interviews:
+* AC2: Current proccess state:
+
+        The job opening should be in the "Analysis" state.
+
+* AC3: Ranking without interviews:
 
         The fact that no interviews are available should not block the customer manager from ranking that application.
 
-* AC3: Moving to the result phase:
+* AC4: Moving to the result phase:
 
         All candidates should be ranked before moving to the result phase.
 
-* AC4: Ranking configurations:
+* AC5: Ranking configurations:
 
         The system should have ranking configurations so that the Customer Manager doesn't have to rank all the candidates for a job opening, 
         and that the ones that haven't been manually ranked are to be tagged with "not ranked".
@@ -173,6 +209,7 @@ Maybe “rank not recorded” or something similar could be more appropriated.
 
 **Output Data:**
 
+    * Interview Score, if available
     * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)

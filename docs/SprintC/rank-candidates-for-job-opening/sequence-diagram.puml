@@ -6,6 +6,10 @@ actor CustomerManager
 participant RankCandidatesUI <<presentation>>
 participant RankCandidatesController <<controller>>
 
+participant JobOpeningService <<service>>
+participant ApplicationService <<service>>
+participant JobInterviewService <<service>>
+
 database JobOpeningRepository <<repository>>
 database ApplicationRepository <<repository>>
 database JobInterviewRepository <<repository>>
@@ -15,16 +19,28 @@ activate CustomerManager
     CustomerManager -> RankCandidatesUI : asks to rank candidates
     activate RankCandidatesUI
 
-        RankCandidatesUI -> RankCandidatesController : getAllJobOpenings()
+        RankCandidatesUI -> RankCandidatesController : findAllJobOpenings()
         activate RankCandidatesController
 
-            RankCandidatesController -> JobOpeningRepository : findAll()
-            activate JobOpeningRepository
+            RankCandidatesController -> JobOpeningService : findAllJobOpenings()
+            activate JobOpeningService
 
-                JobOpeningRepository --> RankCandidatesController : jobOpenings
-            deactivate JobOpeningRepository
+                 JobOpeningService -> JobOpeningRepository : findAll()
+                 activate JobOpeningRepository
 
-            RankCandidatesController --> RankCandidatesUI : jobOpenings
+                     JobOpeningRepository --> JobOpeningService : jobOpenings
+                 deactivate JobOpeningRepository
+
+                JobOpeningService --> RankCandidatesController : jobOpenings
+            deactivate JobOpeningService
+
+            RankCandidatesController -> JobOpeningService : filterAnalysisState(jobOpenings)
+            activate JobOpeningService
+
+                    JobOpeningService --> RankCandidatesController : filteredJobOpenings
+            deactivate JobOpeningService
+
+            RankCandidatesController --> RankCandidatesUI : filteredJobOpenings
         deactivate RankCandidatesController
 
         RankCandidatesUI -> CustomerManager : lists job opening and asks to select one
@@ -33,30 +49,43 @@ activate CustomerManager
     CustomerManager -> RankCandidatesUI : selects job opening
     activate RankCandidatesUI
 
-        RankCandidatesUI -> RankCandidatesController : getApplicationsForJobOpening(selectedJobOpening)
+        RankCandidatesUI -> RankCandidatesController : findApplicationsForJobOpening(selectedJobOpening)
         activate RankCandidatesController
 
-            RankCandidatesController -> ApplicationRepository : findByJobOpening(selectedJobOpening)
-            activate ApplicationRepository
+            RankCandidatesController -> ApplicationService : findByJobOpening(selectedJobOpening)
+            activate ApplicationService
 
-                ApplicationRepository --> RankCandidatesController : applications
-            deactivate ApplicationRepository
+                ApplicationService -> ApplicationRepository : findByJobOpening(selectedJobOpening)
+                activate ApplicationRepository
+
+                    ApplicationRepository --> ApplicationService : applications
+                deactivate ApplicationRepository
+
+                ApplicationService --> RankCandidatesController : applications
+            deactivate ApplicationService
 
             RankCandidatesController --> RankCandidatesUI : applications
         deactivate RankCandidatesController
 
 loop while ranking all applications
 
-        RankCandidatesUI -> RankCandidatesController : getLastJobInterview(currentApplication)
+        RankCandidatesUI -> RankCandidatesController : findLastJobInterview(currentApplication)
         activate RankCandidatesController
             note right of RankCandidatesController
             The application might not have interviews but the customer manager can still rank it.
             end note
-            RankCandidatesController -> JobInterviewRepository : findByApplication(currentApplication)
-            activate JobInterviewRepository
 
-                JobInterviewRepository --> RankCandidatesController : interview
-            deactivate JobInterviewRepository
+            RankCandidatesController -> JobInterviewService : findByApplication(currentApplication)
+            activate JobInterviewService
+
+                JobInterviewService -> JobInterviewRepository : findByApplication(currentApplication)
+                activate JobInterviewRepository
+
+                    JobInterviewRepository --> JobInterviewService : interview
+                deactivate JobInterviewRepository
+
+                JobInterviewService --> RankCandidatesController : interview
+            deactivate JobInterviewService
 
             RankCandidatesController --> RankCandidatesUI : interview
         deactivate RankCandidatesController
@@ -70,11 +99,17 @@ loop while ranking all applications
         RankCandidatesUI -> RankCandidatesController : updateRank(rank, selectedApplication)
         activate RankCandidatesController
 
-            RankCandidatesController -> ApplicationRepository : save(selectedApplication)
-            activate ApplicationRepository
+            RankCandidatesController -> ApplicationService : save(selectedApplication)
+            activate ApplicationService
 
-                ApplicationRepository --> RankCandidatesController : successful operation
-            deactivate ApplicationRepository
+                ApplicationService -> ApplicationRepository : save(selectedApplication)
+                activate ApplicationRepository
+
+                    ApplicationRepository --> ApplicationService : successful operation
+                deactivate ApplicationRepository
+
+                ApplicationService --> RankCandidatesController : successful operation
+            deactivate ApplicationService
 
             RankCandidatesController --> RankCandidatesUI : successful operation
         deactivate RankCandidatesController

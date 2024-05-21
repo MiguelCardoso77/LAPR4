@@ -1,10 +1,14 @@
 package bootstrappers.bootstraping;
 
 import core.application.controllers.ApplicationRegisterController;
+import core.application.controllers.UploadRequirementsAnswersController;
+import core.domain.application.Application;
+import core.domain.application.CandidateRequirements;
 import core.domain.candidate.Candidate;
 import core.domain.jobOpening.JobOpening;
 import core.domain.user.Jobs4URoles;
 import core.persistence.PersistenceContext;
+import core.repositories.ApplicationRepository;
 import core.repositories.CandidateRepository;
 import core.repositories.JobOpeningRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
@@ -19,6 +23,8 @@ public class ApplicationsBootstrapper implements Action {
     final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
     final CandidateRepository candidateRepository = PersistenceContext.repositories().candidates();
     final UserRepository userRepository = PersistenceContext.repositories().users();
+    final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
+    final UploadRequirementsAnswersController uploadRequirementsAnswersController = new UploadRequirementsAnswersController();
 
     @Override
     public boolean execute() {
@@ -34,7 +40,6 @@ public class ApplicationsBootstrapper implements Action {
         }
         SystemUser operator = operators.get(0);
 
-
         registerApplication("1", "fileBot_OutputDirectory/IBM-000123/1", jobOpenings.get(0), candidates.get(0), operator);
         registerApplication("Not Ranked", "FEUPApp2", jobOpenings.get(0), candidates.get(1), operator);
         registerApplication("Not Ranked", "FEUPApp3", jobOpenings.get(0), candidates.get(2), operator);
@@ -44,10 +49,27 @@ public class ApplicationsBootstrapper implements Action {
         registerApplication("Not Ranked", "ISEPApp1", jobOpenings.get(2), candidates.get(0), operator);
         registerApplication("8", "ISEPApp2", jobOpenings.get(2), candidates.get(1), operator);
 
+        List<Application> applications = (List<Application>) applicationRepository.allApplications();
+
+        addRequirements("jobs4u.core/src/main/resources/requirements/requirements4.txt", applications.get(3));
+        addRequirements("jobs4u.core/src/main/resources/requirements/requirements3.txt", applications.get(2));
+        addRequirements("jobs4u.core/src/main/resources/requirements/requirements2.txt", applications.get(1));
+        addRequirements("jobs4u.core/src/main/resources/requirements/requirements1.txt", applications.get(0));
+        addRequirements("jobs4u.core/src/main/resources/requirements/requirements3.txt", applications.get(4));
+        addRequirements("jobs4u.core/src/main/resources/requirements/requirements5.txt", applications.get(5));
+        addRequirements("jobs4u.core/src/main/resources/requirements/requirements4.txt", applications.get(6));
+        addRequirements("jobs4u.core/src/main/resources/requirements/requirements4.txt", applications.get(7));
+
         return true;
     }
 
     private void registerApplication(String rank, String applicationFiles, JobOpening jobReference, Candidate candidate, SystemUser operator) {
         controller.registerApplication(rank, applicationFiles, jobReference, candidate, operator);
     }
+
+    private void addRequirements(String candidateRequirementsPath, Application application) {
+        List<String> requirements = uploadRequirementsAnswersController.readFile(candidateRequirementsPath);
+        uploadRequirementsAnswersController.uploadResponses(requirements, application);
+    }
+
 }

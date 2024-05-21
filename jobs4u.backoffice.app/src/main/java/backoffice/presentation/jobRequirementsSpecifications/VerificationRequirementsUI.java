@@ -18,89 +18,38 @@ import java.util.Scanner;
 
 public class VerificationRequirementsUI extends AbstractUI {
 
-
+    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
-    private final SearchJobRequirementsFileController theController3 = new SearchJobRequirementsFileController();
-    final Iterable<JobOpening> iterable = elements();
-    final List<JobOpening> list = new ArrayList<>();
+
     final List<Application> list1 = new ArrayList<>();
 
 
     @Override
     protected boolean doShow() {
-        JobOpening jobOpeningApplication = selectJobOpening();
+        JobOpening jobOpeningApplication = selectJobOpeningController.selectJobOpening();
         Application applicationToVerify = selectApplication(jobOpeningApplication);
 
         if (applicationToVerify != null) {
 
             CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
             JobRequirementsSpecification jobOpeningRequirement = jobOpeningApplication.jobRequirementsSpecification();
-            System.out.println(jobOpeningRequirement.jobRequirementsPath());
+
+            List<String> jobRequirements = verificationRequirementsController.listJobRequirements(jobOpeningRequirement);
+
+            boolean acceptedApplication = verificationRequirementsController.verifyCandidate(jobRequirements, candidateRequirements.candidateRequirements());
 
 
-            List<String> typeRequirements = verificationRequirementsController.typeRequirements(jobOpeningRequirement.jobRequirementsPath());
-
-            for(String requirements:  typeRequirements){
-                System.out.println(requirements);
+            if(acceptedApplication){
+                System.out.println("The candidate is valid for this job opening");
+            } else{
+                System.out.println("This candidate isn't valid for this job opening");
             }
-
-            boolean acceptedApplication = verificationRequirementsController.verifyCandidate(typeRequirements, candidateRequirements.candidateRequirements());
-
-
-
-            /*String degree = theController3.findDegree(candidateRequirements.candidateRequirements());
-
-            boolean degreeCorrect = theController3.verifyDegree(jobOpeningRequirements.jobRequirementsPath(), degree);
-
-            List<String> progLang = theController3.findProgrammingLanguages(candidateRequirements.candidateRequirements());
-
-            boolean progLangCorrect = theController3.verifyProgLang(jobOpeningRequirements.jobRequirementsPath(), progLang);
-
-            System.out.println(progLangCorrect);
-
-            int years;
-
-            /*try {
-                years = theController3.processarFicheiro(directoryPath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }*/
-
         }
         return true;
     }
 
-
-    public JobOpening selectJobOpening() {
-        JobOpening jobOpeningApplication = null;
-        if (!iterable.iterator().hasNext()) {
-            System.out.println("There is no job openings ");
-        } else {
-            int cont = 1;
-            System.out.println("Select a Job Opening: \n");
-            System.out.printf("%-30s%-30s%n", "Title or Function:", "Job Reference:");
-            for (JobOpening jobOpening : iterable) {
-                list.add(jobOpening);
-                System.out.printf("%-6s%-30s%-30s%n", cont, jobOpening.titleOrFunction(), jobOpening.jobReference());
-                cont++;
-            }
-            final int option = Console.readInteger("Enter the number of job opening");
-            if (option == 0) {
-                System.out.println("No job opening selected");
-            } else {
-                try {
-                    jobOpeningApplication = listJobOpeningApplicationsController.findJobOpening(list.get(option - 1).jobReference());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    System.out.println(
-                            "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
-                }
-            }
-        }
-        return jobOpeningApplication;
-
-    }
 
     public Application selectApplication(JobOpening jobOpeningApplication) {
         Application applicationToVerify = null;

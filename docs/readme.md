@@ -31,19 +31,19 @@ The assignment of tasks (requirements/user stories/use cases) during the project
 
 |         Student Nr.	          |      Name       |                       Justification                        | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
 |:-----------------------------:|:---------------:|:----------------------------------------------------------:|:-------------------:|:--------------------------:|:---------:|:----------:|:-----------:|:-----------------:|
-| [1220772](1220772/readme.md)  | Miguel Cardoso  | [1220772 - Justification](1220772/lapr4/sprintB/readme.md) |   Not Applicable    |             5              |     4     |     4      |      4      |         4         |
+| [1220772](1220772/readme.md)  | Miguel Cardoso  | [1220772 - Justification](1220772/lapr4/sprintB/sprint B) |   Not Applicable    |             5              |     4     |     4      |      4      |         4         |
 | [1220812](1220812/readme.md)  |  Diogo Ribeiro  | [1220812 - Justification](1220812/lapr4/sprintA/readme.md) |   Not Applicable    |             4              |     4     |     4      |      4      |         4         |   
-| [1220917](1220917/readme.md)  | Tomás Gonçalves | [1220917 - Justification](1220917/lapr4/sprintB/readme.md) |   Not Applicable    |             4              |     4     |     4      |      4      |         4         |
-| [1221194](1221194/readme.md)  |   Diana Neves   | [1221194 - Justification](1221194/lapr4/sprintB/readme.md) |   Not Applicable    |             4              |     4     |     4      |      4      |         4         |
+| [1220917](1220917/readme.md)  | Tomás Gonçalves | [1220917 - Justification](1220917/lapr4/sprintB/sprint B) |   Not Applicable    |             4              |     4     |     4      |      4      |         4         |
+| [1221194](1221194/readme.md)  |   Diana Neves   | [1221194 - Justification](1221194/lapr4/sprintB/sprint B) |   Not Applicable    |             4              |     4     |     4      |      4      |         4         |
 
 ### Sprint B
 
 |         Student Nr.	          |      Name       |                         Justification                         | Engineering Process | Issues and Version Control | Team Work | Deployment | Integration | Req. Satisfaction | 
 |:-----------------------------:|:---------------:|:-------------------------------------------------------------:|:-------------------:|:--------------------------:|:---------:|:----------:|:-----------:|:-----------------:|
-| [1220772](1220772/readme.md)  | Miguel Cardoso  | [1220772 - Justification](1220772/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   | |
+| [1220772](1220772/readme.md)  | Miguel Cardoso  | [1220772 - Justification](1220772/lapr4/sprint%20A/readme.md) |          4          |             5              |     5     |     4      |      5      |         5         | |
 | [1220812](1220812/readme.md)	 |  Diogo Ribeiro  | [1220812 - Justification](1220812/lapr4/sprint%20A/readme.md) |          4          |             5              |     5     |     4      |      4      |         4         |
-| [1220917](1220917/readme.md)  | Tomás Gonçalves | [1220917 - Justification](1220917/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   | |
-| [1221194](1221194/readme.md)  |   Diana Neves   | [1221194 - Justification](1221194/lapr4/sprint%20A/readme.md) |                     |                            |           |            |             |                   ||
+| [1220917](1220917/readme.md)  | Tomás Gonçalves | [1220917 - Justification](1220917/lapr4/sprint%20A/readme.md) |          5          |             4              |     5     |     4      |      4      |         5         | |
+| [1221194](1221194/readme.md)  |   Diana Neves   | [1221194 - Justification](1221194/lapr4/sprint%20A/readme.md) |          5          |             5              |     4     |     4      |      4      |         5         ||
 
 ### Sprint C
 

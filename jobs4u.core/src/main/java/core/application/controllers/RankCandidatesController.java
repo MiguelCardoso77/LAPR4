@@ -14,6 +14,7 @@ import java.util.List;
 public class RankCandidatesController {
     private final ApplicationService applicationService = new ApplicationService();
     private final JobInterviewService jobInterviewService = new JobInterviewService();
+    private final List<Integer> assignedRanks = new ArrayList<>();
 
     public List<Application> findApplicationsForJobOpening(JobOpening jobOpening) {
         return applicationService.findApplicationsForJobOpening(jobOpening);
@@ -24,7 +25,12 @@ public class RankCandidatesController {
     }
 
     public Application updateRank(int rank, Application application) {
+        assignedRanks.add(rank);
         return applicationService.updateRank(rank, application);
+    }
+
+    public void clearAssignedRanks() {
+        assignedRanks.clear();
     }
 
     public List<Application> filterByNonRankedApplications(List<Application> applications) {
@@ -37,5 +43,9 @@ public class RankCandidatesController {
         }
 
         return filteredApplications;
+    }
+
+    public boolean isRankAlreadyAssigned(int rank) {
+        return assignedRanks.contains(rank);
     }
 }

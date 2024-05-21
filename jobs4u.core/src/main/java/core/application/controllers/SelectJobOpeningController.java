@@ -33,7 +33,7 @@ public class SelectJobOpeningController {
     private JobOpening selectorPart(List<JobOpening> list) {
         JobOpening jobOpening = null;
 
-        final int option = Console.readInteger("Enter the number of the job opening");
+        final int option = Console.readInteger("\nEnter the number of the job opening: ");
         if (option == 0) {
             System.out.println("No job opening selected");
         } else {

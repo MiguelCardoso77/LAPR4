@@ -17,7 +17,7 @@ public class ListJobOpeningController {
             System.out.println("There are no Job Openings");
         } else {
             int cont = 1;
-            System.out.println("List of registered Job Openings: \n");
+            System.out.println("List of registered Job Openings: ");
             for (JobOpening jobOpening : iterable) {
                 System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.company());
                 cont++;

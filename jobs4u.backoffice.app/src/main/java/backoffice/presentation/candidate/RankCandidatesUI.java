@@ -31,6 +31,7 @@ public class RankCandidatesUI extends AbstractUI {
 
         if (!RANK_ONLY_NOT_RANKED) {
 
+            System.out.println("\n" + applications.size() + " applications will be ranked.");
             for (Application application : applications) {
                 rankApplication(application);
             }
@@ -44,12 +45,14 @@ public class RankCandidatesUI extends AbstractUI {
                 return false;
             }
 
+            System.out.println("\n" + applications.size() + " applications will be ranked.");
             for (Application application : nonRankedApplications) {
                 rankApplication(application);
             }
 
         }
 
+        theController.clearAssignedRanks();
         return true;
     }
 
@@ -57,7 +60,7 @@ public class RankCandidatesUI extends AbstractUI {
         System.out.println("\nNow ranking, Application: " + application.dataFile());
 
         Score selectedInterview = getLastJobInterview(application);
-        System.out.println(ConsoleColors.GREEN + "The score of the last interview for this application is " + ConsoleColors.RESET + selectedInterview);
+        System.out.println(ConsoleColors.CYAN + "The score of the last interview for this application is " + ConsoleColors.RESET + selectedInterview);
 
         if (selectedInterview == null) {
             String response = Console.readLine("Do you still want to rank the application? (Yes/No): ");
@@ -66,7 +69,13 @@ public class RankCandidatesUI extends AbstractUI {
             }
         }
 
-        int rank = Console.readInteger("Insert the new rank for this candidate: ");
+        int rank;
+        do {
+            rank = Console.readInteger("Insert the new rank for this candidate: ");
+            if (theController.isRankAlreadyAssigned(rank)) {
+                System.out.println("This rank is already assigned. Please choose a different rank.");
+            }
+        } while (theController.isRankAlreadyAssigned(rank));
 
         updateRank(rank, application);
     }
@@ -88,7 +97,7 @@ public class RankCandidatesUI extends AbstractUI {
 
     private void updateRank(int rank, Application selectedApplication) {
         Application newApplication = theController.updateRank(rank, selectedApplication);
-        System.out.println("Success: Rank was updated to " + newApplication.rank() + " for the application " + newApplication.dataFile());
+        System.out.println(ConsoleColors.GREEN + "Success:" + ConsoleColors.RESET + " Rank was updated to " + newApplication.rank() + " for the application " + newApplication.dataFile());
     }
 
     @Override

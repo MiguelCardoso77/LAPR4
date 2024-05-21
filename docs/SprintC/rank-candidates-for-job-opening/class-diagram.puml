@@ -21,11 +21,49 @@ package "presentation" {
 }
 
 package "application" {
+    class ListJobOpeningController {
+        + showJobOpenings()
+        + allJobOpening()
+        + findJobOpeningByJobReference(jobReference)
+    }
+
+    class SelectJobOpeningController {
+        + selectJobOpening()
+        + selectJobOpeningAnalysis()
+        + selectorPart(list)
+    }
+
     class RankCandidatesController {
         + getAllJobOpenings()
         + getApplicationsForJobOpening(jobOpening)
         + getInterviewsForApplication(application)
         + updateRank(rank, application)
+    }
+}
+
+package "services" {
+    class ApplicationService {
+        + registerApplication(rank, applicationFiles, jobReference, candidate, operator)
+        + findApplicationById(applicationID)
+        + allApplications()
+        + findApplicationsForJobOpening(jobOpening)
+        + updateRank(rank, application)
+    }
+
+    class JobOpeningService {
+        + registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company)
+        + findJobOpening(jobReference)
+        + updateJobRequirements(jobReference, jobRequirementsSpecification)
+        + verifyJobReference(jobReference)
+        + allJobOpenings()
+    }
+
+    class JobInterviewService {
+        + registerJobInterview(createdOn, time, score, result, application)
+        + allJobInterviews()
+        + updateInterviewModel(interviewModelToChange, id)
+        + updateInterviewScore(newScore, interviewID)
+        + findInterviewsForApplication(application)
     }
 }
 
@@ -95,10 +133,17 @@ package "domain" {
 }
 
 RankCandidatesUI --> RankCandidatesController
+RankCandidatesUI --> SelectJobOpeningController
 
-RankCandidatesController --> ApplicationRepository
-RankCandidatesController --> JobOpeningRepository
-RankCandidatesController --> JobInterviewRepository
+SelectJobOpeningController -> ListJobOpeningController
+
+RankCandidatesController --> ApplicationService
+RankCandidatesController --> JobOpeningService
+RankCandidatesController --> JobInterviewService
+
+ApplicationService --> ApplicationRepository
+JobOpeningService --> JobOpeningRepository
+JobInterviewService --> JobInterviewRepository
 
 ApplicationRepository --> Application : stores
 JobOpeningRepository --> JobOpening : stores

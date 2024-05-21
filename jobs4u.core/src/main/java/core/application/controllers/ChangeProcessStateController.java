@@ -8,7 +8,7 @@ import core.repositories.ProcessRepository;
 public class ChangeProcessStateController {
     private final ProcessRepository processRepository = PersistenceContext.repositories().processRepository();
 
-    public Process changeProcessStatus(ProcessState processState, Process process) {
+    public Process changeProcessState(ProcessState processState, Process process) {
         process.changeProcessState(processState);
         return processRepository.save(process);
     }

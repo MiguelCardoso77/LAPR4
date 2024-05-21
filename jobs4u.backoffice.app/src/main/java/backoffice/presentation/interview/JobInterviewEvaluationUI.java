@@ -45,7 +45,7 @@ public class JobInterviewEvaluationUI extends AbstractUI {
      * Displays a list of job openings that are in the analysis state.
      */
     private void showJobOpenings(){
-        final Iterable<JobOpening> iterable = jobOpeningController.allJobOpening();
+        final Iterable<JobOpening> iterable = jobOpeningController.allJobOpenings();
 
         if(!iterable.iterator().hasNext()){
             System.out.println("There are no job openings");
@@ -67,7 +67,7 @@ public class JobInterviewEvaluationUI extends AbstractUI {
      */
     private JobOpening selectJobOpening() {
         final List<JobOpening> list = new ArrayList<>();
-        for (JobOpening jobOpening : jobOpeningController.allJobOpening()) {
+        for (JobOpening jobOpening : jobOpeningController.allJobOpenings()) {
             if(jobOpening.process().processState() == ProcessState.ANALYSIS){
                 list.add(jobOpening);
             }

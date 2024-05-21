@@ -70,7 +70,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
      */
     @Override
     protected Iterable<JobOpening> elements() {
-        return theController1.allJobOpening();
+        return theController1.allJobOpenings();
     }
 
     @Override

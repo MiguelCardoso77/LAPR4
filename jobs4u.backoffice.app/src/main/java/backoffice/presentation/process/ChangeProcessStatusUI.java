@@ -5,15 +5,8 @@ import core.domain.jobOpening.JobOpening;
 import core.domain.process.Process;
 import core.domain.process.ProcessState;
 import core.domain.process.ProcessStatus;
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * UI class for changing the status of a process in the job opening context.
@@ -34,7 +27,7 @@ public class ChangeProcessStatusUI extends AbstractUI {
     protected boolean doShow() {
 
         System.out.println("\nAvailable Job Openings: ");
-        JobOpening jobOpening = selectJobOpeningController.selectJobOpeningAnalysis();
+        JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
         selectStatus(jobOpening);
 
         return false;
@@ -140,7 +133,7 @@ public class ChangeProcessStatusUI extends AbstractUI {
      * @param process the process to change.
      */
     public void changeProcessState(ProcessState processState, Process process){
-        Process newProcess = changeProcessStateController.changeProcessStatus(processState,process);
+        Process newProcess = changeProcessStateController.changeProcessState(processState,process);
         System.out.println("Success: State was updated to " + newProcess.processState() + " for the process " + newProcess.identity());
     }
 

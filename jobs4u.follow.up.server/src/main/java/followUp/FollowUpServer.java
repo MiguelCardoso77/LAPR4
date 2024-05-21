@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class FollowUpServer {
-    private static final int PORT = 7878;
+    private static final int PORT = 1010;
 
     public static void main(String[] args) throws InterruptedException {
         try {

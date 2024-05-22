@@ -10,7 +10,7 @@
 #include <fcntl.h>
 #include <time.h>
 #include <semaphore.h>
-#include <sys/mmap.h>
+#include <sys/mman.h>
 
 #define EVENT_SIZE (sizeof (struct inotify_event))
 #define BUF_LEN ( 1 * ( EVENT_SIZE + 255 ))
@@ -57,6 +57,11 @@ char* extractCandidateID(char* fileName) {
   return extracted;
 }
 
+typedef struct {
+
+	char file_name [BUFFER_SIZE];
+}shared_memory_data;
+
 // Parameters:
 // 1 - input directory
 // 2 - output directory
@@ -65,41 +70,35 @@ char* extractCandidateID(char* fileName) {
 
 int main(int argc,char *argv[]) {
 
-  struct sigaction act,act2,children_act;
+  struct sigaction act2,children_act;
 
   pid_t pid_handler;
-  int n;
   char outputDirectory[BUFFER_SIZE];
   char inputDirectory[BUFFER_SIZE];
-
-  sem_t *semReadWrite; // read and write
-  sem_t *sem; // read only after write
-  sem_t *semChildren; // father gets a worker
-  sem_t *semVerify; //
-
-  if((sem = sem_open("/sem1", O_CREAT|O_EXCL, 0644, 0)) == SEM_FAILED
-	perror("sem_open");
-	exit(1);
-  }
-
-  if((semReadWrite = sem_open("/sem2", O_CREAT|O_EXCL, 0644, 1)) == SEM_FAILED
-	perror("sem_open");
-	exit(1);
-  }
-
-  if((semChildren = sem_open("/sem3", O_CREAT|O_EXCL, 0644, 0)) == SEM_FAILED
-	perror("sem_open");
-	exit(1);
-  }
-
-  if((semVerify = sem_open("/sem4", O_CREAT|O_EXCL, 0644, 0)) == SEM_FAILED
-	perror("sem_open");
-	exit(1);
-  }
 
   if (argc < 4) {
     fprintf(stderr, "Usage: %s inputDirectory outputDirectory number_of_children\n", argv[0]);
     exit(1);
+  }
+
+  sem_t *semReadWrite; // read and write
+  sem_t *semChildren; // father gets a worker
+  sem_t *semVerify; //
+
+
+  if((semReadWrite = sem_open("/sem_read_write", O_CREAT, 0644, 0)) == SEM_FAILED){
+	perror("sem_open semReadWrite");
+	exit(1);
+  }
+
+  if((semChildren = sem_open("/sem_children", O_CREAT, 0644, 0)) == SEM_FAILED){
+	perror("sem_open semChildren");
+	exit(1);
+  }
+
+  if((semVerify = sem_open("/sem_verify", O_CREAT, 0644, 1)) == SEM_FAILED){
+	perror("sem_open semVerify");
+	exit(1);
   }
 
   strcpy(inputDirectory, argv[1]);    // passing the inputDirectory as the first parameter
@@ -107,11 +106,6 @@ int main(int argc,char *argv[]) {
   numberChildren = atoi(argv[3]);     // 3th parameter is the number of children to be used
 
   pid_t pid[numberChildren];     // Creating an array to store processes that are working
-
-  typedef struct shared_memory_data{
-	int readFlag;
-	char file_name [BUFFER_SIZE];
-  }
 
   int fd;
 
@@ -133,8 +127,6 @@ int main(int argc,char *argv[]) {
 	  perror("mmap");
 	  exit(3);
   }
-
-  pid_t pid[numberChildren];     // Creating an array to store processes that are working
 
   pid_handler = fork();      // Creating the process that warns the father of new files
 
@@ -184,7 +176,6 @@ int main(int argc,char *argv[]) {
               sem_wait(semVerify);
               strcpy(shm -> file_name, event->name);
               sem_post(semReadWrite);
-              sem_post(sem);
             }
           }
         }
@@ -194,7 +185,6 @@ int main(int argc,char *argv[]) {
 
       inotify_rm_watch(fd_notify,wd);
       close(fd_notify);
-      close(pipe_info[1]);
       exit(0);
   }
 
@@ -220,13 +210,11 @@ int main(int argc,char *argv[]) {
       // Continuously read from the pipe until signaled to stop
       while(flagChildren == 0) {
 
-        sem_wait(semChildren);
+          sem_wait(semChildren);
 
-        sem_wait(semReadWrite);
+          strcpy(fileName,shm -> file_name);
 
-        fileName = shm -> file_name;
-
-        sem_post(semVerify);
+          sem_post(semVerify);
 
           // Extract the candidate ID from the file name
 
@@ -239,7 +227,7 @@ int main(int argc,char *argv[]) {
 
           // Create the directory for the candidate
 
-          char createDirectory[BUF_LEN];
+          char createDirectory[BUF_LEN*2];
           snprintf(createDirectory, sizeof(createDirectory), "./%s/%s/", outputDirectory, folderName);
 
           // Create a child process to execute the mkdir command
@@ -252,11 +240,9 @@ int main(int argc,char *argv[]) {
           // Waits for the mkdir command to finish
 
           int status;
-          waitpid(mkdir, &status, 0);
-
           // Copy the file to the new directory
 
-          char copyFiles[BUF_LEN];
+          char copyFiles[BUF_LEN*2];
           snprintf(copyFiles, sizeof(copyFiles), "./%s/%s", inputDirectory, fileName);
 
           // Create a child process to execute the cp command
@@ -266,8 +252,6 @@ int main(int argc,char *argv[]) {
             execlp("cp", "cp", copyFiles, createDirectory, NULL);
           }
           // Signal the parent process that a file has been processed
-
-          kill(getppid(), SIGUSR2);
         }
 
       exit(0);
@@ -292,27 +276,30 @@ int main(int argc,char *argv[]) {
   }
 
   // Continuously read from the pipe until signaled to stop
+  
+  char file[BUF_LEN];
   while (flagFather == 0) {
-      char file[BUF_LEN];
-      sem_wait(sem); // father waits until he can work
+      sem_wait(semReadWrite); // father waits until he can work
 
-      sem_post(semChildren);
+      // Generate the candidate report
 
-        // Generate the candidate report
+      strcpy(file,shm -> file_name);
 
-        char candidateReport[BUF_LEN];
-        char candidateFolder[BUF_LEN];
-        char id[BUF_LEN];
-        char *candidate = extractCandidateID(file);
-        strcpy(id, candidate);
-        free(candidate);
+      char candidateReport[BUF_LEN*5];
+      char candidateFolder[BUF_LEN*2];
+      char id[BUF_LEN];
+      char *candidate = extractCandidateID(file);
+      strcpy(id, candidate);
+      free(candidate);
 
-        memset(candidateReport,0,BUF_LEN);
-        snprintf(candidateFolder, sizeof(candidateFolder), "%s/%s", outputDirectory, id);
-        snprintf(candidateReport, sizeof(candidateReport), "\nCandidate ID: %s\nOutput Directory: %s\nFile: %s\n", id,candidateFolder, file);
+      memset(candidateReport,0,BUF_LEN);
+      snprintf(candidateFolder, sizeof(candidateFolder), "%s/%s", outputDirectory, id);
+      snprintf(candidateReport, sizeof(candidateReport), "\nCandidate ID: %s\nOutput Directory: %s\nFile: %s\n", id,candidateFolder, file);
 
-        // Write the candidate report to the report file
-        write(report,candidateReport,BUF_LEN);
+      // Write the candidate report to the report file
+      write(report,candidateReport,BUF_LEN);
+
+      sem_post(semChildren);        
   }
 
   // Close the report file and the reading end of the pipe
@@ -338,10 +325,9 @@ int main(int argc,char *argv[]) {
   munmap(shm, shm_size);
   shm_unlink("shm_applicationFileBot");
 
-  sem_unlink("sem1");
-  sem_unlink("sem2");
-  sem_unlink("sem3");
-  sem_unlink("sem4");
+  sem_unlink("sem_read_write");
+  sem_unlink("sem_verify");
+  sem_unlink("sem_children");
 
   return 0;
 }

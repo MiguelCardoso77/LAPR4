@@ -10,10 +10,10 @@ EXEC = applicationsFileBot
 
 # How to build an object .o from a code file .c ; $< -- file name
 .c.o:
-		gcc -g -Wall -Wextra -fanalyzer -c -lpthread -lrt $<
+		gcc-12 -g -Wall -Wextra -fanalyzer -c -lpthread -lrt $<
 
 ${EXEC}: ${OBJFILES}
-		gcc ${OBJFILES} -o ${EXEC}
+		gcc-12 ${OBJFILES} -o ${EXEC}
 
 ${OBJFILES}: ${SOURCES}
 

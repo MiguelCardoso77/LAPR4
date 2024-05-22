@@ -8,6 +8,7 @@ import backoffice.presentation.interview.GenerateAnswersTemplateAction;
 import backoffice.presentation.interview.JobInterviewEvaluationAction;
 import backoffice.presentation.interview.SelectInterviewModelAction;
 import backoffice.presentation.interview.UploadResponsesAction;
+import backoffice.presentation.interview.OrderedListOfCandidatesAction;
 import backoffice.presentation.jobOpening.AddJobOpeningAction;
 import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationAction;
 import backoffice.presentation.process.ChangeProcessStatusAction;
@@ -38,6 +39,8 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int NOTIFY_CANDIDATES = 16;
     private static final int MOST_REFERENCED_WORDS = 17;
 
+    private static final int ORDERED_CANDIDATES = 15;
+
 
     @Override
     protected boolean doShow() {
@@ -64,6 +67,9 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(UPLOAD_CANDIDATE_REQUIREMENTS, "Upload the requirements of a candidate ", new UploadRequirementsAnswersAction());
         menu.addItem(NOTIFY_CANDIDATES, "Notify Candidates", new NotifyCandidatesAction());
         menu.addItem(MOST_REFERENCED_WORDS, "Most Referenced Words", new MostReferencedWordsAction());
+
+        menu.addItem(INTERVIEWS_PROCESS_EVALUATION, "Execute the job interview evaluation process", new JobInterviewEvaluationAction());
+        menu.addItem(ORDERED_CANDIDATES, "Order a list of candidates by job interview points (grades)", new OrderedListOfCandidatesAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

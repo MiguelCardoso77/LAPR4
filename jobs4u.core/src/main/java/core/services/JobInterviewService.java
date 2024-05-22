@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import java.util.List;
 
 /**
@@ -97,4 +101,16 @@ public class JobInterviewService {
 
         return interviews;
     }
+
+    /*public List<JobInterview> sortInterviewsDescending() {
+        Comparator<JobInterview> byScoreDescending = Comparator.comparingInt(JobInterview::getScore)
+                .reversed();
+
+        List<JobInterview> sortedInterviews = jobInterviews.stream()
+                .sorted(byScoreDescending)
+                .collect(Collectors.toList());
+
+        return sortedInterviews;
+    }   return sortedInterviews;
+    }*/
 }

@@ -24,7 +24,7 @@ public class JobInterview implements AggregateRoot<Integer> {
     private Time time;
 
     @Column(name = "SCORE")
-    private Score score;
+    private static Score score;
 
     @Column(name = "RESULT")
     private Result result;
@@ -229,4 +229,14 @@ public class JobInterview implements AggregateRoot<Integer> {
     public void updateScore(Score newScore){
         score = newScore;
     }
+
+    public Score getScore(Object o) {
+        return score;
+    }
+
+    public  int returnScore() {
+        return score.getScore();
+    }
+
+
 }

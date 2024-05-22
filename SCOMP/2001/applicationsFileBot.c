@@ -93,7 +93,7 @@ int main(int argc,char *argv[]) {
   char outputDirectory[BUFFER_SIZE];
   char inputDirectory[BUFFER_SIZE];
 
-  if (argc < 4) {
+  if (argc != 4) {
     fprintf(stderr, "Usage: %s inputDirectory outputDirectory number_of_children\n", argv[0]);
     exit(1);
   }
@@ -109,7 +109,7 @@ int main(int argc,char *argv[]) {
 
   if (childrensAvailability == NULL) {
     perror("Memory allocation failed");
-    exit(1);
+    return 1;
   }
 
   for (int i = 0; i < numberChildren; i++) {
@@ -276,7 +276,7 @@ int main(int argc,char *argv[]) {
           pid_available=available_process(); //while loop to wait for one process to be available
         }
 
-        int process;
+        int process=0;
 
         for (int i = 0; i < numberChildren; i++) {
           if (pid[i] == pid_available) {              // If child is available, put it occupied using the method and...

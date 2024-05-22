@@ -3,6 +3,7 @@ package backoffice.presentation.jobRequirementsSpecifications;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.application.CandidateRequirements;
+import core.domain.application.Status;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -19,6 +20,7 @@ public class VerificationRequirementsUI extends AbstractUI {
     private final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
+    private final ChangeJobInterviewStatusController changeJobInterviewStatusController = new ChangeJobInterviewStatusController();
 
     final List<Application> list1 = new ArrayList<>();
 
@@ -37,13 +39,22 @@ public class VerificationRequirementsUI extends AbstractUI {
 
             boolean acceptedApplication = verificationRequirementsController.verifyCandidate(jobRequirements, candidateRequirements.candidateRequirements());
 
+            Status statusFinal;
+
 
             if(acceptedApplication){
+                statusFinal = Status.ACCEPTED;
+                changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal , applicationToVerify);
                 System.out.println("The candidate is valid for this job opening");
             } else{
+                statusFinal = Status.DECLINED;
+                changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal , applicationToVerify);
                 System.out.println("This candidate isn't valid for this job opening");
             }
+
         }
+
+
         return true;
     }
 

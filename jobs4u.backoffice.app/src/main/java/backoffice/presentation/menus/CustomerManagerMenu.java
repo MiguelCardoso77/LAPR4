@@ -62,7 +62,7 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(UPLOAD_INTERVIEW_RESPONSES, "Upload Interview Responses", new UploadResponsesAction());
         menu.addItem(CHANGE_PROCESS_STATUS, "Change Process Status", new ChangeProcessStatusAction());
         menu.addItem(VERIFICATION_REQUIREMENTS, "Verify requirements of applications of a job  opening", new VerificationRequirementsAction());
-        menu.addItem(INTERVIEWS_PROCESS_EVALUATION, "Execute the job interview evaluation process", new JobInterviewEvaluationAction());
+        menu.addItem(INTERVIEWS_PROCESS_EVALUATION, "Execute the Interviews evaluation process", new JobInterviewEvaluationAction());
         menu.addItem(UPLOAD_CANDIDATE_REQUIREMENTS, "Upload the requirements of a candidate ", new UploadRequirementsAnswersAction());
         menu.addItem(NOTIFY_CANDIDATES, "Notify Candidates", new NotifyCandidatesAction());
 

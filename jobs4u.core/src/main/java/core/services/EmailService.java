@@ -1,6 +1,7 @@
 package core.services;
 
 import core.domain.email.Email;
+import core.domain.email.EmailHandler;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 public class EmailService {
+    private EmailHandler emailHandler;
     private Socket sock;
     private ObjectOutputStream oos;
 
@@ -40,6 +42,15 @@ public class EmailService {
             sock.close();
         } catch (IOException e) {
             System.out.println("Error closing socket: " + e.getMessage());
+        }
+    }
+
+    public void sendEmail(String dest, String subject, String body) {
+        try {
+            emailHandler = new EmailHandler();
+            emailHandler.sendEmail(dest, subject, body);
+        } catch (IOException e) {
+            System.out.println("Error sending email: " + e.getMessage());
         }
     }
 }

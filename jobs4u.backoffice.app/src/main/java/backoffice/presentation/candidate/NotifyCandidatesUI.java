@@ -3,8 +3,10 @@ package backoffice.presentation.candidate;
 import core.application.controllers.NotifyCandidatesController;
 import core.domain.application.Application;
 import core.domain.email.Email;
+import core.domain.email.EmailHandler;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,9 @@ public class NotifyCandidatesUI extends AbstractUI {
             emailsToSend.add(emailObj);
         }
 
-        theController.sendEmails(emailsToSend);
+        for (Email email : emailsToSend) {
+            theController.sendEmail(email.toWho(), email.subject(), email.body());
+        }
 
         return true;
     }

@@ -3,16 +3,13 @@ package followUp.server;
 import core.domain.email.Email;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
 public class SimpleHandler extends Handler {
-    private ObjectOutputStream oos;
 
     public SimpleHandler(Socket socket) throws IOException {
         super(socket);
-        this.oos = new ObjectOutputStream(socket.getOutputStream());
     }
 
     @Override
@@ -36,6 +33,6 @@ public class SimpleHandler extends Handler {
             System.out.println("-------------------");
         }
 
-        oos.writeObject(messages);
+        this.output.writeObject(messages);
     }
 }

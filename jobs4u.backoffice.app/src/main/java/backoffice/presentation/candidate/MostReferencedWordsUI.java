@@ -1,11 +1,17 @@
 package backoffice.presentation.candidate;
 
+import console.presentation.utils.ConsoleColors;
 import core.application.controllers.MostReferencedWordsController;
+import core.domain.application.Application;
+import core.domain.candidate.Candidate;
+import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 public class MostReferencedWordsUI extends AbstractUI {
@@ -14,30 +20,47 @@ public class MostReferencedWordsUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         try {
-            // Assume getCandidateFiles() returns the list of files uploaded by the candidate
-            List<File> candidateFiles = getCandidateFiles();
+            List<Application> applicationsFromCM = theController.findCustomerManagerApplications();
 
-            // Get the top 20 most referenced words and the files they appear in
-            List<Map.Entry<String, Set<File>>> topWords = theController.getMostReferencedWords(candidateFiles);
-
-            // Display the top 20 words and their files
-            System.out.println(headline());
-            for (Map.Entry<String, Set<File>> entry : topWords) {
-                System.out.println(entry.getKey() + ": " + entry.getValue().size() + " occurrences");
-                System.out.println("Files: " + entry.getValue());
+            for (Application application : applicationsFromCM) {
+                System.out.println("Application ID: " + application.identity());
+                System.out.println("Candidate: " + application.candidate().toString());
+                System.out.println("Job Opening: " + application.jobReference().toString());
+                System.out.println("Status: " + application.status().toString());
+                System.out.println("Rank: " + application.rank().toString());
+                System.out.println("Submission Date: " + application.submissionDate().toString());
+                System.out.println("Files: " + application.dataFile());
+                System.out.println();
             }
+
+            Candidate selectedCandidate = selectCandidate(applicationsFromCM);
+            List<File> candidateFiles = theController.getCandidateFiles(selectedCandidate.curriculum().curriculumPath());
+
+            Map<String, Integer> topWords = theController.findMostReferencedWords(candidateFiles);
+
+            System.out.println(ConsoleColors.CYAN + "\nTop 20 most referenced words in the files provided by the Candidate: " + ConsoleColors.RESET);
+            for (Map.Entry<String, Integer> entry : topWords.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue() + " occurrences");
+            }
+
         } catch (Exception e) {
             System.err.println("An error occurred while processing the files: " + e.getMessage());
-            e.printStackTrace();
         }
 
         return true;
     }
 
-    private List<File> getCandidateFiles() {
-        // This method should be implemented to fetch the list of files uploaded by the candidate.
-        // For now, returning an empty list.
-        return List.of();
+    private Candidate selectCandidate(List<Application> applications) {
+        int applicationId = Console.readInteger("Enter the ID of the application to select a candidate: ");
+
+        for (Application application : applications) {
+            if (application.identity() == applicationId) {
+                return application.candidate();
+            }
+        }
+
+        System.out.println("No application found with the provided ID.");
+        return null;
     }
 
     @Override

@@ -30,7 +30,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
         registerOperator("OperatorEx", "ExOperator1", "Operator", "Example", "operator@jobs4u.com");
 
         registerBootstrapCandidate("CandidateOne", "ExampleOne", "candidateOne@jobs4u.com", "910920930", "curriculumPathOne");
-        registerBootstrapCandidate("CandidateTwo", "ExampleTwo", "candidateTwo@jobs4u.com", "940950960", "curriculumpPathTwo");
+        registerBootstrapCandidate("CandidateTwo", "ExampleTwo", "candidateTwo@jobs4u.com", "940950960", "fileBot_OutputDirectory/3");
         registerBootstrapCandidate("CandidateThree", "ExampleThree", "candidateThree@jobs4u.com", "970980990", "curriculumPathThree");
         registerBootstrapCandidate("John", "Doe", "johndoe@jobs4u.com", "961234567", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
 

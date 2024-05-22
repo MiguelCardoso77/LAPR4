@@ -2,10 +2,7 @@ package backoffice.presentation.menus;
 
 import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 import backoffice.presentation.application.UploadRequirementsAnswersAction;
-import backoffice.presentation.candidate.DisplayCandidateDataAction;
-import backoffice.presentation.candidate.NotifyCandidatesAction;
-import backoffice.presentation.candidate.RankCandidatesAction;
-import backoffice.presentation.candidate.RegisterCandidateAction;
+import backoffice.presentation.candidate.*;
 import backoffice.presentation.customer.RegisterCustomerAction;
 import backoffice.presentation.interview.GenerateAnswersTemplateAction;
 import backoffice.presentation.interview.JobInterviewEvaluationAction;
@@ -39,6 +36,7 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int INTERVIEWS_PROCESS_EVALUATION = 14;
     private static final int UPLOAD_CANDIDATE_REQUIREMENTS = 15;
     private static final int NOTIFY_CANDIDATES = 16;
+    private static final int MOST_REFERENCED_WORDS = 17;
 
 
     @Override
@@ -65,6 +63,7 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(INTERVIEWS_PROCESS_EVALUATION, "Execute the Interviews evaluation process", new JobInterviewEvaluationAction());
         menu.addItem(UPLOAD_CANDIDATE_REQUIREMENTS, "Upload the requirements of a candidate ", new UploadRequirementsAnswersAction());
         menu.addItem(NOTIFY_CANDIDATES, "Notify Candidates", new NotifyCandidatesAction());
+        menu.addItem(MOST_REFERENCED_WORDS, "Most Referenced Words", new MostReferencedWordsAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 

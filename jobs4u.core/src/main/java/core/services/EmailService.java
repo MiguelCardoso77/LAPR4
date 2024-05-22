@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 @Service
 public class EmailService {
@@ -25,12 +26,12 @@ public class EmailService {
         return new Email(loggedEmail, candidateEmail, subject, body);
     }
 
-    public void sendEmail(Email email) {
+    public void sendEmails(List<Email> emails) {
         try {
-            oos.writeObject(email);
-            System.out.println("Email sent to " + email.toWho() + "!");
+            oos.writeObject(emails);
+            System.out.println("All emails sent!");
         } catch (IOException e) {
-            System.out.println("Error sending email: " + e.getMessage());
+            System.out.println("Error sending emails: " + e.getMessage());
         }
     }
 

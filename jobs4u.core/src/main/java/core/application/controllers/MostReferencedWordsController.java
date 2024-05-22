@@ -3,124 +3,100 @@ package core.application.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import core.domain.application.Application;
+import core.services.ApplicationService;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.application.UserSession;
+import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MostReferencedWordsController {
-    private static final int NUM_THREADS = 4;
+    private final ApplicationService applicationService = new ApplicationService();
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
+    private static final Logger LOGGER = LoggerFactory.getLogger(MostReferencedWordsController.class);
 
-    // Method to count words in a single file
-    private Map<String, Integer> countWordsInFile(File file) throws IOException {
-        Map<String, Integer> wordCounts = new HashMap<>();
-        List<String> lines = Files.readAllLines(file.toPath());
+    public Map<String, Integer> findMostReferencedWords(List<File> candidateFiles) {
+        Map<String, Integer> totalWordCount = new HashMap<>();
 
-        for (String line : lines) {
-            String[] words = line.split("\\W+");
+        for (File file : candidateFiles) {
+
+            Thread thread = new Thread(() -> {
+                List<String> fileLines = readFile(file);
+                Map<String, Integer> wordCount = countWordsFile(fileLines);
+
+                for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
+                    totalWordCount.merge(entry.getKey(), entry.getValue(), Integer::sum);
+                }
+            });
+
+            thread.start();
+        }
+
+        return sortMap(totalWordCount);
+    }
+
+    private Map<String, Integer> countWordsFile(List<String> fileLines) {
+        Map<String, Integer> wordsCounter = new HashMap<>();
+
+        for (String line : fileLines) {
+            String[] words = line.split("\\s+");
+
             for (String word : words) {
-                wordCounts.put(word, wordCounts.getOrDefault(word, 0) + 1);
+                if (!word.isEmpty()) {
+                    word = word.toLowerCase();
+                    wordsCounter.put(word, wordsCounter.getOrDefault(word, 0) + 1);
+                }
             }
         }
 
-        return wordCounts;
+        return wordsCounter;
     }
 
-    // Method to count words in multiple files using parallelism
-    private Map<String, Integer> countWordsInFiles(List<File> files) throws InterruptedException {
-        Map<String, Integer> aggregatedCounts = Collections.synchronizedMap(new HashMap<>());
-        List<Thread> threads = new ArrayList<>();
-        int currentIndex = 0;
-
-        for (int i = 0; i < NUM_THREADS; i++) {
-            Thread thread = new Thread(() -> {
-                int index;
-                while ((index = getIncrement(currentIndex)) < files.size()) {
-                    File file = files.get(index);
-                    try {
-                        Map<String, Integer> fileCounts = countWordsInFile(file);
-                        synchronized (aggregatedCounts) {
-                            for (Map.Entry<String, Integer> entry : fileCounts.entrySet()) {
-                                aggregatedCounts.put(entry.getKey(), aggregatedCounts.getOrDefault(entry.getKey(), 0) + entry.getValue());
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            threads.add(thread);
-            thread.start();
+    private List<String> readFile(File file) {
+        try {
+            return Files.readAllLines(file.toPath());
+        } catch (IOException e) {
+            LOGGER.error("Error reading file: {}", file.getName(), e);
+            return Collections.emptyList();
         }
-
-        for (Thread thread : threads) {
-            thread.join();
-        }
-
-        return aggregatedCounts;
     }
 
-    // Method to get top N words
-    private List<Map.Entry<String, Integer>> getTopWords(Map<String, Integer> wordCounts) {
-        return wordCounts.entrySet()
-                .stream()
-                .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
+    private Map<String, Integer> sortMap(Map<String, Integer> totalWordCount) {
+        return totalWordCount.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .limit(20)
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new));
     }
 
-    // Method to track which files contain the top words
-    private Map<String, Set<File>> trackWordsInFiles(List<File> files) throws InterruptedException {
-        Map<String, Set<File>> wordFileMap = Collections.synchronizedMap(new HashMap<>());
-        List<Thread> threads = new ArrayList<>();
-        int currentIndex = 0;
+    public List<Application> findCustomerManagerApplications() {
+        SystemUser customerManager = authz.session().map(UserSession::authenticatedUser).orElse(null);
 
-        for (int i = 0; i < NUM_THREADS; i++) {
-            Thread thread = new Thread(() -> {
-                int index;
-                while ((index = getIncrement(currentIndex)) < files.size()) {
-                    File file = files.get(index);
-                    try {
-                        Map<String, Integer> fileCounts = countWordsInFile(file);
-                        synchronized (wordFileMap) {
-                            for (String word : fileCounts.keySet()) {
-                                wordFileMap.computeIfAbsent(word, k -> Collections.synchronizedSet(new HashSet<>())).add(file);
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            threads.add(thread);
-            thread.start();
-        }
-
-        for (Thread thread : threads) {
-            thread.join();
-        }
-
-        return wordFileMap;
+        return applicationService.applicationsByCM(customerManager);
     }
 
-    public List<Map.Entry<String, Set<File>>> getMostReferencedWords(List<File> candidateFiles) throws InterruptedException {
-        // Count words in the files
-        Map<String, Integer> wordCounts = countWordsInFiles(candidateFiles);
+    public List<File> getCandidateFiles(String curriculum) {
+        try {
 
-        // Get the top 20 words
-        List<Map.Entry<String, Integer>> topWords = getTopWords(wordCounts);
+            Path curriculumPath = Paths.get(curriculum);
+            return Files.walk(curriculumPath)
+                    .filter(Files::isRegularFile)
+                    .map(Path::toFile)
+                    .collect(Collectors.toList());
 
-        // Track the files for each word
-        Map<String, Set<File>> wordFileMap = trackWordsInFiles(candidateFiles);
-
-        // Combine the top words with their file references
-        List<Map.Entry<String, Set<File>>> topWordsWithFiles = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : topWords) {
-            topWordsWithFiles.add(new AbstractMap.SimpleEntry<>(entry.getKey(), wordFileMap.get(entry.getKey())));
+        } catch (IOException e) {
+            System.err.println("An error occurred while accessing the directory: " + e.getMessage());
+            return List.of();
         }
-
-        return topWordsWithFiles;
-    }
-
-    public int getIncrement(int num) {
-        return num++;
     }
 }

@@ -4,8 +4,10 @@ import core.domain.email.Email;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 
-public class SimpleHandler extends Handler{
+public class SimpleHandler extends Handler {
+
     public SimpleHandler(Socket socket) throws IOException {
         super(socket);
     }
@@ -15,11 +17,22 @@ public class SimpleHandler extends Handler{
         System.out.println("Connection established!");
         try {
 
-            Email message = (Email) this.input.readObject();
-            System.out.println("Received: " + message);
+            handleEmails();
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void handleEmails() throws IOException, ClassNotFoundException {
+        List<Email> messages = (List<Email>) this.input.readObject();
+
+        System.out.println("\nReceived emails: ");
+        for (Email message : messages) {
+            System.out.println(message);
+            System.out.println("-------------------");
+        }
+
+        this.output.writeObject(messages);
     }
 }

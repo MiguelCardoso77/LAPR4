@@ -2,9 +2,12 @@ package core.services;
 
 import core.domain.application.*;
 import core.domain.candidate.Candidate;
+import core.domain.company.Company;
+import core.domain.customer.Customer;
 import core.domain.jobOpening.JobOpening;
 import core.persistence.PersistenceContext;
 import core.repositories.ApplicationRepository;
+import core.repositories.CustomerRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,7 @@ import java.util.List;
 @Service
 public class ApplicationService {
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
+    private final CustomerRepository customerRepository = PersistenceContext.repositories().customerUsers();
 
     /**
      * Registers a new job application.
@@ -80,5 +84,24 @@ public class ApplicationService {
     public Application updateRank(int rank, Application application) {
         application.updateRank(rank);
         return applicationRepository.save(application);
+    }
+
+    public List<Application> applicationsByCM(SystemUser cm) {
+        List<Application> applications = new ArrayList<>();
+        List<Customer> customers = (List<Customer>) customerRepository.findAll();
+
+        for (Application a : applicationRepository.allApplications()) {
+            Company company = a.jobReference().company();
+
+            for (Customer c : customers) {
+                if (c.company().equals(company) && c.customerManager().equals(cm)) {
+                    if (!applications.contains(a)) {
+                        applications.add(a);
+                    }
+                }
+            }
+        }
+
+        return applications;
     }
 }

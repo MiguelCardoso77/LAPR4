@@ -1,3 +1,5 @@
+package core.antlr4.autogen.interview;
+
 import core.antlr4.autogen.interview.InterviewModelGrammarListener;
 import core.antlr4.autogen.interview.InterviewModelGrammarVisitor;
 import org.antlr.v4.runtime.atn.*;

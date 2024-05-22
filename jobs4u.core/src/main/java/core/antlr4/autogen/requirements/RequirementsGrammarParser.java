@@ -1,6 +1,5 @@
+package core.antlr4.autogen.requirements;
 
-import core.antlr4.autogen.requirements.RequirementsGrammarListener;
-import core.antlr4.autogen.requirements.RequirementsGrammarVisitor;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;

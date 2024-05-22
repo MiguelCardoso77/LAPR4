@@ -5,6 +5,7 @@ import core.domain.application.Application;
 import core.domain.email.Email;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotifyCandidatesUI extends AbstractUI {
@@ -14,6 +15,7 @@ public class NotifyCandidatesUI extends AbstractUI {
     protected boolean doShow() {
         String loggedEmail = theController.getLoggedInUserEmail();
         List<Application> applications = theController.findApplicationsToNotify();
+        List<Email> emailsToSend = new ArrayList<>();
         System.out.println("Candidates that will be notified: " + applications.size());
 
         for (Application application : applications) {
@@ -22,10 +24,11 @@ public class NotifyCandidatesUI extends AbstractUI {
             String subject = buildSubject(application);
             String body = buildBody(application, status);
 
-            theController.createEmail(loggedEmail, candidateEmail, subject, body);
+            Email emailObj = theController.createEmail(loggedEmail, candidateEmail, subject, body);
+            emailsToSend.add(emailObj);
         }
 
-        theController.closeSocket();
+        theController.sendEmails(emailsToSend);
 
         return true;
     }

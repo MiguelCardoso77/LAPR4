@@ -44,12 +44,16 @@ public class NotifyCandidatesController {
         return application.status().toString();
     }
 
-    public void createEmail(String loggedEmail, String candidateEmail, String subject, String body) {
-        Email emailToSend = emailService.createEmail(loggedEmail, candidateEmail, subject, body);
-        emailService.sendEmail(emailToSend);
+    public Email createEmail(String loggedEmail, String candidateEmail, String subject, String body) {
+        return emailService.createEmail(loggedEmail, candidateEmail, subject, body);
     }
 
-    public void closeSocket() {
+    public void sendEmails(List<Email> emails) {
+        emailService.sendEmails(emails);
+        closeSocket();
+    }
+
+    private void closeSocket() {
         emailService.closeSocket();
     }
 }

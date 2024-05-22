@@ -33,13 +33,12 @@ public class JobInterview implements AggregateRoot<Integer> {
     @JoinColumn(name = "APPLICATION_ID")
     private Application application;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "INTERVIEW_MODEL")
     private InterviewModel interviewModel;
 
     @Column(name = "INTERVIEW_ANSWERS")
     private InterviewAnswers interviewAnswers;
-
 
     /**
      * Constructs a job interview with the specified attributes.
@@ -140,7 +139,7 @@ public class JobInterview implements AggregateRoot<Integer> {
      *
      * @param interviewModelToChange the new interview model
      */
-    public void changeInterviewModel(InterviewModel interviewModelToChange) {
+    public void updateInterviewModel(InterviewModel interviewModelToChange) {
         if (interviewModelToChange != null) {
             this.interviewModel = interviewModelToChange;
         } else {
@@ -201,7 +200,14 @@ public class JobInterview implements AggregateRoot<Integer> {
     public int compareTo(Integer other) {
         return AggregateRoot.super.compareTo(other);
     }
-
+    /**
+     * Returns a string representation of the JobInterview object.
+     * This implementation returns a string that includes the values of
+     * the id, createdOn, time, score, result, application, interviewModel,
+     * and interviewAnswers fields.
+     *
+     * @return A string representation of the JobInterview object.
+     */
     @Override
     public String toString() {
         return "JobInterview{" +
@@ -214,5 +220,13 @@ public class JobInterview implements AggregateRoot<Integer> {
                 ", interviewModel=" + interviewModel +
                 ", interviewAnswers=" + interviewAnswers +
                 '}';
+    }
+    /**
+     * Updates the score of this JobInterview with a new score.
+     *
+     * @param newScore The new score to be set.
+     */
+    public void updateScore(Score newScore){
+        score = newScore;
     }
 }

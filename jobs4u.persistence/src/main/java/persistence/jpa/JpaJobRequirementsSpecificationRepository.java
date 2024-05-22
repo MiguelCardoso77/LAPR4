@@ -10,11 +10,11 @@ import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 class JpaJobRequirementsSpecificationRepository extends JpaAutoTxRepository<JobRequirementsSpecification, Integer ,Integer> implements JobRequirementsSpecificationRepository {
 
     public JpaJobRequirementsSpecificationRepository(final TransactionalContext autoTx) {
-        super(autoTx, "jobRequirementsSpecification");
+        super(autoTx, "id");
     }
 
     public JpaJobRequirementsSpecificationRepository(final String puname) {
-        super(puname, "jobRequirementsSpecification");
+        super(puname, "idJobRequirementsSpecification");
     }
 
 

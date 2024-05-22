@@ -1,0 +1,60 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+'skinparam shadowing false
+
+skinparam rectangle{
+    BorderColor black
+}
+
+left to right direction
+
+actor "Operator" as operator
+actor "Customer Manager" as customerManager
+actor "Product Owner" as productOwner
+actor "Customer" as customer
+actor "Candidate" as candidate
+
+title "Use Case Diagram"
+
+rectangle "System" as backoffice {
+
+    usecase "rank the candidates for a job opening."
+    usecase "open or close phases of the process for a job opening."
+    usecase "execute the process of verification of requirements of applications for a job opening."
+    usecase "notify candidates, by email, of the result of the verification process."
+    usecase "upload a text file with the candidate responses for an interview."
+    usecase "execute the process that evaluates (grades) the interviews for a job opening."
+    usecase "get an ordered list of candidates, using the job interview points (grades), to help analyze the candidates."
+    usecase "publish the results of the selection of candidates for a job opening, so that candidates and customer are notified by email of the result."
+    usecase "process the files produced by the Applications Email Bot, so that they can be imported into the system by initiative of the Operator."
+    usecase "upload a text file with the data fields (requirements) of a candidate for its verification."
+    usecase "list all applications and their state (including the number of applicants)."
+    usecase "notify the candidate on the candidate app when the state of one of his applications changes."
+    usecase "list all job openings, including job reference, position, active since, number of applicants for a customer."
+    usecase "present a top 20 list of the most frequently referenced words from files uploaded by a candidate and a list of the files in which these words appear."
+
+
+    candidate --> "notify the candidate on the candidate app when the state of one of his applications changes."
+    candidate --> "list all applications and their state (including the number of applicants)."
+
+    customer --> "list all job openings, including job reference, position, active since, number of applicants for a customer."
+
+    customerManager --> "present a top 20 list of the most frequently referenced words from files uploaded by a candidate and a list of the files in which these words appear."
+        customerManager --> "publish the results of the selection of candidates for a job opening, so that candidates and customer are notified by email of the result."
+        customerManager --> "get an ordered list of candidates, using the job interview points (grades), to help analyze the candidates."
+        customerManager --> "execute the process that evaluates (grades) the interviews for a job opening."
+        customerManager --> "upload a text file with the candidate responses for an interview."
+        customerManager --> "notify candidates, by email, of the result of the verification process."
+        customerManager --> "execute the process of verification of requirements of applications for a job opening."
+        customerManager --> "open or close phases of the process for a job opening."
+        customer --> "rank the candidates for a job opening."
+
+    operator --> "upload a text file with the data fields (requirements) of a candidate for its verification."
+
+    productOwner --> "process the files produced by the Applications Email Bot, so that they can be imported into the system by initiative of the Operator."
+
+}
+
+
+@enduml

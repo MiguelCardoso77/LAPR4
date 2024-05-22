@@ -5,10 +5,10 @@ package core.domain.jobRequirementsSpecification;
 public enum AcademicDegree {
 
 
-        NONE ("None") ,
-        BACHELOR ("Bachelor") ,
-        MASTER ("Master")  ,
-        DOCTORATE ("Doctorate") ;
+    NONE ("None") ,
+    BACHELOR ("Bachelor") ,
+    MASTER ("Master")  ,
+    DOCTORATE ("Doctorate") ;
 
     private final String usage;
 

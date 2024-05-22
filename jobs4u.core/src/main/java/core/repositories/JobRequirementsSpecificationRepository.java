@@ -18,13 +18,5 @@ public interface JobRequirementsSpecificationRepository extends DomainRepository
      * @return An Iterable containing all JobRequirementsSpecification entities.
      */
     Iterable<JobRequirementsSpecification> allJobRequirementsSpecification();
-    /**
-     * Retrieves a JobRequirementsSpecification entity by its identity.
-     *
-     * @param id The identity of the JobRequirementsSpecification entity to retrieve.
-     * @return An Optional containing the JobRequirementsSpecification entity if found, or empty if not found.
-     */
-    @Override
-    Optional<JobRequirementsSpecification> ofIdentity(Integer id);
 
 }

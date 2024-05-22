@@ -3,11 +3,11 @@ package core.application.controllers;
 import core.domain.application.Application;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
-import core.domain.user.Jobs4URoles;
 import core.services.ApplicationService;
 import core.services.JobOpeningService;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
+import eapli.framework.io.util.Console;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,6 @@ import java.util.List;
  * @author Tomás Gonçalves
  */
 public class ListJobOpeningApplicationsController {
-
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
     private final JobOpeningService jobserv = new JobOpeningService();
     private final ApplicationService appServ = new ApplicationService();
@@ -32,7 +30,6 @@ public class ListJobOpeningApplicationsController {
      * @return Iterable of applications associated with the specified job opening.
      */
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         Iterable<Application> allApplications = appServ.allApplications();
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
@@ -44,6 +41,36 @@ public class ListJobOpeningApplicationsController {
         return allApplicationsJobOpening;
     }
 
+    public Iterable<Application> showApplicationsOfJobOpening(JobReference jobReference) {
+        Iterable<Application> iterable = allApplicationsOfJobOpening(jobReference);
+
+        if (!iterable.iterator().hasNext()) {
+            System.out.println("There are no applications for this job opening ");
+        } else {
+            System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status",  "Job Reference" , "Candidate");
+            for (Application application : iterable) {
+                System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", application.identity(), application.rank(), "Submitted", application.jobReference().jobReference(), application.candidate().user().identity());
+            }
+        }
+
+        return iterable;
+    }
+
+    public Application selectApplication() {
+        Application application = null;
+        final int option = Console.readInteger("Enter the id of the application");
+        if (option == 0) {
+            System.out.println("No application selected");
+        } else {
+            try {
+                application = findApplicationByID(option);
+            } catch (IntegrityViolationException | ConcurrencyException ex) {
+                System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
+            }
+        }
+        return application;
+    }
+
     /**
      * Finds a job opening by its reference.
      *
@@ -51,7 +78,6 @@ public class ListJobOpeningApplicationsController {
      * @return The job opening if found, otherwise null.
      */
     public JobOpening findJobOpening(JobReference jobReference) {
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER);
         Iterable<JobOpening> allJobOpenings = jobserv.allJobOpenings();
         for (JobOpening j : allJobOpenings) {
             if (j.jobReference().equals(jobReference)) {
@@ -76,6 +102,4 @@ public class ListJobOpeningApplicationsController {
         }
         return null;
     }
-
-
 }

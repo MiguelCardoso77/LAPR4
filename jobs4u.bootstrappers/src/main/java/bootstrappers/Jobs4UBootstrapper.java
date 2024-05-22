@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:S106")
 public class Jobs4UBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(Jobs4UBootstrapper.class);
-    private static final String BOOTSTRAP = "bootstrap@gmail.com";
+    private static final String BOOTSTRAP = "bootstrapmachine@jobs4u.com";
     private static final String BOOTSTRAP_PWD = "Bootstrap9000";
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
@@ -35,24 +35,24 @@ public class Jobs4UBootstrapper implements Action {
 
     @Override
     public boolean execute() {
+        System.out.println("Bootstrapping MasterUser...");
+        registerBootstrapAccount();
+        authenticateForBootstrapping();
+
         final Action[] actions = {
+                new AddRequirementsBootstrapper(),
                 new CompanyBootstrapper(),
                 new MasterUsersBootstrapper(),
                 new JobsBootstrapper(),
                 new ProcessBootstrapper(),
+                new InterviewModelBootstrapper(),
                 new ApplicationsBootstrapper(),
-                new JobInterviewsBootstrapper(),
-                new RequirementsBootstrapper()};
-
-
-
-        registerBootstrapAccount();
-        authenticateForBootstrapping();
+                new JobInterviewsBootstrapper()};
 
         // execute all bootstrapping
         boolean ret = true;
         for (final Action boot : actions) {
-            System.out.println("Bootstrapping " + nameOfEntity(boot) + "...");
+            System.out.println("\nBootstrapping " + nameOfEntity(boot) + "...");
             ret &= boot.execute();
         }
         return ret;
@@ -64,7 +64,7 @@ public class Jobs4UBootstrapper implements Action {
      */
     private void registerBootstrapAccount() {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
-        userBuilder.withUsername(BOOTSTRAP).withPassword(BOOTSTRAP_PWD).withName("Bootstrap", "Machine").withEmail("bootstrapmachine@gmail.com").withRoles(Jobs4URoles.BOOTSTRAP);
+        userBuilder.withUsername(BOOTSTRAP).withPassword(BOOTSTRAP_PWD).withName("Bootstrap", "Machine").withEmail("bootstrapmachine@jobs4u.com").withRoles(Jobs4URoles.BOOTSTRAP);
         final SystemUser newUser = userBuilder.build();
 
         SystemUser bootstrapper;

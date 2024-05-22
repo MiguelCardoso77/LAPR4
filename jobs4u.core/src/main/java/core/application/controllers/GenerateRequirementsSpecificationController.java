@@ -1,8 +1,12 @@
 package core.application.controllers;
 
-import core.domain.interview.QuestionType;
-import core.domain.jobRequirementsSpecification.AcademicDegree;
-import core.domain.jobRequirementsSpecification.ProgrammingLanguages;
+import core.domain.jobOpening.JobOpening;
+import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.persistence.PersistenceContext;
+import core.repositories.JobOpeningRepository;
+import core.repositories.JobRequirementsSpecificationRepository;
+import eapli.framework.domain.repositories.ConcurrencyException;
+import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 
 import java.io.IOException;
@@ -10,11 +14,66 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Optional;
 
 public class GenerateRequirementsSpecificationController {
 
-    public List<String> getAcademicDegree() {
+    private final JobRequirementsSpecificationRepository jobRequirementsSpecificationRepository = PersistenceContext.repositories().jobRequirements();
+
+    private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
+
+
+    public List<String> readFile(String filePath) {
+        try {
+            return Files.readAllLines(Paths.get(filePath));
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+            return new ArrayList<>();  // Return empty list instead of null
+        }
+    }
+
+    public void writeListToFile(List<String> questionForFile, String filePath) {
+        try {
+            Files.write(Paths.get(filePath), questionForFile);
+            System.out.println("\nFile created successfully.");
+        } catch (IOException e) {
+            System.err.println("\nError writing to file.");
+            e.printStackTrace();
+        }
+    }
+
+    public List<JobOpening> findAllJobOpeningAssigned() {
+        Iterable<JobOpening> allJobOpening = jobOpeningRepository.allJobOpenings();
+        List<JobOpening> filteredJobOpening = new ArrayList<>();
+
+        for (JobOpening jobOpening : allJobOpening) {
+            if (jobOpening.jobRequirementsSpecification() != null) {
+                filteredJobOpening.add(jobOpening);
+            }
+        }
+
+        return filteredJobOpening;
+    }
+
+
+
+
+
+    public List<String> processLines(List<String> lines) {
+        List<String> processedLines = new ArrayList<>();
+        for (String line : lines) {
+            int firstIndex = line.indexOf(":");
+            if (firstIndex != -1) {
+                // Keep everything up to and including the first ":"
+                processedLines.add(line.substring(0, firstIndex + 1));
+            } else {
+                // Add the line as is if no ":" is found
+                processedLines.add(line);
+            }
+        }
+        return processedLines;
+    }
+    /*public List<String> getAcademicDegree() {
         List<String> academicDegree = new ArrayList<>();
         for (AcademicDegree type : AcademicDegree.values()) {
             academicDegree.add(type.toString());
@@ -85,6 +144,6 @@ public class GenerateRequirementsSpecificationController {
         }
 
         return progLangString.toString();
-    }
+    }*/
 
 }

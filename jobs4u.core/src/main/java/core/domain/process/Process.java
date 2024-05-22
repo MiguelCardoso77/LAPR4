@@ -1,6 +1,5 @@
 package core.domain.process;
-import core.domain.jobOpening.JobOpening;
-import core.domain.jobOpening.JobReference;
+
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
 
@@ -26,21 +25,35 @@ public class Process implements AggregateRoot<Integer> {
     @Temporal(TemporalType.DATE)
     private Calendar processDate;
 
-    @OneToOne
-    @JoinColumn(name = "JOB_REFERENCE")
-    private JobOpening jobReference;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PROCESS_STATUS")
+    private ProcessStatus processStatus;
 
     /**
      * Constructs a Process object with the given parameters.
      *
      * @param processState  the state of the process
      * @param processDate   the date of the process
-     * @param jobReference  the reference to the associated job opening
+     * @param processStatus the status of the process
      */
-    public Process(ProcessState processState, Calendar processDate, JobOpening jobReference){
+    public Process(ProcessState processState, Calendar processDate, ProcessStatus processStatus){
         this.processState = processState;
         this.processDate = processDate;
-        this.jobReference = jobReference;
+        this.processStatus = processStatus;
+    }
+    /**
+     * Constructs a Process object with the given parameters.
+     *
+     * @param id            the id of the process
+     * @param processState  the state of the process
+     * @param processDate   the date of the process
+     * @param processStatus the status of the process
+     */
+    public Process(Integer id, ProcessState processState, Calendar processDate, ProcessStatus processStatus){
+        this.idProcess = id;
+        this.processState = processState;
+        this.processDate = processDate;
+        this.processStatus = processStatus;
     }
 
     /**
@@ -68,7 +81,7 @@ public class Process implements AggregateRoot<Integer> {
 
         final Process that = (Process) other;
 
-        return idProcess.equals(that.idProcess) && processState.equals(that.processState) && processDate.equals(that.processDate) && jobReference.equals(that.jobReference);
+        return idProcess.equals(that.idProcess) && processState.equals(that.processState) && processDate.equals(that.processDate);
     }
 
     /**
@@ -95,6 +108,13 @@ public class Process implements AggregateRoot<Integer> {
      * @return the process state
      */
     public ProcessState processState() { return this.processState; }
+    /**
+     * Retrieves the status of the process.
+     *
+     * @return the process state
+     */
+
+    public ProcessStatus processStatus() { return this.processStatus; }
 
     /**
      * Retrieves the date of the process.
@@ -104,9 +124,24 @@ public class Process implements AggregateRoot<Integer> {
     public Calendar processDate() { return this.processDate; }
 
     /**
-     * Retrieves the reference to the associated job opening.
-     *
-     * @return the job reference
+     * Changes the status of the associated process.
      */
-    public JobOpening jobReference() { return this.jobReference; }
+    public void changeProcessStatus(ProcessStatus processStatus) { this.processStatus = processStatus; }
+    /**
+     * Changes the state of the state process.
+     */
+    public void changeProcessState(ProcessState processState) { this.processState = processState; }
+    /**
+     * Returns a string representation of this process
+     * The string representation includes the process id, state, state date and status
+     *
+     * @return A string representation of this process.
+     */
+    @Override
+    public String toString() {
+        return "Process : " + idProcess +
+                ", state = " + processState +
+                ", state date = " + processDate +
+                ", status = " + processStatus;
+    }
 }

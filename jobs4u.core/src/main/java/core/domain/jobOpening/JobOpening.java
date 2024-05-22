@@ -2,11 +2,10 @@ package core.domain.jobOpening;
 
 import core.domain.company.Company;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.domain.process.Process;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import jakarta.persistence.*;
-
-import java.util.Objects;
 
 /**
  * Represents a job opening in the system.
@@ -48,6 +47,10 @@ public class JobOpening implements AggregateRoot<JobReference> {
     @ManyToOne
     @JoinColumn(name = "JOB_REQUIREMENTS")
     private JobRequirementsSpecification jobRequirementsSpecification;
+
+    @OneToOne
+    @JoinColumn(name = "PROCESS_ID")
+    private Process process;
     /**
      * Constructs a new job opening with the provided attributes.
      *
@@ -62,7 +65,8 @@ public class JobOpening implements AggregateRoot<JobReference> {
      * @param jobRequirementsSpecification The job requirements specification for the job opening.
      */
     public JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber,
-                      Address address, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction, Company company, JobRequirementsSpecification jobRequirementsSpecification) {
+                      Address address, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction, Company company,
+                      JobRequirementsSpecification jobRequirementsSpecification, Process process) {
         this.jobReference = jobReference;
         this.description = description;
         this.vacanciesNumber = vacanciesNumber;
@@ -72,11 +76,13 @@ public class JobOpening implements AggregateRoot<JobReference> {
         this.titleOrFunction = titleOrFunction;
         this.company = company;
         this.jobRequirementsSpecification = jobRequirementsSpecification;
+        this.process = process;
     }
 
     protected JobOpening() {
         // for ORM only
     }
+
     /**
      * Gets the job reference.
      *
@@ -85,13 +91,12 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public JobReference identity() {
         return jobReference;
     }
+
     /**
      * Gets the description of the job opening.
      *
      * @return The description of the job opening.
      */
-
-
 
     @Override
     public boolean equals(Object obj) {
@@ -104,6 +109,13 @@ public class JobOpening implements AggregateRoot<JobReference> {
         JobReference otherJobReference = (JobReference) obj;
         return jobReference.equals(otherJobReference);
     }
+
+    /**
+     * Checks if this process is equal to another object.
+     *
+     * @param other the object to compare with
+     * @return true if the objects are equal, false otherwise
+     */
 
     @Override
     public boolean sameAs(Object other) {
@@ -182,6 +194,14 @@ public class JobOpening implements AggregateRoot<JobReference> {
         return jobRequirementsSpecification;
     }
     /**
+     * Gets the process for the job opening.
+     *
+     * @return The process for the job opening.
+     */
+    public Process process(){
+        return process;
+    }
+    /**
      * Updates the job requirements specification for the job opening.
      *
      * @param jobRequirementsSpecification The new job requirements specification.
@@ -189,7 +209,12 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public void updateJobRequirements(JobRequirementsSpecification jobRequirementsSpecification){
         this.jobRequirementsSpecification = jobRequirementsSpecification;
     }
-
+    /**
+     * Checks if the given job reference is the same as the job reference of this job opening.
+     *
+     * @param jobReference The job reference to compare.
+     * @return True if the job reference matches the job reference of this job opening, false otherwise.
+     */
     public boolean sameReference(JobReference jobReference){
         String jobReference1 = String.valueOf(jobReference);
         String jobOpeningReference = String.valueOf(this.jobReference);
@@ -198,7 +223,13 @@ public class JobOpening implements AggregateRoot<JobReference> {
         }
         return false;
     }
-
+    /**
+     * Returns a string representation of this job opening.
+     * The string representation includes the job reference, description, vacancies number, address, mode,
+     * contract type, title or function, associated company, and job requirements specification.
+     *
+     * @return A string representation of this job opening.
+     */
     @Override
     public String toString() {
         return "jobReference=" + jobReference +
@@ -209,7 +240,8 @@ public class JobOpening implements AggregateRoot<JobReference> {
                 ", contract type = " + contractType +
                 ", title = " + titleOrFunction +
                 ", company = " + company +
-                ", job requirements specification = " + jobRequirementsSpecification;
+                ", job requirements specification = " + jobRequirementsSpecification +
+                ", process = " + process;
     }
 
 }

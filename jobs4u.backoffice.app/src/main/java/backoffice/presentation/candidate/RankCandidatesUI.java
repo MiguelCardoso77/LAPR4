@@ -1,7 +1,9 @@
 package backoffice.presentation.candidate;
 
 import console.presentation.utils.ConsoleColors;
+import core.application.controllers.ListJobOpeningController;
 import core.application.controllers.RankCandidatesController;
+import core.application.controllers.SelectJobOpeningController;
 import core.domain.application.Application;
 import core.domain.interview.JobInterview;
 import core.domain.interview.Score;
@@ -13,69 +15,73 @@ import java.util.Comparator;
 import java.util.List;
 
 public class RankCandidatesUI extends AbstractUI {
+    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final RankCandidatesController theController = new RankCandidatesController();
+    private final boolean RANK_ONLY_NOT_RANKED = false;
 
     @Override
     protected boolean doShow() {
-        JobOpening selectedJob = selectJobOpening();
-        Application selectedApplication = selectApplication(selectedJob);
-        Score selectedInterview = getLastJobInterview(selectedApplication);
+        JobOpening selectedJob = selectJobOpeningController.selectJobOpeningAnalysis();
 
-        System.out.println(ConsoleColors.GREEN + "\nThe score of the last interview for the selected application is " + ConsoleColors.RESET + selectedInterview);
+        List<Application> applications = theController.findApplicationsForJobOpening(selectedJob);
+        if (applications.isEmpty()) {
+            System.out.println(ConsoleColors.RED + "No applications found for the selected job opening." + ConsoleColors.RESET);
+            return false;
+        }
+
+        if (!RANK_ONLY_NOT_RANKED) {
+
+            System.out.println("\n" + applications.size() + " applications will be ranked.");
+            for (Application application : applications) {
+                rankApplication(application);
+            }
+
+        } else {
+
+            List<Application> nonRankedApplications = theController.filterByNonRankedApplications(applications);
+
+            if (nonRankedApplications.isEmpty()) {
+                System.out.println(ConsoleColors.RED + "No non-ranked applications found for the selected job opening." + ConsoleColors.RESET);
+                return false;
+            }
+
+            System.out.println("\n" + applications.size() + " applications will be ranked.");
+            for (Application application : nonRankedApplications) {
+                rankApplication(application);
+            }
+
+        }
+
+        theController.clearAssignedRanks();
+        return true;
+    }
+
+    private void rankApplication(Application application) {
+        System.out.println("\nNow ranking, Application: " + application.dataFile());
+
+        Score selectedInterview = getLastJobInterview(application);
+        System.out.println(ConsoleColors.CYAN + "The score of the last interview for this application is " + ConsoleColors.RESET + selectedInterview);
 
         if (selectedInterview == null) {
             String response = Console.readLine("Do you still want to rank the application? (Yes/No): ");
             if (!response.equalsIgnoreCase("yes")) {
-                return false;
+                return;
             }
         }
 
-        int rank = Console.readInteger("Insert the new rank for this candidate: ");
+        int rank;
+        do {
+            rank = Console.readInteger("Insert the new rank for this candidate: ");
+            if (theController.isRankAlreadyAssigned(rank)) {
+                System.out.println("This rank is already assigned. Please choose a different rank.");
+            }
+        } while (theController.isRankAlreadyAssigned(rank));
 
-        updateRank(rank, selectedApplication);
-
-        return true;
-    }
-
-    private JobOpening selectJobOpening() {
-        List<JobOpening> jobOpenings = theController.getAllJobOpenings();
-
-        System.out.println("Job Openings:");
-        for (int i = 0; i < jobOpenings.size(); i++) {
-            System.out.println((i + 1) + " - " + jobOpenings.get(i).jobReference());
-        }
-
-        int selectedNumber = Console.readInteger("Please select a job opening by entering its number: ");
-        if (selectedNumber < 1 || selectedNumber > jobOpenings.size()) {
-            System.out.println(ConsoleColors.RED + "Invalid number. Please enter a number between 1 and " + jobOpenings.size() + ConsoleColors.RESET);
-        }
-
-        return jobOpenings.get(selectedNumber - 1);
-    }
-
-    private Application selectApplication(JobOpening selectedJob) {
-        List<Application> applications = theController.getApplicationsForJobOpening(selectedJob);
-
-        if (applications.isEmpty()) {
-            System.out.println(ConsoleColors.RED + "No applications found for the selected job opening." + ConsoleColors.RESET);
-            return null;
-        }
-
-        System.out.println("\nApplications:");
-        for (int i = 0; i < applications.size(); i++) {
-            System.out.println((i + 1) + " - " + applications.get(i).dataFile());
-        }
-
-        int selectedApplicationIndex = Console.readInteger("Please select an application by entering its number: ");
-        if (selectedApplicationIndex < 1 || selectedApplicationIndex > applications.size()) {
-            System.out.println(ConsoleColors.RED + "Invalid number. Please enter a number between 1 and " + applications.size() + ConsoleColors.RESET);
-        }
-
-        return applications.get(selectedApplicationIndex - 1);
+        updateRank(rank, application);
     }
 
     private Score getLastJobInterview(Application selectedApplication) {
-        List<JobInterview> interviews = theController.getInterviewsForApplication(selectedApplication);
+        List<JobInterview> interviews = theController.findInterviewsForApplication(selectedApplication);
 
         if (interviews.isEmpty()) {
             System.out.println(ConsoleColors.RED + "No interviews found for the selected application." + ConsoleColors.RESET);
@@ -91,11 +97,11 @@ public class RankCandidatesUI extends AbstractUI {
 
     private void updateRank(int rank, Application selectedApplication) {
         Application newApplication = theController.updateRank(rank, selectedApplication);
-        System.out.println("Success: Rank was updated to " + newApplication.rank() + " for the application " + newApplication.dataFile());
+        System.out.println(ConsoleColors.GREEN + "Success:" + ConsoleColors.RESET + " Rank was updated to " + newApplication.rank() + " for the application " + newApplication.dataFile());
     }
 
     @Override
     public String headline() {
-        return "Rank Candidates";
+        return "Rank Candidates, (Ranking Only Not Ranked: " + RANK_ONLY_NOT_RANKED + ")";
     }
 }

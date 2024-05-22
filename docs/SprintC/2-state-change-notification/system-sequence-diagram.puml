@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD)
+
+autonumber
+
+actor "Candidate" as C
+participant ": System" as S
+
+activate C
+
+    C -> S: asks to see the applications's state changes notifications
+    activate S
+
+        S --> C : shows all the notifications
+        deactivate S
+
+@enduml

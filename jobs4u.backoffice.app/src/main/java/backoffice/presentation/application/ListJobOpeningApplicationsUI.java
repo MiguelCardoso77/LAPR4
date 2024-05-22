@@ -35,16 +35,17 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
      * Generates the headline for this UI.
      *
      * @return The headline string.
- * */
+     */
     @Override
     public String headline() {
         return "List All Applications of a Job Opening";
     }
+
     /**
      * Provides the message to display when no applications are found.
      *
      * @return The message indicating no applications found.
- */
+     */
     @Override
     protected String emptyMessage() {
         return "No applications found for this job opening.";
@@ -62,7 +63,6 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
     }
 
 
-
     /**
      * Retrieves all job openings.
      *
@@ -70,7 +70,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
      */
     @Override
     protected Iterable<JobOpening> elements() {
-        return theController1.allJobOpening();
+        return theController1.allJobOpenings();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
             System.out.printf("%-30s%-30s%n", "Title or Function:", "Job Reference:");
             for (JobOpening jobOpening : iterable) {
                 list.add(jobOpening);
-                System.out.printf("%-6s%-30s%-30s%n",cont, jobOpening.titleOrFunction(), jobOpening.jobReference());
+                System.out.printf("%-6s%-30s%-30s%n", cont, jobOpening.titleOrFunction(), jobOpening.jobReference());
                 cont++;
             }
             final int option = Console.readInteger("Enter the number of job opening");
@@ -130,17 +130,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
             }
         }
         if (jobOpeningApplication != null) {
-
-            final Iterable<Application> iterable1 = theController.allApplicationsOfJobOpening(jobOpeningApplication.jobReference());
-            if (!iterable1.iterator().hasNext()) {
-                System.out.println("There are no applications for this job opening ");
-            } else {
-                System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status",  "Job Reference" , "Candidate");
-                for (Application application : iterable1) {
-                    System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", application.identity(), application.rank(), "Submitted", application.jobReference().jobReference(), application.candidate().user().identity());
-                }
-            }
-
+            theController.showApplicationsOfJobOpening(jobOpeningApplication.jobReference());
         }
         return true;
     }

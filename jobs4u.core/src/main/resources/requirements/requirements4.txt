@@ -1,0 +1,5 @@
+# Requirements:
+-> Academic Degree: Master
+-> Languages: French, Portuguese, Spanish
+-> Programming Languages: Java, JavaScript, Python
+-> Years of Experience: 4

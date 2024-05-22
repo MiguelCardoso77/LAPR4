@@ -24,19 +24,18 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
     CompanyRepository companyRepository = PersistenceContext.repositories().companies();
     @Override
     public boolean execute() {
-        registerAdmin("admin", TestDataConstants.PASSWORD1, "Jane", "Doe Admin", "jane.doe@email.local");
+        registerAdmin("AdminEx", "ExAdmin1", "Admin", "Example", "admin@jobs4u.com");
+        registerCustomerManager("CustomerManagerEx", "ExCustomerManager1", "CustomerManager", "Example", "customermanager@jobs4u.com");
+        registerLanguageEngineer("LanguageEngineerEx", "ExLanguageEngineer1", "LanguageEngineer", "Example", "languageengineer@jobs4u.com");
+        registerOperator("OperatorEx", "ExOperator1", "Operator", "Example", "operator@jobs4u.com");
 
-        registerAdmin("AdminEx", "ExAdmin1", "Admin", "Example", "exadmin@gmail.com");
-        registerCustomerManager("CustomerManagerEx", "ExCustomerManager1", "CustomerManager", "Example", "excustomermanager@gmail.com");
-        registerLanguageEngineer("LanguageEngineerEx", "ExLanguageEngineer1", "LanguageEngineer", "Example", "exlanguageengineer@gmail.com");
-        registerOperator("OperatorEx", "ExOperator1", "Operator", "Example", "exoperator@gmail.com");
+        registerBootstrapCandidate("CandidateOne", "ExampleOne", "candidateOne@jobs4u.com", "910920930", "curriculumPathOne");
+        registerBootstrapCandidate("CandidateTwo", "ExampleTwo", "candidateTwo@jobs4u.com", "940950960", "curriculumpPathTwo");
+        registerBootstrapCandidate("CandidateThree", "ExampleThree", "candidateThree@jobs4u.com", "970980990", "curriculumPathThree");
+        registerBootstrapCandidate("John", "Doe", "johndoe@jobs4u.com", "961234567", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
 
-        registerBootstrapCandidate("CandidateOne", "ExampleOne", "candidateOne@gmail.com", "910920930", "curriculumPathOne");
-        registerBootstrapCandidate("CandidateTwo", "ExampleTwo", "candidateTwo@gmail.com", "940950960", "curriculumpPathTwo");
-        registerBootstrapCandidate("John", "Doe", "johndoe@email.com", "961234567", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
-
-        registerCustomer("CustomerOne", "ExampleOne", "customerOne@gmail.com");
-        registerCustomer("CustomerTwo", "ExampleTwo", "customerTwo@gmail.com");
+        registerCustomer("CustomerOne", "ExampleOne", "customerOne@jobs4u.com");
+        registerCustomer("CustomerTwo", "ExampleTwo", "customerTwo@jobs4u.com");
 
         return true;
     }
@@ -73,7 +72,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
     }
 
     private void registerCustomer(final String firstName, final String lastName, final String email){
-        Optional<SystemUser> currentUser = userRepository.ofIdentity(Username.valueOf("excustomermanager@gmail.com"));
+        Optional<SystemUser> currentUser = userRepository.ofIdentity(Username.valueOf("customermanager@jobs4u.com"));
         Optional<Company> company = companyRepository.ofIdentity(1);
 
         SystemUser customerManager = currentUser.get();

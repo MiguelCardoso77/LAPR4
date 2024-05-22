@@ -17,40 +17,28 @@ import eapli.framework.validations.Preconditions;
 public class JobRequirementsSpecificationBuilder {
 
     private Integer idRequirements;
-    private String academicDegree;
-
-    private int experience;
-
-    private String knowledge;
+    private String jobRequirementsFile;
 
     /**
      * Sets all attributes required to build a JobRequirementsSpecification.
      *
      * @param idRequirements The ID of the job requirements specification.
-     * @param academicDegree The academic degree required for the job.
-     * @param experience The minimum years of experience required for the job.
-     * @param knowledge The specific knowledge or skills required for the job.
+     * @param jobRequirementsPath The path for the job requirements specification file.
      * @return This JobRequirementsSpecificationBuilder instance.
      */
-    public JobRequirementsSpecificationBuilder withAll(final Integer idRequirements, final String academicDegree, final int experience, final String knowledge) {
+    public JobRequirementsSpecificationBuilder withAll(final Integer idRequirements, final String jobRequirementsPath) {
         this.idRequirements = idRequirements;
-        this.academicDegree = academicDegree;
-        this.experience = experience;
-        this.knowledge = knowledge;
+        this.jobRequirementsFile = jobRequirementsPath;
         return this;
     }
     /**
      * Sets all attributes required to build a JobRequirementsSpecification.
      *
-     * @param academicDegree The academic degree required for the job.
-     * @param experience The minimum years of experience required for the job.
-     * @param knowledge The specific knowledge or skills required for the job.
+     * @param jobRequirementsFile The path for the job requirements specification file.
      * @return This JobRequirementsSpecificationBuilder instance.
      */
-    public JobRequirementsSpecificationBuilder withoutId( final String academicDegree, final int experience, final String knowledge) {
-        this.academicDegree = academicDegree;
-        this.experience = experience;
-        this.knowledge = knowledge;
+    public JobRequirementsSpecificationBuilder withoutId( final String jobRequirementsFile) {
+        this.jobRequirementsFile = jobRequirementsFile;
         return this;
     }
 
@@ -62,10 +50,7 @@ public class JobRequirementsSpecificationBuilder {
      * @throws IllegalStateException if any required attribute is not set.
      */
     public JobRequirementsSpecification build() {
-        Preconditions.nonNull(academicDegree);
-        Preconditions.nonNull(experience);
-        Preconditions.nonNull(knowledge);
-
-        return new JobRequirementsSpecification(idRequirements, academicDegree, experience, knowledge);
+        Preconditions.nonNull(jobRequirementsFile);
+        return new JobRequirementsSpecification(idRequirements, jobRequirementsFile);
     }
 }

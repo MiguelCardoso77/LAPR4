@@ -4,10 +4,8 @@ import backoffice.presentation.jobOpening.AddJobOpeningUI;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.interview.InterviewModel;
-import core.domain.interview.InterviewModelBuilder;
 import core.domain.interview.JobInterview;
 import core.domain.jobOpening.JobOpening;
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -15,156 +13,55 @@ import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SelectInterviewModelUI extends AbstractUI {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
-
-    final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
-
-    final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
 
     final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
-
-    final ListInterviewModelsController listInterviewModelsController = new ListInterviewModelsController();
-
     final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
-
-    Iterable<JobOpening> jobOpenings = new ArrayList<>();
-
+    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     Iterable<Application> applicationList = new ArrayList<>();
-
-    Iterable<JobInterview> jobInterviews = new ArrayList<>();
-
-
 
     @Override
     protected boolean doShow() {
 
-        showJobOpenings();
         JobOpening jobOpening = selectJobOpening();
 
-        showApplicationsOfJobOpening(jobOpening);
-        Application application = selectApplication();
+        InterviewModel interviewModel = selectInterviewModel();
 
-        showInterviewsOfApplication(application);
-        JobInterview jobInterview = selectJobInterview();
+        applicationsOfJobOpening(jobOpening);
 
-        String interviewModelString = selectInterviewModel();
-        List<String> data;
-
-        try {
-            data = listInterviewModelsController.importInterviewModel(Path.of(interviewModelString));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        InterviewModel interviewModel = listInterviewModelsController.extractInterviewModelFromFile(data);
-
-        if (jobInterview != null) {
-            jobInterview.changeInterviewModel(interviewModel);
-        }
+        updateInterviewModel(interviewModel);
 
         return false;
     }
 
-    private void showJobOpenings() {
-        jobOpenings = selectInterviewModelController.showJobOpenings();
+    private void updateInterviewModel(InterviewModel interviewModel) {
+        if (!applicationList.iterator().hasNext()) {
+            System.out.println("It's not possible to perform this operation. ");
+            doShow();
+        } else {
+            for (Application application : applicationList) {
+                Iterable<JobInterview> jobInterviews = listJobInterviewsApplicationController.allJobInterviewsOfApplication(application);
+                for (JobInterview jobInterview : jobInterviews) {
+                    if (jobInterview != null) {
+                        selectInterviewModelController.updateInterviewModel(interviewModel, jobInterview.identity());
+                    }
+                }
+            }
+        }
     }
 
     private JobOpening selectJobOpening() {
-        final List<JobOpening> list = new ArrayList<>();
-        if (jobOpenings.iterator().hasNext()) {
-            for (JobOpening jobOpening : jobOpenings) {
-                list.add(jobOpening);
-            }
-
-            JobOpening jobOpening = null;
-            final int option = Console.readInteger("Enter the number of the job opening");
-            if (option == 0) {
-                System.out.println("No job opening selected");
-            } else {
-                try {
-                    jobOpening = this.jobOpeningController.findJobOpeningByJobReference(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println(
-                            "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
-            }
-
-            return jobOpening;
-        }
-        return null;
+        return selectJobOpeningController.selectJobOpening();
     }
 
-    private void showApplicationsOfJobOpening(JobOpening jobOpening) {
-        applicationList = selectInterviewModelController.showApplicationsOfJobOpening(jobOpening);
+    private void applicationsOfJobOpening(JobOpening jobOpening) {
+        applicationList = selectInterviewModelController.applicationsOfJobOpening(jobOpening);
     }
 
-    private Application selectApplication() {
-        final List<Application> list = new ArrayList<>();
-        if (applicationList.iterator().hasNext()) {
-            for (Application application : applicationList) {
-                list.add(application);
-            }
-
-            Application application = null;
-            final int option = Console.readInteger("Enter the number of the application");
-            if (option == 0) {
-                System.out.println("No applications selected");
-            } else {
-                try {
-                    application = this.jobOpeningApplicationsController.findApplicationByID(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println(
-                            "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
-            }
-            return application;
-        }
-
-        return null;
-    }
-
-    private void showInterviewsOfApplication(Application application) {
-        jobInterviews = selectInterviewModelController.showInterviewsOfApplication(application);
-    }
-
-    private JobInterview selectJobInterview() {
-        final List<JobInterview> list = new ArrayList<>();
-        if (jobInterviews.iterator().hasNext()) {
-            for (JobInterview jobInterview : jobInterviews) {
-                list.add(jobInterview);
-            }
-
-            JobInterview jobInterview = null;
-            final int option = Console.readInteger("Enter the number of the jobInterview");
-            if (option == 0) {
-                System.out.println("No job interviews selected");
-            } else {
-                try {
-                    jobInterview = listJobInterviewsApplicationController.findJobInterviewById(list.get(option - 1).identity());
-                } catch (IntegrityViolationException | ConcurrencyException ex) {
-                    LOGGER.error("Error performing the operation", ex);
-                    System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
-                }
-            }
-
-            return jobInterview;
-        }
-        return null;
-    }
-
-    private String selectInterviewModel() {
+    private InterviewModel selectInterviewModel() {
         return selectInterviewModelController.listAndSelectInterviewModels();
 
     }

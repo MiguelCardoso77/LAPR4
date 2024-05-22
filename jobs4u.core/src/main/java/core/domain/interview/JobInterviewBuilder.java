@@ -28,14 +28,14 @@ public class JobInterviewBuilder implements DomainFactory<JobInterview> {
      * @param interviewModel the interview model used for the interview
      * @return this builder instance
      */
-    public JobInterviewBuilder withAll(Calendar createdOn, int time, int score, String result,
-                                       Application application, InterviewModel interviewModel) {
+    public JobInterviewBuilder withAll(Calendar createdOn, int time, int score, String result, Application application, InterviewModel interviewModel) {
         this.createdOn = createdOn;
         this.time = new Time(time);
         this.score = new Score(score);
         this.result = new Result(result);
         this.application = application;
-        this.interviewModel = null;
+        this.interviewModel = interviewModel;
+
         return this;
     }
     /**
@@ -45,7 +45,7 @@ public class JobInterviewBuilder implements DomainFactory<JobInterview> {
      */
     @Override
     public JobInterview build() {
-        return new JobInterview(createdOn, time, score, result, application, null, null);
+        return new JobInterview(createdOn, time, score, result, application, interviewModel, null);
     }
 
 }

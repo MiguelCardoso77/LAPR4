@@ -1,6 +1,5 @@
 package bootstrap;
 
-import bootstrappers.Jobs4USmokeTester;
 import console.BaseApplication;
 import bootstrappers.Jobs4UBootstrapper;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
@@ -13,8 +12,6 @@ public class Jobs4UBootstrap extends BaseApplication {
     private Jobs4UBootstrap() {
     }
 
-    private final boolean isToBootstrapTestData = false;
-
     public static void main(final String[] args) {
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new Jobs4UBootstrap().run(args);
@@ -22,22 +19,13 @@ public class Jobs4UBootstrap extends BaseApplication {
 
     @Override
     protected void doMain(final String[] args) {
-        if (isToBootstrapTestData) {
-            System.out.println("\n\n------- TEST DATA -------");
-            new Jobs4USmokeTester().execute();
-        } else {
-            System.out.println("\n\n------- MASTER DATA -------");
-            new Jobs4UBootstrapper().execute();
-        }
+        System.out.println("\n\n------- MASTER DATA -------");
+        new Jobs4UBootstrapper().execute();
     }
 
     @Override
     protected String appTitle() {
-        if (isToBootstrapTestData) {
-            return "Bootstrapping Jobs4u test data";
-        } else {
-            return "Bootstrapping Jobs4u data ";
-        }
+        return "Bootstrapping Jobs4u Data ";
     }
 
     @Override

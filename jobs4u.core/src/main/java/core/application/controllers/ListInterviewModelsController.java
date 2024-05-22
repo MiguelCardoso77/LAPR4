@@ -19,28 +19,4 @@ public class ListInterviewModelsController {
                 return service.allInterviewModels();
         }
 
-
-        public static List<String> importInterviewModel(Path path) throws FileNotFoundException {
-                List<String> interviews = new ArrayList<>();
-                try (BufferedReader br = new BufferedReader(new FileReader(path.toFile()))) {
-                        String line;
-                        br.readLine();
-                        while ((line = br.readLine()) != null) {
-                                String[] parts = line.split(":");
-                                if (parts.length == 2) {
-                                        String value = parts[1].trim();
-                                        interviews.add(value);
-                                }
-                        }
-                } catch (IOException e) {
-                        e.printStackTrace();
-                }
-                return interviews;
-        }
-
-
-        public InterviewModel extractInterviewModelFromFile(List<String> data){
-                String model = data.get(0);
-                return service.registerJobRequirement(model);
-        }
 }

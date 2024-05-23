@@ -22,19 +22,13 @@ activate CM
     CM -> System : selects job opening
     activate System
 
-        System --> CM : lists phases for the selected job opening \nand asks to select one
+        System --> CM : lists current phase for the selected job opening \n and asks to move back actor forward
     deactivate System
 
-    CM -> System : selects phase
+    CM -> System : selects option
     activate System
 
-        System --> CM : shows status update options for the selected \nphase and asks to select one
-    deactivate System
-
-    CM -> System : selects status update option
-    activate System
-
-        System --> CM : displays operation success message
+        System --> CM : displays updated phase for the job opening \n and operation sucess
     deactivate System
 
 deactivate CM

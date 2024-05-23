@@ -3,8 +3,6 @@ package backoffice.presentation.application;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.jobOpening.JobOpening;
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -37,10 +35,11 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
             applications = listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobOpening.jobReference());
             Application application = listJobOpeningApplicationsController.selectApplication();
 
-            String path = Console.readLine("\nEnter the path to the file with the responses: ");
-            List<String> responses = uploadRequirementsAnswersController.readFile(path);
+            String path = Console.readLine("\nEnter the path to the file with the requirements: ");
+            List<String> candidateRequirements = uploadRequirementsAnswersController.readFile(path);
 
-            uploadRequirementsAnswersController.uploadResponses(responses, application);
+            uploadRequirementsAnswersController.uploadRequirements(candidateRequirements, application);
+            System.out.println("\nCandidate Requirements uploaded successfully!");
 
         }
         return true;

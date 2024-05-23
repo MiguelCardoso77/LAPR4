@@ -21,11 +21,10 @@ public class UploadRequirementsAnswersController {
         }
     }
 
-    public Application uploadResponses(List<String> responses, Application application) {
-        CandidateRequirements candidateRequirements = new CandidateRequirements(responses);
+    public Application uploadRequirements(List<String> requirements, Application application) {
+        CandidateRequirements candidateRequirements = new CandidateRequirements(requirements);
 
         application.uploadCandidateRequirements(candidateRequirements);
-        System.out.println("\nCandidate Requirements uploaded successfully!");
         return applicationRepository.save(application);
     }
 }

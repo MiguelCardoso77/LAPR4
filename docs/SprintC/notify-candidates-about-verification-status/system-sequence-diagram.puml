@@ -1,0 +1,24 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Notifying Candidates
+
+autonumber
+
+actor "Customer Manager" as CMAN
+participant ":System" as System
+
+activate CMAN
+
+    CMAN -> System : asks to notify candidates by email\n about their verification status
+    activate System
+
+
+       System --> CMAN : shows how many emails will be sent\n and confirms operation success
+    deactivate System
+
+deactivate CMAN
+
+@enduml

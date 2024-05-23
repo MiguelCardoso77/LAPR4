@@ -16,22 +16,7 @@ public class ProcessBuilder implements DomainFactory<Process> {
     private ProcessState processState;
     private Calendar processDate;
     private ProcessStatus processStatus;
-    /**
-     * Sets all attributes of the builder.
-     *
-     * @param processState  the state of the process
-     * @param id            the id of the process
-     * @param processStatus the status of the process
-     *
-     * @return this builder instance
-     */
-    public ProcessBuilder withAll(Integer id, ProcessState processState, ProcessStatus processStatus){
-        this.idProcess = id;
-        this.processState = processState;
-        this.processDate = Calendar.getInstance();
-        this.processStatus = processStatus;
-        return this;
-    }
+
     /**
      * Sets all attributes of the builder.
      *
@@ -39,7 +24,7 @@ public class ProcessBuilder implements DomainFactory<Process> {
      *
      * @return this builder instance
      */
-    public ProcessBuilder withoutID(ProcessState processState, ProcessStatus processStatus){
+    public ProcessBuilder withAll(ProcessState processState, ProcessStatus processStatus){
         this.processState = processState;
         this.processDate = Calendar.getInstance();
         this.processStatus = processStatus;
@@ -60,7 +45,7 @@ public class ProcessBuilder implements DomainFactory<Process> {
             return null;
         } else {
             LOGGER.debug("Building Process with processState{}, processDate{} and processStatus{}", processState, processDate, processStatus);
-            process = new Process(idProcess, processState, processDate, processStatus);
+            process = new Process(processState, processDate, processStatus);
         }
         return process;
     }

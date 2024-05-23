@@ -10,8 +10,5 @@ import jakarta.persistence.TypedQuery;
 import java.util.Optional;
 
 public interface JobOpeningRepository extends DomainRepository<JobReference, JobOpening> {
-
-
     Iterable<JobOpening> allJobOpenings();
-
 }

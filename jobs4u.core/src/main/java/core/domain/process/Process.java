@@ -41,20 +41,6 @@ public class Process implements AggregateRoot<Integer> {
         this.processDate = processDate;
         this.processStatus = processStatus;
     }
-    /**
-     * Constructs a Process object with the given parameters.
-     *
-     * @param id            the id of the process
-     * @param processState  the state of the process
-     * @param processDate   the date of the process
-     * @param processStatus the status of the process
-     */
-    public Process(Integer id, ProcessState processState, Calendar processDate, ProcessStatus processStatus){
-        this.idProcess = id;
-        this.processState = processState;
-        this.processDate = processDate;
-        this.processStatus = processStatus;
-    }
 
     /**
      * Default constructor required by ORM frameworks.

@@ -13,48 +13,29 @@ public class OrderedListOfCandidatesController {
 
 
     private final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
-    private final ListApplicationsController listApplicationsController = new ListApplicationsController();
 
-    public List<JobInterview> desorderedList(Iterable<Application> applicationList){
-        List<JobInterview> desorderedList = new ArrayList<>();
+    public List<JobInterview> orderedList(Iterable<Application> applicationList){
+        List<JobInterview> orderedList = new ArrayList<>();
 
         for(Application application : applicationList){
             Iterable<JobInterview> list = listJobInterviewsApplicationController.allJobInterviewsOfApplication(application);
             for(JobInterview jobInterview : list){
-                 desorderedList.add(jobInterview);
+                 orderedList.add(jobInterview);
             }
         }
 
-        desorderedList.sort(Comparator.comparing(JobInterview::returnScore).reversed());
+        orderedList.sort(Comparator.comparing(JobInterview::returnScore).reversed());
 
-        return desorderedList;
+        return orderedList;
     }
 
 
-    public List<Candidate> candidateList (List<JobInterview> orderedListfinal){
-        List<Candidate> candidatesList = new ArrayList<>();
-        Iterable<Application> allApplications = listApplicationsController.allApplications();
-
-
-        for(JobInterview jobInterview : orderedListfinal){
-            Application application = jobInterview.application();
-            Candidate candidate = application.candidate();
-            candidatesList.add(candidate);}
-
-
-
-
-        return candidatesList;
-    }
-
-    public List<Application> applicationList (List<JobInterview> orderedListfinal){
+    public List<Application> applicationList (List<JobInterview> orderedList){
         List<Application> applicationsList = new ArrayList<>();
-        Iterable<Application> allApplications = listApplicationsController.allApplications();
 
 
-        for(JobInterview jobInterview : orderedListfinal){
+        for(JobInterview jobInterview : orderedList){
             Application application = jobInterview.application();
-            //Candidate candidate = application.candidate();
             applicationsList.add(application);}
 
 

@@ -15,11 +15,7 @@ import java.util.List;
 
 public class OrderedListOfCandidatesUI {
 
-    private final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
-    private final ListApplicationsController listApplicationsController = new ListApplicationsController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
-    private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
-    private final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final OrderedListOfCandidatesController orderedListOfCandidatesController = new OrderedListOfCandidatesController();
 
@@ -31,22 +27,22 @@ public class OrderedListOfCandidatesUI {
 
         Iterable<Application> applicationList = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
 
-        List<JobInterview> desorderedList = orderedListOfCandidatesController.desorderedList(applicationList);
+        List<JobInterview> orderedList = orderedListOfCandidatesController.orderedList(applicationList);
 
-        List<Application> finalList = orderedListOfCandidatesController.applicationList(desorderedList);
+        List<Application> finalList = orderedListOfCandidatesController.applicationList(orderedList);
 
-        displayList(finalList, desorderedList);
+        displayList(finalList, orderedList);
 
 
         return true;
     }
 
-    public List<Candidate> displayList(List<Application> finalList, List<JobInterview> desorderedList) {
+    public List<Candidate> displayList(List<Application> finalList, List<JobInterview> orderedList) {
 
     int count= 0;
 
-        if(desorderedList != null && finalList!= null)  {
-            for (JobInterview jobInterview : desorderedList) {
+        if(orderedList != null && finalList!= null)  {
+            for (JobInterview jobInterview : orderedList) {
                 if (finalList.contains(jobInterview.application())) {
                     count++;
                     if(count == 1) {

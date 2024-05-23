@@ -19,14 +19,7 @@ public class SelectJobOpeningController {
     }
 
     public JobOpening selectJobOpeningAnalysis() {
-        final List<JobOpening> jobOpenings = (List<JobOpening>) jobOpeningController.showJobOpenings();
-
-        for (JobOpening jobOpening : jobOpenings) {
-            if (jobOpening.process().processState() == ProcessState.ANALYSIS) {
-                return jobOpening;
-            }
-        }
-
+        final List<JobOpening> jobOpenings = (List<JobOpening>) jobOpeningController.showJobOpeningsAnalysis();
         return selectorPart(jobOpenings);
     }
 

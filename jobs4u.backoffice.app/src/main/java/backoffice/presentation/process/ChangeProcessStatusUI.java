@@ -37,11 +37,15 @@ public class ChangeProcessStatusUI extends AbstractUI {
 
         Process process = jobOpening.process();
         ProcessState state = process.processState();
-        String name = state.name();
-        final int optionMove = Console.readInteger("Do you want to move: \n 1 - Back \n 2 - Forward \n" + "Choose an option: ");
+        ProcessStatus status = process.processStatus();
+        String nameState = state.name();
+        String nameStatus = status.name();
+        System.out.printf("%-30s%-30s%-30S%n", "Job Opening", "State" , "Status");
+        System.out.printf("%-30s%-30s%-30S%n",jobOpening.identity() ,nameState, nameStatus);
+        final int optionMove = Console.readInteger("\nDo you want to move: \n 1 - Back \n 2 - Forward \n" + "Choose an option: ");
 
         if (optionMove == 1){
-            switch (name) {
+            switch (nameState) {
                 case "APPLICATION":
                     System.out.println("You cannot move backwards because this is the first state of the process");
                     System.out.println("Status of the process: " + process.processStatus().toString());
@@ -76,7 +80,7 @@ public class ChangeProcessStatusUI extends AbstractUI {
             }
 
         }else if (optionMove == 2){
-            switch (name) {
+            switch (nameState) {
                 case "APPLICATION":
                     changeProcessStatus(ProcessStatus.CLOSE, process);
                     changeProcessState(ProcessState.SCREENING, process);

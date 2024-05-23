@@ -38,7 +38,6 @@ public class  UsersBootstrapper {
     protected void registerUser(final String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
         try {
             userController.addUser(username, password, firstName, lastName, email, roles);
-            LOGGER.debug("»»» %s", username);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             listUserController.find(Username.valueOf(username)).orElseThrow(() -> e);
         }
@@ -52,8 +51,6 @@ public class  UsersBootstrapper {
             final Calendar createdOn = Calendar.getInstance();
 
             registerCandidateController.registerCandidate(firstName, lastName, email, roles, createdOn, telephoneNumber, curriculum);
-
-            LOGGER.debug("»»» %s", email);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             LOGGER.error("Error performing the operation", e);
             System.out.println("Unfortunatelly there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
@@ -67,8 +64,6 @@ public class  UsersBootstrapper {
             final Calendar createdOn = Calendar.getInstance();
 
             customerController.registerCustomer(firstName, lastName, email, roles, createdOn, company, customerManager);
-
-            LOGGER.debug("»»» %s", email);
         }catch (final IntegrityViolationException | ConcurrencyException e) {
             LOGGER.error("Error performing the operation", e);
             System.out.println("Unfortunatelly there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");

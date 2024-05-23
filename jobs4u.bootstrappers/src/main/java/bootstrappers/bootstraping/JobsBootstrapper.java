@@ -54,6 +54,6 @@ public class JobsBootstrapper implements Action {
     private void registerJobOpening(String companyName, String description, int vacanciesNumber, String address, Mode mode, ContractType contractType, String titleOrFunction, Company company) {
         JobReference jobReference = new JobReference(companyName, true);
         controller.addJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
-        LOGGER.debug("»»» %s", jobReference);
+        LOGGER.debug("»»» {}", jobReference);
     }
 }

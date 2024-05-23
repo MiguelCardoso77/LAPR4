@@ -4,8 +4,11 @@ import core.domain.interview.InterviewModel;
 import core.persistence.PersistenceContext;
 import core.repositories.InterviewModelRepository;
 import eapli.framework.actions.Action;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class InterviewModelBootstrapper implements Action {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InterviewModelBootstrapper.class);
     private final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
 
     @Override
@@ -20,5 +23,6 @@ public class InterviewModelBootstrapper implements Action {
     private void registerInterviewModel(String interviewModelString) {
         InterviewModel interviewModel = new InterviewModel(interviewModelString);
         interviewModelRepository.save(interviewModel);
+        LOGGER.debug("»»» {}", interviewModel);
     }
 }

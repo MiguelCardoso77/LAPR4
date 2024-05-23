@@ -9,11 +9,14 @@ import core.repositories.ApplicationRepository;
 import core.repositories.InterviewModelRepository;
 import core.services.JobInterviewService;
 import eapli.framework.actions.Action;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class JobInterviewsBootstrapper implements Action {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobInterviewsBootstrapper.class);
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
     private final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
     private final AddJobInterviewController controller = new AddJobInterviewController();
@@ -41,6 +44,7 @@ public class JobInterviewsBootstrapper implements Action {
 
     private void registerJobInterview(Calendar createdOn, Integer time, Integer score, String result, Application application){
         controller.addJobInterview(createdOn, time, score, result, application);
+        LOGGER.debug("»»» {}", application);
     }
 }
 

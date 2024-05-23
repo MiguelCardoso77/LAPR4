@@ -38,8 +38,7 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int UPLOAD_CANDIDATE_REQUIREMENTS = 15;
     private static final int NOTIFY_CANDIDATES = 16;
     private static final int MOST_REFERENCED_WORDS = 17;
-
-    private static final int ORDERED_CANDIDATES = 15;
+    private static final int ORDERED_CANDIDATES = 18;
 
 
     @Override
@@ -67,8 +66,6 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(UPLOAD_CANDIDATE_REQUIREMENTS, "Upload the requirements of a candidate ", new UploadRequirementsAnswersAction());
         menu.addItem(NOTIFY_CANDIDATES, "Notify Candidates", new NotifyCandidatesAction());
         menu.addItem(MOST_REFERENCED_WORDS, "Most Referenced Words", new MostReferencedWordsAction());
-
-        menu.addItem(INTERVIEWS_PROCESS_EVALUATION, "Execute the job interview evaluation process", new JobInterviewEvaluationAction());
         menu.addItem(ORDERED_CANDIDATES, "Order a list of candidates by job interview points (grades)", new OrderedListOfCandidatesAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);

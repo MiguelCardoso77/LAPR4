@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 public class EmailService {
-    private EmailHandler emailHandler;
     private Socket sock;
     private ObjectOutputStream oos;
 
@@ -45,10 +44,17 @@ public class EmailService {
         }
     }
 
-    public void sendEmail(String dest, String subject, String body) {
+    public void sendEmailOnline(String dest, String subject, String body) {
         try {
-            emailHandler = new EmailHandler();
-            emailHandler.sendEmail(dest, subject, body);
+
+            EmailHandler emailHandler = new EmailHandler();
+            boolean flag = emailHandler.sendEmail(dest, subject, body);
+            if (flag) {
+                System.out.println("Email sent!");
+            } else {
+                System.out.println("Error sending email!");
+            }
+
         } catch (IOException e) {
             System.out.println("Error sending email: " + e.getMessage());
         }

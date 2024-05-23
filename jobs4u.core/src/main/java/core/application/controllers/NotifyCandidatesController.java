@@ -57,8 +57,7 @@ public class NotifyCandidatesController {
         emailService.closeSocket();
     }
 
-    public boolean sendEmail(String dest, String subject, String body) {
-        emailService.sendEmail(dest, subject, body);
-        return true;
+    public void sendEmail(String dest, String subject, String body) {
+        emailService.sendEmailOnline(dest, subject, body);
     }
 }

@@ -1,5 +1,9 @@
 package core.domain.email;
 
+import infrastructure.AppSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class EmailHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailHandler.class);
     private final Session session;
     private final String username;
 
@@ -71,7 +76,7 @@ public class EmailHandler {
             Transport.send(msg);
             return true;
         } catch (MessagingException e) {
-            e.printStackTrace();
+            LOGGER.error("Error sending email: {}", e.getMessage());
             return false;
         }
 

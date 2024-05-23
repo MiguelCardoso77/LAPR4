@@ -2,7 +2,7 @@ package core.application.controllers;
 
 import core.domain.interview.JobInterview;
 import core.domain.interview.Score;
-import core.services.JobInterviewService;
+import core.services.InterviewScoreUpdateService;
 import eapli.framework.application.UseCaseController;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @UseCaseController
 public class InterviewsEvaluationProcessController {
-    JobInterviewService jobInterviewService =  new JobInterviewService();
+    InterviewScoreUpdateService jobInterviewService;
 
     /**
      * Updates the score of a given job interview.
@@ -24,7 +24,7 @@ public class InterviewsEvaluationProcessController {
      * @param interview the JobInterview object for which the score is to be updated
      */
     public void interviewScoreUpdate(Score newScore, JobInterview interview){
-        jobInterviewService.updateInterviewScore(newScore, interview.identity());
+        jobInterviewService.interviewScoreUpdate(interview.identity(), newScore);
     }
     /**
      * Processes the evaluation of a given job interview and returns a Score.

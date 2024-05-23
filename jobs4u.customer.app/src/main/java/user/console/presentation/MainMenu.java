@@ -39,10 +39,7 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 class MainMenu extends CustomerUserUI {
 
     private static final String SEPARATOR_LABEL = "--------------";
-
     private static final int EXIT_OPTION = 0;
-
-    // MAIN MENU
     private static final int MY_USER_OPTION = 1;
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();

@@ -1,12 +1,9 @@
 package backoffice.presentation.interview;
 
-import backoffice.presentation.jobOpening.AddJobOpeningUI;
 import core.application.controllers.*;
 import core.domain.interview.JobInterview;
 import core.domain.jobOpening.JobOpening;
 import eapli.framework.presentation.console.AbstractUI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 

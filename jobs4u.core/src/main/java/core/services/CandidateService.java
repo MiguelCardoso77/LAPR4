@@ -6,9 +6,12 @@ import core.domain.candidate.Curriculum;
 import core.domain.candidate.TelephoneNumber;
 import core.persistence.PersistenceContext;
 import core.repositories.CandidateRepository;
+import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import jakarta.transaction.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -90,5 +93,20 @@ public class CandidateService {
     public Candidate findCandidateByTelephoneNumber(TelephoneNumber telephoneNumber) {
         Optional<Candidate> candidateOptional = candidateRepository.findByTelephoneNumber(telephoneNumber);
         return candidateOptional.orElse(null);
+    }
+
+    public Candidate findCandidateByEmail(String email) {
+        EmailAddress emailAddress = EmailAddress.valueOf(email);
+
+        Iterable<Candidate> allCandidates = allCandidates();
+        if (allCandidates.iterator().hasNext()) {
+            for (Candidate candidate : allCandidates) {
+                if (candidate.user().email().equals(emailAddress)) {
+                    return candidate;
+                }
+            }
+        }
+
+        return null;
     }
 }

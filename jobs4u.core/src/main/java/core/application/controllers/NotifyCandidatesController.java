@@ -36,25 +36,12 @@ public class NotifyCandidatesController {
         return application.candidate().user().email().toString();
     }
 
-    public String getLoggedInUserEmail() {
-        return Objects.requireNonNull(authz.session().map(UserSession::authenticatedUser).orElse(null)).email().toString();
-    }
-
     public String checkApplicationStatus(Application application) {
         return application.status().toString();
     }
 
-    public Email createEmail(String loggedEmail, String candidateEmail, String subject, String body) {
-        return emailService.createEmail(loggedEmail, candidateEmail, subject, body);
-    }
-
-    public void sendEmails(List<Email> emails) {
-        emailService.sendEmails(emails);
-        closeSocket();
-    }
-
-    private void closeSocket() {
-        emailService.closeSocket();
+    public Email createEmail(String candidateEmail, String subject, String body) {
+        return emailService.createEmail(candidateEmail, subject, body);
     }
 
     public void sendEmail(String dest, String subject, String body) {

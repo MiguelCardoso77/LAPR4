@@ -13,7 +13,6 @@ public class NotifyCandidatesUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        String loggedEmail = theController.getLoggedInUserEmail();
         List<Application> applications = theController.findApplicationsToNotify();
         List<Email> emailsToSend = new ArrayList<>();
         System.out.println("Candidates that will be notified: " + applications.size());
@@ -24,15 +23,13 @@ public class NotifyCandidatesUI extends AbstractUI {
             String subject = buildSubject(application);
             String body = buildBody(application, status);
 
-            Email emailObj = theController.createEmail(loggedEmail, candidateEmail, subject, body);
+            Email emailObj = theController.createEmail(candidateEmail, subject, body);
             emailsToSend.add(emailObj);
         }
 
         for (Email email : emailsToSend) {
             theController.sendEmail(email.toWho(), email.subject(), email.body());
         }
-
-        //theController.sendEmails(emailsToSend);
 
         return true;
     }
@@ -42,8 +39,15 @@ public class NotifyCandidatesUI extends AbstractUI {
     }
 
     private String buildBody(Application application, String status) {
-        return "Dear candidate, the status of your application '" + application.dataFile() + "' has changed to '" + status + "'.\n"
-                + "Please check the application for more details.";
+        return "Dear Candidate,\n\n"
+                + "We hope this message finds you well.\n\n"
+                + "We are writing to inform you about an update regarding your application titled '" + application.dataFile() + "'. "
+                + "After careful consideration and review, the status of your application has been updated to: **'" + status + "'**.\n\n"
+                + "If you have any questions or need further assistance, please do not hesitate to contact our support team.\n\n"
+                + "Thank you for your patience and understanding.\n\n"
+                + "Best regards,\n"
+                + "The Verification Team\n"
+                + "Jobs4U\n";
     }
 
     @Override

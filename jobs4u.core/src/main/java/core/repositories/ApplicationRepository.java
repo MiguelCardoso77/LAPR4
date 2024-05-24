@@ -18,11 +18,11 @@ public interface ApplicationRepository extends DomainRepository<Integer ,Applica
      */
     @Override
     Optional<Application> ofIdentity(Integer id);
+
     /**
      * Retrieve all applications.
      *
      * @return an iterable collection of all applications
      */
-
     Iterable<Application> allApplications();
 }

@@ -33,6 +33,7 @@ package "application" {
     }
     class ListJobOpeningController {
         + showJobOpenings()
+        + showJobOpeningsAnalysis()
         + allJobOpenings()
         + findJobOpeningByJobReference(jobReference)
     }

@@ -1,0 +1,97 @@
+@startuml
+autonumber
+
+actor CustomerManager
+
+participant ChangeProcessStatusUI <<presentation>>
+participant SelectJobOpeningController <<controller>>
+participant ListJobOpeningController <<controller>>
+participant JobOpeningService <<service>>
+database JobOpeningRepository <<repository>>
+participant ChangeProcessStatusController <<controller>>
+participant ChangeProcessStateController <<controller>>
+participant Process <<process>>
+database ProcessRepository <<repository>>
+
+
+activate CustomerManager
+
+    CustomerManager -> ChangeProcessStatusUI : asks to change phase \nstatus of a job opening
+    activate ChangeProcessStatusUI
+
+        ChangeProcessStatusUI -> SelectJobOpeningController : selectJobOpening()
+        activate SelectJobOpeningController
+
+            SelectJobOpeningController -> ListJobOpeningController : showJobOpenings()
+            activate ListJobOpeningController
+
+                ListJobOpeningController -> JobOpeningService : allJobOpenings()
+                activate JobOpeningService
+
+                    JobOpeningService -> JobOpeningRepository : findAll()
+                    activate JobOpeningRepository
+
+                        JobOpeningRepository --> JobOpeningService : jobOpenings
+                    deactivate JobOpeningRepository
+
+                    JobOpeningService --> ListJobOpeningController : jobOpenings
+                deactivate JobOpeningService
+
+                ListJobOpeningController --> SelectJobOpeningController : jobOpenings
+            deactivate ListJobOpeningController
+
+            SelectJobOpeningController -> SelectJobOpeningController : selectorPart(List<JobOpening> list)
+
+            SelectJobOpeningController --> ChangeProcessStatusUI : jobOpening
+        deactivate SelectJobOpeningController
+
+        ChangeProcessStatusUI -> CustomerManager : shows job opening status \nand asks if wants to change
+    deactivate ChangeProcessStatusUI
+
+    CustomerManager -> ChangeProcessStatusUI : selects if wants to go back or forward
+    activate ChangeProcessStatusUI
+
+        ChangeProcessStatusUI -> ChangeProcessStatusController : changeProcessStatus(processStatus,process);
+        activate ChangeProcessStatusController
+
+            ChangeProcessStatusController -> Process : changeProcessStatus(processStatus)
+            activate Process
+
+                Process --> ChangeProcessStatusController : true
+            deactivate Process
+
+            ChangeProcessStatusController -> ProcessRepository : save(process)
+            activate ProcessRepository
+
+                ProcessRepository --> ChangeProcessStatusController : true
+            deactivate ProcessRepository
+
+            ChangeProcessStatusController --> ChangeProcessStatusUI : process status altered
+        deactivate ChangeProcessStatusController
+
+        ChangeProcessStatusUI -> ChangeProcessStateController : changeProcessState(processState,process)
+        activate ChangeProcessStateController
+
+            ChangeProcessStateController -> Process : changeProcessState(processState)
+            activate Process
+
+                Process --> ChangeProcessStateController : true
+            deactivate Process
+
+            ChangeProcessStateController -> ProcessRepository : save(process)
+            activate ProcessRepository
+
+                ProcessRepository --> ChangeProcessStateController : true
+            deactivate ProcessRepository
+
+            ChangeProcessStateController --> ChangeProcessStatusUI : process state altered
+        deactivate ChangeProcessStateController
+
+    ChangeProcessStatusUI --> CustomerManager : operation success message
+
+
+    deactivate ChangeProcessStatusUI
+
+deactivate CustomerManager
+
+@enduml

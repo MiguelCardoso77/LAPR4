@@ -3,7 +3,6 @@ package bootstrappers.bootstraping;
 import core.application.controllers.ApplicationRegisterController;
 import core.application.controllers.UploadRequirementsAnswersController;
 import core.domain.application.Application;
-import core.domain.application.CandidateRequirements;
 import core.domain.application.Status;
 import core.domain.candidate.Candidate;
 import core.domain.jobOpening.JobOpening;
@@ -79,7 +78,7 @@ public class ApplicationsBootstrapper implements Action {
 
     private void addRequirements(String candidateRequirementsPath, Application application) {
         List<String> requirements = uploadRequirementsAnswersController.readFile(candidateRequirementsPath);
-        uploadRequirementsAnswersController.uploadResponses(requirements, application);
+        uploadRequirementsAnswersController.uploadRequirements(requirements, application);
     }
 
     private void changeApplicationStatus(Application application, Status status) {

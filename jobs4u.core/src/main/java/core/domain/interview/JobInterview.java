@@ -24,7 +24,7 @@ public class JobInterview implements AggregateRoot<Integer> {
     private Time time;
 
     @Column(name = "SCORE")
-    private static Score score;
+    private  Score score;
 
     @Column(name = "RESULT")
     private Result result;

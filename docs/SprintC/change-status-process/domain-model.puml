@@ -63,25 +63,6 @@ entity JobOpening <<entity>><<root>>
 
 }
 
-package "User Aggregate"{
-entity User <<entity>><<root>>
-
-    card UserEmail <<Value Object>> {
-    }
-    card UserName <<Value Object>> {
-    }
-    card UserPassword <<Value Object>> {
-    }
-    card Username<<Value Object>> {
-    }
-
-    User --> UserEmail
-    User --> UserName
-    User --> Username
-    User --> UserPassword
-
-}
-
 package "Process Aggregate"{
 entity Process <<entity>><<root>>
 
@@ -89,19 +70,20 @@ entity Process <<entity>><<root>>
     }
     card ProcessDate <<Value Object>> {
     }
+    card ProcessStatus <<Value Object>>{
+    }
 
     Process --> ProcessState
     Process --> ProcessDate
+    Process --> ProcessStatus
 
     note right of ProcessDate
         Can be one of the following:
+        - applicationStartDate
         - ScreeningStartDate
-        - ScreeningEndDate
         - InterviewsStartDate
-        - InterviewsEndDate
         - AnalysisStartDate
-        - AnalysisEndDate
-        - ResultDate
+        - ResultStartDate
     end note
 
     note right of ProcessState
@@ -113,6 +95,11 @@ entity Process <<entity>><<root>>
         - Result
     end note
 
+    note right of ProcessStatus
+        Can be one of the following:
+        - Open
+        - Close
+    end note
 }
 
 package "Customer Manager Aggregate"{
@@ -122,6 +109,5 @@ entity CustomerManager <<entity>><<root>>
 
     JobOpening  --> Process
     CustomerManager "1" ---> "N" JobOpening : manages
-    CustomerManager ---> User
 
 @enduml

@@ -29,7 +29,6 @@ public class JobInterviewEvaluationUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        System.out.println("\nAvailable Job Openings: ");
         JobOpening jobOpening = selectJobOpening();
 
         List<JobInterview> interviews = jobOpeningInterviews(jobOpening);
@@ -40,12 +39,12 @@ public class JobInterviewEvaluationUI extends AbstractUI {
         return false;
     }
     /**
-     * Allows the user to select a job opening from the displayed list.
+     * Allows the user to select a job opening in "Analysis" phase from the displayed list.
      *
      * @return the selected JobOpening object
      */
     private JobOpening selectJobOpening() {
-        return selectJobOpeningController.selectJobOpening();
+        return selectJobOpeningController.selectJobOpeningAnalysis();
     }
 
     /**

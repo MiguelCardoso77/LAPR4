@@ -1,0 +1,97 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
+
+Title "Class Diagram - Register a candidate"
+
+package "presentation" {
+    class ChangeProcessStatusUI {
+        + doShow()
+        + headline()
+        + selectStatus()
+        + changeProcessStatus(processStatus ,process)
+        + changeProcessState(processState ,process)
+    }
+}
+
+package "application" {
+    class ChangeProcessStatusController {
+        + changeProcessStatus(processStatus ,process)
+    }
+    class ChangeProcessStateController {
+        + changeProcessState(processState ,process)
+    }
+    class SelectJobOpeningController {
+        + selectJobOpening()
+        + selectJobOpeningAnalysis()
+        + selectorPart(list)
+    }
+    class ListJobOpeningController {
+        + showJobOpenings()
+        + showJobOpeningsAnalysis()
+        + allJobOpenings()
+        + findJobOpeningByJobReference(jobReference)
+    }
+}
+
+package "repositories" {
+    interface JobOpeningRepository {
+        + allJobOpenings()
+    }
+
+    interface ProcessRepository {
+        + allProcesses()
+        + ofIdentity(Integer id)
+    }
+}
+
+package "domain" {
+    class Process {
+        + Process(processState,processDate,processStatus)
+        + Process()
+        + sameAs(other)
+        + compareTo(other)
+        + identity()
+        + processState()
+        + processStatus()
+        + processDate()
+        + changeProcessStatus(processStatus)
+        + changeProcessState(processState)
+        + toString()
+    }
+}
+
+package "services" {
+    class JobOpeningService {
+        + registerJobOpening(jobReference, description, vacanciesNumber, address,
+            mode, contractType, titleOrFunction, company)
+
+        + findJobOpening(jobReference)
+        + updateJobRequirements(jobReference, jobRequirementsSpecification)
+        + verifyJobReference(jobReference)
+        + allJobOpenings()
+
+    }
+}
+
+ChangeProcessStatusUI --> ChangeProcessStatusController
+ChangeProcessStatusUI --> ChangeProcessStateController
+ChangeProcessStatusUI --> SelectJobOpeningController
+
+SelectJobOpeningController --> ListJobOpeningController
+
+ListJobOpeningController --> JobOpeningService
+
+JobOpeningService -> JobOpeningRepository
+ChangeProcessStateController --> ProcessRepository
+ChangeProcessStatusController --> ProcessRepository
+
+ChangeProcessStateController -> Process
+ChangeProcessStatusController -> Process
+
+@enduml

@@ -1,0 +1,125 @@
+@startuml
+autonumber
+
+actor Operator
+
+participant UploadRequirementsAnswersUI <<presentation>>
+participant GenerateRequirementsAnswersTemplateController <<controller>>
+participant ListJobOpeningController <<controller>>
+participant JobOpeningService <<service>>
+database    JobOpeningRepository <<repository>>
+participant ListJobOpeningApplicationsController <<controller>>
+participant ApplicationService <<service>>
+participant UploadRequirementsAnswersController <<controller>>
+participant CandidateRequirements <<candidateRequirements>>
+database ApplicationRepository <<repository>>
+
+participant Application <<application>>
+
+
+activate Operator
+
+    Operator -> UploadRequirementsAnswersUI : asks to upload candidate requirements
+    activate UploadRequirementsAnswersUI
+
+        UploadRequirementsAnswersUI -> GenerateRequirementsAnswersTemplateController : findAllJobOpeningsWithJobRequirements()
+        activate GenerateRequirementsAnswersTemplateController
+
+            GenerateRequirementsAnswersTemplateController -> ListJobOpeningController : allJobOpenings()
+            activate ListJobOpeningController
+
+                ListJobOpeningController -> JobOpeningService : allJobOpenings()
+                activate JobOpeningService
+
+                    JobOpeningService -> JobOpeningRepository : findAll()
+                    activate JobOpeningRepository
+
+                        JobOpeningRepository --> JobOpeningService : allJobOpenings
+                    deactivate JobOpeningRepository
+
+                    JobOpeningService --> ListJobOpeningController : allJobOpenings
+                deactivate JobOpeningService
+
+                ListJobOpeningController -> GenerateRequirementsAnswersTemplateController : allJobOpenings
+            deactivate ListJobOpeningController
+
+            GenerateRequirementsAnswersTemplateController --> UploadRequirementsAnswersUI : jobOpeningsWithRequirements
+        deactivate GenerateRequirementsAnswersTemplateController
+
+        UploadRequirementsAnswersUI --> Operator : lists job Openings With Requirements  \n and asks to select one
+    deactivate UploadRequirementsAnswersUI
+
+    Operator -> UploadRequirementsAnswersUI : selects job Opening
+    activate UploadRequirementsAnswersUI
+
+
+        UploadRequirementsAnswersUI -> ListJobOpeningApplicationsController : showApplicationsOfJobOpening(jobReference)
+        activate ListJobOpeningApplicationsController
+
+            ListJobOpeningApplicationsController -> ListJobOpeningApplicationsController : allApplicationsOfJobOpening(jobReference)
+            activate ListJobOpeningApplicationsController
+
+                ListJobOpeningApplicationsController -> ApplicationService : allApplications()
+                activate ApplicationService
+
+                    ApplicationService -> ApplicationRepository : allApplications()
+                    activate ApplicationRepository
+
+                        ApplicationRepository --> ApplicationService : allApplications
+                    deactivate ApplicationRepository
+
+                    ApplicationService --> ListJobOpeningApplicationsController : allApplicationsOfJobOpening
+                deactivate ApplicationService
+            deactivate ListJobOpeningApplicationsController
+
+            ListJobOpeningApplicationsController --> UploadRequirementsAnswersUI : applicationsOfJobOpening
+        deactivate ListJobOpeningApplicationsController
+
+        UploadRequirementsAnswersUI --> Operator : lists applications of job opening \n and asks to select one
+    deactivate UploadRequirementsAnswersUI
+
+    Operator -> UploadRequirementsAnswersUI : selects application
+    activate UploadRequirementsAnswersUI
+
+        UploadRequirementsAnswersUI --> Operator : asks to enter the path to the file with the requirements
+    deactivate UploadRequirementsAnswersUI
+
+    Operator -> UploadRequirementsAnswersUI : enters the path
+    activate UploadRequirementsAnswersUI
+
+        UploadRequirementsAnswersUI -> UploadRequirementsAnswersController : readFile(path)
+        activate UploadRequirementsAnswersController
+
+            UploadRequirementsAnswersController --> UploadRequirementsAnswersUI : listOfRequirements
+        deactivate UploadRequirementsAnswersController
+
+        UploadRequirementsAnswersUI -> UploadRequirementsAnswersController : uploadRequirements(candidateRequirements, application)
+        activate UploadRequirementsAnswersController
+
+            UploadRequirementsAnswersController -> CandidateRequirements** : new CandidateRequirements(requirements)
+            activate CandidateRequirements
+
+                CandidateRequirements --> UploadRequirementsAnswersController : candidateRequirements
+            deactivate CandidateRequirements
+
+            UploadRequirementsAnswersController -> Application : uploadCandidateRequirements(candidateRequirements)
+            activate Application
+
+                Application --> UploadRequirementsAnswersController : application
+            deactivate Application
+
+            UploadRequirementsAnswersController -> ApplicationRepository : save(application)
+            activate ApplicationRepository
+
+                ApplicationRepository --> UploadRequirementsAnswersController : true
+            deactivate ApplicationRepository
+
+            UploadRequirementsAnswersController --> UploadRequirementsAnswersUI : application
+        deactivate UploadRequirementsAnswersController
+
+        UploadRequirementsAnswersUI --> Operator : displays operation success
+    deactivate UploadRequirementsAnswersUI
+
+deactivate Operator
+
+@enduml

@@ -39,7 +39,4 @@ public class CandidateRequirements implements ValueObject {
     @Override
     public String toString() { return candidateRequirements.toString(); }
 
-
-
-
 }

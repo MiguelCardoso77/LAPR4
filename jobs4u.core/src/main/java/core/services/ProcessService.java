@@ -15,7 +15,7 @@ public class ProcessService {
     @Transactional
     public Process registerProcess(ProcessState processState){
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.withoutID(processState, ProcessStatus.OPEN);
+        processBuilder.withAll(processState, ProcessStatus.OPEN);
         Process process = processBuilder.build();
         return processRepository.save(process);
     }

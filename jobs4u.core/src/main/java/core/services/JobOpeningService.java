@@ -24,6 +24,7 @@ import java.util.Calendar;
 public class JobOpeningService {
     private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
     private final ProcessService processService = new ProcessService();
+
     /**
      * Registers a new job opening.
      *
@@ -46,6 +47,7 @@ public class JobOpeningService {
         JobOpening jobOpening = jobOpeningBuilder.build();
         return jobOpeningRepository.save(jobOpening);
     }
+
     /**
      * Finds a job opening by its reference.
      *
@@ -61,6 +63,7 @@ public class JobOpeningService {
         }
         return null;
     }
+
     /**
      * Updates the job requirements specification for the job opening.
      *
@@ -78,6 +81,7 @@ public class JobOpeningService {
         }
         return null;
     }
+
     /**
      * Verifies if a job opening with the given reference exists.
      *
@@ -90,6 +94,7 @@ public class JobOpeningService {
         }
         return false;
     }
+
     /**
      * Retrieves all job openings.
      *

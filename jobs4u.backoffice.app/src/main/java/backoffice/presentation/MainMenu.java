@@ -1,9 +1,6 @@
 package backoffice.presentation;
 
-import backoffice.presentation.menus.AdminMenu;
-import backoffice.presentation.menus.CustomerManagerMenu;
-import backoffice.presentation.menus.LanguageEngineerMenu;
-import backoffice.presentation.menus.OperatorMenu;
+import backoffice.presentation.menus.*;
 import console.presentation.authz.MyUserMenu;
 import core.domain.user.Jobs4URoles;
 import eapli.framework.actions.menu.Menu;
@@ -94,6 +91,10 @@ public class MainMenu extends AbstractUI {
             final Menu languageEngineerMenu = buildLanguageEnginnerMenu();
             mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, languageEngineerMenu);
         }
+        if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.CANDIDATE)) {
+            final Menu candidatemenu = buildCandidateMenu();
+            mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, candidatemenu);
+        }
 
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
@@ -118,6 +119,10 @@ public class MainMenu extends AbstractUI {
     private Menu buildOperatorMenu() {
         OperatorMenu operator = new OperatorMenu();
         return operator.build();
+    }
+    private Menu buildCandidateMenu() {
+        CandidateMenu candidate = new CandidateMenu();
+        return candidate.build();
     }
 
 }

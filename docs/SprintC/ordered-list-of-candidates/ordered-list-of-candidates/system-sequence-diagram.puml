@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Ranking candidates
+
+autonumber
+
+actor "Customer Manager" as CMAN
+participant ":System" as System
+
+activate CMAN
+
+    CMAN -> System : asks to order the candidates of a job opening by grades
+    activate System
+
+
+       System --> CMAN : lists job openings and asks to select one
+    deactivate System
+
+    CMAN -> System : selects job opening
+    activate System
+
+        System --> CMAN : show job interviews of applications of the selected job opening and ordered by grades
+    deactivate System
+
+deactivate CMAN
+
+@enduml

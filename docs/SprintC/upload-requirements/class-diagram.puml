@@ -1,0 +1,131 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
+
+Title "Class Diagram - Register a candidate"
+
+package "presentation" {
+    class UploadRequirementsAnswersUI {
+        + doShow()
+        + headline()
+    }
+}
+
+package "application" {
+    class GenerateRequirementsAnswersTemplateController {
+        + findAllJobOpeningsWithJobRequirements()
+    }
+    class UploadRequirementsAnswersController {
+        + readFile(path)
+        + uploadRequirements(requirements, application)
+    }
+    class ListJobOpeningApplicationsController {
+        + allApplicationsOfJobOpening(jobReference)
+        + showApplicationsOfJobOpening(jobReference)
+        + selectApplication()
+        + findJobOpening(jobReference)
+        + findApplicationByID(id)
+    }
+    class ListJobOpeningController {
+        + showJobOpenings()
+        + showJobOpeningsAnalysis()
+        + allJobOpenings()
+        + findJobOpeningByJobReference(jobReference)
+    }
+}
+
+package "repositories" {
+    interface JobOpeningRepository {
+        + allJobOpenings()
+    }
+
+    interface ApplicationRepository {
+        + allApplications()
+        + ofIdentity(Integer id)
+    }
+}
+
+package "domain" {
+    class Application {
+        + Application(rank, createdOn, applicationFiles, jobReference,
+            candidate, operator)
+        + Application()
+        + sameAs(other)
+        + equals(other)
+        + hashCode()
+        + compareTo(other)
+        + identity()
+        + rank()
+        + submissionDate()
+        + status()
+        + dataFile()
+        + operator()
+        + candidate()
+        + jobReference()
+        + candidateRequirements()
+        + updateRank(rank)
+        + changeStatus(status)
+        + toString()
+        + uploadCandidateRequirements(candidateRequirements)
+    }
+
+    class CandidateRequirements {
+        + CandidateRequirements(candidateRequirements)
+        + CandidateRequirements()
+        + equals(other)
+        + hashCode()
+        + toString()
+        + candidateRequirements()
+    }
+}
+
+package "services" {
+    class JobOpeningService {
+        + registerJobOpening(jobReference, description, vacanciesNumber, address,
+            mode, contractType, titleOrFunction, company)
+        + findJobOpening(jobReference)
+        + updateJobRequirements(jobReference, jobRequirementsSpecification)
+        + verifyJobReference(jobReference)
+        + allJobOpenings()
+    }
+
+    class ApplicationService {
+        + registerApplication(rank, applicationFiles, jobReference, candidate, operator)
+        + findApplicationById(applicationID)
+        + allApplications()
+        + findApplicationsForJobOpening(jobOpening)
+        + updateRank(rank, application)
+        + applicationsByCM(cm)
+    }
+}
+
+UploadRequirementsAnswersUI --> GenerateRequirementsAnswersTemplateController
+
+GenerateRequirementsAnswersTemplateController --> ListJobOpeningController
+
+ListJobOpeningController --> JobOpeningService
+
+JobOpeningService --> JobOpeningRepository
+
+UploadRequirementsAnswersUI --> ListJobOpeningApplicationsController
+
+ListJobOpeningApplicationsController --> ApplicationService
+
+ApplicationService --> ApplicationRepository
+
+UploadRequirementsAnswersUI --> UploadRequirementsAnswersController
+
+UploadRequirementsAnswersController ---> CandidateRequirements
+
+UploadRequirementsAnswersController ---> Application
+
+UploadRequirementsAnswersController ---> ApplicationRepository
+
+
+
+@enduml

@@ -40,7 +40,7 @@ activate CustomerManager
                 ListJobOpeningController --> SelectJobOpeningController : jobOpenings
             deactivate ListJobOpeningController
 
-            SelectJobOpeningController --> SelectJobOpeningController : selectorPart(List<JobOpening> list)
+            SelectJobOpeningController -> SelectJobOpeningController : selectorPart(List<JobOpening> list)
 
             SelectJobOpeningController --> ChangeProcessStatusUI : jobOpening
         deactivate SelectJobOpeningController

@@ -26,7 +26,7 @@ public class ComProtocolV0 {
             output.writeObject(p);
             response = ((Packet<?>) input.readObject());
             tries--;
-        } while (response == null || response.getCode() != ProtocolCodes.ACK);
+        } while (response == null || response.code() != ProtocolCodes.ACK);
         return true;
     }
 
@@ -39,7 +39,7 @@ public class ComProtocolV0 {
             output.writeObject(p);
             response = ((Packet<?>) input.readObject());
             tries--;
-        } while (response == null || response.getCode() != ProtocolCodes.ACK);
+        } while (response == null || response.code() != ProtocolCodes.ACK);
         return true;
     }
 
@@ -52,7 +52,7 @@ public class ComProtocolV0 {
             output.writeObject(p);
             response = ((Packet<?>) input.readObject());
             tries--;
-        } while (response == null || response.getCode() != ProtocolCodes.ACK);
+        } while (response == null || response.code() != ProtocolCodes.ACK);
         return true;
     }
 
@@ -65,7 +65,7 @@ public class ComProtocolV0 {
             output.writeObject(p);
             response = ((Packet<?>) input.readObject());
             tries--;
-        } while (response == null || response.getCode() != ProtocolCodes.ACK);
+        } while (response == null || response.code() != ProtocolCodes.ACK);
         return true;
     }
 
@@ -78,7 +78,7 @@ public class ComProtocolV0 {
             output.writeObject(p);
             response = ((Packet<?>) input.readObject());
             tries--;
-        } while (response == null || response.getCode() != ProtocolCodes.ACK);
+        } while (response == null || response.code() != ProtocolCodes.ACK);
         return true;
     }
 
@@ -90,15 +90,15 @@ public class ComProtocolV0 {
             Packet p = new Packet(VERSION, ProtocolCodes.ACK, null);
             response = ((Packet<T>) input.readObject());
 
-            if (response!=null && response.getCode() != ProtocolCodes.ERR){
-                return (T) response.getData();
+            if (response!=null && response.code() != ProtocolCodes.ERR){
+                return (T) response.data();
             }
 
             output.writeObject(new Packet<>(VERSION, ProtocolCodes.ERR, null));
 
             tries--;
-        } while (response == null || response.getCode() != ProtocolCodes.ACK);
-        return (T) response.getData();
+        } while (response == null || response.code() != ProtocolCodes.ACK);
+        return (T) response.data();
     }
 
 

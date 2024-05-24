@@ -20,8 +20,8 @@ public class Server implements Runnable {
             try {
                 Socket connection = socket.accept();
                 if (!running) return; //Force exit new connections TODO: Add exit handler to communicate server shutdown
-                ServerSemaphore.getInstance().enterCriticalSection();
-                Thread thread = new Thread(serverThreadGroup, new SimpleHandler(connection));
+                ServerSemaphore.getInstance().enterCriticalSection(); //ver para q server
+                Thread thread = new Thread(serverThreadGroup, new CallResponder(connection));
                 thread.start();
             } catch (IOException e) {
                 System.out.println("Could not accept new connection!");

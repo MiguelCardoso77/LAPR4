@@ -5,7 +5,8 @@ public enum ProtocolCodes {
     DISCONNECT((byte) 1),
     ACK((byte) 2),
     ERR((byte) 3),
-    AUTH((byte) 4);
+    AUTH((byte) 4),
+    LIST_APPLICATIONS((byte) 5);
 
     private final byte code;
 

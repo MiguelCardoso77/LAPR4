@@ -1,9 +1,9 @@
 package core.protocol;
 
-public class PositiveByte {
+public class UnsignedInteger {
     private byte value;
 
-    public PositiveByte(byte value) {
+    public UnsignedInteger(byte value) {
         this.value = value;
     }
 
@@ -13,8 +13,8 @@ public class PositiveByte {
 
     public int positiveValue() {
         if (value < 0) {
-            int tmp = value;
-            return tmp +  256;
+            int negVal = value;
+            return negVal +  256;
         }
         return value;
     }

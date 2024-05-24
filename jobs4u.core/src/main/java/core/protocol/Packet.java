@@ -9,43 +9,47 @@ public class Packet<T> implements Serializable {
 
     private byte version;
     private ProtocolCodes code;
-    private List<Chunk> data;
+    private List<DataChunk> data;
 
     public Packet(byte version, ProtocolCodes code, T data) throws IOException {
         this.version = version;
         this.code = code;
-        this.data = chunkerize(data);
+        this.data = createChunks(data);
     }
 
-    public byte getVersion() {
+    public byte version() {
         return version;
     }
 
-    public ProtocolCodes getCode() {
+    public ProtocolCodes code() {
         return code;
     }
 
-    public List<Chunk> getData() {
+    public List<DataChunk> data() {
         return data;
     }
 
     public <T> T buildObject() throws IOException, ClassNotFoundException {
         List<Byte> rawData = new ArrayList<>();
-        for (Chunk chunk : data) {
-            for (byte b : chunk.getData()) {
+
+        for (DataChunk dataChunk : data) {
+            for (byte b : dataChunk.data()) {
                 rawData.add(b);
             }
         }
+
         byte[] arr = new byte[rawData.size()];
         for (int i = 0; i < rawData.size(); i++) {
             arr[i] = rawData.get(i);
         }
+
         ByteArrayInputStream bais = new ByteArrayInputStream(arr);
         ObjectInputStream ois = new ObjectInputStream(bais);
+
         return (T) ois.readObject();
     }
 
-    private List<Chunk> chunkerize(T data) throws IOException {
+    private List<DataChunk> createChunks(T data) throws IOException {
         if (data == null) return new ArrayList<>();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -56,18 +60,25 @@ public class Packet<T> implements Serializable {
         int nChunks = rawData.length / MAX_CHUNK_LEN + 1;
 
         int index = 0;
-        List<Chunk> chunks = new ArrayList<>(nChunks);
+        List<DataChunk> dataChunks = new ArrayList<>(nChunks);
+
         for (int i = 0; i < nChunks; i++) {
-            byte[] arr = new byte[MAX_CHUNK_LEN];
-            for (int j = 0; j < Math.min(rawData.length / (MAX_CHUNK_LEN * i), MAX_CHUNK_LEN); j++) {
+            int chunkSize = Math.min(MAX_CHUNK_LEN, rawData.length - index);
+            byte[] arr = new byte[chunkSize];
+
+            for (int j = 0; j < chunkSize; j++) {
                 arr[j] = rawData[index];
                 index++;
             }
-            Chunk fdp = new Chunk(new PositiveByte((byte) (arr.length % 256)), new PositiveByte((byte) (arr.length / 256)), arr);
-            chunks.add(fdp);
-        }
-        return chunks;
-    }
 
+            byte data1LenL = (byte) (chunkSize % 256);
+            byte data1LenM = (byte) (chunkSize / 256);
+
+            DataChunk dataChunk = new DataChunk(new UnsignedInteger(data1LenL), new UnsignedInteger(data1LenM), arr);
+            dataChunks.add(dataChunk);
+        }
+
+        return dataChunks;
+    }
 
 }

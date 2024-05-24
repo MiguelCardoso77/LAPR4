@@ -17,14 +17,15 @@ public class FollowUpServer {
         try {
             Server server = new Server(PORT);
             init();
-            Thread thread = new Thread(server);
-            thread.setDaemon(true);
-            thread.start();
+
+            Thread serverThread = new Thread(server);
+            serverThread.setDaemon(true); //ver para q serve
+            serverThread.start();
 
             Console.readLine("To stop the server press 'ENTER'...");
 
             server.stop();
-            stop(thread);
+            stop(serverThread);
         } catch (IOException e) {
             System.out.println("Could not bind to port " + PORT);
             System.out.println("Exiting the application...");

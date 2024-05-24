@@ -104,4 +104,16 @@ public class ApplicationService {
 
         return applications;
     }
+
+    public List<Application> applicationsByCandidate(Candidate candidate) {
+        List<Application> applications = new ArrayList<>();
+
+        for (Application a : applicationRepository.allApplications()) {
+            if (a.candidate().equals(candidate)) {
+                applications.add(a);
+            }
+        }
+
+        return applications;
+    }
 }

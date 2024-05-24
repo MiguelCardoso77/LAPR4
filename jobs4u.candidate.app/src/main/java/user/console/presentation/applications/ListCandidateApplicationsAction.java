@@ -1,4 +1,4 @@
-package backoffice.presentation.candidate;
+package user.console.presentation.applications;
 
 import eapli.framework.actions.Action;
 

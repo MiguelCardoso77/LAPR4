@@ -1,10 +1,9 @@
 package backoffice.presentation.menus;
 
-import backoffice.presentation.authz.ListUsersAction;
-import backoffice.presentation.candidate.ListCandidateApplicationsAction;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
+import user.console.presentation.applications.ListCandidateApplicationsAction;
 
 public class CandidateMenu extends AbstractUI {
 

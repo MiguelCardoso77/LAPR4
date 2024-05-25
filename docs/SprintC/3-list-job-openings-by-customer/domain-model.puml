@@ -49,6 +49,8 @@ entity JobOpening <<entity>><<root>>
     }
     card Description <<Value Object>> {
     }
+    card ActiveSince <<Value Object>>{
+    }
 
     JobOpening --> JobReference
     JobOpening --> TitleOrFunction
@@ -57,6 +59,7 @@ entity JobOpening <<entity>><<root>>
     JobOpening --> Address
     JobOpening --> VacanciesNumber
     JobOpening --> Description
+    JobOpening --> ActiveSince
 
     note right of ContractType
         Can be one of the following:
@@ -124,21 +127,20 @@ entity Process <<entity>><<root>>
     }
     card ProcessDate <<Value Object>> {
     }
+    card ProcessStatus <<Value Object>>{
+    }
 
     Process --> ProcessState
     Process --> ProcessDate
+    Process --> ProcessStatus
 
     note right of ProcessDate
         Can be one of the following:
         - applicationStartDate
-        - applicationEndDate
         - ScreeningStartDate
-        - ScreeningEndDate
         - InterviewsStartDate
-        - InterviewsEndDate
         - AnalysisStartDate
-        - AnalysisEndDate
-        - ResultDate
+        - ResultStartDate
     end note
 
     note right of ProcessState
@@ -150,14 +152,30 @@ entity Process <<entity>><<root>>
         - Result
     end note
 
+    note right of ProcessStatus
+        Can be one of the following:
+        - Open
+        - Close
+    end note
 }
 
+package "Interview Model Aggregate"{
+entity InterviewModel <<entity>><<root>>
+
+    card Plugin <<Value Object>> {
+    }
+
+    InterviewModel --> Plugin
+
+}
+
+
 JobOpening "1" <-- "N " Application : has
-JobOpening "N" ---> "1" Customer : associated
+JobOpening "N" --> "1" Customer : associated
+JobOpening  "1" --> "1" Process
 
-JobOpening  --> Process
+JobRequirementsSpecification "1" <-- "N" JobOpening : associated
 
-
-JobRequirementsSpecification "1" <--- "N" JobOpening : associated
+InterviewModel "1" <--- "N" JobOpening : uses
 
 @enduml

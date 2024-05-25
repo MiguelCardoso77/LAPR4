@@ -9,7 +9,7 @@ public class ListCandidateApplicationsUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        Candidate candidateLoggedIn = listCandidateApplicationsController.candidateLoggedIn();\
+        //Candidate candidateLoggedIn = listCandidateApplicationsController.candidateLoggedIn();\
 
 
         return true;

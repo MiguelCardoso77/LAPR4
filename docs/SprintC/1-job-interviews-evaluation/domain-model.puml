@@ -49,6 +49,8 @@ entity JobOpening <<entity>><<root>>
     }
     card Description <<Value Object>> {
     }
+    card ActiveSince <<Value Object>>{
+    }
 
     JobOpening --> JobReference
     JobOpening --> TitleOrFunction
@@ -57,6 +59,7 @@ entity JobOpening <<entity>><<root>>
     JobOpening --> Address
     JobOpening --> VacanciesNumber
     JobOpening --> Description
+    JobOpening --> ActiveSince
 
     note right of ContractType
         Can be one of the following:
@@ -70,25 +73,6 @@ entity JobOpening <<entity>><<root>>
          - hybrid
          - onsite
     end note
-
-}
-
-package "JobInterview Aggregate"{
-entity JobInterview <<entity>><<root>>
-
-     card InterviewResults <<Value Object>> {
-     }
-     card Score <<Value Object>> {
-     }
-     card InterviewTime <<Value Object>> {
-     }
-     card InterviewDate <<Value Object>> {
-     }
-
-     JobInterview --> InterviewResults
-     JobInterview --> Score
-     JobInterview --> InterviewTime
-     JobInterview --> InterviewDate
 
 }
 
@@ -129,7 +113,6 @@ entity Process <<entity>><<root>>
         - Open
         - Close
     end note
-
 }
 
 package "Application Aggregate"{
@@ -167,6 +150,44 @@ entity Application <<entity>><<root>>
 
 }
 
+package "JobInterview Aggregate"{
+entity JobInterview <<entity>><<root>>
+
+     card InterviewResults <<Value Object>> {
+     }
+     card Score <<Value Object>> {
+     }
+     card InterviewTime <<Value Object>> {
+     }
+     card InterviewDate <<Value Object>> {
+     }
+
+     JobInterview --> InterviewResults
+     JobInterview --> Score
+     JobInterview --> InterviewTime
+     JobInterview --> InterviewDate
+
+}
+
+package "Interview Model Aggregate"{
+entity InterviewModel <<entity>><<root>>
+
+    card Plugin <<Value Object>> {
+    }
+
+    InterviewModel --> Plugin
+
+}
+
+package "Customer Aggregate"{
+entity Customer <<entity>><<root>>
+
+    card EmailAddress <<Value Object>>{
+    }
+
+    Customer --> EmailAddress
+}
+
 package "Candidate Aggregate"{
 entity Candidate <<entity>><<root>>
 
@@ -179,16 +200,16 @@ entity Candidate <<entity>><<root>>
     Candidate --> TelephoneNumber
 }
 
-package "Customer Manager Aggregate"{
-entity CustomerManager <<entity>><<root>>
-
-}
-
-JobOpening  --> Process
-JobRequirementsSpecification "1" <--- "N" JobOpening : associated
-CustomerManager "1" ---> "N" JobOpening : manages
-Application "N" ---> "1" Candidate
-Application "1" ---> "1" JobInterview
 JobOpening "1" <-- "N " Application : has
+    JobOpening "N" --> "1" Customer : associated
+    JobOpening  "1" --> "1" Process
+
+
+Application "N" --> "1" Candidate
+    Application "1" <-- "1" JobInterview
+
+     JobRequirementsSpecification "1" <-- "N" JobOpening : associated
+
+     InterviewModel "1" <--- "N" JobOpening : uses
 
 @enduml

@@ -1,14 +1,19 @@
 package core.services;
 
+import core.application.controllers.AddUserController;
 import core.domain.company.Company;
 import core.domain.customer.Customer;
 import core.domain.customer.CustomerBuilder;
 import core.persistence.PersistenceContext;
 import core.repositories.CustomerRepository;
 import eapli.framework.general.domain.model.EmailAddress;
+import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * A service class for managing operations related to customers.
@@ -18,6 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository = PersistenceContext.repositories().customerUsers();
+    private final AddUserController addUserController = new AddUserController();
     /**
      * Registers a new customer with the specified system user, company, customer manager, and customer ID.
      *
@@ -53,6 +59,23 @@ public class CustomerService {
         for(Customer customer : customers){
             if(customer.identity().equals(customerId.identity()) ){
                 return customer;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds the customer associated with a given system user.
+     *
+     * @param systemUser The system user whose associated customer is to be found.
+     * @return The customer associated with the specified system user, or null if no such customer is found.
+     */
+    public Customer findCustomerByUser(SystemUser systemUser){
+        List<SystemUser> allSystemUsers = addUserController.allUsers();
+        for(SystemUser user : allSystemUsers){
+            if(user.identity().equals(systemUser.identity())){
+                Optional<Customer> customerOptional = customerRepository.findByEmailAddress(systemUser.email());
+                return customerOptional.orElse(null);
             }
         }
         return null;

@@ -30,4 +30,12 @@ public class JobOpeningDTO{
         this.activeSince = activeSince;
         this.numberOfApplicants = numberOfApplicants;
     }
+
+    @Override
+    public String toString() {
+        return "jobReference : " + jobReference +
+                ", position : " + position +
+                ", date of activation : " + activeSince +
+                ", number of applicants = " + numberOfApplicants;
+    }
 }

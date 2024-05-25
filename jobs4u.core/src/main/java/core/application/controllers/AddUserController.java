@@ -15,6 +15,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.time.util.CurrentTimeCalendars;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -56,6 +57,10 @@ public class AddUserController {
     public SystemUser addUser(String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
         username = email;
         return addUser(username, password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
+    }
+
+    public List<SystemUser> allUsers() {
+        return (List<SystemUser>) userSvc.allUsers();
     }
 }
 

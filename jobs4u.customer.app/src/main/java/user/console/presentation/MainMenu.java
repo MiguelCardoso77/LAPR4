@@ -32,6 +32,7 @@ import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
+import user.console.presentation.jobOpenings.ListCustomerJobOpeningsAction;
 
 /**
  * @author Paulo Gandra Sousa
@@ -41,6 +42,7 @@ class MainMenu extends CustomerUserUI {
     private static final String SEPARATOR_LABEL = "--------------";
     private static final int EXIT_OPTION = 0;
     private static final int MY_USER_OPTION = 1;
+    private static final int LIST_JOB_OPENINGS_OPTION = 2;
 
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
@@ -65,9 +67,8 @@ class MainMenu extends CustomerUserUI {
 
         final Menu myUserMenu = new MyUserMenu();
         mainMenu.addSubMenu(MY_USER_OPTION, myUserMenu);
-
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
-
+        mainMenu.addItem(LIST_JOB_OPENINGS_OPTION, "List Job Openings", new ListCustomerJobOpeningsAction());
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;

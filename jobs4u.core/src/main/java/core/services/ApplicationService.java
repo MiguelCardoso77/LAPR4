@@ -116,4 +116,14 @@ public class ApplicationService {
 
         return applications;
     }
+
+    public int numberOfApplicationsForJobOpening(JobOpening jobOpening){
+        int count = 0;
+        for(Application application : applicationRepository.allApplications()){
+            if(application.jobReference().jobReference().equals(jobOpening.jobReference())){
+                count++;
+            }
+        }
+        return count;
+    }
 }

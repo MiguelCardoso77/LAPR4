@@ -28,12 +28,12 @@ public class GenerateAnswersTemplateController {
         }
     }
 
-    public void writeListToFile(List<String> questionForFile, String filePath) {
+    public boolean writeListToFile(List<String> questionForFile, String filePath) {
         try {
             Files.write(Paths.get(filePath), questionForFile);
-            System.out.println("\nFile created successfully.");
+            return true;
         } catch (IOException e) {
-            System.err.println("\nError writing to file.");
+            return false;
         }
     }
 
@@ -88,19 +88,23 @@ public class GenerateAnswersTemplateController {
 
     public List<String> processLines(List<String> lines) {
         List<String> processedLines = new ArrayList<>();
+
         for (String line : lines) {
-            int firstIndex = line.indexOf(">");
-            if (firstIndex != -1) {
-                int secondIndex = line.indexOf(">", firstIndex + 1);
-                if (secondIndex != -1) {
-                    processedLines.add(line.substring(0, secondIndex + 1));
+            if (!line.isEmpty()) {
+                int firstIndex = line.indexOf(">");
+                if (firstIndex != -1) {
+                    int secondIndex = line.indexOf(">", firstIndex + 1);
+                    if (secondIndex != -1) {
+                        processedLines.add(line.substring(0, secondIndex + 1));
+                    } else {
+                        processedLines.add(line);
+                    }
                 } else {
                     processedLines.add(line);
                 }
-            } else {
-                processedLines.add(line);
             }
         }
+
         return processedLines;
     }
 }

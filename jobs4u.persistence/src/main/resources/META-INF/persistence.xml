@@ -16,7 +16,7 @@
     <class>core.domain.jobRequirementsSpecification.JobRequirementsSpecification</class>
     <class>core.domain.jobRequirementsSpecification.JobRequirementsSpecification</class>
     <class>core.domain.interview.JobInterview</class>
-    <class>core.domain.interview.InterviewModel</class>
+    <class>core.domain.interviewModel.InterviewModel</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>

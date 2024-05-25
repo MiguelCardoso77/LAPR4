@@ -1,11 +1,9 @@
 package core.domain.jobOpening;
 
-import core.domain.company.Company;
+import core.domain.customer.Customer;
+import core.domain.interviewModel.InterviewModel;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.domain.process.Process;
-import core.domain.process.ProcessBuilder;
-import core.domain.process.ProcessState;
-import core.domain.process.ProcessStatus;
 import eapli.framework.domain.model.DomainFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,9 +26,11 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private Mode mode;
     private ContractType contractType;
     private TitleOrFunction titleOrFunction;
-    private Company company;
+    private Customer customer;
     private JobRequirementsSpecification jobRequirementsSpecification;
     private Process process;
+    private Calendar activeSince;
+    private InterviewModel interviewModel;
 
     /**
      * Sets all attributes of the job opening.
@@ -42,12 +42,15 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
      * @param mode                       The mode of the job opening (e.g., full-time, part-time).
      * @param contractType               The contract type of the job opening.
      * @param titleOrFunction            The title or function of the job opening.
-     * @param company                    The company offering the job opening.
+     * @param customer                    The customer associated to the job opening.
+     * @param jobRequirementsSpecification The job requirements specification of the job opening.
+     * @param process                    The process for the job opening.
+     * @param interviewModel             The interview model of the job opening
      * @return This builder instance.
      */
     public JobOpeningBuilder withAll(JobReference jobReference, String description, int vacanciesNumber,
                                      String address, Mode mode, ContractType contractType, String titleOrFunction,
-                                    Company company, JobRequirementsSpecification jobRequirementsSpecification, Process process) {
+                                    Customer customer, JobRequirementsSpecification jobRequirementsSpecification, Process process, InterviewModel interviewModel) {
         this.jobReference = jobReference;
         this.description = new Description(description);
         this.vacanciesNumber = new VacanciesNumber(vacanciesNumber);
@@ -55,9 +58,11 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
         this.mode = mode;
         this.contractType = contractType;
         this.titleOrFunction = new TitleOrFunction(titleOrFunction);
-        this.company = company;
+        this.customer = customer;
         this.jobRequirementsSpecification = null;
         this.process = process;
+        this.activeSince = Calendar.getInstance();
+        this.interviewModel = null;
         return this;
     }
     /**
@@ -68,12 +73,12 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     public JobOpening build() {
         JobOpening jobOpening;
 
-        if (jobReference == null || description == null || vacanciesNumber == null || address == null || mode == null || contractType == null || titleOrFunction == null || company == null) {
+        if (jobReference == null || description == null || vacanciesNumber == null || address == null || mode == null || contractType == null || titleOrFunction == null || customer == null) {
             LOGGER.error("Missing mandatory information to build a JobOpening");
             return null;
         } else {
-            LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}, company {}", jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
-            jobOpening = new JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company, null, process);
+            LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}, company {}", jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer);
+            jobOpening = new JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer, null, process, activeSince, null);
         }
         return jobOpening;
     }

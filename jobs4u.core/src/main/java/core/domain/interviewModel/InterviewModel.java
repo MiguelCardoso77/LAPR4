@@ -1,8 +1,6 @@
-package core.domain.interview;
+package core.domain.interviewModel;
 
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.model.AggregateRoot;
-import eapli.framework.domain.model.ValueObject;
 import jakarta.persistence.*;
 /**
  * Represents an interview model, which is a value object.

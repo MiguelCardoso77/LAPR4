@@ -1,4 +1,4 @@
-package core.domain.interview;
+package core.domain.interviewModel;
 
 import eapli.framework.validations.Preconditions;
 

@@ -27,6 +27,8 @@ public class AddCustomerController {
     private final AddUserController addUserController = new AddUserController();
     private final Jobs4UPasswordPolicy passwordPolicy = new Jobs4UPasswordPolicy();
 
+    private final UserManagementService user = AuthzRegistry.userService();
+
     private final CustomerService customerService = new CustomerService();
     /**
      * Registers a new customer with the specified information.
@@ -60,12 +62,10 @@ public class AddCustomerController {
         Preconditions.nonNull(lastName);
         Preconditions.nonNull(email);
 
-        authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.ADMIN, Jobs4URoles.CANDIDATE, Jobs4URoles.OPERATOR, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.BOOTSTRAP);
-
         roles.add(Jobs4URoles.CUSTOMER);
         String password = passwordPolicy.passwordGenerator(firstName);
 
-        return addUserController.addUser(email, password, firstName, lastName, email, roles, createdOn);
+        return user.registerNewUser(email, password, firstName, lastName, email, roles, createdOn);
     }
     /**
      * Creates a new candidate.

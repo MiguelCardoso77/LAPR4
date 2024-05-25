@@ -1,20 +1,13 @@
 package backoffice.presentation.interview;
 
-import backoffice.presentation.jobOpening.AddJobOpeningUI;
 import core.application.controllers.*;
 import core.domain.application.Application;
-import core.domain.interview.InterviewModel;
+import core.domain.interviewModel.InterviewModel;
 import core.domain.interview.JobInterview;
 import core.domain.jobOpening.JobOpening;
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
-import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SelectInterviewModelUI extends AbstractUI {
 
@@ -32,12 +25,12 @@ public class SelectInterviewModelUI extends AbstractUI {
 
         applicationsOfJobOpening(jobOpening);
 
-        updateInterviewModel(interviewModel);
+        updateInterviewModel(jobOpening, interviewModel);
 
         return false;
     }
 
-    private void updateInterviewModel(InterviewModel interviewModel) {
+    private void updateInterviewModel(JobOpening jobOpening, InterviewModel interviewModel) {
         if (!applicationList.iterator().hasNext()) {
             System.out.println("It's not possible to perform this operation. ");
             doShow();
@@ -46,7 +39,7 @@ public class SelectInterviewModelUI extends AbstractUI {
                 Iterable<JobInterview> jobInterviews = listJobInterviewsApplicationController.allJobInterviewsOfApplication(application);
                 for (JobInterview jobInterview : jobInterviews) {
                     if (jobInterview != null) {
-                        selectInterviewModelController.updateInterviewModel(interviewModel, jobInterview.identity());
+                        selectInterviewModelController.updateInterviewModel(jobOpening.jobReference(), interviewModel);
                     }
                 }
             }

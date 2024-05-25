@@ -1,5 +1,6 @@
 package persistence.inMemory;
 
+import core.domain.interviewModel.InterviewModel;
 import core.pluginManagement.importer.LanguageImporterPluginRepository;
 import core.pluginManagement.language.LanguageRepository;
 import core.pluginManagement.language.LanguageTypeRepository;
@@ -69,13 +70,23 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public CustomerRepository customers(TransactionalContext autoTx) {
+        return null;
+    }
+
+    @Override
+    public CustomerRepository customers() {
+        return customers(null);
+    }
+
+    @Override
     public CompanyRepository companies(TransactionalContext autoTx) {
         return new InMemoryCompanyRepository();
     }
 
     @Override
     public CompanyRepository companies() {
-        return null;
+        return companies(null);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package core.services;
 
 import core.domain.application.Application;
-import core.domain.interview.InterviewModel;
+import core.domain.interviewModel.InterviewModel;
 import core.domain.interview.JobInterview;
 import core.domain.interview.JobInterviewBuilder;
 import core.domain.interview.Score;
@@ -12,10 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import java.util.List;
 
 /**
@@ -41,7 +37,7 @@ public class JobInterviewService {
     public JobInterview registerJobInterview(Calendar createdOn, int time, int score, String result,
                                              Application application) {
         JobInterviewBuilder jobInterviewBuilder = new JobInterviewBuilder();
-        jobInterviewBuilder.withAll(createdOn, time, score, result, application, null);
+        jobInterviewBuilder.withAll(createdOn, time, score, result, application);
         JobInterview jobInterview = jobInterviewBuilder.build();
         return jobInterviewRepository.save(jobInterview);
     }
@@ -55,23 +51,6 @@ public class JobInterviewService {
         return jobInterviewRepository.allJobInterviews();
     }
 
-    /**
-     * Updates the interview model for a specific job interview identified by its ID.
-     *
-     * @param interviewModelToChange The new interview model to be set.
-     * @param id                     The ID of the job interview to be updated.
-     * @return The updated job interview, or null if no job interview with the given ID is found.
-     */
-    @Transactional
-    public JobInterview updateInterviewModel(InterviewModel interviewModelToChange, Integer id) {
-        JobInterview jobInterview = jobInterviewRepository.ofIdentity(id).orElse(null);
-        if (jobInterview != null) {
-            jobInterview.updateInterviewModel(interviewModelToChange);
-            jobInterviewRepository.save(jobInterview);
-            return jobInterview;
-        }
-        return null;
-    }
     /**
      * Updates the score for a specific job interview identified by its ID.
      *

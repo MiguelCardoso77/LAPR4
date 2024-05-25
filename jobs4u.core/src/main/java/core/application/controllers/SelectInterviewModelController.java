@@ -1,12 +1,13 @@
 package core.application.controllers;
 
 import core.domain.application.Application;
-import core.domain.interview.InterviewModel;
-import core.domain.interview.JobInterview;
+import core.domain.interviewModel.InterviewModel;
 import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobReference;
 import core.persistence.PersistenceContext;
 import core.repositories.InterviewModelRepository;
 import core.services.JobInterviewService;
+import core.services.JobOpeningService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.io.util.Console;
 
@@ -19,6 +20,8 @@ public class SelectInterviewModelController {
     final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
     final JobInterviewService service = new JobInterviewService();
+
+    final JobOpeningService jobOpeningService = new JobOpeningService();
     List<Application> applicationList = new ArrayList<>();
 
 
@@ -44,7 +47,7 @@ public class SelectInterviewModelController {
         return (option == 0) ? null : interviewModels.get(option - 1);
     }
 
-    public void updateInterviewModel(InterviewModel interviewModel, Integer id) {
-        service.updateInterviewModel(interviewModel, id);
+    public void updateInterviewModel(JobReference jobReference, InterviewModel interviewModel) {
+        jobOpeningService.updateInterviewModel(jobReference, interviewModel);
     }
 }

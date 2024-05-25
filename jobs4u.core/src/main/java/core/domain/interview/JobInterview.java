@@ -33,10 +33,6 @@ public class JobInterview implements AggregateRoot<Integer> {
     @JoinColumn(name = "APPLICATION_ID")
     private Application application;
 
-    @ManyToOne
-    @JoinColumn(name = "INTERVIEW_MODEL")
-    private InterviewModel interviewModel;
-
     @Column(name = "INTERVIEW_ANSWERS")
     private InterviewAnswers interviewAnswers;
 
@@ -48,15 +44,13 @@ public class JobInterview implements AggregateRoot<Integer> {
      * @param score          the score of the interview
      * @param result         the result of the interview
      * @param application    the application associated with the interview
-     * @param interviewModel the interview model used for the interview
      */
-    public JobInterview(Calendar createdOn, Time time, Score score, Result result, Application application, InterviewModel interviewModel, InterviewAnswers interviewAnswers) {
+    public JobInterview(Calendar createdOn, Time time, Score score, Result result, Application application, InterviewAnswers interviewAnswers) {
         this.createdOn = createdOn;
         this.time = time;
         this.score = score;
         this.result = result;
         this.application = application;
-        this.interviewModel = interviewModel;
         this.interviewAnswers = interviewAnswers;
     }
 
@@ -121,30 +115,8 @@ public class JobInterview implements AggregateRoot<Integer> {
         return application;
     }
 
-    /**
-     * Retrieves the interview model used for the interview.
-     *
-     * @return the interview model used for the interview
-     */
-    public InterviewModel interviewModel() {
-        return interviewModel;
-    }
-
     public InterviewAnswers interviewAnswers() {
         return interviewAnswers;
-    }
-
-    /**
-     * Changes the interview model used for the interview.
-     *
-     * @param interviewModelToChange the new interview model
-     */
-    public void updateInterviewModel(InterviewModel interviewModelToChange) {
-        if (interviewModelToChange != null) {
-            this.interviewModel = interviewModelToChange;
-        } else {
-            System.out.println("not able to change it");
-        }
     }
 
     public void uploadInterviewAnswers(InterviewAnswers interviewAnswers) {
@@ -165,8 +137,7 @@ public class JobInterview implements AggregateRoot<Integer> {
         JobInterview jobInterview = (JobInterview) o;
         return Objects.equals(id, jobInterview.id) && Objects.equals(createdOn, jobInterview.createdOn)
                 && Objects.equals(time, jobInterview.time) && Objects.equals(score, jobInterview.score)
-                && Objects.equals(result, jobInterview.result) && Objects.equals(application, jobInterview.application)
-                && Objects.equals(interviewModel, jobInterview.interviewModel);
+                && Objects.equals(result, jobInterview.result) && Objects.equals(application, jobInterview.application);
     }
 
     /**
@@ -217,7 +188,6 @@ public class JobInterview implements AggregateRoot<Integer> {
                 ", score=" + score +
                 ", result=" + result +
                 ", application=" + application +
-                ", interviewModel=" + interviewModel +
                 ", interviewAnswers=" + interviewAnswers +
                 '}';
     }

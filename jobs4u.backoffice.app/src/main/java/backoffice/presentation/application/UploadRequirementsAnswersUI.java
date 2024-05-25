@@ -27,7 +27,7 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
         } else {
             System.out.println("Job Opening: ");
             for (JobOpening jobOpening : requirements) {
-                System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.company());
+                System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.customer());
                 cont++;
             }
             JobOpening jobOpening = selectJobOpeningController.selectorPart(requirements);

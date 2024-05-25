@@ -2,7 +2,6 @@ package core.services;
 
 import core.domain.interview.JobInterview;
 import core.domain.interview.Score;
-import core.domain.interview.events.EvaluationCompletedEvent;
 import core.persistence.PersistenceContext;
 import core.repositories.JobInterviewRepository;
 import eapli.framework.validations.Preconditions;
@@ -34,7 +33,5 @@ public class InterviewScoreUpdateService {
         JobInterview jobInterview = repository.ofIdentity(jobInterviewID).orElseThrow(() -> new IllegalArgumentException("Invalid interview id"));
         jobInterview.updateScore(newScore);
         repository.save(jobInterview);
-        EvaluationCompletedEvent event = new EvaluationCompletedEvent(jobInterviewID, newScore);
-        eventPublisher.publishEvent(event);
     }
 }

@@ -1,8 +1,10 @@
 package backoffice.presentation.jobOpening;
 
+import core.application.ListCustomerController;
 import core.application.controllers.AddJobOpeningController;
 import core.application.controllers.ListCompaniesController;
 import core.domain.company.Company;
+import core.domain.customer.Customer;
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.JobReference;
 import core.domain.jobOpening.Mode;
@@ -18,10 +20,9 @@ import java.util.List;
 
 public class AddJobOpeningUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
-
     private final AddJobOpeningController theController = new AddJobOpeningController();
-
     private final ListCompaniesController companiesController = new ListCompaniesController();
+    private final ListCustomerController customerController = new ListCustomerController();
 
     @Override
     protected boolean doShow() {
@@ -37,13 +38,13 @@ public class AddJobOpeningUI extends AbstractUI {
 
         final String titleOrFunction = Console.readLine("Title or Function");
 
-        showCompanies();
-        Company company = selectCompany();
+        showCustomer();
+        Customer customer = selectCustomer();
 
-        final JobReference jobReference = new JobReference(company.companyName().toString(), true);
+        final JobReference jobReference = new JobReference(customer.company().companyName().toString(), true);
 
         try {
-            this.theController.addJobOpening(jobReference, description, vacanciesNumber, address, modes, contractTypes, titleOrFunction, company);
+            this.theController.addJobOpening(jobReference, description, vacanciesNumber, address, modes, contractTypes, titleOrFunction, customer);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             System.out.println("That job reference is already in use.");
         }
@@ -90,34 +91,34 @@ public class AddJobOpeningUI extends AbstractUI {
         }
     }
 
-    private void showCompanies() {
-        final Iterable<Company> iterable = companiesController.allCompanies();
+    private void showCustomer(){
+        final Iterable<Customer> iterable = customerController.allCustomers();
 
         if (!iterable.iterator().hasNext()) {
-            System.out.println("There are no companies");
+            System.out.println("There are no customers");
         } else {
             int cont = 1;
-            System.out.println("List of registered Companies: \n");
-            for (Company company : iterable) {
-                System.out.printf("%-6s%-30s%n", cont, company.companyName());
+            System.out.println("List of registered Customers: \n");
+            for (Customer customer : iterable) {
+                System.out.printf("%-6s%-30s%n", cont, customer.identity());
                 cont++;
             }
         }
     }
 
-    private Company selectCompany() {
-        final List<Company> list = new ArrayList<>();
-        for (Company company : companiesController.allCompanies()) {
-            list.add(company);
+    private Customer selectCustomer(){
+        final List<Customer> list = new ArrayList<>();
+        for (Customer customer : customerController.allCustomers()) {
+            list.add(customer);
         }
 
-        Company company = null;
-        final int option = Console.readInteger("Enter the number of the company");
+        Customer customer = null;
+        final int option = Console.readInteger("Enter the number of the customer");
         if (option == 0) {
-            System.out.println("No company selected");
+            System.out.println("No customer selected");
         } else {
             try {
-                company = this.companiesController.findCompany(list.get(option - 1).identity());
+                customer = this.customerController.findCustomer(list.get(option - 1));
             } catch (IntegrityViolationException | ConcurrencyException ex) {
                 LOGGER.error("Error performing the operation", ex);
                 System.out.println(
@@ -125,7 +126,7 @@ public class AddJobOpeningUI extends AbstractUI {
             }
         }
 
-        return company;
+        return customer;
     }
 
     @Override

@@ -1,18 +1,10 @@
 package backoffice.presentation.jobRequirementsSpecifications;
 
-import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationUI;
-import core.application.controllers.GenerateAnswersTemplateController;
 import core.application.controllers.GenerateRequirementsSpecificationController;
 import core.application.controllers.SelectJobOpeningController;
-import core.domain.interview.InterviewModel;
-import core.domain.interview.JobInterview;
 import core.domain.jobOpening.JobOpening;
-import core.domain.jobRequirementsSpecification.AcademicDegree;
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
-import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GenerateRequirementsSpecificationUI extends AbstractUI {

@@ -1,6 +1,6 @@
 package persistence.jpa;
 
-import core.domain.interview.InterviewModel;
+import core.domain.interviewModel.InterviewModel;
 import core.repositories.InterviewModelRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
@@ -15,6 +15,6 @@ public class JpaInterviewModelsRepository extends JpaAutoTxRepository<InterviewM
     }
     @Override
     public Iterable<InterviewModel> allInterviewModels() {
-        return null;
+        return findAll();
     }
 }

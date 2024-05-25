@@ -1,6 +1,6 @@
 package bootstrappers.bootstraping;
 
-import core.domain.interview.InterviewModel;
+import core.domain.interviewModel.InterviewModel;
 import core.persistence.PersistenceContext;
 import core.repositories.InterviewModelRepository;
 import eapli.framework.actions.Action;

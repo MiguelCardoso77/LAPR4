@@ -1,6 +1,7 @@
 package core.application.controllers;
 
 import core.domain.company.Company;
+import core.domain.customer.Customer;
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
@@ -17,10 +18,10 @@ public class AddJobOpeningController {
     private final JobOpeningService jobOpeningService = new JobOpeningService();
 
     public JobOpening addJobOpening(JobReference jobReference, String description, int vacanciesNumber, String address,
-                                    Mode mode, ContractType contractType, String titleOrFunction, Company company) {
+                                    Mode mode, ContractType contractType, String titleOrFunction, Customer customer) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.ADMIN);
 
-        return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company);
+        return jobOpeningService.registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer);
     }
 
     public boolean verifyID(JobReference jobReference) {

@@ -38,14 +38,12 @@ public interface CustomerRepository extends DomainRepository<EmailAddress, Custo
      * @return an {@link Optional} containing the customer if found, or empty if not found
      */
 
-    default Optional<Customer> findByEmailAddress(final EmailAddress emailAddress) {
-        return ofIdentity(emailAddress);
-    }
+    Optional<Customer> findByEmailAddress(final EmailAddress emailAddress);
 
     /**
      * Retrieve all active customers.
      *
      * @return an iterable collection of active customers
      */
-    public Iterable<Customer> findAllActive();
+    Iterable<Customer> findAllActive();
 }

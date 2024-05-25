@@ -91,7 +91,7 @@ public class ApplicationService {
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
 
         for (Application a : applicationRepository.allApplications()) {
-            Company company = a.jobReference().company();
+            Company company = a.jobReference().customer().company();
 
             for (Customer c : customers) {
                 if (c.company().equals(company) && c.customerManager().equals(cm)) {

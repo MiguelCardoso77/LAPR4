@@ -1,10 +1,7 @@
 package core.services;
 
-import core.domain.interview.InterviewModel;
-import core.domain.interview.InterviewModelBuilder;
-import core.domain.jobOpening.JobOpening;
-import core.domain.jobOpening.JobReference;
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
+import core.domain.interviewModel.InterviewModel;
+import core.domain.interviewModel.InterviewModelBuilder;
 import core.persistence.PersistenceContext;
 import core.repositories.InterviewModelRepository;
 import jakarta.transaction.Transactional;

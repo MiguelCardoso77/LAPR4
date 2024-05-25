@@ -1,10 +1,13 @@
 package backoffice.presentation.interview;
 
 import core.application.controllers.GenerateAnswersTemplateController;
-import core.domain.interview.InterviewModel;
+import core.domain.application.Application;
+import core.domain.interviewModel.InterviewModel;
 import core.domain.interview.JobInterview;
+import core.domain.jobOpening.JobOpening;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+
 
 import java.util.List;
 
@@ -31,11 +34,13 @@ public class GenerateAnswersTemplateUI extends AbstractUI {
      */
     @Override
     protected boolean doShow() {
-        List<JobInterview> allJobInterviews = theController.findAllInterviewsWithModelAssigned();
+        List<JobOpening> allJobOpenings = theController.findAllJobOpeningsWithInterviewModelAssigned();
+        List<Application> applications = theController.findAllApplicationsWithInterviewModel(allJobOpenings);
+        List<JobInterview> allJobInterviews = theController.findAllInterviewsWithModelAssigned(applications);
 
         System.out.println("Job Interviews: ");
         for (JobInterview jobInterview : allJobInterviews) {
-            System.out.println("ID: " + jobInterview.identity() + " - " + jobInterview.interviewModel());
+            System.out.println("ID: " + jobInterview.identity());
         }
 
         int jobInterviewID = Console.readInteger("\nChoose a Job Interview: ");

@@ -41,4 +41,20 @@ public class CustomerService {
     public Iterable<Customer> allCustomers(){
         return customerRepository.findAll();
     }
+
+    /**
+     * Retrieves a customer from the customer repository based on the provided customer ID.
+     *
+     * @param customerId The customer ID to search for.
+     * @return The customer object corresponding to the provided customer ID if found,
+     */
+    public Customer findCustomer(Customer customerId) {
+        Iterable<Customer> customers = customerRepository.findAll();
+        for(Customer customer : customers){
+            if(customer.identity().equals(customerId.identity()) ){
+                return customer;
+            }
+        }
+        return null;
+    }
 }

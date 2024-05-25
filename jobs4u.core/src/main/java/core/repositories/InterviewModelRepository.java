@@ -1,6 +1,6 @@
 package core.repositories;
 
-import core.domain.interview.InterviewModel;
+import core.domain.interviewModel.InterviewModel;
 import eapli.framework.domain.repositories.DomainRepository;
 
 import java.util.Optional;

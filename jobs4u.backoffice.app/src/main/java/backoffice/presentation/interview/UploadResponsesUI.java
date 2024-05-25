@@ -2,7 +2,9 @@ package backoffice.presentation.interview;
 
 import core.application.controllers.GenerateAnswersTemplateController;
 import core.application.controllers.UploadResponsesController;
+import core.domain.application.Application;
 import core.domain.interview.JobInterview;
+import core.domain.jobOpening.JobOpening;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -14,11 +16,13 @@ public class UploadResponsesUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        List<JobInterview> interviews = generateAnswersTemplateController.findAllInterviewsWithModelAssigned();
+        List<JobOpening> jobOpenings = generateAnswersTemplateController.findAllJobOpeningsWithInterviewModelAssigned();
+        List<Application> applications = generateAnswersTemplateController.findAllApplicationsWithInterviewModel(jobOpenings);
+        List<JobInterview> interviews = generateAnswersTemplateController.findAllInterviewsWithModelAssigned(applications);
 
         System.out.println("Job Interviews: ");
         for (JobInterview jobInterview : interviews) {
-            System.out.println("ID: " + jobInterview.identity() + " - " + jobInterview.interviewModel());
+            System.out.println("ID: " + jobInterview.identity());
         }
 
         int jobInterviewID = Console.readInteger("Enter the Job Interview ID: ");

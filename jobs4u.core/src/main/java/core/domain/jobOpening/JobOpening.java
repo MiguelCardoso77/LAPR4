@@ -1,11 +1,14 @@
 package core.domain.jobOpening;
 
-import core.domain.company.Company;
+import core.domain.customer.Customer;
+import core.domain.interviewModel.InterviewModel;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.domain.process.Process;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import jakarta.persistence.*;
+
+import java.util.Calendar;
 
 /**
  * Represents a job opening in the system.
@@ -40,13 +43,20 @@ public class JobOpening implements AggregateRoot<JobReference> {
     @Column(name = "TITLE_OR_FUNCTION")
     private TitleOrFunction titleOrFunction;
 
+    @Column(name = "ACTIVATE_SINCE")
+    private Calendar activeSince;
+
     @ManyToOne
-    @JoinColumn(name = "COMPANY_NUMBER")
-    private Company company;
+    @JoinColumn(name = "CUSTOMER_EMAIL_ADDRESS")
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "JOB_REQUIREMENTS")
     private JobRequirementsSpecification jobRequirementsSpecification;
+
+    @ManyToOne
+    @JoinColumn(name = "INTERVIEW_MODEL")
+    private InterviewModel interviewModel;
 
     @OneToOne
     @JoinColumn(name = "PROCESS_ID")
@@ -61,12 +71,15 @@ public class JobOpening implements AggregateRoot<JobReference> {
      * @param mode                       The mode of the job opening (e.g., full-time, part-time).
      * @param contractType               The contract type of the job opening.
      * @param titleOrFunction            The title or function of the job opening.
-     * @param company                    The company offering the job opening.
+     * @param customer                    The customer associated to the job opening.
      * @param jobRequirementsSpecification The job requirements specification for the job opening.
+     * @param process                    The process for the job opening.
+     * @param activeSince                The date when the job opening was activated.
+     * @param interviewModel             The interview model
      */
     public JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber,
-                      Address address, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction, Company company,
-                      JobRequirementsSpecification jobRequirementsSpecification, Process process) {
+                      Address address, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction, Customer customer,
+                      JobRequirementsSpecification jobRequirementsSpecification, Process process, Calendar activeSince, InterviewModel interviewModel) {
         this.jobReference = jobReference;
         this.description = description;
         this.vacanciesNumber = vacanciesNumber;
@@ -74,9 +87,11 @@ public class JobOpening implements AggregateRoot<JobReference> {
         this.mode = mode;
         this.contractType = contractType;
         this.titleOrFunction = titleOrFunction;
-        this.company = company;
+        this.customer = customer;
         this.jobRequirementsSpecification = jobRequirementsSpecification;
         this.process = process;
+        this.activeSince = activeSince;
+        this.interviewModel = interviewModel;
     }
 
     protected JobOpening() {
@@ -178,12 +193,12 @@ public class JobOpening implements AggregateRoot<JobReference> {
         return titleOrFunction;
     }
     /**
-     * Gets the job requirements specification for the job opening.
+     * Gets the customer associated to the job opening.
      *
-     * @return The job requirements specification for the job opening.
+     * @return The customer.
      */
-    public Company company() {
-        return company;
+    public Customer customer() {
+        return customer;
     }
     /**
      * Gets the job requirements specification for the job opening.
@@ -201,6 +216,25 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public Process process(){
         return process;
     }
+
+    /**
+     * Gets the date when the job opening was activated.
+     *
+     * @return The date when the job opening was activated.
+     */
+    public Calendar activationDate(){
+        return activeSince;
+    }
+
+    /**
+     * Gets the interview model associated to the job opening.
+     *
+     * @return The interview model associated.
+     */
+
+    public InterviewModel myInterviewModel(){
+        return interviewModel;
+    }
     /**
      * Updates the job requirements specification for the job opening.
      *
@@ -208,6 +242,14 @@ public class JobOpening implements AggregateRoot<JobReference> {
      */
     public void updateJobRequirements(JobRequirementsSpecification jobRequirementsSpecification){
         this.jobRequirementsSpecification = jobRequirementsSpecification;
+    }
+    /**
+     * Updates the interview model for the job opening.
+     *
+     * @param interviewModel The new interview model.
+     */
+    public void updateInterviewModel(InterviewModel interviewModel){
+        this.interviewModel = interviewModel;
     }
     /**
      * Checks if the given job reference is the same as the job reference of this job opening.
@@ -226,7 +268,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     /**
      * Returns a string representation of this job opening.
      * The string representation includes the job reference, description, vacancies number, address, mode,
-     * contract type, title or function, associated company, and job requirements specification.
+     * contract type, title or function, associated customer, interview model and job requirements specification.
      *
      * @return A string representation of this job opening.
      */
@@ -239,8 +281,9 @@ public class JobOpening implements AggregateRoot<JobReference> {
                 ", mode = " + mode +
                 ", contract type = " + contractType +
                 ", title = " + titleOrFunction +
-                ", company = " + company +
+                ", customer = " + customer +
                 ", job requirements specification = " + jobRequirementsSpecification +
+                ", interview model = " + interviewModel +
                 ", process = " + process;
     }
 

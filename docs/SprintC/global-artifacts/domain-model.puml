@@ -71,6 +71,8 @@ entity JobOpening <<entity>><<root>>
     }
     card Description <<Value Object>> {
     }
+    card ActiveSince <<Value Object>>{
+    }
 
     JobOpening --> JobReference
     JobOpening --> TitleOrFunction
@@ -79,6 +81,7 @@ entity JobOpening <<entity>><<root>>
     JobOpening --> Address
     JobOpening --> VacanciesNumber
     JobOpening --> Description
+    JobOpening --> ActiveSince
 
     note right of ContractType
         Can be one of the following:
@@ -217,31 +220,6 @@ entity InterviewModel <<entity>><<root>>
 
 }
 
-package "Language Engineer Aggregate"{
-entity LanguageEngineer <<entity>><<root>>
-
-}
-
-package "Admin Aggregate"{
-entity Admin <<entity>><<root>>
-
-}
-
-package "Customer Manager Aggregate"{
-entity CustomerManager <<entity>><<root>>
-
-}
-
-package "Operator Aggregate"{
-    entity Operator <<entity>><<root>>
-
-}
-
-package "ANTLR Service Aggregate"{
-    entity ANTLR <<entity>><<root>>
-
-}
-
 package "Company Aggregate" {
     entity Company <<entity>><<root>>
 
@@ -255,37 +233,22 @@ package "Company Aggregate" {
 }
 
     JobOpening "1" <-- "N " Application : has
-    JobOpening "N" ---> "1" Customer : associated
-    JobOpening  --> Process
+    JobOpening "N" --> "1" Customer : associated
+    JobOpening  "1" --> "1" Process
 
-    Application "N" ---> "1" Candidate
-    Application "1" <--- "1" JobInterview
+    Application "N" --> "1" Candidate
+    Application "1" <-- "1" JobInterview
 
-    JobRequirementsSpecification "1" <--- "N" JobOpening : associated
+    JobRequirementsSpecification "1" <-- "N" JobOpening : associated
 
-    Admin "1" ---> "N" Customer : manages
-    Admin "1" ---> "N" CustomerManager : manages
+    User "1" ---> "N" JobOpening : Customer Manager manages >
 
-    CustomerManager "1" ---> "N" JobOpening : manages
-    CustomerManager "1" ---> "N" Customer : registers
+    User "1" ---> "N" Application : Operator registers >
 
-    Operator "1" ---> "N" Application : registers
+    User "1" --> "N" JobRequirementsSpecification : Language Engineer creates >
+    User "1" --> "N" InterviewModel : Language Engineer creates >
 
-    LanguageEngineer "1" ---> "N" JobRequirementsSpecification : creates
-    LanguageEngineer "1" ---> "N" InterviewModel : creates
-
-    InterviewModel "1" <--- "N" JobInterview : uses
-
-    ANTLR --> JobRequirementsSpecification : processes
-    ANTLR ---> InterviewModel : processes
-
-    Admin ---> User: manages
-
-    CustomerManager ---> User
-
-    Operator --> User
-
-    LanguageEngineer ---> User
+    InterviewModel "1" <--- "N" JobOpening : uses
 
     Customer ---> User
     Customer "N" --> "1" Company : associated <

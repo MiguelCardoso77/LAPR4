@@ -43,9 +43,6 @@ public class JobOpening implements AggregateRoot<JobReference> {
     @Column(name = "TITLE_OR_FUNCTION")
     private TitleOrFunction titleOrFunction;
 
-    @Column(name = "ACTIVATE_SINCE")
-    private Calendar activeSince;
-
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_EMAIL_ADDRESS")
     private Customer customer;
@@ -74,12 +71,11 @@ public class JobOpening implements AggregateRoot<JobReference> {
      * @param customer                    The customer associated to the job opening.
      * @param jobRequirementsSpecification The job requirements specification for the job opening.
      * @param process                    The process for the job opening.
-     * @param activeSince                The date when the job opening was activated.
      * @param interviewModel             The interview model
      */
     public JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber,
                       Address address, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction, Customer customer,
-                      JobRequirementsSpecification jobRequirementsSpecification, Process process, Calendar activeSince, InterviewModel interviewModel) {
+                      JobRequirementsSpecification jobRequirementsSpecification, Process process, InterviewModel interviewModel) {
         this.jobReference = jobReference;
         this.description = description;
         this.vacanciesNumber = vacanciesNumber;
@@ -90,7 +86,6 @@ public class JobOpening implements AggregateRoot<JobReference> {
         this.customer = customer;
         this.jobRequirementsSpecification = jobRequirementsSpecification;
         this.process = process;
-        this.activeSince = activeSince;
         this.interviewModel = interviewModel;
     }
 
@@ -215,15 +210,6 @@ public class JobOpening implements AggregateRoot<JobReference> {
      */
     public Process process(){
         return process;
-    }
-
-    /**
-     * Gets the date when the job opening was activated.
-     *
-     * @return The date when the job opening was activated.
-     */
-    public Calendar activationDate(){
-        return activeSince;
     }
 
     /**

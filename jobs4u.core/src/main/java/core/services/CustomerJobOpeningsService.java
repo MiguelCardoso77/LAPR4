@@ -34,7 +34,7 @@ public class CustomerJobOpeningsService {
         return new JobOpeningDTO(
                 jobOpening.jobReference().toString(),
                 jobOpening.titleOrFunction().toString(),
-                jobOpening.activationDate().getTime(),
+                jobOpening.process().processDate().getTime(),
                 numberOfApplicants
         );
     }

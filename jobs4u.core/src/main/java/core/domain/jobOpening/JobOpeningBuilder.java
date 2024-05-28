@@ -29,7 +29,6 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private Customer customer;
     private JobRequirementsSpecification jobRequirementsSpecification;
     private Process process;
-    private Calendar activeSince;
     private InterviewModel interviewModel;
 
     /**
@@ -61,7 +60,6 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
         this.customer = customer;
         this.jobRequirementsSpecification = null;
         this.process = process;
-        this.activeSince = Calendar.getInstance();
         this.interviewModel = null;
         return this;
     }
@@ -78,7 +76,7 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
             return null;
         } else {
             LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}, company {}", jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer);
-            jobOpening = new JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer, null, process, activeSince, null);
+            jobOpening = new JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer, null, process, null);
         }
         return jobOpening;
     }

@@ -9,6 +9,7 @@ public class Packet<T> implements Serializable {
 
     private byte version;
     private ProtocolCodes code;
+    private byte codes;
     private List<DataChunk> data;
 
     public Packet(byte version, ProtocolCodes code, T data) throws IOException {
@@ -17,13 +18,20 @@ public class Packet<T> implements Serializable {
         this.data = createChunks(data);
     }
 
+    public Packet(byte version, byte code, List<DataChunk> data) throws IOException {
+        this.version = version;
+        this.codes = code;
+        this.data = data;
+    }
+
     public byte version() {
         return version;
     }
 
-    public ProtocolCodes code() {
-        return code;
-    }
+    public ProtocolCodes code() {return code; }
+
+    public byte codes() {return codes; }
+
 
     public List<DataChunk> data() {
         return data;
@@ -80,5 +88,43 @@ public class Packet<T> implements Serializable {
 
         return dataChunks;
     }
+
+    public static Packet fromDataStream(DataInputStream inputStream) throws IOException {
+        byte[] metadata = new byte[2];
+        int bytesRead = inputStream.read(metadata);
+
+        if (bytesRead != 2) {
+            throw new IOException("Insufficient metadata bytes read");
+        }
+
+        byte protocolVersion = metadata[0];
+        byte code = metadata[1];
+
+        List<DataChunk> dataChunkList = new ArrayList<>();
+
+        while (true) {
+            byte[] lengthBytes = new byte[2];
+            bytesRead = inputStream.read(lengthBytes);
+            if (bytesRead != 2) {
+                throw new IOException("Insufficient data length bytes read");
+            }
+
+            int dataLength = (lengthBytes[0] & 0xFF) + ((lengthBytes[1] & 0xFF) << 8);
+            if (dataLength == 0) {
+                break;
+            }
+
+            byte[] dataContent = new byte[dataLength];
+            bytesRead = inputStream.read(dataContent);
+            if (bytesRead != dataLength) {
+                throw new IOException("Insufficient data bytes read");
+            }
+
+            dataChunkList.add(new DataChunk(dataContent));
+        }
+
+        return new Packet(protocolVersion, code, dataChunkList);
+    }
+
 
 }

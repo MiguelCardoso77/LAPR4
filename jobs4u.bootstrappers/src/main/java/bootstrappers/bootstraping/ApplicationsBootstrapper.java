@@ -1,5 +1,6 @@
 package bootstrappers.bootstraping;
 
+import bootstrappers.Jobs4UBootstrapper;
 import core.application.controllers.ApplicationRegisterController;
 import core.application.controllers.UploadRequirementsAnswersController;
 import core.domain.application.Application;
@@ -14,11 +15,15 @@ import core.repositories.JobOpeningRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.actions.Action;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationsBootstrapper implements Action {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationsBootstrapper.class);
+
     final ApplicationRegisterController controller = new ApplicationRegisterController();
     final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
     final CandidateRepository candidateRepository = PersistenceContext.repositories().candidates();
@@ -74,16 +79,19 @@ public class ApplicationsBootstrapper implements Action {
 
     private void registerApplication(String rank, String applicationFiles, JobOpening jobReference, Candidate candidate, SystemUser operator) {
         controller.registerApplication(rank, applicationFiles, jobReference, candidate, operator);
+        LOGGER.debug("»»» Registering application {}", applicationFiles);
     }
 
     private void addRequirements(String candidateRequirementsPath, Application application) {
         List<String> requirements = uploadRequirementsAnswersController.readFile(candidateRequirementsPath);
         uploadRequirementsAnswersController.uploadRequirements(requirements, application);
+        LOGGER.debug("»»» Uploading requirements {}", candidateRequirementsPath);
     }
 
     private void changeApplicationStatus(Application application, Status status) {
         application.changeStatus(status);
         applicationRepository.save(application);
+        LOGGER.debug("»»» Changing application status {}", status);
     }
 
 }

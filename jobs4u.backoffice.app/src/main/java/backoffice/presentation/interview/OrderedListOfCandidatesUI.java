@@ -23,9 +23,8 @@ public class OrderedListOfCandidatesUI {
     public boolean doShow() {
 
         JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
-        JobReference jobReference = jobOpening.jobReference();
 
-        Iterable<Application> applicationList = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
+        Iterable<Application> applicationList = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpening.jobReference());
 
         List<JobInterview> orderedList = orderedListOfCandidatesController.orderedList(applicationList);
 

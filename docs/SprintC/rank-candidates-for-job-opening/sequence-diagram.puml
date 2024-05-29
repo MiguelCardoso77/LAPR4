@@ -8,7 +8,6 @@ participant SelectJobOpeningController <<controller>>
 participant ListJobOpeningController <<controller>>
 participant RankCandidatesController <<controller>>
 
-participant JobOpeningService <<service>>
 participant ApplicationService <<service>>
 participant JobInterviewService <<service>>
 

@@ -13,6 +13,10 @@ public class DataChunk implements Serializable {
         this.data = data;
     }
 
+    public DataChunk (byte[] data) {
+        this.data = data;
+    }
+
     public UnsignedInteger dataLenL() {
         return dataLengthL;
     }

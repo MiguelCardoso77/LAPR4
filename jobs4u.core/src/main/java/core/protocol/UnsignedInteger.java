@@ -12,10 +12,6 @@ public class UnsignedInteger {
     }
 
     public int positiveValue() {
-        if (value < 0) {
-            int negVal = value;
-            return negVal +  256;
-        }
-        return value;
+        return value & 0xFF;
     }
 }

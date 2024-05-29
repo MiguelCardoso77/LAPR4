@@ -33,7 +33,7 @@ public class RankCandidatesUI extends AbstractUI {
 
             System.out.println("\n" + applications.size() + " applications will be ranked.");
             for (Application application : applications) {
-                rankApplication(application);
+                rankApplication(application, applications.size());
             }
 
         } else {
@@ -47,7 +47,7 @@ public class RankCandidatesUI extends AbstractUI {
 
             System.out.println("\n" + applications.size() + " applications will be ranked.");
             for (Application application : nonRankedApplications) {
-                rankApplication(application);
+                rankApplication(application, applications.size());
             }
 
         }
@@ -56,7 +56,7 @@ public class RankCandidatesUI extends AbstractUI {
         return true;
     }
 
-    private void rankApplication(Application application) {
+    private void rankApplication(Application application, int listSize) {
         System.out.println("\nNow ranking, Application: " + application.dataFile());
 
         Score selectedInterview = getLastJobInterview(application);
@@ -72,10 +72,13 @@ public class RankCandidatesUI extends AbstractUI {
         int rank;
         do {
             rank = Console.readInteger("Insert the new rank for this candidate: ");
-            if (theController.isRankAlreadyAssigned(rank)) {
-                System.out.println("This rank is already assigned. Please choose a different rank.");
+            if (rank < 1 || rank > listSize) {
+                System.out.println(ConsoleColors.RED + "Invalid rank. Please enter a rank between 1 and " + listSize + "." + ConsoleColors.RESET);
             }
-        } while (theController.isRankAlreadyAssigned(rank));
+            if (theController.isRankAlreadyAssigned(rank)) {
+                System.out.println(ConsoleColors.RED + "This rank is already assigned. Please choose a different rank." + ConsoleColors.RESET);
+            }
+        } while (rank < 1 || rank > listSize || theController.isRankAlreadyAssigned(rank));
 
         updateRank(rank, application);
     }

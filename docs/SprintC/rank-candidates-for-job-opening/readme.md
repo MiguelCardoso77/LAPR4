@@ -167,6 +167,21 @@ exceptions (such as someone leaving the application). But my suggestion was only
 > **Answer:**
 > This question is about the design/implementation of the solution. I have no specific opinion regarding this specific question.
 
+> **Question 215:**
+> 
+> About the US1013 which states: "As Customer Manager, I want to rank the candidates for a job opening.".
+I want to know if two candidates can be tied, which would mean having the same rank for the same job opening
+> 
+> **Answer:**
+> No, ties should not be allowed. It must be clear what candidates are selected to the vacancies.
+
+> **Question 216:**
+> 
+> Can we assume that once an interview is evaluated, a score is provided and that score is initially used for the 
+rank entry associated with said application? The Customer Manager is then capable of defining manually the rank order.
+> 
+> I see no need for that. This would be an extra functionality.
+
 ### 1.3. Acceptance Criteria
 
 * AC1: Manually ranking candidates:
@@ -195,13 +210,13 @@ exceptions (such as someone leaving the application). But my suggestion was only
 * G007 - As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
 * 1002 - As Customer Manager, I want to register a job opening.
 * 2002 - As Operator, I want to register an application of a candidate for a job opening and import all files received.
+* 1010 - As Customer Manager, I want to open or close phases of the process for a job opening.
 
 ### 1.5. Input and Output Data
 
 **Selected Data:**
 
     * Job Opening
-    * Application
 
 **Input Data:**
 

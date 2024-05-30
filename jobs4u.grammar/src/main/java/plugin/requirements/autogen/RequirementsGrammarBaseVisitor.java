@@ -1,4 +1,4 @@
-package requirements.autogen;// Generated from C:/Users/migue/IdeaProjects/lprog-plugin-2dd5/requirements/src/main/resources/RequirementsGrammar.g4 by ANTLR 4.13.1
+package plugin.requirements.autogen;// Generated from C:/Users/migue/IdeaProjects/lprog-plugin-2dd5/requirements/src/main/resources/RequirementsGrammar.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**

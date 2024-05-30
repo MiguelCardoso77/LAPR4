@@ -1,4 +1,4 @@
-package requirements.autogen;// Generated from C:/Users/migue/IdeaProjects/lprog-plugin-2dd5/requirements/src/main/resources/RequirementsGrammar.g4 by ANTLR 4.13.1
+package plugin.requirements.autogen;// Generated from C:/Users/migue/IdeaProjects/lprog-plugin-2dd5/requirements/src/main/resources/RequirementsGrammar.g4 by ANTLR 4.13.1
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATN;
@@ -33,7 +33,7 @@ public class RequirementsGrammarParser extends Parser {
 		RULE_yearsOfExperienceType = 13;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"start", "requirements", "requirementsList", "requirementType", "academicDegree", 
+			"start", "plugin/requirements", "requirementsList", "requirementType", "academicDegree",
 			"academicDegreeType", "languages", "languagesSelection", "languagesType", 
 			"programmingLanguages", "programmingLanguagesType", "programmingTypes", 
 			"yearsOfExperience", "yearsOfExperienceType"

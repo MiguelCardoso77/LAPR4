@@ -29,7 +29,7 @@ public class UploadResponsesUI extends AbstractUI {
         JobInterview jobInterview = theController.findInterviewByID(jobInterviewID);
 
         String path = Console.readLine("\nEnter the path to the file with the responses: ");
-        List<String> responses = theController.readFile(path);
+        List<String> responses = theController.retrieveResponses(path);
 
         System.out.println(theController.uploadResponses(responses, jobInterview));
 

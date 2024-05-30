@@ -1,7 +1,7 @@
-package requirements;
+package plugin.requirements;
 
-import requirements.autogen.RequirementsGrammarBaseVisitor;
-import requirements.autogen.RequirementsGrammarParser;
+import plugin.requirements.autogen.RequirementsGrammarBaseVisitor;
+import plugin.requirements.autogen.RequirementsGrammarParser;
 
 import java.util.Arrays;
 import java.util.List;

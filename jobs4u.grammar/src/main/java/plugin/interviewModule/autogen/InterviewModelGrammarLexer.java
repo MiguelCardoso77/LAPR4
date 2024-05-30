@@ -1,4 +1,4 @@
-package interviewModule.autogen;
+package plugin.interviewModule.autogen;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATN;

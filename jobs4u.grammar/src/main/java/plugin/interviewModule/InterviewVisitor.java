@@ -1,8 +1,7 @@
-package interviewModule;
+package plugin.interviewModule;
 
-
-import interviewModule.autogen.InterviewModelGrammarBaseVisitor;
-import interviewModule.autogen.InterviewModelGrammarParser;
+import plugin.interviewModule.autogen.InterviewModelGrammarBaseVisitor;
+import plugin.interviewModule.autogen.InterviewModelGrammarParser;
 
 import java.util.List;
 
@@ -74,16 +73,16 @@ class InterviewVisitor extends InterviewModelGrammarBaseVisitor<Object> {
         return ctx.getText().replace("%", "").trim();
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
     @Override
     public Object visitQuestionDate(InterviewModelGrammarParser.QuestionDateContext ctx) {
         System.out.println(ctx.getText());
         System.out.println("Question Type -> " + ctx.DATE().getText());
         return visitChildren(ctx);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public Object visitQuestionDecimalNumber(InterviewModelGrammarParser.QuestionDecimalNumberContext ctx) {

@@ -10,9 +10,11 @@ import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+import requirements.RequirementsPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class VerificationRequirementsUI extends AbstractUI {
 
@@ -21,6 +23,7 @@ public class VerificationRequirementsUI extends AbstractUI {
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
     private final ChangeJobInterviewStatusController changeJobInterviewStatusController = new ChangeJobInterviewStatusController();
+    private final RequirementsPlugin requirementsPlugin = new RequirementsPlugin();
 
     final List<Application> list1 = new ArrayList<>();
 
@@ -34,10 +37,12 @@ public class VerificationRequirementsUI extends AbstractUI {
 
             CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
             JobRequirementsSpecification jobOpeningRequirement = jobOpeningApplication.jobRequirementsSpecification();
+            String path = jobOpeningApplication.jobRequirementsSpecification().jobRequirementsPath();
+
 
             List<String> jobRequirements = verificationRequirementsController.listJobRequirements(jobOpeningRequirement);
 
-            boolean acceptedApplication = verificationRequirementsController.verifyCandidate(jobRequirements, candidateRequirements.candidateRequirements());
+            /*boolean acceptedApplication = verificationRequirementsController.verifyCandidate(jobRequirements, candidateRequirements.candidateRequirements());
 
             Status statusFinal;
 
@@ -50,7 +55,23 @@ public class VerificationRequirementsUI extends AbstractUI {
                 statusFinal = Status.DECLINED;
                 changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal , applicationToVerify);
                 System.out.println("This candidate isn't valid for this job opening");
+            }*/
+
+            Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
+
+            boolean result = requirementsPlugin.checkRequirements(path , clientRequirements );
+            Status statusFinal;
+
+            if(result){
+                statusFinal = Status.ACCEPTED;
+                changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal , applicationToVerify);
+                System.out.println("The candidate is valid for this job opening");
+            } else{
+                statusFinal = Status.DECLINED;
+                changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal , applicationToVerify);
+                System.out.println("This candidate isn't valid for this job opening");
             }
+
 
         }
 

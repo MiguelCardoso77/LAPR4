@@ -39,4 +39,8 @@ public class InterviewAnswers implements ValueObject {
     public String toString() {
         return answers.toString();
     }
+
+    public List<String> answersList() {
+        return answers;
+    }
 }

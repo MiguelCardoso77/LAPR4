@@ -2,6 +2,7 @@ package backoffice.presentation.interview;
 
 import core.application.controllers.*;
 import core.domain.interview.JobInterview;
+import core.domain.interviewModel.InterviewModel;
 import core.domain.jobOpening.JobOpening;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -29,31 +30,38 @@ public class JobInterviewEvaluationUI extends AbstractUI {
     @Override
     protected boolean doShow() {
 
-        JobOpening jobOpening = selectJobOpening();
+        JobOpening jobOpening = selectJobOpeningController.selectJobOpeningAnalysis();
 
-        List<JobInterview> interviews = jobOpeningInterviews(jobOpening);
-        executeEvaluationProcess(interviews);
+        List<JobInterview> interviews = listJobOpeningInterviewsController.allInterviewOfJobOpening(jobOpening);
 
-        // TO DO: Mensagem de sucesso ou outro tipo de print
+        InterviewModel interviewModel = jobOpening.myInterviewModel();
+
+        boolean isProcessSuccessful = executeEvaluationProcess(interviews, interviewModel);
+
+        if(isProcessSuccessful){
+            System.out.println("Evaluation process completed successfully.");
+        } else {
+            System.out.println("Evaluation process failed.");
+        }
 
         return false;
     }
-    /**
-     * Allows the user to select a job opening in "Analysis" phase from the displayed list.
-     *
-     * @return the selected JobOpening object
-     */
-    private JobOpening selectJobOpening() {
-        return selectJobOpeningController.selectJobOpeningAnalysis();
-    }
 
     /**
-     * This method executes the evaluation process for the provided list of JobInterview objects.
+     * Executes the evaluation process for the provided list of JobInterview objects using the provided InterviewModel.
+     * Returns a boolean indicating the success or failure of the process.
      *
-     * @param interviews list of JobInterview objects for the provided JobOpening object
+     * @param interviews List of JobInterview objects for which the evaluation process is to be executed.
+     * @param interviewModel The InterviewModel to be used in the evaluation process.
+     * @return boolean indicating whether the evaluation process was successful (true) or not (false).
      */
-    private void executeEvaluationProcess(List<JobInterview> interviews){
-        evaluationProcessController.evaluationProcessExecution(interviews);
+    private boolean executeEvaluationProcess(List<JobInterview> interviews, InterviewModel interviewModel){
+        try {
+            evaluationProcessController.evaluationProcessExecution(interviews, interviewModel);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**

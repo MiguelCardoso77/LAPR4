@@ -24,10 +24,9 @@
             <artifactId>jobs4u.infrastructure</artifactId>
             <version>0.1.0</version>
         </dependency>
-
         <dependency>
-            <groupId>grammarPlugin</groupId>
-            <artifactId>jobs4u.grammar.plugin</artifactId>
+            <groupId>plugin</groupId>
+            <artifactId>jobs4u.grammar</artifactId>
             <version>0.1.0</version>
         </dependency>
     </dependencies>

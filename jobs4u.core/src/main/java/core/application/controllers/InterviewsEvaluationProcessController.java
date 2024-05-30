@@ -5,7 +5,7 @@ import core.domain.interview.Score;
 import core.domain.interviewModel.InterviewModel;
 import core.services.InterviewService;
 import eapli.framework.application.UseCaseController;
-import interviewModule.InterviewPlugin;
+import plugin.interviewModule.InterviewPlugin;
 
 import java.util.List;
 

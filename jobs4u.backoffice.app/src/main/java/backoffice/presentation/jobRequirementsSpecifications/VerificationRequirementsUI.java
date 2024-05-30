@@ -10,7 +10,7 @@ import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import requirements.RequirementsPlugin;
+import plugin.requirements.RequirementsPlugin;
 
 import java.util.ArrayList;
 import java.util.List;

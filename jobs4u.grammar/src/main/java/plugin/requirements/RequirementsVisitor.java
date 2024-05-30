@@ -94,6 +94,9 @@ public class RequirementsVisitor extends RequirementsGrammarBaseVisitor<Object> 
             requirementsMet = false;
         }
 
+        if (candidateRequirement == null) {
+            requirementsMet = false;
+        }
         return visitChildren(ctx);
     }
 
@@ -103,76 +106,86 @@ public class RequirementsVisitor extends RequirementsGrammarBaseVisitor<Object> 
         String candidateRequirement = candidateResponses.get("Languages");
         System.out.println("Required Languages -> " + ctx.getText());
         System.out.println("Candidate Languages -> " + candidateRequirement);
-
         List<String> requiredLanguagesList = Arrays.asList(requiredLanguages.split(","));
         List<String> candidateLanguagesList = Arrays.asList(candidateRequirement.split(","));
 
-        if (candidateLanguagesList.containsAll(requiredLanguagesList)) {
-            System.out.println("Languages Requirement Met");
-            if (!requirementsMet) {
-                requirementsMet = false;
+        if (candidateRequirement != null) {
+            if (candidateLanguagesList.containsAll(requiredLanguagesList)) {
+                System.out.println("Languages Requirement Met");
+                if (!requirementsMet) {
+                    requirementsMet = false;
+                } else {
+                    requirementsMet = true;
+                }
             } else {
-                requirementsMet = true;
+                System.out.println("Languages Requirement Not Met");
+                requirementsMet = false;
             }
         } else {
-            System.out.println("Languages Requirement Not Met");
             requirementsMet = false;
         }
-
         return visitChildren(ctx);
     }
 
-    @Override
-    public Object visitProgrammingLanguagesType(RequirementsGrammarParser.ProgrammingLanguagesTypeContext ctx) {
-        String requiredLanguages = ctx.getText();
-        String candidateRequirement = candidateResponses.get("Programming Languages");
-        System.out.println("Required Programming Languages -> " + ctx.getText());
-        System.out.println("Candidate Programming Languages -> " + candidateRequirement);
+        @Override
+        public Object visitProgrammingLanguagesType (RequirementsGrammarParser.ProgrammingLanguagesTypeContext ctx){
+            String requiredLanguages = ctx.getText();
+            String candidateRequirement = candidateResponses.get("Programming Languages");
+            System.out.println("Required Programming Languages -> " + ctx.getText());
+            System.out.println("Candidate Programming Languages -> " + candidateRequirement);
 
-        List<String> requiredLanguagesList = Arrays.asList(requiredLanguages.split(","));
-        List<String> candidateLanguagesList = Arrays.asList(candidateRequirement.split(","));
+            List<String> requiredLanguagesList = Arrays.asList(requiredLanguages.split(","));
+            List<String> candidateLanguagesList = Arrays.asList(candidateRequirement.split(","));
 
-        if (candidateLanguagesList.containsAll(requiredLanguagesList)) {
-            System.out.println("Programming Languages Requirement Met");
-            if (!requirementsMet) {
-                requirementsMet = false;
+            if (candidateLanguagesList.containsAll(requiredLanguagesList)) {
+                System.out.println("Programming Languages Requirement Met");
+                if (!requirementsMet) {
+                    requirementsMet = false;
+                } else {
+                    requirementsMet = true;
+                }
             } else {
-                requirementsMet = true;
+                System.out.println("Programming Languages Requirement Not Met");
+                requirementsMet = false;
             }
-        } else {
-            System.out.println("Programming Languages Requirement Not Met");
-            requirementsMet = false;
+
+            if (candidateRequirement == null) {
+                requirementsMet = false;
+            }
+
+            return visitChildren(ctx);
         }
 
-        return visitChildren(ctx);
-    }
+        @Override
+        public Object visitYearsOfExperienceType (RequirementsGrammarParser.YearsOfExperienceTypeContext ctx){
+            String candidateRequirement = candidateResponses.get("Years of Experience");
+            System.out.println("Required Years -> " + ctx.getText());
+            System.out.println("Candidate Years -> " + candidateRequirement);
 
-    @Override
-    public Object visitYearsOfExperienceType(RequirementsGrammarParser.YearsOfExperienceTypeContext ctx) {
-        String candidateRequirement = candidateResponses.get("Years of Experience");
-        System.out.println("Required Years -> " + ctx.getText());
-        System.out.println("Candidate Years -> " + candidateRequirement);
-
-        if (Integer.parseInt(candidateRequirement) >= Integer.parseInt(ctx.getText())) {
-            System.out.println("Years of Experience Requirement Met");
-            if (!requirementsMet) {
-                requirementsMet = false;
+            if (Integer.parseInt(candidateRequirement) >= Integer.parseInt(ctx.getText())) {
+                System.out.println("Years of Experience Requirement Met");
+                if (!requirementsMet) {
+                    requirementsMet = false;
+                } else {
+                    requirementsMet = true;
+                }
             } else {
-                requirementsMet = true;
+                System.out.println("Years of Experience Requirement Not Met");
+                requirementsMet = false;
             }
-        } else {
-            System.out.println("Years of Experience Requirement Not Met");
-            requirementsMet = false;
+
+            if (candidateRequirement == null) {
+                requirementsMet = false;
+            }
+
+            return visitChildren(ctx);
         }
 
-        return visitChildren(ctx);
-    }
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
-
-    public boolean checkRequirements() {
-        return requirementsMet;
+        public boolean checkRequirements () {
+            return requirementsMet;
+        }
     }
-}

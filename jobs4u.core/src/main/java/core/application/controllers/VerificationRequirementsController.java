@@ -23,7 +23,6 @@ public class VerificationRequirementsController {
     private final ApplicationService appServ = new ApplicationService();
 
 
-
     public Application findApplicationById(Application applicationID) {
         Iterable<Application> allApplications = appServ.allApplications();
         for (Application application : allApplications) {
@@ -100,17 +99,35 @@ public class VerificationRequirementsController {
         return true;
     }
 
-    public List<String> listJobRequirements(JobRequirementsSpecification jobOpeningRequirement) {
 
-        List<String> jobRequirements = new ArrayList<>();
-        try {
-            jobRequirements.addAll(Files.readAllLines(Paths.get(jobOpeningRequirement.jobRequirementsPath())));
-        } catch (IOException e) {
-            System.out.println("Error reading file" + e.getMessage());
+    public Map<String, String> mapCandidate(List<String> candidateRequirements) {
+
+        Map<String, String> candidateRequirementsMap = new HashMap<>();
+        for (String requirement : candidateRequirements) {
+            int startIndex = requirement.indexOf("->");
+            int endIndex = requirement.indexOf(":");
+            if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
+                String typeRequirement = requirement.substring(startIndex + 2, endIndex).trim();
+                String valueRequirement = requirement.substring(endIndex + 2).trim();
+                candidateRequirementsMap.put(typeRequirement, valueRequirement);
+            }
         }
 
-        return jobRequirements;
+        return candidateRequirementsMap;
+
+}
+
+public List<String> listJobRequirements(JobRequirementsSpecification jobOpeningRequirement) {
+
+    List<String> jobRequirements = new ArrayList<>();
+    try {
+        jobRequirements.addAll(Files.readAllLines(Paths.get(jobOpeningRequirement.jobRequirementsPath())));
+    } catch (IOException e) {
+        System.out.println("Error reading file" + e.getMessage());
     }
+
+    return jobRequirements;
+}
 
 
 }

@@ -3,63 +3,67 @@ package core.protocol;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class ComProtocolV0 {
-    private ObjectOutputStream output;
-    private DataOutputStream outData;
-    private ObjectInputStream input;
+public class Jobs4UProtocol {
+    private final DataInputStream inData;
+    private final DataOutputStream outData;
     private final byte VERSION = 0;
 
-    private final int MAX_TRIES = 3;
-
-    public ComProtocolV0(Socket connection) throws IOException {
-        output = new ObjectOutputStream(connection.getOutputStream());
+    public Jobs4UProtocol(Socket connection) throws IOException {
+        inData = new DataInputStream(connection.getInputStream());
         outData = new DataOutputStream(connection.getOutputStream());
-        input = new ObjectInputStream(connection.getInputStream());
     }
 
-    public boolean sendAck() throws IOException, ClassNotFoundException {
-        Packet response = null;
-        int tries = MAX_TRIES;
-        do {
-            if (tries == 0) return false;
-            Packet p = new Packet(VERSION, ProtocolCodes.ACK, null);
-            output.writeObject(p);
-            response = ((Packet<?>) input.readObject());
-            tries--;
-        } while (response == null || response.code() != ProtocolCodes.ACK);
+    public boolean sendAck() throws IOException {
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+        byteArrayOut.write(VERSION);
+        byteArrayOut.write(ProtocolCodes.ACK.code());
+
+        byteArrayOut.write(0);
+        byteArrayOut.write(0);
+
+        byte[] requestedData = byteArrayOut.toByteArray();
+
+        System.out.println("Sending ACK ...");
+        outData.write(requestedData);
+
         return true;
     }
 
-    public boolean sendErr() throws IOException, ClassNotFoundException {
-        Packet response = null;
-        int tries = MAX_TRIES;
-        do {
-            if (tries == 0) return false;
-            Packet p = new Packet(VERSION, ProtocolCodes.ERR, null);
-            output.writeObject(p);
-            response = ((Packet<?>) input.readObject());
-            tries--;
-        } while (response == null || response.code() != ProtocolCodes.ACK);
+    public boolean sendErr() throws IOException {
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+        byteArrayOut.write(VERSION);
+        byteArrayOut.write(ProtocolCodes.ERR.code());
+
+        byteArrayOut.write(0);
+        byteArrayOut.write(0);
+
+        byte[] requestedData = byteArrayOut.toByteArray();
+
+        System.out.println("Sending ERR ...");
+        outData.write(requestedData);
+
         return true;
     }
 
     public boolean sendDisconnect() throws IOException, ClassNotFoundException {
-        Packet response = null;
-        int tries = MAX_TRIES;
-        do {
-            if (tries == 0) return false;
-            Packet p = new Packet(VERSION, ProtocolCodes.DISCONNECT, null);
-            output.writeObject(p);
-            response = ((Packet<?>) input.readObject());
-            tries--;
-        } while (response == null || response.code() != ProtocolCodes.ACK);
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+        byteArrayOut.write(VERSION);
+        byteArrayOut.write(ProtocolCodes.DISCONNECT.code());
+
+        byteArrayOut.write(0);
+        byteArrayOut.write(0);
+
+        byte[] requestedData = byteArrayOut.toByteArray();
+
+        System.out.println("Sending DISCONNECT ...");
+        outData.write(requestedData);
+
         return true;
     }
 
-    public boolean sendAuth(String email, String password) throws IOException, ClassNotFoundException {
+    public void sendAuth(String email, String password) throws IOException, ClassNotFoundException {
         List<String> data = new ArrayList<>();
         data.add(email);
         data.add(password);
@@ -99,13 +103,11 @@ public class ComProtocolV0 {
         byteArrayOut.write(0);
 
         byte[] requestedData = byteArrayOut.toByteArray();
-        System.out.println(Arrays.toString(requestedData));
 
         outData.write(requestedData);
-
-        return true;
     }
 
+/**
     public boolean commTest() throws IOException, ClassNotFoundException {
         Packet response = null;
         int tries = MAX_TRIES;
@@ -150,6 +152,7 @@ public class ComProtocolV0 {
         } while (response == null || response.code() != ProtocolCodes.ACK);
         return (T) response.data();
     }
+ **/
 
 
 }

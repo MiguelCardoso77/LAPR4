@@ -128,7 +128,9 @@ public class LoginUI extends AbstractUI {
             final String password = Console.readLine("Password:");
 
             ServerAuthentication serverAuthentication = new ServerAuthentication();
-            serverAuthentication.authenticateCandidate(email, password);
+            if (serverAuthentication.authenticateCandidate(email, password)) {
+                return true;
+            }
 
         }
 

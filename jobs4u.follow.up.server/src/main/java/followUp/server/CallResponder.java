@@ -1,7 +1,6 @@
 package followUp.server;
 
 import core.domain.user.Jobs4URoles;
-import core.protocol.ComProtocolV0;
 import core.services.ApplicationService;
 import core.services.CandidateService;
 import infrastructure.authz.AuthenticationCredentialHandler;
@@ -14,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class CallResponder extends Handler {
     private final ApplicationService applicationService = new ApplicationService();
     private final CandidateService candidateService = new CandidateService();
+    //private final ComProtocolV0 protocol = new ComProtocolV0(null);
 
     public CallResponder(Socket socket) throws IOException {
         super(socket);
@@ -25,10 +25,9 @@ public class CallResponder extends Handler {
 
         try {
             byte version = inData.readByte();
-            System.out.println("Version: " + version);
+            System.out.println("\nVersion: " + version);
 
             byte code = inData.readByte();
-            System.out.println("Code: " + code);
 
             if (code == 4) {
                 handleCode4();
@@ -40,34 +39,35 @@ public class CallResponder extends Handler {
     }
 
     private void handleCode4() throws IOException, ClassNotFoundException {
-        System.out.println("Code 4 received!");
+        System.out.println("Code 4 received! -> Authentication Request\n");
 
         byte emailDataLenL = inData.readByte();
-        System.out.println("Email L: " + emailDataLenL);
-
         byte emailDataLenM = inData.readByte();
-        System.out.println("Email M: " + emailDataLenM);
 
-        byte[] emailBytes = inData.readNBytes(emailDataLenL);
+        byte lenghtEmail = (byte) (256 * emailDataLenM + emailDataLenL);
+
+        byte[] emailBytes = inData.readNBytes(lenghtEmail);
         String email = new String(emailBytes, StandardCharsets.UTF_8);
         System.out.println("Email: " + email);
 
         byte passwordDataLenL = inData.readByte();
-        System.out.println("Password L: " + passwordDataLenL);
-
         byte passwordDataLenM = inData.readByte();
-        System.out.println("Password M: " + passwordDataLenM);
 
-        byte[] passwordBytes = inData.readNBytes(passwordDataLenL);
+        byte lenghtPassword = (byte) (256 * passwordDataLenM + passwordDataLenL);
+
+        byte[] passwordBytes = inData.readNBytes(lenghtPassword);
         String password = new String(passwordBytes, StandardCharsets.UTF_8);
         System.out.println("Password: " + password);
 
         CredentialHandler credentialHandler = new AuthenticationCredentialHandler();
         if (credentialHandler.authenticated(email, password, Jobs4URoles.CANDIDATE)) {
+            System.out.println("\nAuthenticated as candidate!");
             protocol.sendAck();
         } else if (credentialHandler.authenticated(email, password, Jobs4URoles.CUSTOMER)) {
+            System.out.println("\nAuthenticated as customer!");
             protocol.sendAck();
         } else {
+            System.out.println("\nAuthentication failed!");
             protocol.sendErr();
         }
     }

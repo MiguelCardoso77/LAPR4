@@ -1,6 +1,6 @@
 package followUp.server;
 
-import core.protocol.ComProtocolV0;
+import core.protocol.Jobs4UProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,17 +14,14 @@ public abstract class Handler implements Runnable {
     private final Socket socket;
 
     protected DataInputStream inData;
-    protected ObjectInputStream input;
     protected DataOutputStream outData;
-    protected ObjectOutputStream output;
-    protected ComProtocolV0 protocol;
+    protected Jobs4UProtocol protocol;
 
     public Handler(Socket socket) throws IOException {
         this.socket = socket;
-        this.input = new ObjectInputStream(socket.getInputStream());
         this.inData = new DataInputStream(socket.getInputStream());
-        this.output = new ObjectOutputStream(socket.getOutputStream());
         this.outData = new DataOutputStream(socket.getOutputStream());
+        this.protocol = new Jobs4UProtocol(socket);
     }
 
     public abstract void handle();

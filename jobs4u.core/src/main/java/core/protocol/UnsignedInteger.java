@@ -1,7 +1,7 @@
 package core.protocol;
 
 public class UnsignedInteger {
-    private byte value;
+    private final byte value;
 
     public UnsignedInteger(byte value) {
         this.value = value;

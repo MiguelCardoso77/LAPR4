@@ -28,16 +28,20 @@ public class Packet<T> implements Serializable {
         return version;
     }
 
-    public ProtocolCodes code() {return code; }
+    public ProtocolCodes code() {
+        return code;
+    }
 
-    public byte codes() {return codes; }
+    public byte codes() {
+        return codes;
+    }
 
 
     public List<DataChunk> data() {
         return data;
     }
 
-    public <T> T buildObject() throws IOException, ClassNotFoundException {
+    public <T> T buildObjectT() throws IOException, ClassNotFoundException {
         List<Byte> rawData = new ArrayList<>();
 
         for (DataChunk dataChunk : data) {
@@ -56,6 +60,27 @@ public class Packet<T> implements Serializable {
 
         return (T) ois.readObject();
     }
+
+    public byte[] buildObject() throws IOException {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             DataOutputStream dos = new DataOutputStream(bos)) {
+
+            dos.writeByte(version);
+            dos.writeByte(codes);
+
+            for (DataChunk dataChunk : data) {
+                byte[] data = dataChunk.data();
+                dos.writeShort(data.length); // Write length of data chunk
+                dos.write(data); // Write data chunk
+            }
+
+            dos.writeShort(0); // End of data chunks
+
+            dos.flush();
+            return bos.toByteArray();
+        }
+    }
+
 
     private List<DataChunk> createChunks(T data) throws IOException {
         if (data == null) return new ArrayList<>();
@@ -90,40 +115,24 @@ public class Packet<T> implements Serializable {
     }
 
     public static Packet fromDataStream(DataInputStream inputStream) throws IOException {
-        byte[] metadata = new byte[2];
-        int bytesRead = inputStream.read(metadata);
-
-        if (bytesRead != 2) {
-            throw new IOException("Insufficient metadata bytes read");
-        }
-
-        byte protocolVersion = metadata[0];
-        byte code = metadata[1];
+        byte version = inputStream.readByte();
+        byte code = inputStream.readByte();
 
         List<DataChunk> dataChunkList = new ArrayList<>();
 
         while (true) {
-            byte[] lengthBytes = new byte[2];
-            bytesRead = inputStream.read(lengthBytes);
-            if (bytesRead != 2) {
-                throw new IOException("Insufficient data length bytes read");
-            }
-
-            int dataLength = (lengthBytes[0] & 0xFF) + ((lengthBytes[1] & 0xFF) << 8);
+            int dataLength = inputStream.readUnsignedShort();
             if (dataLength == 0) {
-                break;
+                break; // End of data chunks
             }
 
             byte[] dataContent = new byte[dataLength];
-            bytesRead = inputStream.read(dataContent);
-            if (bytesRead != dataLength) {
-                throw new IOException("Insufficient data bytes read");
-            }
+            inputStream.readFully(dataContent); // Read the full data chunk
 
             dataChunkList.add(new DataChunk(dataContent));
         }
 
-        return new Packet(protocolVersion, code, dataChunkList);
+        return new Packet(version, code, dataChunkList);
     }
 
 

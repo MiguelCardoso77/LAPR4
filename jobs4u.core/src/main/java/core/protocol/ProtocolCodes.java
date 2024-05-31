@@ -11,9 +11,11 @@ public enum ProtocolCodes {
     LIST_JOB_OPENINGS((byte) 7),
     LIST_JOB_OPENINGS_RESPONSE((byte) 8);
     private final byte code;
+
     ProtocolCodes(byte code) {
         this.code = code;
     }
+
     public byte code() {
         return code;
     }

@@ -1,14 +1,15 @@
 package followUp.server;
 
-import core.domain.application.Application;
-import core.domain.candidate.Candidate;
+import core.domain.user.Jobs4URoles;
+import core.protocol.ComProtocolV0;
 import core.services.ApplicationService;
 import core.services.CandidateService;
+import infrastructure.authz.AuthenticationCredentialHandler;
+import infrastructure.authz.CredentialHandler;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class CallResponder extends Handler {
     private final ApplicationService applicationService = new ApplicationService();
@@ -23,41 +24,51 @@ public class CallResponder extends Handler {
         System.out.println("Connection established!");
 
         try {
-            int code = (int) input.readObject();
+            byte version = inData.readByte();
+            System.out.println("Version: " + version);
+
+            byte code = inData.readByte();
+            System.out.println("Code: " + code);
 
             if (code == 4) {
-                System.out.println("Code 4 received!");
-                String password = input.readObject().toString();
-
-                //TODO: Implement login
+                handleCode4();
             }
-
-            if (code == 5) {
-                System.out.println("Code 5 received!");
-                String email = input.readObject().toString();
-
-                Candidate candidate = candidateService.findCandidateByEmail(email);
-                String list = listCandidateApplications(candidate);
-                byte[] byteArray = list.getBytes(StandardCharsets.UTF_8);
-                int sizeInBytes = byteArray.length;
-
-                output.writeObject(list);
-            }
-
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private String listCandidateApplications(Candidate candidate) {
-        List<Application> applicationList = applicationService.applicationsByCandidate(candidate);
+    private void handleCode4() throws IOException, ClassNotFoundException {
+        System.out.println("Code 4 received!");
 
-        StringBuilder sb = new StringBuilder();
-        for (Application app : applicationList) {
-            sb.append(app.toString()).append("\n");
+        byte emailDataLenL = inData.readByte();
+        System.out.println("Email L: " + emailDataLenL);
+
+        byte emailDataLenM = inData.readByte();
+        System.out.println("Email M: " + emailDataLenM);
+
+        byte[] emailBytes = inData.readNBytes(emailDataLenL);
+        String email = new String(emailBytes, StandardCharsets.UTF_8);
+        System.out.println("Email: " + email);
+
+        byte passwordDataLenL = inData.readByte();
+        System.out.println("Password L: " + passwordDataLenL);
+
+        byte passwordDataLenM = inData.readByte();
+        System.out.println("Password M: " + passwordDataLenM);
+
+        byte[] passwordBytes = inData.readNBytes(passwordDataLenL);
+        String password = new String(passwordBytes, StandardCharsets.UTF_8);
+        System.out.println("Password: " + password);
+
+        CredentialHandler credentialHandler = new AuthenticationCredentialHandler();
+        if (credentialHandler.authenticated(email, password, Jobs4URoles.CANDIDATE)) {
+            protocol.sendAck();
+        } else if (credentialHandler.authenticated(email, password, Jobs4URoles.CUSTOMER)) {
+            protocol.sendAck();
+        } else {
+            protocol.sendErr();
         }
-
-        return sb.toString();
     }
 }

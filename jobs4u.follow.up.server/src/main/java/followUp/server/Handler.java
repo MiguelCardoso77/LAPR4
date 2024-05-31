@@ -1,11 +1,10 @@
 package followUp.server;
 
+import core.protocol.ComProtocolV0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 public abstract class Handler implements Runnable {
@@ -14,13 +13,18 @@ public abstract class Handler implements Runnable {
 
     private final Socket socket;
 
+    protected DataInputStream inData;
     protected ObjectInputStream input;
+    protected DataOutputStream outData;
     protected ObjectOutputStream output;
+    protected ComProtocolV0 protocol;
 
     public Handler(Socket socket) throws IOException {
         this.socket = socket;
         this.input = new ObjectInputStream(socket.getInputStream());
+        this.inData = new DataInputStream(socket.getInputStream());
         this.output = new ObjectOutputStream(socket.getOutputStream());
+        this.outData = new DataOutputStream(socket.getOutputStream());
     }
 
     public abstract void handle();

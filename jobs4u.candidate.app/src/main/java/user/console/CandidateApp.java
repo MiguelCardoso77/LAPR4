@@ -47,50 +47,7 @@ public final class CandidateApp {
         System.out.println("=====================================");
 
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
-
-        // Get user input for username and password
-        final String username = Console.readLine("\nUsername: ");
-        final String password = Console.readLine("\nPassword: ");
-
-        // Prepare the authentication request
-        byte version = 1;
-        byte code = ProtocolCodes.AUTH.code();
-        List<DataChunk> dataChunkList = new ArrayList<>();
-        dataChunkList.add(new DataChunk(username.getBytes()));
-        dataChunkList.add(new DataChunk(password.getBytes()));
-
-        Packet authRequest = new Packet(version, code, dataChunkList);
-
-        byte[] requestedData;
-
-        try{
-            requestedData = (byte[]) authRequest.buildObject();
-
-            // Connect to the server and send the request
-            try (Socket socket = new Socket("localHost", PORT);
-
-                 DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-                 DataInputStream inputStream = new DataInputStream(socket.getInputStream())){
-
-                // Send request data to server
-                outputStream.write(requestedData);
-
-                // Wait for response from server
-                Packet response = Packet.fromDataStream(inputStream);
-
-                if (response.codes() == ProtocolCodes.ACK.code()){
-                    System.out.println("Login Successful!");
-                } else {
-                    System.out.println("Login failed. Please check your credentials.");
-                }
-
-            } catch (IOException e){
-                System.err.println("Error communicating with server: " + e.getMessage());
-            }
-
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error creating authentication request: " + e.getMessage());
-        }
+        new FrontMenu().show();
     }
 
 }

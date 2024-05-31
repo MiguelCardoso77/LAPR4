@@ -31,12 +31,17 @@ public class ListJobOpeningApplicationsController {
      */
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
         Iterable<Application> allApplications = appServ.allApplications();
+        int count = 0;
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
         for (Application a : allApplications) {
             if (a.jobReference().sameReference(jobReference)) {
                 allApplicationsJobOpening.add(a);
+                count++;
             }
+        }
+        if(count == 0){
+            return null;
         }
         return allApplicationsJobOpening;
     }

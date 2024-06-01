@@ -1,11 +1,676 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+skinparam linetype ortho
+'left to right direction
 
-autonumber
+title CD - Job Interview Evaluation
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+package "ui"{
+    class JobInterviewEvaluationUI{
+        + doShow() : boolean
+        + headline() : String
+    }
+}
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+package "jobOpening"{
+    package "domain"{
+        class JobOpening{
+            + JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer, jobRequirementsSpecification, process, interviewModel) : JobOpening
+            JobOpening()
+            + identity() : JobReference
+            + equals(otherObject) : boolean
+            + sameAs(otherObject) : boolean
+            + jobReference() : JobReference
+            + description() : Description
+            + vacanciesNumber() : VacanciesNumber
+            + address() : Address
+            + mode() :  Mode
+            + contractType() : ContractType
+            + titleOrFunction() : TitleOrFunction
+            + customer() : Customer
+            + jobRequirementsSpecification() : JobRequirementsSpecification
+            + process() : Process
+            + myInterviewModel() : InterviewModel
+            + updateJobRequirements(jobRequirementsSpecification)
+            + updateInterviewModel(interviewModel)
+            + sameReference(jobReference) : boolean
+            + toString() : String
+        }
+
+        class Address{
+            - address : String
+            + Address(address) : Address
+            Address()
+            + valueOf(address) : Address
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+        Enum ContractType{
+            FULL_TIME
+            PART_TIME
+        }
+
+        class Description{
+            - description : String
+            + Description(description) : Description
+            Description()
+            + valueOf(description) : Description
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+        class JobReference{
+            - private jobReference : String
+            - private lastSequentialNumber : int
+            JobReference()
+            + JobReference(companyName, generate) : JobReference
+            - buildCompanyReference(companyName) : String
+            + buildReference(companyReference) : String
+            + valueOf(jobReference) : JobReference
+            + stringToJobReference(jobReference) : JobReference
+            + toString() : String
+            + compareTo(otherObject) : int
+            + hashCode() : int
+            + equals(otherObject) : boolean
+        }
+
+        Enum Mode{
+            REMOTE
+            HYBRID
+            ON_SITE
+        }
+
+        class TitleOrFunction{
+            - titleOrFunction : String
+            + TitleOrFunction(titleOrFunction) : TitleOrFunction
+            TitleOrFunction()
+            + valueOf(titleOrFunction) : TitleOrFunction
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+        class VacanciesNumber{
+            - vacanciesNumber : int
+            + VacanciesNumber(vacanciesNumber) : VacanciesNumber
+            VacanciesNumber()
+            + valueOf(vacanciesNumber) : VacanciesNumber
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+    }
+
+    package "service"{
+        class JobOpeningService{
+            + registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer) : JobOpening
+            + findJobOpening(jobReference) : JobOpening
+            + updateJobOpening(jobReference, jobRequirementsSpecification) : JobOpening
+            + updateInterviewModel(jobReference, interviewModel) : JobOpening
+            + verifyJobOpening(jobReference) : boolean
+            + findByCustomer(customer) : List<JobOpening>
+            + allJobOpenings() : Iterable<JobOpening>
+        }
+    }
+
+    package "repository"{
+        interface JobOpeningRepository{
+            allJobOpenings() : Iterable<JobOpening>
+        }
+    }
+}
+
+package "application"{
+    package "domain"{
+        class Application{
+            - applicationID : int
+            - rank : Rank
+            - submissionDate : Date
+            - status : Status
+            - jobOpening : JobOpening
+            - candidate : Candidate
+            - candidateRequirements : CandidateRequirements
+            - applicationFiles : String
+            - operator : SystemUser
+            + Application(rank, submissionDate, jobOpening, candidate, applicationFiles, operator) : Application
+            Application()
+            + sameAs(otherObject) : boolean
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + compareTo() : int
+            + identity() : Integer
+            + rank() : Rank
+            + submissionDate() : Date
+            + status() : Status
+            + jobOpening() : JobOpening
+            + candidate() : Candidate
+            + candidateRequirements() : CandidateRequirements
+            + applicationFiles() : String
+            + operator() : SystemUser
+            + changeStatus(status)
+            + updateRank(rank)
+            + toString() : String
+            + uploadCandidateRequirements(candidateRequirements)
+        }
+
+        note right of Application
+                            - The SystemUser class is provided by the framework,
+                            so that there's no need in representing it
+                         end note
+
+        class CandidateRequirements{
+            - candidateRequirements : List<String>
+            + CandidateRequirements(candidateRequirements) : CandidateRequirements
+            CandidateRequirements()
+            + equals(otherObject) : boolean
+            + candidateRequirements() : List<String>
+            + hashCode() : int
+            + toString() : String
+        }
+
+        class Rank{
+            - rank : String
+            + Rank(rank) : Rank
+            Rank()
+            + isRanked() : boolean
+            + valueOf(rank) : Rank
+            + equals(otherObject) : boolean
+            + toString() : String
+        }
+
+        Enum Status{
+            SUBMITTED
+            ACCEPTED
+            DECLINED
+            PENDING
+        }
+    }
+
+    package "service"{
+        class ApplicationService{
+            + registerApplication(rank, submissionDate, jobOpening, candidate, applicationFiles, operator) : Application
+            + findApplicationByID(id) : Application
+            + allApplications() : Iterable<Application>
+            + findApplicationForJobOpening(jobOpening) : Iterable<Application>
+            + findApplicationByCandidate(candidate) : Iterable<Application>
+            + updateRank(rank, application) : Application
+            + applicationByCM(customerManager) : Iterable<Application>
+            + numberOfApplicationsForJobOpening(jobOpening) : int
+        }
+    }
+
+    package "repository"{
+        Interface ApplicationRepository{
+            allApplications() : Iterable<Application>
+            ofIdentity(id) : Application
+        }
+    }
+}
+
+package "process"{
+    package "domain"{
+        class Process{
+            - idProcess : Integer
+            - processDate : Date
+            + Process(processState, processDate, processStatus) : Process
+            Process() : Process
+            + sameAs(otherObject) : boolean
+            + compareTo(otherObject) : int
+            + identity () : Integer
+            + processState() : ProcessState
+            + processStatus() : ProcessStatus
+            + processDate() : Date
+            + toString() : String
+            + changeProcessStatus(processStatus)
+            + changeProcessState(processState)
+        }
+
+        ENUM ProcessStatus{
+            OPEN
+            CLOSE
+        }
+
+        ENUM ProcessState{
+            APPLICATION
+            SCREENING
+            INTERVIEWS
+            ANALYSIS
+            RESULT
+        }
+    }
+
+    package "service"{
+        class ProcessService{
+        + registerProcess(processState) : Process
+        + findProcessByID(id) : Process
+        + allProcesses() : Iterable<Process>
+        }
+    }
+
+    package "repository"{
+        Interface ProcessRepository{
+            allProcesses() : Iterable<Process>
+            ofIdentity(id) : Process
+        }
+    }
+}
+
+package "customer"{
+    package "domain"{
+        class Customer{
+         - emailAddress : EmailAddress
+         - customerManager : SystemUser
+         - company : Company
+         + Customer(user, emailAddress, customerManager, company) : Customer
+           Customer()
+         + user() : SystemUser
+         + company() : Company
+         + customerManager() : SystemUser
+         + identity() : EmailAddress
+         + equals(otherObject) : boolean
+         + sameAs(otherObject) : boolean
+         + hashCode() : int
+         + toString() : String
+        }
+        note right of Customer
+                    - The SystemUser and EmailAddress classes are provided by the framework,
+                    so that there's no need in representing them
+                 end note
+    }
+
+    package "service"{
+        class CustomerService{
+        + registerCustomer(user, emailAddress, customerManager, company) : Customer
+        + allCustomers() : Iterable<Customer>
+        + findCustomer(emailAddress) : Customer
+        + findCustomerByUser(user) : Customer
+        }
+
+    }
+
+    package "repository"{
+        Interface CustomerRepository{
+            findAllActive() : Iterable<Customer>
+            findByEmailAddress(emailAddress) : Customer
+        }
+    }
+}
+
+package "company"{
+    package "domain"{
+        class Company{
+        - companyName : CompanyName
+        - companyNumber : int
+        + Company(companyName) : Company
+        + Company(companyName, companyNumber) : Company
+        Company()
+        + companyName() : CompanyName
+        + identity() : Integer
+        + equals(otherObject) : boolean
+        + hashCode() : int
+        + toString() : String
+        + sameAs(otherObject) : boolean
+        }
+
+        class CompanyName{
+            - designation : String
+            + CompanyName(designation) : CompanyName
+            CompanyName()
+            + valueOf(designation) : CompanyName
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+            + compareTo(otherObject) : int
+        }
+    }
+
+    package "service"{
+        class CompanyService{
+            + registerCompany(companyName) : Company
+            + allCompanies() : Iterable<Company>
+            + findCompany(companyName) : Company
+        }
+    }
+
+    package "repository"{
+        Interface CompanyRepository{
+            allCompanies() : Iterable<Company>
+            findCompanyByID(id) : Company
+        }
+    }
+}
+
+package "interview"{
+    package "application"{
+        class InterviewsEvaluationProcessController{
+        + interviewScoreUpdate(score, interview)
+        + interviewEvaluation(interview, interviewModel)
+        + evaluationProcessExecution(jobOpeningInterviews, interviewModel)
+        }
+    }
+
+    package "domain"{
+        class JobInterview{
+            - id : int
+            - createdOn : Calendar
+            - time : Time
+            - result : Result
+            - score : Score
+            - interviewAnswers : InterviewAnswers
+            - application : Application
+            + JobInterview(time, result, score, interviewAnswers, application, createdOn) : JobInterview
+            JobInterview()
+            + identity() : Integer
+            + equals(otherObject) : boolean
+            + sameAs(otherObject) : boolean
+            + time() : Time
+            + result() : Result
+            + score() : Score
+            + interviewAnswers() : InterviewAnswers
+            + application() : Application
+            + toString() : String
+            + createdOn() : Calendar
+            + uploadInterviewAnswers(interviewAnswers)
+            + compareTo(otherObject) : int
+            + toString() : String
+            + hashCode() : int
+            + updateScore(newScore)
+            + returnScore() : Integer
+        }
+
+        class InterviewAnswers{
+            - answers : List<String>
+            + InterviewAnswers(answers) : InterviewAnswers
+            InterviewAnswers()
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+            + answersList() : List<String>
+        }
+
+        class QuestionType{
+            DATE
+            MULTIPLE_CHOICE
+            DECIMAL_NUMBER
+            INTEGER_NUMBER
+            NUMERIC_RANGE
+            SINGLE_CHOICE
+            SHORT_TEXT
+            TIME
+            TRUE_FALSE
+        }
+
+        class Result{
+            - result : String
+            + Result(result) : Result
+            Result()
+            + equals(otherObject): boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+        class Score{
+            - score : Integer
+            + Score(score) : Score
+            Score()
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+            + getScore() : Integer
+        }
+
+        class Time{
+            - time : Integer
+            + Time(time) : Time
+            Time()
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+            + getTime() : Integer
+        }
+    }
+
+    package "service"{
+        class JobInterviewService{
+            + registerJobInterview(createdOn, time, result, score, application) : JobInterview
+            + allJobInterviews() : Iterable<JobInterview>
+            + updateJobInterviewScore(jobInterview, newScore) : JobInterview
+            + findJobInterviewByApplication(application) : Iterable<JobInterview>
+        }
+    }
+
+    package "repository"{
+        Interface JobInterviewRepository{
+             allJobInterviews() : Iterable<JobInterview>
+        }
+    }
+}
+
+package "interviewModel"{
+
+    package "domain"{
+         class InterviewModel{
+            - interviewModel : String
+            - idInterviewModel : Integer
+            + InterviewModel(interviewModel) : InterviewModel
+            + InterviewModel(interviewModel, idInterviewModel) : InterviewModel
+            InterviewModel()
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+            + sameAs(otherObject) : boolean
+            + identity() : Integer
+            + model() : String
+         }
+    }
+
+    package "service"{
+        class InterviewModelService{
+            + registerInterviewModel(interviewModel) : InterviewModel
+            + allInterviewModels() : Iterable<InterviewModel>
+        }
+    }
+
+    package "repository"{
+        Interface InterviewModelRepository{
+            allInterviewModels() : Iterable<InterviewModel>
+            ofIdentity(id) : InterviewModel
+        }
+    }
+
+}
+
+package "jobRequirementsSpecification"{
+
+    package "domain" {
+        class JobRequirementsSpecification{
+            - idRequirements : Integer
+            - jobRequirementsSpecificationFile : String
+            + JobRequirementsSpecification(id, jobRequirementsSpecificationFile) : JobRequirementsSpecification
+            JobRequirementsSpecification()
+            + JobRequirementsSpecification(jobRequirementsSpecificationFile) : JobRequirementsSpecification
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + sameAs(other) : boolean
+            + compareTo(otherObject) : int
+            + identity() : Integer
+            + jobRequirementsSpecificationPath() : String
+            + hasIdentity() : boolean
+            + toString() : String
+        }
+
+        Enum AcademicDegree{
+            NONE
+            BACHELOR
+            MASTER
+            DOCTORATE
+        }
+
+        Enum ProgrammingLanguages{
+            JAVA
+            JAVASCRIPT
+            PYTHON
+            TYPESCRIPT
+            PHP
+            CHASH
+        }
+    }
+
+    package "service"{
+        class JobRequirementsService{
+            + registerJobRequirementsSpecification(jobRequirementsPath) : JobRequirementsSpecification
+            + allJobRequirementsSpecifications() : Iterable<JobRequirementsSpecification>
+            + findJobRequirementsSpecification(id) : JobRequirementsSpecification
+            + verifyJobRequirementsSpecification(jobRequirementsSpecification) : boolean
+        }
+    }
+
+    package "repository"{
+        Interface JobRequirementsSpecificationRepository{
+            allJobRequirementsSpecifications() : Iterable<JobRequirementsSpecification>
+        }
+    }
+}
+
+package "candidate"{
+    package "domain"{
+        class Candidate{
+            - telephoneNumber : TelephoneNumber
+            - curriculum : Curriculum
+            - user : SystemUser
+            + Candidate(user, telephoneNumber, curriculum) : Candidate
+            Candidate()
+            + curriculum() : Curriculum
+            + user() : SystemUser
+            + identity() : EmailAddress
+            + equals(otherObject) : boolean
+            + sameAs(otherObject) : boolean
+            + toString() : String
+        }
+
+        note right of Candidate
+                            - The SystemUser class is provided by the framework,
+                            so that there's no need in representing it
+                         end note
+
+        class TelephoneNumber{
+            - telephoneNumber : String
+            + TelephoneNumber(telephoneNumber) : TelephoneNumber
+            TelephoneNumber()
+            + valueOf(telephoneNumber) : TelephoneNumber
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+            + compareTo(otherObject) : int
+        }
+
+        class Curriculum{
+            - curriculumPath : String
+            + Curriculum(curriculumPath) : Curriculum
+            Curriculum()
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+    }
+
+    package "service"{
+        class CandidateService{
+            + registerCandidate(user, telephoneNumber, curriculum) : Candidate
+            + allCandidates() : Iterable<Candidate>
+            + findCandidateByTelephoneNumber(telephoneNumber) : Candidate
+            + findCandidateByEmail(emailAddress) : Candidate
+            + findCandidateByUser(user) : Candidate
+        }
+    }
+
+    package "repository"{
+        Interface CandidateRepository{
+            allCandidates() : Iterable<Candidate>
+            findByTelephoneNumber(telephoneNumber) : Candidate
+        }
+    }
+
+}
+
+JobInterviewEvaluationUI --> InterviewsEvaluationProcessController
+
+InterviewsEvaluationProcessController --> JobOpeningService
+InterviewsEvaluationProcessController --> JobInterviewService
+InterviewsEvaluationProcessController --> ApplicationService
+
+Process --> ProcessState
+Process --> ProcessStatus
+
+ProcessService --> Process
+ProcessService --> ProcessRepository
+
+CompanyService --> Company
+CompanyService --> CompanyRepository
+
+CustomerService --> Customer
+CustomerService --> CustomerRepository
+CustomerService --> CompanyService
+
+CandidateService --> Candidate
+CandidateService --> CandidateRepository
+
+ApplicationService --> Application
+ApplicationService --> ApplicationRepository
+
+JobInterviewService --> JobInterview
+JobInterviewService --> JobInterviewRepository
+
+InterviewModelService --> InterviewModel
+InterviewModelService --> InterviewModelRepository
+
+JobRequirementsService --> JobRequirementsSpecification
+JobRequirementsService --> JobRequirementsSpecificationRepository
+
+JobOpeningService --> JobOpening
+JobOpeningService --> JobOpeningRepository
+JobOpeningService --> ProcessService
+JobOpeningService --> CustomerService
+JobOpeningService --> JobRequirementsService
+JobOpeningService --> InterviewModelService
+
+
+JobOpening --> Address
+JobOpening --> Mode
+JobOpening --> ContractType
+JobOpening --> Description
+JobOpening --> JobReference
+JobOpening --> TitleOrFunction
+JobOpening --> VacanciesNumber
+JobOpening --> Process
+JobOpening --> Customer
+JobOpening --> JobRequirementsSpecification
+JobOpening --> InterviewModel
+
+Company --> CompanyName
+
+Application --> Rank
+Application --> Status
+Application --> CandidateRequirements
+Application --> JobOpening
+Application --> Candidate
+
+JobInterview --> Result
+JobInterview --> Score
+JobInterview --> Time
+JobInterview --> InterviewAnswers
+JobInterview --> QuestionType
+JobInterview --> Application
+
+Customer --> Company
+
+Candidate --> Curriculum
+Candidate --> TelephoneNumber
+
+JobRequirementsSpecification --> AcademicDegree
+JobRequirementsSpecification --> ProgrammingLanguages
+
 @enduml

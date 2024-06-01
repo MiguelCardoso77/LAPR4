@@ -1,11 +1,191 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
 
 autonumber
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+title SD - Job Interviews Evaluation
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+'hide footbox
+
+actor "Customer Manager" as CM
+
+participant JobInterviewEvaluationUI <<presentation>>
+
+participant InterviewsEvaluationProcessController <<application>>
+
+participant JobOpeningService <<service>>
+participant JobInterviewService <<service>>
+participant ApplicationService <<service>>
+
+participant InterviewPlugin <<core>>
+participant JobOpenings <<core>>
+
+database JobOpeningRepository <<repository>>
+database JobInterviewRepository <<repository>>
+database ApplicationRepository <<repository>>
+
+activate CM
+
+CM -> JobInterviewEvaluationUI : Asks to execute the job interviews evaluation process
+
+activate JobInterviewEvaluationUI
+
+JobInterviewEvaluationUI -> InterviewsEvaluationProcessController : selectJobOpeningAnalysis()
+
+activate InterviewsEvaluationProcessController
+
+InterviewsEvaluationProcessController -> JobOpeningService : jobOpeningAnalysis()
+
+activate JobOpeningService
+
+JobOpeningService -> JobOpeningRepository : findJobOpeningAnalysis()
+
+activate JobOpeningRepository
+
+JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> : jobOpenings
+
+deactivate JobOpeningRepository
+
+JobOpeningService --> InterviewsEvaluationProcessController : List <JobOpening> : jobOpenings
+
+deactivate JobOpeningService
+
+InterviewsEvaluationProcessController --> JobInterviewEvaluationUI : List <JobOpening> : jobOpenings
+
+deactivate InterviewsEvaluationProcessController
+
+JobInterviewEvaluationUI --> CM : Shows the list of Job Openings in \n"Analysis" phase and asks to select one
+
+deactivate JobInterviewEvaluationUI
+
+CM -> JobInterviewEvaluationUI : Selects a Job Opening
+
+activate JobInterviewEvaluationUI
+
+JobInterviewEvaluationUI -> InterviewsEvaluationProcessController : allInterviewsOfJobOpening(jobOpening)
+
+activate InterviewsEvaluationProcessController
+
+InterviewsEvaluationProcessController -> JobInterviewService : findInterviewsByJobOpening(jobOpening)
+
+activate JobInterviewService
+
+JobInterviewService -> ApplicationService : allApplicationsOfJobOpening(jobOpening)
+
+activate ApplicationService
+
+ApplicationService -> ApplicationRepository : findApplicationsByJobOpening(jobOpening)
+
+activate ApplicationRepository
+
+ApplicationRepository --> ApplicationService : Iterable<Application>
+
+deactivate ApplicationRepository
+
+ApplicationService --> JobInterviewService : List<Application> : applications
+
+deactivate ApplicationService
+
+JobInterviewService -> JobInterviewRepository : findInterviewsByJobOpening(jobOpening)
+
+activate JobInterviewRepository
+
+JobInterviewRepository --> JobInterviewService : Iterable<JobInterview>
+
+deactivate JobInterviewRepository
+
+JobInterviewService --> InterviewsEvaluationProcessController : List<JobInterview> : interviews
+
+deactivate JobInterviewService
+
+InterviewsEvaluationProcessController --> JobInterviewEvaluationUI : List<JobInterview> : interviews
+
+deactivate InterviewsEvaluationProcessController
+
+JobInterviewEvaluationUI -> InterviewsEvaluationProcessController : findInterviewModel(jobOpening)
+
+activate InterviewsEvaluationProcessController
+
+InterviewsEvaluationProcessController -> JobOpeningService : findInterviewModel(jobOpening)
+
+activate JobOpeningService
+
+JobOpeningService -> JobOpeningRepository : findInterviewModel(jobOpening)
+
+activate JobOpeningRepository
+
+JobOpeningRepository --> JobOpeningService : interviewModel
+
+deactivate JobOpeningRepository
+
+JobOpeningService --> InterviewsEvaluationProcessController : interviewModel
+
+deactivate JobOpeningService
+
+InterviewsEvaluationProcessController --> JobInterviewEvaluationUI : InterviewModel
+
+deactivate InterviewsEvaluationProcessController
+
+JobInterviewEvaluationUI -> InterviewsEvaluationProcessController : evaluationProcessExecution(interviews, interviewModel)
+
+activate InterviewsEvaluationProcessController
+
+loop for each interview on interviews
+
+    InterviewsEvaluationProcessController -> JobInterviewService : interviewsAnswersList()
+
+    activate JobInterviewService
+
+    JobInterviewService -> JobInterviewRepository : findAnswersByInterview(interview)
+
+    activate JobInterviewRepository
+
+    JobInterviewRepository --> JobInterviewService : List<String> : answersList
+
+    deactivate JobInterviewRepository
+
+    JobInterviewService --> InterviewsEvaluationProcessController : List<String> : answersList
+
+    deactivate JobInterviewService
+
+    alt answersList is not null
+
+        InterviewsEvaluationProcessController -> InterviewPlugin : grammarChecker(interviewModel, answersList)
+
+        activate InterviewPlugin
+
+        InterviewPlugin --> InterviewsEvaluationProcessController : int : score
+
+        deactivate InterviewPlugin
+
+        InterviewsEvaluationProcessController -> JobInterviewService : interviewScoreUpdate (interview, score)
+
+        activate JobInterviewService
+
+        JobInterviewService -> JobInterviewRepository : updateInterviewScore(interview, score)
+
+        activate JobInterviewRepository
+
+        JobInterviewRepository --> JobInterviewService
+
+        deactivate JobInterviewRepository
+
+        JobInterviewService --> InterviewsEvaluationProcessController
+
+        deactivate JobInterviewService
+
+end
+
+end
+
+InterviewsEvaluationProcessController --> JobInterviewEvaluationUI : Displays operation success
+
+deactivate InterviewsEvaluationProcessController
+
+JobInterviewEvaluationUI --> CM : Displays operation success
+
+deactivate JobInterviewEvaluationUI
+
 @enduml

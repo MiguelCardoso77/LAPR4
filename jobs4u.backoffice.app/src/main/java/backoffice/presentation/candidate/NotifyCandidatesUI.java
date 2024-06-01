@@ -27,9 +27,7 @@ public class NotifyCandidatesUI extends AbstractUI {
             emailsToSend.add(emailObj);
         }
 
-        for (Email email : emailsToSend) {
-            theController.sendEmail(email.toWho(), email.subject(), email.body());
-        }
+        theController.sendEmails(emailsToSend);
 
         return true;
     }
@@ -39,15 +37,13 @@ public class NotifyCandidatesUI extends AbstractUI {
     }
 
     private String buildBody(Application application, String status) {
-        return "Dear Candidate,\n\n"
-                + "We hope this message finds you well.\n\n"
+        /**return "Dear Candidate,\n\n"
                 + "We are writing to inform you about an update regarding your application titled '" + application.dataFile() + "'. "
-                + "After careful consideration and review, the status of your application has been updated to: **'" + status + "'**.\n\n"
-                + "If you have any questions or need further assistance, please do not hesitate to contact our support team.\n\n"
-                + "Thank you for your patience and understanding.\n\n"
+                + "The status of your application has been updated to: **'" + status + "'**.\n\n"
                 + "Best regards,\n"
-                + "The Verification Team\n"
                 + "Jobs4U\n";
+         **/
+        return "Test";
     }
 
     @Override

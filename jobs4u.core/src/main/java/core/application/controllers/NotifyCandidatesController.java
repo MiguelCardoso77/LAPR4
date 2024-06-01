@@ -44,7 +44,7 @@ public class NotifyCandidatesController {
         return emailService.createEmail(candidateEmail, subject, body);
     }
 
-    public void sendEmail(String dest, String subject, String body) {
-        emailService.sendEmailOnline(dest, subject, body);
+    public void sendEmails(List<Email> emailsToSend) {
+        emailService.sendAllEmails(emailsToSend);
     }
 }

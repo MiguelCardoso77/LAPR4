@@ -57,7 +57,6 @@ public class EmailHandler {
 
     }
 
-
     /**
      * Send email boolean.
      *

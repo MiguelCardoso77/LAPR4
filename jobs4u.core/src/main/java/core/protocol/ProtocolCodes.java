@@ -6,10 +6,9 @@ public enum ProtocolCodes {
     ACK((byte) 2),
     ERR((byte) 3),
     AUTH((byte) 4),
-    LIST_APPLICATIONS((byte) 5),
-    LIST_APPLICATIONS_RESPONSE((byte) 6),
-    LIST_JOB_OPENINGS((byte) 7),
-    LIST_JOB_OPENINGS_RESPONSE((byte) 8);
+    EMAIL((byte) 5),
+    LIST_APPLICATIONS((byte) 6),
+    LIST_JOB_OPENINGS((byte) 7);
     private final byte code;
 
     ProtocolCodes(byte code) {

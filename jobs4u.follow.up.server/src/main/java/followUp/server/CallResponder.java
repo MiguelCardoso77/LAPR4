@@ -107,10 +107,10 @@ public class CallResponder extends Handler {
         EmailHandler emailHandler = new EmailHandler();
         boolean flag = emailHandler.sendEmail(toWho, subject, body);
         if (flag) {
-            System.out.println("Email sent to " + toWho + "!");
+            System.out.println("\nEmail sent to " + toWho + "!");
             protocol.sendAck();
         } else {
-            System.out.println("Error sending email to " + toWho + "!");
+            System.out.println("\nError sending email to " + toWho + "!");
             protocol.sendErr();
         }
     }

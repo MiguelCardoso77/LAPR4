@@ -19,12 +19,12 @@ public class EmailService {
     }
 
     public void sendAllEmails(List<Email> emailsToSend) {
-        try {
-            Socket socket = new Socket("127.0.0.1", 1010);
-            DataInputStream inData = new DataInputStream(socket.getInputStream());
+        for (Email email : emailsToSend) {
+            try {
+                Socket socket = new Socket("127.0.0.1", 1010);
+                DataInputStream inData = new DataInputStream(socket.getInputStream());
 
-            Jobs4UProtocol protocol = new Jobs4UProtocol(socket);
-            for (Email email : emailsToSend) {
+                Jobs4UProtocol protocol = new Jobs4UProtocol(socket);
                 protocol.sendEmail(email.toWho(), email.subject(), email.body());
 
                 inData.readByte();
@@ -32,16 +32,14 @@ public class EmailService {
 
                 if (code == ProtocolCodes.ACK.code()) {
                     System.out.println("ACK Code Received: Email to " + email.toWho() + " sent successfully!");
-                    return;
                 } else if (code == ProtocolCodes.ERR.code()) {
                     System.out.println("ERR Code Received: Could not send email to " + email.toWho() + "!");
-                    return;
                 }
-            }
 
-            socket.close();
-        } catch (IOException e){
-            throw new RuntimeException(e);
+                socket.close();
+            } catch (IOException e){
+                throw new RuntimeException(e);
+            }
         }
     }
 

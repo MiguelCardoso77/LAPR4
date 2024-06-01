@@ -59,6 +59,7 @@ public class JobsBootstrapper implements Action {
 
         List<Process> processes = (List<Process>) processRepository.findAll();
         changeProcessStateController.changeProcessState(ProcessState.ANALYSIS, processes.get(0));
+        changeProcessStateController.changeProcessState(ProcessState.ANALYSIS, processes.get(1));
 
         return true;
     }

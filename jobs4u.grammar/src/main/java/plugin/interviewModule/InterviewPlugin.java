@@ -37,6 +37,7 @@ public class InterviewPlugin {
             System.out.println("-------------------------------------------");
             int totalScore = visitor.findOutTotalScore();
             System.out.println("Total score: " + totalScore + "% out of 100%");
+            return totalScore;
 
         } catch (IOException e) {
             e.printStackTrace();

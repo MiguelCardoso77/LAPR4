@@ -1,11 +1,11 @@
 package core.application.controllers;
 
 import core.domain.interviewModel.InterviewModel;
-import core.services.InterviewService;
+import core.services.InterviewModelService;
 
 public class ListInterviewModelsController {
 
-        private final InterviewService service = new InterviewService();
+        private final InterviewModelService service = new InterviewModelService();
 
         public Iterable<InterviewModel> allInterviewModels(){
                 return service.allInterviewModels();

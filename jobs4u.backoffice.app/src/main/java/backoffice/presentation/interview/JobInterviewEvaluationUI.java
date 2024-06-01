@@ -36,43 +36,9 @@ public class JobInterviewEvaluationUI extends AbstractUI {
 
         InterviewModel interviewModel = jobOpening.myInterviewModel();
 
-        boolean isProcessSuccessful = executeEvaluationProcess(interviews, interviewModel);
-
-        if(isProcessSuccessful){
-            System.out.println("Evaluation process completed successfully.");
-        } else {
-            System.out.println("Evaluation process failed.");
-        }
+        evaluationProcessController.evaluationProcessExecution(interviews, interviewModel);
 
         return false;
-    }
-
-    /**
-     * Executes the evaluation process for the provided list of JobInterview objects using the provided InterviewModel.
-     * Returns a boolean indicating the success or failure of the process.
-     *
-     * @param interviews List of JobInterview objects for which the evaluation process is to be executed.
-     * @param interviewModel The InterviewModel to be used in the evaluation process.
-     * @return boolean indicating whether the evaluation process was successful (true) or not (false).
-     */
-    private boolean executeEvaluationProcess(List<JobInterview> interviews, InterviewModel interviewModel){
-        try {
-            evaluationProcessController.evaluationProcessExecution(interviews, interviewModel);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * This method returns a list of JobInterview objects for the provided JobOpening object.
-     *
-     * @param jobOpening selected job opening
-     * @return list with all the job interviews on the selected job opening
-     */
-
-    private List<JobInterview> jobOpeningInterviews(JobOpening jobOpening){
-        return listJobOpeningInterviewsController.allInterviewOfJobOpening(jobOpening);
     }
 
     /**

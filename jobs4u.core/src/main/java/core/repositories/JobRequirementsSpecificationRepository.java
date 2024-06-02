@@ -3,8 +3,6 @@ package core.repositories;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import eapli.framework.domain.repositories.DomainRepository;
 
-import java.util.Optional;
-
 /**
  * Repository interface for managing JobRequirementsSpecification entities.
  *

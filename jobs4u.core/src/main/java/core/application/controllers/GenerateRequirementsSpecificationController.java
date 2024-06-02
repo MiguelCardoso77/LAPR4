@@ -1,20 +1,15 @@
 package core.application.controllers;
 
 import core.domain.jobOpening.JobOpening;
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.persistence.PersistenceContext;
 import core.repositories.JobOpeningRepository;
 import core.repositories.JobRequirementsSpecificationRepository;
-import eapli.framework.domain.repositories.ConcurrencyException;
-import eapli.framework.domain.repositories.IntegrityViolationException;
-import eapli.framework.io.util.Console;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class GenerateRequirementsSpecificationController {
 

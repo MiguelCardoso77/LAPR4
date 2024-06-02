@@ -6,8 +6,6 @@ import core.repositories.CandidateRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-import java.util.Optional;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

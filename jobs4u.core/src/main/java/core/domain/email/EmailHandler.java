@@ -1,6 +1,5 @@
 package core.domain.email;
 
-import infrastructure.AppSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import javax.mail.*;
-import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 

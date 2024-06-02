@@ -2,7 +2,6 @@ package core.domain.application;
 
 import core.domain.candidate.Candidate;
 import core.domain.jobOpening.JobOpening;
-import core.domain.process.ProcessState;
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;

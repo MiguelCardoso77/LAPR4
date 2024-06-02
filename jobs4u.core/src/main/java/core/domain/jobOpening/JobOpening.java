@@ -8,8 +8,6 @@ import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import jakarta.persistence.*;
 
-import java.util.Calendar;
-
 /**
  * Represents a job opening in the system.
  *

@@ -6,13 +6,10 @@ import core.domain.application.Application;
 import core.domain.candidate.Candidate;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
 
 public class MostReferencedWordsUI extends AbstractUI {
     private final MostReferencedWordsController theController = new MostReferencedWordsController();

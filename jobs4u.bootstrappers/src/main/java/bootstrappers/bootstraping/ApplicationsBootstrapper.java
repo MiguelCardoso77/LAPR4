@@ -1,6 +1,5 @@
 package bootstrappers.bootstraping;
 
-import bootstrappers.Jobs4UBootstrapper;
 import core.application.controllers.ApplicationRegisterController;
 import core.application.controllers.UploadRequirementsAnswersController;
 import core.domain.application.Application;

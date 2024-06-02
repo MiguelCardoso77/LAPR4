@@ -7,7 +7,6 @@ import core.domain.customer.CustomerBuilder;
 import core.persistence.PersistenceContext;
 import core.repositories.CustomerRepository;
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

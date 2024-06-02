@@ -1,7 +1,6 @@
 package backoffice.presentation.candidate;
 
 import core.application.controllers.DisplayCandidateDataController;
-import core.domain.application.Application;
 import core.domain.candidate.Candidate;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.io.util.Console;

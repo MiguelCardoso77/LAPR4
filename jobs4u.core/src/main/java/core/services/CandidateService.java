@@ -7,11 +7,9 @@ import core.domain.candidate.TelephoneNumber;
 import core.persistence.PersistenceContext;
 import core.repositories.CandidateRepository;
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import jakarta.transaction.Transactional;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**

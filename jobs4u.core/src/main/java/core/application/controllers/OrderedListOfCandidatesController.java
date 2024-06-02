@@ -1,9 +1,7 @@
 package core.application.controllers;
 
 import core.domain.application.Application;
-import core.domain.candidate.Candidate;
 import core.domain.interview.JobInterview;
-import core.domain.jobOpening.JobReference;
 
 import java.util.ArrayList;
 import java.util.Comparator;

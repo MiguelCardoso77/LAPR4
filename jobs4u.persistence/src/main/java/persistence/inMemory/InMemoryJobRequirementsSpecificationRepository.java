@@ -1,8 +1,6 @@
 package persistence.inMemory;
 
-import core.domain.interview.JobInterview;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
-import core.repositories.JobInterviewRepository;
 import core.repositories.JobRequirementsSpecificationRepository;
 import eapli.framework.infrastructure.repositories.impl.inmemory.InMemoryDomainRepository;
 

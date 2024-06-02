@@ -1,7 +1,6 @@
 package core.services;
 
 import core.domain.application.Application;
-import core.domain.interviewModel.InterviewModel;
 import core.domain.interview.JobInterview;
 import core.domain.interview.JobInterviewBuilder;
 import core.domain.interview.Score;

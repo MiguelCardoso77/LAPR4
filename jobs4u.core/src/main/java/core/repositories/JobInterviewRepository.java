@@ -1,10 +1,7 @@
 package core.repositories;
 
-import core.domain.application.Application;
 import core.domain.interview.JobInterview;
 import eapli.framework.domain.repositories.DomainRepository;
-
-import java.util.Optional;
 
 /**
  * Repository interface for managing {@link JobInterview} entities.

@@ -3,14 +3,9 @@ package backoffice.presentation.interview;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.candidate.Candidate;
-import core.domain.candidate.TelephoneNumber;
 import core.domain.interview.JobInterview;
-import core.domain.interview.Score;
 import core.domain.jobOpening.JobOpening;
-import core.domain.jobOpening.JobReference;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class OrderedListOfCandidatesUI {

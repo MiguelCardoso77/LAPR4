@@ -1,7 +1,6 @@
 package backoffice.presentation.candidate;
 
 import console.presentation.utils.ConsoleColors;
-import core.application.controllers.ListJobOpeningController;
 import core.application.controllers.RankCandidatesController;
 import core.application.controllers.SelectJobOpeningController;
 import core.domain.application.Application;

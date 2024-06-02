@@ -1,17 +1,10 @@
 package bootstrappers.bootstraping;
 
-import core.application.controllers.ListJobRequirementsSpecificationController;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.domain.jobRequirementsSpecification.JobRequirementsSpecificationBuilder;
 import core.persistence.PersistenceContext;
 import core.repositories.JobRequirementsSpecificationRepository;
 import eapli.framework.actions.Action;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.util.List;
 
 public class RequirementsBootstrapper implements Action {
     final JobRequirementsSpecificationRepository repository = PersistenceContext.repositories().jobRequirements();

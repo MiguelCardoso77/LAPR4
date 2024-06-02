@@ -1,6 +1,5 @@
 package core.application.controllers;
 
-import core.domain.jobOpening.JobOpening;
 import core.domain.process.Process;
 import core.domain.process.ProcessState;
 import core.domain.user.Jobs4URoles;

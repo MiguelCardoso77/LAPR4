@@ -5,8 +5,6 @@ import core.repositories.ProcessRepository;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.repositories.impl.jpa.JpaAutoTxRepository;
 
-import java.util.Map;
-
 public class JpaProcessRepository extends JpaAutoTxRepository<Process, Integer, Integer> implements ProcessRepository {
     public JpaProcessRepository(String persistenceUnitName) {
         super(persistenceUnitName, "idProcess");

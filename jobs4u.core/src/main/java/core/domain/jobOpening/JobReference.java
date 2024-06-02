@@ -1,11 +1,7 @@
 package core.domain.jobOpening;
 
 import eapli.framework.domain.model.ValueObject;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Transient;
-
-import java.util.Random;
 
 /**
  * Represents a job reference, which is a unique identifier for a job opening.

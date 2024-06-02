@@ -3,7 +3,6 @@ package backoffice.presentation.jobOpening;
 import core.application.ListCustomerController;
 import core.application.controllers.AddJobOpeningController;
 import core.application.controllers.ListCompaniesController;
-import core.domain.company.Company;
 import core.domain.customer.Customer;
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.JobReference;

@@ -8,8 +8,6 @@ import eapli.framework.domain.model.DomainFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Calendar;
-
 /**
  * A builder class for creating instances of {@link JobOpening}.
  * This builder provides methods for setting various attributes of a job opening

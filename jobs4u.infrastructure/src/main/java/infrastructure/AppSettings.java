@@ -96,8 +96,7 @@ public class AppSettings {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public Map getExtendedPersistenceProperties() {
         final Map ret = new HashMap();
-        ret.put(SCHEMA_GENERATION_KEY,
-                this.applicationProperties.getProperty(SCHEMA_GENERATION_KEY));
+        ret.put(SCHEMA_GENERATION_KEY, this.applicationProperties.getProperty(SCHEMA_GENERATION_KEY));
         return ret;
     }
 

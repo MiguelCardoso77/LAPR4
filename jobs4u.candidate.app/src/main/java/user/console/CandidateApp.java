@@ -1,22 +1,12 @@
 package user.console;
 
 import core.domain.user.Jobs4UPasswordPolicy;
-import core.protocol.DataChunk;
-import core.protocol.Packet;
-import core.protocol.ProtocolCodes;
-import eapli.framework.io.util.Console;
 import user.console.presentation.FrontMenu;
 import core.persistence.PersistenceContext;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.domain.model.PlainTextEncoder;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 /**
  * Main class for the Jobs4U Candidate Application.

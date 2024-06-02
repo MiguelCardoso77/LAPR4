@@ -1,7 +1,6 @@
 package core.services;
 
 import core.domain.email.Email;
-import core.domain.email.EmailHandler;
 import core.protocol.Jobs4UProtocol;
 import core.protocol.ProtocolCodes;
 import org.springframework.stereotype.Service;

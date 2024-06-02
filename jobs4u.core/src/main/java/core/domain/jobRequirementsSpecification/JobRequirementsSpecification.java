@@ -3,8 +3,6 @@ package core.domain.jobRequirementsSpecification;
 
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 import java.util.Objects;
 

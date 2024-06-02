@@ -1,11 +1,8 @@
 package backoffice.presentation.menus;
 
-import backoffice.presentation.jobRequirementsSpecifications.SelectRequirementsSpecificationAction;
 import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
-
-import java.awt.*;
 
 /**
  * @author 1220812@isep.ipp.pt

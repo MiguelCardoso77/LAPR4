@@ -1,7 +1,6 @@
 package bootstrappers.bootstraping;
 
 import core.domain.company.Company;
-import core.domain.company.CompanyName;
 import core.domain.user.Jobs4URoles;
 import core.persistence.PersistenceContext;
 import core.repositories.CompanyRepository;

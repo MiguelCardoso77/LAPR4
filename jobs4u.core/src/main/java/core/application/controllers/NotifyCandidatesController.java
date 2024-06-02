@@ -8,11 +8,9 @@ import core.services.EmailService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
-import eapli.framework.infrastructure.authz.application.UserSession;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @UseCaseController
 public class NotifyCandidatesController {

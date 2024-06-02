@@ -1,6 +1,5 @@
 package core.application.controllers;
 
-import core.domain.company.Company;
 import core.domain.customer.Customer;
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.JobOpening;

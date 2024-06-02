@@ -1,11 +1,7 @@
 package core.application.controllers;
 
-import core.domain.company.Company;
-import core.domain.customer.Customer;
-import core.domain.customer.CustomerBuilder;
 import core.domain.user.Jobs4URoles;
 import core.domain.user.Jobs4UPasswordPolicy;
-import core.services.CustomerService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;

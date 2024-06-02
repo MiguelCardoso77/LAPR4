@@ -2,7 +2,6 @@ package core.application.controllers;
 
 import core.domain.application.Application;
 import core.domain.interview.JobInterview;
-import core.domain.jobOpening.JobOpening;
 import core.services.JobInterviewService;
 import java.util.ArrayList;
 import java.util.List;

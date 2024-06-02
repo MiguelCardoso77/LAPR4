@@ -1,13 +1,10 @@
 package core.application.controllers;
 
 import core.domain.jobOpening.JobOpening;
-import core.domain.process.ProcessState;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SelectJobOpeningController {

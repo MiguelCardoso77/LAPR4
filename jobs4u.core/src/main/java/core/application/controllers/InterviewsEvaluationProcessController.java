@@ -3,7 +3,6 @@ package core.application.controllers;
 import core.domain.interview.JobInterview;
 import core.domain.interview.Score;
 import core.domain.interviewModel.InterviewModel;
-import core.services.InterviewModelService;
 import core.services.JobInterviewService;
 import eapli.framework.application.UseCaseController;
 import plugin.interviewModule.InterviewPlugin;

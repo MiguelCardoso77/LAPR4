@@ -2,12 +2,9 @@ package bootstrappers.bootstraping;
 
 import core.application.controllers.*;
 import core.domain.application.Application;
-import core.domain.interview.InterviewAnswers;
 import core.domain.interview.JobInterview;
-import core.domain.interviewModel.InterviewModel;
 import core.persistence.PersistenceContext;
 import core.repositories.ApplicationRepository;
-import core.repositories.InterviewModelRepository;
 import eapli.framework.actions.Action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

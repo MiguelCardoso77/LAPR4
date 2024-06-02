@@ -26,14 +26,13 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public CustomerRepository customerUsers(final TransactionalContext tx) {
-
+    public CustomerRepository customerUsers(TransactionalContext autoTx) {
         return new InMemoryCustomerRepository();
     }
 
     @Override
     public CustomerRepository customerUsers() {
-        return customerUsers(null);
+        return null;
     }
 
     @Override
@@ -63,16 +62,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
     @Override
     public CandidateRepository candidates() {
         return candidates(null);
-    }
-
-    @Override
-    public CustomerRepository customers(TransactionalContext autoTx) {
-        return null;
-    }
-
-    @Override
-    public CustomerRepository customers() {
-        return customers(null);
     }
 
     @Override

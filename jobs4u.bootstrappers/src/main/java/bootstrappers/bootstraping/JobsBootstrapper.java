@@ -23,7 +23,7 @@ import java.util.List;
 public class JobsBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(JobsBootstrapper.class);
 
-    private final CustomerRepository customerRepository = PersistenceContext.repositories().customers();
+    private final CustomerRepository customerRepository = PersistenceContext.repositories().customerUsers();
     private final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
     private final JobRequirementsSpecificationRepository requirementsRepository = PersistenceContext.repositories().jobRequirements();
     private final ProcessRepository processRepository = PersistenceContext.repositories().processRepository();

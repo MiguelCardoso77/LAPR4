@@ -22,7 +22,7 @@ public class UploadResponsesUI extends AbstractUI {
 
         System.out.println("Job Interviews: ");
         for (JobInterview jobInterview : interviews) {
-            System.out.println("ID: " + jobInterview.identity());
+            System.out.println("ID: " + jobInterview.identity() + ", from application " + jobInterview.application().dataFile());
         }
 
         int jobInterviewID = Console.readInteger("Enter the Job Interview ID: ");

@@ -1,4 +1,5 @@
-package plugin.interviewModule.autogen;// Generated from C:/Users/migue/IdeaProjects/lprog-plugin-2dd5/interviewModel/src/main/resources/InterviewModelGrammar.g4 by ANTLR 4.13.1
+package plugin.interviewModule.autogen;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**

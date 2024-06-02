@@ -1,137 +1,82 @@
 package core.persistence;
 
-import core.pluginManagement.importer.LanguageImporterPluginRepository;
-import core.pluginManagement.language.LanguageRepository;
-import core.pluginManagement.language.LanguageTypeRepository;
 import core.repositories.*;
 import eapli.framework.domain.repositories.TransactionalContext;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 
 /**
-
-@author
-Paulo Gandra
-Sousa**/
-
+ * Factory interface for creating repositories.
+ *
+ * @author Miguel Cardoso
+ */
 public interface RepositoryFactory {
 
     /**
-
-    factory method
-    to create
-    a transactional
-    context to
-    use in
-    the repositories*
-            @return*/
-
+     * Factory method to create a transactional context to be used by the repositories.
+     */
     TransactionalContext newTransactionalContext();
 
     /**
-            *
-
-    @param
-    autoTx
-    the transactional
-    context to
-    enrol
-    @return
-            */
-
+     * SystemUser repository.
+     */
     UserRepository users(TransactionalContext autoTx);
-
-    /**
-
-    repository will
-    be created
-    in auto
-    transaction mode*
-            @return*/
-
     UserRepository users();
 
     /**
-            *
-
-    @param
-    autoTx
-    the transactional
-    context to
-    enroll
-    @return
-            */
-
+     * Customer repository.
+     */
     CustomerRepository customerUsers(TransactionalContext autoTx);
-
-    /**
-
-    repository will
-    be created
-    in auto
-    transaction mode*
-            @return*/
-
     CustomerRepository customerUsers();
 
     /**
-            *
-
-    @param
-    autoTx
-    the transactional
-    context to
-    enroll
-    @return
-            */
-
-
-    /**
-
-    repository will
-    be created
-    in auto
-    transaction mode*
-            @return*/
-
-
-    /**
-     * @param autoTx
-     * @return
+     * JobOpening repository.
      */
-
     JobOpeningRepository jobOpenings(TransactionalContext autoTx);
-
     JobOpeningRepository jobOpenings();
 
+    /**
+     * Application repository.
+     */
     ApplicationRepository applications(TransactionalContext autoTx);
-
     ApplicationRepository applications();
 
+    /**
+     * Candidate repository.
+     */
     CandidateRepository candidates(TransactionalContext autoTx);
     CandidateRepository candidates();
+
 
     CustomerRepository customers(TransactionalContext autoTx);
     CustomerRepository customers();
 
+    /**
+     * Company repository.
+     */
     CompanyRepository companies(TransactionalContext autoTx);
     CompanyRepository companies();
 
+    /**
+     * JobInterview repository.
+     */
     JobInterviewRepository jobInterviews(TransactionalContext autoTx);
     JobInterviewRepository jobInterviews();
 
+    /**
+     * RequirementsSpecification repository.
+     */
     JobRequirementsSpecificationRepository jobRequirements(TransactionalContext autoTx);
     JobRequirementsSpecificationRepository jobRequirements();
 
-    LanguageImporterPluginRepository languageImporterPlugins();
-
-    LanguageRepository languages();
-
-    LanguageTypeRepository languageTypes();
-
+    /**
+     * InterviewModel repository.
+     */
     InterviewModelRepository interviewModelRepository(TransactionalContext autoTx);
     InterviewModelRepository interviewModelRepository();
 
+    /**
+     * Process repository.
+     */
     ProcessRepository processRepository(TransactionalContext autoTx);
     ProcessRepository processRepository();
-
 }

@@ -1,9 +1,5 @@
 package persistence.inMemory;
 
-import core.domain.interviewModel.InterviewModel;
-import core.pluginManagement.importer.LanguageImporterPluginRepository;
-import core.pluginManagement.language.LanguageRepository;
-import core.pluginManagement.language.LanguageTypeRepository;
 import core.repositories.*;
 import bootstrappers.Jobs4UBootstrapper;
 import core.persistence.RepositoryFactory;
@@ -109,20 +105,6 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return null;
     }
 
-    @Override
-    public LanguageImporterPluginRepository languageImporterPlugins() {
-        return null;
-    }
-
-    @Override
-    public LanguageRepository languages() {
-        return null;
-    }
-
-    @Override
-    public LanguageTypeRepository languageTypes() {
-        return null;
-    }
 
     @Override
     public TransactionalContext newTransactionalContext() {

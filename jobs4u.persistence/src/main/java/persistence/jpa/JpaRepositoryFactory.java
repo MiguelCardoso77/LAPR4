@@ -1,8 +1,5 @@
 package persistence.jpa;
 
-import core.pluginManagement.importer.LanguageImporterPluginRepository;
-import core.pluginManagement.language.LanguageRepository;
-import core.pluginManagement.language.LanguageTypeRepository;
 import core.repositories.*;
 import infrastructure.Application;
 import core.persistence.RepositoryFactory;
@@ -113,21 +110,6 @@ public class JpaRepositoryFactory implements RepositoryFactory {
     @Override
     public JobRequirementsSpecificationRepository jobRequirements() {
         return new JpaJobRequirementsSpecificationRepository(Application.settings().getPersistenceUnitName());
-    }
-
-    @Override
-    public LanguageImporterPluginRepository languageImporterPlugins() {
-        return null;
-    }
-
-    @Override
-    public LanguageRepository languages() {
-        return null;
-    }
-
-    @Override
-    public LanguageTypeRepository languageTypes() {
-        return null;
     }
 
     @Override

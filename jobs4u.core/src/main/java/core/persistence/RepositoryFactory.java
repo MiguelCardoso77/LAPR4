@@ -46,10 +46,6 @@ public interface RepositoryFactory {
     CandidateRepository candidates(TransactionalContext autoTx);
     CandidateRepository candidates();
 
-
-    CustomerRepository customers(TransactionalContext autoTx);
-    CustomerRepository customers();
-
     /**
      * Company repository.
      */

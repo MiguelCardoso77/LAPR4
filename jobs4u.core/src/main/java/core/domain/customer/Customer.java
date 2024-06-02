@@ -42,9 +42,6 @@ public class Customer implements AggregateRoot<EmailAddress> {
      * @throws IllegalArgumentException if any of the parameters are null.
      */
     public Customer(final SystemUser user, final EmailAddress emailAddress, final Company company, final SystemUser customerManager) {
-        if (user == null || company == null || customerManager == null || emailAddress == null) {
-            throw new IllegalArgumentException();
-        }
         this.systemUser = user;
         this.company = company;
         this.customerManager = customerManager;

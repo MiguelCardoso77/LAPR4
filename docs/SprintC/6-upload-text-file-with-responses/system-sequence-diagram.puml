@@ -22,10 +22,10 @@ activate CMAN
     CMAN -> System : provides the job interview id
     activate System
 
-       System --> CMAN : requests the text file
+       System --> CMAN : requests path to text file
     deactivate System
 
-    CMAN -> System : uploads the text file
+    CMAN -> System : inserts path
     activate System
 
        System --> CMAN : confirms the upload success

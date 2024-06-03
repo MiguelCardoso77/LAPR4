@@ -1,0 +1,102 @@
+@startuml
+autonumber
+
+actor CustomerManager
+
+participant UploadResponsesUI <<presentation>>
+participant UploadResponsesController <<controller>>
+
+participant JobInterviewService <<service>>
+database JobInterviewRepository <<repository>>
+
+participant InterviewPlugin <<plugin>>
+
+activate CustomerManager
+
+    CustomerManager -> UploadResponsesUI : asks to upload candidate responses
+    activate UploadResponsesUI
+
+        UploadResponsesUI -> UploadResponsesController : findAllInterviewsWithModelAssigned()
+        activate UploadResponsesController
+
+            UploadResponsesController -> JobInterviewService : findAllInterviewsWithModelAssigned()
+            activate JobInterviewService
+
+                JobInterviewService -> JobInterviewRepository : findAll()
+                activate JobInterviewRepository
+
+                    JobInterviewRepository --> JobInterviewService : jobInterviews
+                deactivate JobInterviewRepository
+
+                JobInterviewService --> UploadResponsesController : jobInterviews
+            deactivate JobInterviewService
+
+            UploadResponsesController --> UploadResponsesUI : jobInterviews
+        deactivate UploadResponsesController
+
+        UploadResponsesUI --> CustomerManager : shows job interviews and asks to select one
+    deactivate UploadResponsesUI
+
+    CustomerManager -> UploadResponsesUI : selects job interview
+    activate UploadResponsesUI
+
+        UploadResponsesUI -> UploadResponsesController : findJobInterviewById(jobInterviewId)
+        activate UploadResponsesController
+
+            UploadResponsesController -> JobInterviewService : findJobInterviewById(jobInterviewId)
+            activate JobInterviewService
+
+                JobInterviewService -> JobInterviewRepository : ofIdentity(jobInterviewId)
+                activate JobInterviewRepository
+
+                    JobInterviewRepository --> JobInterviewService : jobInterview
+                deactivate JobInterviewRepository
+
+                JobInterviewService --> UploadResponsesController : jobInterview
+            deactivate JobInterviewService
+
+            UploadResponsesController --> UploadResponsesUI : jobInterview
+        deactivate UploadResponsesController
+
+        UploadResponsesUI --> CustomerManager : requests file path
+    deactivate UploadResponsesUI
+
+    CustomerManager -> UploadResponsesUI : inserts file path
+    activate UploadResponsesUI
+
+        UploadResponsesUI -> UploadResponsesController : retrieveResponses(path)
+        activate UploadResponsesController
+
+            UploadResponsesController -> InterviewPlugin : retrieveAnswers(path)
+            activate InterviewPlugin
+
+                InterviewPlugin --> UploadResponsesController : responses
+            deactivate InterviewPlugin
+
+            UploadResponsesController --> UploadResponsesUI : responses
+        deactivate UploadResponsesController
+
+        UploadResponsesUI -> UploadResponsesController : uploadResponses(responses, jobInterview)
+        activate UploadResponsesController
+
+            UploadResponsesController -> JobInterviewService : uploadResponses(responses, jobInterview)
+            activate JobInterviewService
+
+                JobInterviewService -> JobInterviewRepository : save(updatedJobInterview)
+                activate JobInterviewRepository
+
+                    JobInterviewRepository --> JobInterviewService : updatedJobInterview
+                deactivate JobInterviewRepository
+
+                JobInterviewService --> UploadResponsesController : successful operation
+            deactivate JobInterviewService
+
+            UploadResponsesController --> UploadResponsesUI : successful operation
+        deactivate UploadResponsesController
+
+        UploadResponsesUI --> CustomerManager : shows success message
+    deactivate UploadResponsesUI
+
+deactivate CustomerManager
+
+@enduml

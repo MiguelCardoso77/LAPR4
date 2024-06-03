@@ -76,7 +76,8 @@ public class VerificationRequirementsUI extends AbstractUI {
 
                     Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
 
-                    boolean result = requirementsPlugin.checkRequirements(path, clientRequirements);
+                    boolean result = verificationRequirementsController.pluginRequirements(path, clientRequirements);
+
                     Status statusFinal;
 
                     if (result) {

@@ -11,10 +11,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import plugin.requirements.RequirementsPlugin;
+
 
 public class VerificationRequirementsController {
 
     private final ApplicationService appServ = new ApplicationService();
+    private final RequirementsPlugin requirementsPlugin = new RequirementsPlugin();
+
 
 
     public Application findApplicationById(Application applicationID) {
@@ -110,6 +114,14 @@ public class VerificationRequirementsController {
         return candidateRequirementsMap;
 
 }
+
+
+        public boolean pluginRequirements ( String path , Map<String, String> clientRequirements) {
+
+         boolean status = requirementsPlugin.checkRequirements(path, clientRequirements);
+
+        return status;
+        }
 
 public List<String> listJobRequirements(JobRequirementsSpecification jobOpeningRequirement) {
 

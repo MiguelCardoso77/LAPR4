@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ApplicationTest {
-
     private Application application;
     private Rank rank;
     private Calendar createdOn;
@@ -97,6 +96,7 @@ class ApplicationTest {
     void testCandidateRequirements() {
         assertEquals(candidateRequirements, application.candidateRequirements());
     }
+
     @Test
     void testIdentity() {
         assertNotNull(application.identity());

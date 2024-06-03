@@ -255,32 +255,119 @@ To find out more details about the analysis and design of Application, Job Openi
 ## 3. Implementation
 
 Most of the implementation of this user story was done in the UI layer, in the `RankCandidatesForJobOpeningUI` class. The `doShow` method was implemented to allow the customer manager to rank the candidates for a job opening.
-The `RankCandidatesController` class is mainly used to access the repositories to retrieve and update data.
+The `RankCandidatesController` class is mainly used to access the services, to retrieve data and update it.
 
 ```java
     @Override
     protected boolean doShow() {
-        JobOpening selectedJob = selectJobOpening();
-        Application selectedApplication = selectApplication(selectedJob);
-        Score selectedInterview = getLastJobInterview(selectedApplication);
-
-        System.out.println(The score of the last interview for the selected application is " + selectedInterview);
-
-        if (selectedInterview == null) {
-            String response = Console.readLine("Do you still want to rank the application? (Yes/No): ");
-            if (!response.equalsIgnoreCase("yes")) {
-                return false;
-            }
+      JobOpening selectedJob = selectJobOpeningController.selectJobOpeningAnalysis();
+    
+      List<Application> applications = theController.findApplicationsForJobOpening(selectedJob);
+      if (applications.isEmpty()) {
+        System.out.println(ConsoleColors.RED + "No applications found for the selected job opening." + ConsoleColors.RESET);
+        return false;
+      }
+    
+      if (!RANK_ONLY_NOT_RANKED) {
+    
+        System.out.println("\n" + applications.size() + " applications will be ranked.");
+        for (Application application : applications) {
+          rankApplication(application, applications.size());
         }
-
-        int rank = Console.readInteger("Insert the new rank for this candidate: ");
-
-        updateRank(rank, selectedApplication);
-
-        return true;
+    
+      } else {
+    
+        List<Application> nonRankedApplications = theController.filterByNonRankedApplications(applications);
+    
+        if (nonRankedApplications.isEmpty()) {
+          System.out.println(ConsoleColors.RED + "No non-ranked applications found for the selected job opening." + ConsoleColors.RESET);
+          return false;
+        }
+    
+        System.out.println("\n" + applications.size() + " applications will be ranked.");
+        for (Application application : nonRankedApplications) {
+          rankApplication(application, applications.size());
+        }
+    
+      }
+    
+      theController.clearAssignedRanks();
+      return true;
     }
 ```
 
 ## 4. Testing
 
+The `Application` class is fully tested to ensure the rank and all other attributes are correctly updated and retrieved:
+
+```java
+    @Test
+    void testRank() {
+        assertEquals(rank, application.rank());
+    }
+
+    @Test
+    void testSubmissionDate() {
+        assertEquals(createdOn, application.submissionDate());
+    }
+
+    @Test
+    void testDataFile() {
+        assertEquals(applicationFiles, application.dataFile());
+    }
+
+    @Test
+    void testOperator() {
+        assertEquals(operator, application.operator());
+    }
+
+    @Test
+    void testCandidate() {
+        assertEquals(candidate, application.candidate());
+    }
+
+    @Test
+    void testJobReference() {
+        assertEquals(jobReference, application.jobReference());
+    }
+
+    @Test
+    void testCandidateRequirements() {
+        assertEquals(candidateRequirements, application.candidateRequirements());
+    }
+
+    @Test
+    void testIdentity() {
+        assertNotNull(application.identity());
+    }
+
+    @Test
+    void testStatus() {
+        application.changeStatus(Status.PENDING);
+        assertEquals(Status.PENDING, application.status());
+    }
+
+    @Test
+    void testUpdateRank() {
+        Rank newRank = new Rank("2");
+        application.updateRank(2);
+        assertEquals(newRank, application.rank());
+    }
+
+    @Test
+    void testChangeStatus() {
+        Status newStatus = Status.ACCEPTED;
+        application.changeStatus(newStatus);
+        assertEquals(newStatus, application.status());
+    }
+
+    @Test
+    void testUploadCandidateRequirements() {
+        CandidateRequirements newCandidateRequirements = new CandidateRequirements(Arrays.asList("Requirement3", "Requirement4"));
+        application.uploadCandidateRequirements(newCandidateRequirements);
+        assertEquals(newCandidateRequirements, application.candidateRequirements());
+    }
+```
+
 ## 5. Demonstration
+![demonstration.png](demonstration.png)

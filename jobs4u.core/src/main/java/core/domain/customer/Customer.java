@@ -131,9 +131,6 @@ public class Customer implements AggregateRoot<EmailAddress> {
      */
     @Override
     public String toString() {
-        return "Customer" +
-                 systemUser.toString() +
-                ", associated to " + company.toString() +
-                ", registered in the system by " + customerManager.toString();
+        return systemUser.name().toString();
     }
 }

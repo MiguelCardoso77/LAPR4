@@ -1,6 +1,7 @@
 package core.services;
 
 import core.domain.application.Application;
+import core.domain.interview.InterviewAnswers;
 import core.domain.interview.JobInterview;
 import core.domain.interview.JobInterviewBuilder;
 import core.domain.interview.Score;
@@ -53,19 +54,25 @@ public class JobInterviewService {
     /**
      * Updates the score for a specific job interview identified by its ID.
      *
-     * @param newScore          The new score to be set.
-     * @param interviewID       The ID of the job interview to be updated.
+     * @param newScore    The new score to be set.
+     * @param interviewID The ID of the job interview to be updated.
      * @return The updated job interview, or null if no job interview with the given ID is found.
      */
     @Transactional
-    public JobInterview updateInterviewScore(Score newScore, Integer interviewID){
+    public JobInterview updateInterviewScore(Score newScore, Integer interviewID) {
         JobInterview jobInterview = jobInterviewRepository.ofIdentity(interviewID).orElse(null);
-        if(jobInterview != null){
+        if (jobInterview != null) {
             jobInterview.updateScore(newScore);
             jobInterviewRepository.save(jobInterview);
             return jobInterview;
         }
         return null;
+    }
+
+    @Transactional
+    public JobInterview uploadResponses(InterviewAnswers interviewAnswers, JobInterview jobInterview) {
+        jobInterview.uploadInterviewAnswers(interviewAnswers);
+        return jobInterviewRepository.save(jobInterview);
     }
 
     public List<JobInterview> findInterviewsForApplication(Application application) {
@@ -78,6 +85,10 @@ public class JobInterviewService {
         }
 
         return interviews;
+    }
+
+    public JobInterview findById(int id) {
+        return jobInterviewRepository.ofIdentity(id).orElse(null);
     }
 
     /*public List<JobInterview> sortInterviewsDescending() {

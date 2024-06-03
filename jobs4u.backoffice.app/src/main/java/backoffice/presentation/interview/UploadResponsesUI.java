@@ -1,5 +1,6 @@
 package backoffice.presentation.interview;
 
+import console.presentation.utils.ConsoleColors;
 import core.application.controllers.UploadResponsesController;
 import core.domain.interview.JobInterview;
 import eapli.framework.io.util.Console;
@@ -25,7 +26,8 @@ public class UploadResponsesUI extends AbstractUI {
         String path = Console.readLine("\nEnter the path to the file with the responses: ");
         List<String> responses = theController.retrieveResponses(path);
 
-        System.out.println(theController.uploadResponses(responses, jobInterview));
+        theController.uploadResponses(responses, jobInterview);
+        System.out.println(ConsoleColors.GREEN + "Responses uploaded successfully!" + ConsoleColors.RESET);
 
         return true;
     }

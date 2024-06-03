@@ -2,8 +2,7 @@ package core.application.controllers;
 
 import core.domain.interview.InterviewAnswers;
 import core.domain.interview.JobInterview;
-import core.persistence.PersistenceContext;
-import core.repositories.JobInterviewRepository;
+import core.services.JobInterviewService;
 import eapli.framework.application.UseCaseController;
 import plugin.interviewModule.InterviewPlugin;
 
@@ -12,18 +11,15 @@ import java.util.List;
 
 @UseCaseController
 public class UploadResponsesController {
-    private final JobInterviewRepository jobInterviewRepository = PersistenceContext.repositories().jobInterviews();
+    private final JobInterviewService jobInterviewService = new JobInterviewService();
 
     public JobInterview findInterviewByID(int jobInterviewID) {
-        return jobInterviewRepository.ofIdentity(jobInterviewID).orElse(null);
+        return jobInterviewService.findById(jobInterviewID);
     }
 
-    public JobInterview uploadResponses(List<String> responses, JobInterview jobInterview) {
+    public void uploadResponses(List<String> responses, JobInterview jobInterview) {
         InterviewAnswers interviewAnswers = new InterviewAnswers(responses);
-
-        jobInterview.uploadInterviewAnswers(interviewAnswers);
-        System.out.println("\nResponses uploaded successfully!");
-        return jobInterviewRepository.save(jobInterview);
+        jobInterviewService.uploadResponses(interviewAnswers, jobInterview);
     }
 
     public List<String> retrieveResponses(String path) {
@@ -32,7 +28,7 @@ public class UploadResponsesController {
     }
 
     public List<JobInterview> findAllInterviewsWithModelAssigned() {
-        List<JobInterview> jobInterviews = (List<JobInterview>) jobInterviewRepository.allJobInterviews();
+        List<JobInterview> jobInterviews = (List<JobInterview>) jobInterviewService.allJobInterviews();
         List<JobInterview> availableInterviews = new ArrayList<>();
 
         for (JobInterview jobInterview : jobInterviews) {

@@ -1,0 +1,227 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
+
+Title "Class Diagram - Verifications of requirements"
+
+package "presentation" {
+    class VerificationRequirementsUI {
+        + doShow()
+        + headline()
+    }
+}
+
+package "application" {
+    class SelectJobOpeningController {
+        + selectJobOpening()
+        + selectJobOpeningAnalysis()
+        + selectorPart(list)
+    }
+
+    class ListJobOpeningApplicationsController {
+        + allApplicationsOfJobOpening(jobReference)
+        + showApplicationsOfJobOpening(jobReference)
+        + selectApplication()
+        + findJobOpening(jobReference)
+        + findApplicationByID(id)
+    }
+
+    class VerificationRequirementsController {
+        + mapCandidate(candidateRequirements)
+        + listJobRequirements(jobOpeningRequirement)
+    }
+
+    class ChangeJobInterviewStatusController {
+        + changeJobInterviewStatus( applicationStatus,  application)
+    }
+
+    class ListJobOpeningController {
+        + showJobOpenings()
+        + showJobOpeningsAnalysis()
+        + allJobOpenings()
+        + findJobOpeningByJobReference(jobReference)
+    }
+
+ }
+
+
+    package "grammar" {
+       class RequirementsPlugin{
+        + showJobOpenings()
+        + showJobOpeningsAnalysis()
+        + allJobOpenings()
+        + findJobOpeningByJobReference(jobReference)
+        }
+
+        class  RequirementsVisitor {
+            + RequirementsVisitor(cResponses)
+            + visitRequirementType(ctx)
+            + visitAcademicDegree( ctx)
+            + visitLanguages(ctx)
+            + visitProgrammingLanguages(ctx)
+            + visitYearsOfExperience(ctx)
+            + visitAcademicDegreeType(ctx)
+            + visitLanguagesType(ctx)
+            + visitProgrammingLanguagesType (ctx)
+            + visitYearsOfExperienceType (ctx)
+            + checkRequirements ()
+        }
+    }
+
+
+    package "services" {
+        class ApplicationService {
+            + registerApplication(rank, applicationFiles, jobReference, candidate, operator)
+            + findApplicationById(applicationID)
+            + allApplications()
+            + findApplicationsForJobOpening(jobOpening)
+            + updateRank(rank, application)
+            + applicationsByCM(cm)
+        }
+
+        class JobOpeningService {
+            + registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company)
+            + findJobOpening(jobReference)
+            + updateJobRequirements(jobReference, jobRequirementsSpecification)
+            + verifyJobReference(jobReference)
+            + allJobOpenings()
+        }
+
+        class JobInterviewService {
+            + registerJobInterview(createdOn, time, score, result, application)
+            + allJobInterviews()
+            + updateInterviewModel(interviewModelToChange, id)
+            + updateInterviewScore(newScore, interviewID)
+            + findInterviewsForApplication(application)
+        }
+      }
+
+
+        package "repositories" {
+            interface ApplicationRepository {
+                + allApplications()
+                + ofIdentity(applicationId)
+            }
+
+            interface JobOpeningRepository {
+                + allJobOpenings()
+                + ofIdentity(jobReference)
+            }
+
+            interface JobInterviewRepository {
+                + allInterviews()
+            }
+        }
+
+package "domain" {
+    class Application {
+        + Application(rank, createdOn, applicationFiles, jobReference, candidate, operator)
+        + sameAs(otherApplication)
+        + equals(otherApplication)
+        + hashCode()
+        + compareTo(otherApplication)
+        + identity()
+        + rank()
+        + submissionDate()
+        + status()
+        + dataFile()
+        + operator()
+        + candidate()
+        + jobReference()
+        + updateRank(rank)
+        + toString()
+    }
+
+    class JobOpening {
+        + JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, Company)
+        + identity()
+        + sameAs(otherJobOpening)
+        + jobReference()
+        + description()
+        + vacanciesNumber()
+        + address()
+        + mode()
+        + contractType()
+        + titleOrFunction()
+        + company()
+    }
+
+    class JobRequirementSpecification{
+        + JobRequirementsSpecification(id, jobRequirementsSpecificationFile)
+        + JobRequirementsSpecification(jobRequirementsSpecificationFile)
+        + JobRequirementsSpecification()
+        + equals (o)
+        + hashCode()
+        + sameAs(other)
+        + compareTo(other)
+        + jobRequirementsPath()
+        + identity()
+        + hasIdentity(idRequirements)
+        + toString()
+    }
+
+    class JobInterview {
+            + JobInterview(createdOn, time, score, result, application, interviewModel)
+            + identity()
+            + createdOn()
+            + time()
+            + score()
+            + result()
+            + application()
+            + interviewModel()
+            + changeInterviewModel(interviewModelToChange)
+            + hashCode()
+            + sameAs(otherObject)
+            + equals(jobInterview)
+        }
+
+VerificationRequirementsUI -> SelectJobOpeningController
+VerificationRequirementsUI --> ListJobOpeningApplicationsController
+VerificationRequirementsUI --> VerificationRequirementsController
+VerificationRequirementsUI ---> ChangeJobInterviewStatusController
+VerificationRequirementsUI -> RequirementsPlugin
+
+
+SelectJobOpeningController --> ListJobOpeningController
+
+ListJobOpeningApplicationsController -> JobOpeningService
+ListJobOpeningApplicationsController -> ApplicationService
+
+ChangeJobInterviewStatusController ---> ApplicationRepository
+
+RequirementsPlugin -> RequirementsVisitor
+
+JobOpeningService ----> JobOpeningRepository
+ApplicationService ----> ApplicationRepository
+JobInterviewService ----> JobInterviewRepository
+
+ApplicationRepository --> Application : stores
+JobOpeningRepository --> JobOpening : stores
+JobInterviewRepository --> JobInterview : stores
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+@enduml
+
+

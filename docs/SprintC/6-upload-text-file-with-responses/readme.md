@@ -85,6 +85,7 @@ pasta/diretório de um servidor.
 *  None to specify 
 
 ## 2. Analysis and Design
+The desing of this use case is based on the following domain model and class diagram:
 
 ### 2.1. Domain Model
 ![domain-model.svg](domain-model.svg)
@@ -94,30 +95,71 @@ pasta/diretório de um servidor.
 
 ## 3. Implementation
 
-These are the three methods code in the `UploadResponsesController` that are used by the UI for this use case.
+These are the methods coded into `UploadResponsesController` that are used by the UI for this use case.
 
 ```java
-    public List<String> readFile(String filePath) {
-        try {
-            return Files.readAllLines(Paths.get(filePath));
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
-            return null;
-        }
-    }
-
     public JobInterview findInterviewByID(int jobInterviewID) {
-        return jobInterviewRepository.ofIdentity(jobInterviewID).orElse(null);
+        return jobInterviewService.findById(jobInterviewID);
     }
-
-    public JobInterview uploadResponses(List<String> responses, JobInterview jobInterview) {
+    
+    public void uploadResponses(List<String> responses, JobInterview jobInterview) {
         InterviewAnswers interviewAnswers = new InterviewAnswers(responses);
-
-        jobInterview.uploadInterviewAnswers(interviewAnswers);
-        return jobInterviewRepository.save(jobInterview);
+        jobInterviewService.uploadResponses(interviewAnswers, jobInterview);
+    }
+    
+    public List<String> retrieveResponses(String path) {
+        InterviewPlugin plugin = new InterviewPlugin();
+        return plugin.retrieveAnswers(path);
+    }
+    
+    public List<JobInterview> findAllInterviewsWithModelAssigned() {
+        List<JobInterview> jobInterviews = (List<JobInterview>) jobInterviewService.allJobInterviews();
+        List<JobInterview> availableInterviews = new ArrayList<>();
+      
+        for (JobInterview jobInterview : jobInterviews) {
+            if (jobInterview.application().jobReference().myInterviewModel() != null) {
+                availableInterviews.add(jobInterview);
+            }
+        }
+      
+        return availableInterviews;
     }
 ```
 
 ## 4. Testing
 
+JUnit tests were implemented for the `InterviewAnswers` class to ensure that the class behaves as expected.
+
+```java
+    @BeforeEach
+    void setUp() {
+        answers = Arrays.asList("Answer 1", "Answer 2", "Answer 3");
+        interviewAnswers = new InterviewAnswers(answers);
+    }
+    
+    @Test
+    void testEquals() {
+        InterviewAnswers sameInterviewAnswers = new InterviewAnswers(answers);
+        assertEquals(interviewAnswers, sameInterviewAnswers);
+    }
+
+    @Test
+    void testHashCode() {
+        InterviewAnswers sameInterviewAnswers = new InterviewAnswers(answers);
+        assertEquals(interviewAnswers.hashCode(), sameInterviewAnswers.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        String expectedString = answers.toString();
+        assertEquals(expectedString, interviewAnswers.toString());
+    }
+
+    @Test
+    void testAnswersList() {
+        assertEquals(answers, interviewAnswers.answersList());
+    }
+```
+
 ## 5. Demonstration
+![demonstration.png](demonstration.png)

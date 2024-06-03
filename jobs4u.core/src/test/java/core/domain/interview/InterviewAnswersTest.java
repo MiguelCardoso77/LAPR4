@@ -21,7 +21,7 @@ class InterviewAnswersTest {
     @Test
     void testEquals() {
         InterviewAnswers sameInterviewAnswers = new InterviewAnswers(answers);
-        assertTrue(interviewAnswers.equals(sameInterviewAnswers));
+        assertEquals(interviewAnswers, sameInterviewAnswers);
     }
 
     @Test

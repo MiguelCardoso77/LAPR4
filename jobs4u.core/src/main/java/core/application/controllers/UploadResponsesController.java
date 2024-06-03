@@ -7,6 +7,7 @@ import core.repositories.JobInterviewRepository;
 import eapli.framework.application.UseCaseController;
 import plugin.interviewModule.InterviewPlugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @UseCaseController
@@ -28,5 +29,18 @@ public class UploadResponsesController {
     public List<String> retrieveResponses(String path) {
         InterviewPlugin plugin = new InterviewPlugin();
         return plugin.retrieveAnswers(path);
+    }
+
+    public List<JobInterview> findAllInterviewsWithModelAssigned() {
+        List<JobInterview> jobInterviews = (List<JobInterview>) jobInterviewRepository.allJobInterviews();
+        List<JobInterview> availableInterviews = new ArrayList<>();
+
+        for (JobInterview jobInterview : jobInterviews) {
+            if (jobInterview.application().jobReference().myInterviewModel() != null) {
+                availableInterviews.add(jobInterview);
+            }
+        }
+
+        return availableInterviews;
     }
 }

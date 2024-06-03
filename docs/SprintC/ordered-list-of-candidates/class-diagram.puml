@@ -7,7 +7,7 @@ skinparam class {
     FontSize 14
 }
 
-Title "Class Diagram - Register a candidate"
+Title "Class Diagram - Ordered list of candidates"
 
 package "presentation" {
     class OrderedListOfCandidatesUI {

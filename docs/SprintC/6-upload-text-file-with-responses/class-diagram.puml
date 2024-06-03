@@ -18,8 +18,24 @@ package "presentation" {
 
 package "application" {
     class UploadResponsesController {
-        + readFile(path)
+        + findAllInterviewsWithModelAssigned()
+        + retrieveResponses(path)
         + findInterviewByID(interviewID)
+        + uploadResponses(responses, jobInterview)
+    }
+}
+
+package "plugin" {
+    class InterviewPlugin {
+        + grammarChecker(path, cResponses)
+        + retrieveAnswers(path)
+    }
+}
+
+package "services" {
+    class JobInterviewService {
+        + findAllInterviewsWithModelAssigned()
+        + findJobInterviewById(jobInterviewId)
         + uploadResponses(responses, jobInterview)
     }
 }
@@ -109,7 +125,10 @@ package "domain" {
 
 UploadResponsesUI --> UploadResponsesController
 
-UploadResponsesController --> JobInterviewRepository
+UploadResponsesController --> JobInterviewService
+UploadResponsesController -> InterviewPlugin
+
+JobInterviewService --> JobInterviewRepository
 
 JobInterviewRepository --> JobInterview : stores
 

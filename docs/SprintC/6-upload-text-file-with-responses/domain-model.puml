@@ -82,20 +82,92 @@ entity InterviewModel <<entity>><<root>>
 
 }
 
-package "ANTLR Service Aggregate"{
-    entity ANTLR <<entity>><<root>>
+package "Job Opening Aggregate"{
+entity JobOpening <<entity>><<root>>
+
+    card JobReference <<Value Object>> {
+    }
+    card TitleOrFunction <<Value Object>> {
+    }
+    card ContractType <<Value Object>> {
+    }
+    card Mode <<Value Object>> {
+    }
+    card Address <<Value Object>> {
+    }
+    card VacanciesNumber <<Value Object>> {
+    }
+    card Description <<Value Object>> {
+    }
+    card ActiveSince <<Value Object>>{
+    }
+
+    JobOpening --> JobReference
+    JobOpening --> TitleOrFunction
+    JobOpening --> ContractType
+    JobOpening --> Mode
+    JobOpening --> Address
+    JobOpening --> VacanciesNumber
+    JobOpening --> Description
+    JobOpening --> ActiveSince
+
+    note right of ContractType
+        Can be one of the following:
+        - full-time
+        - part-time
+    end note
+
+    note right of Mode
+         Can be one of the following:
+         - remote
+         - hybrid
+         - onsite
+    end note
 
 }
 
-package "Language Engineer Aggregate"{
-entity LanguageEngineer <<entity>><<root>>
+package "Application Aggregate"{
+entity Application <<entity>><<root>>
+
+    card ApplicationFiles <<Value Object>>{
+    }
+    card Status <<Value Object>>{
+    }
+    card SubmissionDate <<Value Object>>{
+    }
+    card Rank <<Value Object>>{
+    }
+
+    Application --> ApplicationFiles
+    Application --> Status
+    Application --> SubmissionDate
+    Application --> Rank
+
+    note right of Status
+        Can be one of the following:
+        - submitted
+        - pending
+        - accepted
+        - declined
+    end note
+
+    note right of ApplicationFiles
+        Can be one of the following:
+        - text file with the contents of the email
+        - file for each file attached to the email
+        - text file with the contents of each file attached to the email
+        - text file with the data of the application and candidate
+    end note
 
 }
 
-Candidate ----> User
-InterviewModel "1" <--- "N" JobInterview : uses
-ANTLR ---> InterviewModel : processes
-LanguageEngineer "1" ---> "N" InterviewModel : creates
-LanguageEngineer ---> User
+JobOpening "1" <-- "N " Application : has
+Application "N" --> "1" Candidate
+Application "1" <-- "1" JobInterview
+User "1" ---> "N" JobOpening : Customer Manager manages >
+User "1" ---> "N" Application : Operator registers >
+User "1" --> "N" InterviewModel : Language Engineer creates >
+InterviewModel "1" <--- "N" JobOpening : uses
+Candidate --> User
 
 @enduml

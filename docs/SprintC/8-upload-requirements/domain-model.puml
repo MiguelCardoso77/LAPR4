@@ -98,11 +98,6 @@ entity Application <<entity>><<root>>
 
 }
 
-package "Operator Aggregate"{
-    entity Operator <<entity>><<root>>
-
-}
-
 package "Job Requirements Specification Aggregate"{
 entity JobRequirementsSpecification <<entity>><<root>>
 
@@ -111,7 +106,6 @@ entity JobRequirementsSpecification <<entity>><<root>>
     JobRequirementsSpecification --> Requirements
 
 }
-
 
 package "Candidate Aggregate"{
 entity Candidate <<entity>><<root>>
@@ -125,9 +119,9 @@ entity Candidate <<entity>><<root>>
     Candidate --> TelephoneNumber
 }
 
+
     JobOpening "1" <-- "N " Application : has
     JobRequirementsSpecification "1" <-- "N" JobOpening : associated
-    Operator "1" --> "N" Application : registers
     Application "N" --> "1" Candidate
 
 

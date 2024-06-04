@@ -19,7 +19,7 @@ participant Application <<application>>
 
 activate Operator
 
-    Operator -> UploadRequirementsAnswersUI : asks to upload candidate requirements
+    Operator -> UploadRequirementsAnswersUI : asks to upload the requirements of and candidate
     activate UploadRequirementsAnswersUI
 
         UploadRequirementsAnswersUI -> GenerateRequirementsAnswersTemplateController : findAllJobOpeningsWithJobRequirements()
@@ -34,24 +34,23 @@ activate Operator
                     JobOpeningService -> JobOpeningRepository : findAll()
                     activate JobOpeningRepository
 
-                        JobOpeningRepository --> JobOpeningService : allJobOpenings
+                        JobOpeningRepository --> JobOpeningService : all Job Openings
                     deactivate JobOpeningRepository
 
-                    JobOpeningService --> ListJobOpeningController : allJobOpenings
+                    JobOpeningService --> ListJobOpeningController : all Job Openings
                 deactivate JobOpeningService
 
-                ListJobOpeningController -> GenerateRequirementsAnswersTemplateController : allJobOpenings
+                ListJobOpeningController -> GenerateRequirementsAnswersTemplateController : all Job Openings
             deactivate ListJobOpeningController
 
-            GenerateRequirementsAnswersTemplateController --> UploadRequirementsAnswersUI : jobOpeningsWithRequirements
+            GenerateRequirementsAnswersTemplateController --> UploadRequirementsAnswersUI : job Openings With Requirements
         deactivate GenerateRequirementsAnswersTemplateController
 
-        UploadRequirementsAnswersUI --> Operator : lists job Openings With Requirements  \n and asks to select one
+        UploadRequirementsAnswersUI --> Operator : lists job openings with requirements \n and asks to select one
     deactivate UploadRequirementsAnswersUI
 
     Operator -> UploadRequirementsAnswersUI : selects job Opening
     activate UploadRequirementsAnswersUI
-
 
         UploadRequirementsAnswersUI -> ListJobOpeningApplicationsController : showApplicationsOfJobOpening(jobReference)
         activate ListJobOpeningApplicationsController
@@ -68,14 +67,14 @@ activate Operator
                         ApplicationRepository --> ApplicationService : allApplications
                     deactivate ApplicationRepository
 
-                    ApplicationService --> ListJobOpeningApplicationsController : allApplicationsOfJobOpening
+                    ApplicationService --> ListJobOpeningApplicationsController : all Applications Of Job Opening
                 deactivate ApplicationService
             deactivate ListJobOpeningApplicationsController
 
-            ListJobOpeningApplicationsController --> UploadRequirementsAnswersUI : applicationsOfJobOpening
+            ListJobOpeningApplicationsController --> UploadRequirementsAnswersUI : applications Of Job Opening
         deactivate ListJobOpeningApplicationsController
 
-        UploadRequirementsAnswersUI --> Operator : lists applications of job opening \n and asks to select one
+        UploadRequirementsAnswersUI --> Operator : lists applications of that job opening \n and asks to select one
     deactivate UploadRequirementsAnswersUI
 
     Operator -> UploadRequirementsAnswersUI : selects application
@@ -90,7 +89,7 @@ activate Operator
         UploadRequirementsAnswersUI -> UploadRequirementsAnswersController : readFile(path)
         activate UploadRequirementsAnswersController
 
-            UploadRequirementsAnswersController --> UploadRequirementsAnswersUI : listOfRequirements
+            UploadRequirementsAnswersController --> UploadRequirementsAnswersUI : list Of Requirements
         deactivate UploadRequirementsAnswersController
 
         UploadRequirementsAnswersUI -> UploadRequirementsAnswersController : uploadRequirements(candidateRequirements, application)
@@ -99,7 +98,7 @@ activate Operator
             UploadRequirementsAnswersController -> CandidateRequirements** : new CandidateRequirements(requirements)
             activate CandidateRequirements
 
-                CandidateRequirements --> UploadRequirementsAnswersController : candidateRequirements
+                CandidateRequirements --> UploadRequirementsAnswersController : candidate Requirements
             deactivate CandidateRequirements
 
             UploadRequirementsAnswersController -> Application : uploadCandidateRequirements(candidateRequirements)

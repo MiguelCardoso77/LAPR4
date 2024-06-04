@@ -49,7 +49,7 @@ public class MostReferencedWordsController {
             String[] words = line.split("\\s+");
 
             for (String word : words) {
-                if (!word.isEmpty()) {
+                if (!word.isEmpty() && isWord(word)) {
                     word = word.toLowerCase();
                     wordsCounter.put(word, wordsCounter.getOrDefault(word, 0) + 1);
                 }
@@ -57,6 +57,10 @@ public class MostReferencedWordsController {
         }
 
         return wordsCounter;
+    }
+
+    private boolean isWord(String possibleWord) {
+        return possibleWord.matches("^[a-zA-Z]+$");
     }
 
     private List<String> readFile(File file) {

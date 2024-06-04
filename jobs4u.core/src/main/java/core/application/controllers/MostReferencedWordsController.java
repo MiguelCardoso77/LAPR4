@@ -24,6 +24,7 @@ public class MostReferencedWordsController {
 
     public Map<String, Integer> findMostReferencedWords(List<File> candidateFiles) {
         Map<String, Integer> totalWordCount = new HashMap<>();
+        List<Thread> threads = new ArrayList<>();
 
         for (File file : candidateFiles) {
 
@@ -31,12 +32,23 @@ public class MostReferencedWordsController {
                 List<String> fileLines = readFile(file);
                 Map<String, Integer> wordCount = countWordsFile(fileLines);
 
-                for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
-                    totalWordCount.merge(entry.getKey(), entry.getValue(), Integer::sum);
+                synchronized (totalWordCount) {
+                    for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
+                        totalWordCount.merge(entry.getKey(), entry.getValue(), Integer::sum);
+                    }
                 }
             });
 
+            threads.add(thread);
             thread.start();
+        }
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                LOGGER.error("Thread interrupted while waiting for completion", e);
+            }
         }
 
         return sortMap(totalWordCount);

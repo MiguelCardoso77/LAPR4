@@ -11,6 +11,8 @@ participant EmailService <<service>>
 
 database ApplicationRepository <<repository>>
 
+participant Jobs4UProtocol <<protocol>>
+
 activate CustomerManager
 
     CustomerManager -> NotifyCandidatesUI : asks to rank candidates
@@ -69,18 +71,41 @@ end loop
 
             NotifyCandidatesController -> EmailService : sendAllEmails(emailsToSend)
             activate EmailService
-                note right
-                    send through follow up server
-                end note
-                EmailService --> NotifyCandidatesController : successfull operation
-            deactivate EmailService
 
-            NotifyCandidatesController --> NotifyCandidatesUI : successfull operation
-        deactivate NotifyCandidatesController
+note right of EmailService
+All emails are sent through the FollowUpServer
+which is accessed through the Jobs4UProtocol
+end note
+                EmailService -> Jobs4UProtocol : sendEmail(toWho, subject, body)
+
+                activate Jobs4UProtocol
+
+alt return is ACK code
+
+        Jobs4UProtocol --> EmailService : successfull operation
+
+        EmailService --> NotifyCandidatesController : successfull operation
+
+        NotifyCandidatesController --> NotifyCandidatesUI : successfull operation
 
         NotifyCandidatesUI --> CustomerManager : shows operation success
+
+else return is ERR code
+
+                    Jobs4UProtocol --> EmailService : could not send emails
+                deactivate Jobs4UProtocol
+
+                EmailService --> NotifyCandidatesController : could not send emails
+            deactivate EmailService
+
+            NotifyCandidatesController --> NotifyCandidatesUI : could not send emails
+        deactivate NotifyCandidatesController
+
+        NotifyCandidatesUI --> CustomerManager : shows operation error
     deactivate NotifyCandidatesUI
 
 deactivate CustomerManager
+
+end alt
 
 @enduml

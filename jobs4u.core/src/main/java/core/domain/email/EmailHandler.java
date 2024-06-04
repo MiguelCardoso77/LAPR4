@@ -1,5 +1,8 @@
 package core.domain.email;
 
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 public class EmailHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailHandler.class);
@@ -58,23 +59,27 @@ public class EmailHandler {
     /**
      * Send email boolean.
      *
-     * @param dest    the dest
+     * @param toWho   the dest
      * @param subject the subject
-     * @param content the content
+     * @param body    the body
      * @return the boolean
      */
-    public boolean sendEmail(String dest, String subject, String content) {
+    public boolean sendEmail(String toWho, String subject, String body) {
         try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(username));
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(dest));
-            msg.setSubject(subject);
-            msg.setText(content);
-            Transport.send(msg);
+            Email email = new SimpleEmail();
+            email.setHostName("frodo.dei.isep.ipp.pt");
+            email.setSmtpPort(25);
+            email.setSSLOnConnect(false);
+            email.setFrom("sem4pi2dd5@outlook.pt", "Jobs4U Customer Manager");
+            email.setSubject(subject);
+            email.setMsg(body);
+            email.addTo(toWho);
+            email.send();
+
             return true;
-        } catch (MessagingException e) {
-            LOGGER.error("Error sending email: {}", e.getMessage());
-            return false;
+        } catch (EmailException e) {
+            LOGGER.error("Error sending email", e);
+            throw new RuntimeException(e);
         }
 
     }

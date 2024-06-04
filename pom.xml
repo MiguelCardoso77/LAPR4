@@ -45,6 +45,13 @@
             <version>1.6.2</version>
         </dependency>
 
+        <!-- Commons Email -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
+        </dependency>
+
         <!-- keep junit4 engine for now -->
         <dependency>
             <groupId>org.junit.vintage</groupId>

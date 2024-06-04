@@ -133,6 +133,7 @@ does not invalidate the “results” of the verification process.
 ![domain-model.svg](domain-model.svg)
 
 ### 2.2. Class Diagram
+![class-diagram.svg](class-diagram.svg)
 
 ## 3. Implementation
 

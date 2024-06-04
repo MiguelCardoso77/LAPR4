@@ -13,7 +13,7 @@ import java.util.List;
 public class CandidateApplicationsService {
     ApplicationService applicationService = new ApplicationService();
 
-    public void requestApplications(String email) {
+    public List<Application> requestApplications(String email) {
         try {
             Socket socket = new Socket("127.0.0.1", 2005);
             DataInputStream inData = new DataInputStream(socket.getInputStream());
@@ -43,16 +43,14 @@ public class CandidateApplicationsService {
                             applications.add(application1);
                         }
                     }
+
                 } else {
-                    System.out.println("Invalid entry: " + entry);
+                    System.out.println("You don't have any applications! ");
                 }
             }
-            System.out.printf("%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status", "Job Reference");
-            for (Application applicationCandidate : applications) {
-                System.out.printf("%-30s%-30s%-30s%-30s%n", applicationCandidate.identity(), applicationCandidate.rank(), applicationCandidate.status().name(), applicationCandidate.jobReference().jobReference());
-            }
-
             socket.close();
+            return applications;
+
         } catch (
                 IOException e) {
             throw new RuntimeException(e);

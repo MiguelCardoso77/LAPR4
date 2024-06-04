@@ -121,6 +121,7 @@ does not invalidate the “results” of the verification process.
 ![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ### 1.7. Sequence Diagram (SD)
+![sequence-diagram.svg](sequence-diagram.svg)
 
 ### 1.8 Other Relevant Remarks
 

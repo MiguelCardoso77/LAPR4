@@ -1,0 +1,69 @@
+@startuml
+autonumber
+
+actor Candidate
+
+participant ListCandidateApplicationsUI <<presentation>>
+participant ListCandidateApplicationsController <<controller>>
+participant CandidateApplicationsService <<service>>
+participant Jobs4UProtocol <<protocol>>
+participant ApplicationService <<service>>
+database ApplicationRepository <<repository>>
+participant Application <<application>>
+
+activate Candidate
+
+    Candidate -> ListCandidateApplicationsUI : asks to list all applications of candidate
+    activate ListCandidateApplicationsUI
+
+        ListCandidateApplicationsUI -> ListCandidateApplicationsController : sendApplicationsRequest(email)
+        activate ListCandidateApplicationsController
+
+            ListCandidateApplicationsController -> CandidateApplicationsService : requestApplications(email)
+            activate CandidateApplicationsService
+
+                CandidateApplicationsService -> Jobs4UProtocol : sendApplications(email)
+                activate Jobs4UProtocol
+
+                    Jobs4UProtocol --> CandidateApplicationsService : list of all applications of a candidate \n and operation success
+                deactivate Jobs4UProtocol
+
+                CandidateApplicationsService -> ApplicationService : allApplications()
+                activate ApplicationService
+
+                    ApplicationService -> ApplicationRepository : allApplications()
+                    activate ApplicationRepository
+
+                        ApplicationRepository --> ApplicationService : all applications
+                    deactivate ApplicationRepository
+
+                    ApplicationService --> CandidateApplicationsService : all applications
+                deactivate ApplicationService
+
+                loop for each application on the list
+
+                CandidateApplicationsService -> Application : identity()
+                activate Application
+
+                    Application --> CandidateApplicationsService : Integer id
+                deactivate Application
+
+                CandidateApplicationsService -> Application : equals(id)
+                activate Application
+
+                    Application --> CandidateApplicationsService : return true
+                deactivate Application
+                end loop
+
+                CandidateApplicationsService --> ListCandidateApplicationsController : List<Application> applications
+            deactivate CandidateApplicationsService
+
+            ListCandidateApplicationsController --> ListCandidateApplicationsUI : List<Application> applications
+        deactivate ListCandidateApplicationsController
+
+        ListCandidateApplicationsUI --> Candidate :lists all applications of candidate \n and displays operation success
+    deactivate ListCandidateApplicationsUI
+
+deactivate Candidate
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Upload Candidate Requirements
+
+autonumber
+
+actor Candidate as CA
+participant ":System" as System
+
+activate CA
+
+    CA -> System : asks to list all applications of candidate
+    activate System
+
+       System --> CA : lists all applications of candidate \n and displays operation success
+
+    deactivate System
+
+deactivate CA
+
+@enduml

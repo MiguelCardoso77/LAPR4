@@ -22,7 +22,7 @@ activate CMAN
     CMAN -> System : selects job opening
     activate System
 
-        System --> CMAN : show job interviews of applications of the selected job opening and ordered by grades
+        System --> CMAN : show candidates for the selected job opening and ordered by grades
     deactivate System
 
 deactivate CMAN

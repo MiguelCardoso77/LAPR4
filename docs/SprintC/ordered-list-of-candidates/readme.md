@@ -35,12 +35,18 @@ As Customer Manager, I want to get an ordered list of candidates, using the job 
 
 ### 1.3. Acceptance Criteria
 
+> **AC1:**
+> The costumer manager should select the job opening for which he wants the list of candidates.
 
 ### 1.4. Found out Dependencies
 
-* As a Project Manager, I want the system to support and apply authentication and authorization for all its users and functionalities.
-*  As Customer Manager, I want to register a job opening.
-* As Operator, I want to register an application of a candidate for a job opening and import all files received.
+[Register a candidate](..%2F..%2FSprintB%2Fregister-a-candidate)
+
+[Register a job opening](..%2F..%2FSprintB%2Fadd-jobOpening)
+
+[Register an application](..%2F..%2FSprintB%2Fregister-an-application)
+
+
 
 ### 1.5. Input and Output Data
 
@@ -48,17 +54,12 @@ As Customer Manager, I want to get an ordered list of candidates, using the job 
 
     * Job Opening
 
-**Input Data:**
-
-    * None
 **Output Data:**
 
-    * List of candidates
+    * List of candidates ordered by score
 
 
-### 1.8 Other Relevant Remarks
 
-*  None to specify 
 
 ## 2. Analysis and Design
 
@@ -100,15 +101,6 @@ The `OrderedListOfCandidatesController` class is mainly used to order by grade a
   return true;
 }
 ```
-
-
-## 5. Demonstration
-
-    * Demonstration with interviews
-![implementation_with_interview](with_interview.png)
-
-    * Demonstration with no interviews
-  ![implementation_with_interview](no_interviews.png)
 
 
 

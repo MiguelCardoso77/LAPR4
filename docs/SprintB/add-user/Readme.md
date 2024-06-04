@@ -32,7 +32,7 @@ As Administrator, I want to be able to register, disable/enable, and list users 
 
 ## 1.7. Sequence Diagram (SD)
 
-![sequence-diagram-overview.svg](sequence-diagram-activateUser.svg)
+![sequence-diagram-overview.svg](sequence-diagram-addUser.svg)
 
 ## 1.8 Other Relevant Remarks
 

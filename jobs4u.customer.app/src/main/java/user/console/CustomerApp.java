@@ -25,7 +25,7 @@ import java.util.List;
 @SuppressWarnings("squid:S106")
 public final class CustomerApp {
 
-    private static final int PORT = 1010;
+    private static final int PORT = 2005;
 
     /**
      * Private constructor to prevent instantiation of this class.

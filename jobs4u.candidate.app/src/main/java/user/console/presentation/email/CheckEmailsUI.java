@@ -15,7 +15,7 @@ public class CheckEmailsUI extends AbstractUI {
         System.out.println("Checking the most recent emails...\n");
 
         try {
-            Socket sock = new Socket("127.0.0.1", 1010);
+            Socket sock = new Socket("127.0.0.1", 2005);
 
             ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
             List<Email> messages = (List<Email>) ois.readObject();

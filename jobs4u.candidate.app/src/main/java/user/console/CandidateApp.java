@@ -16,7 +16,6 @@ import java.io.IOException;
  */
 @SuppressWarnings("squid:S106")
 public final class CandidateApp {
-    private static final int PORT = 1010;
 
     /**
      * Private constructor to prevent instantiation of this class.

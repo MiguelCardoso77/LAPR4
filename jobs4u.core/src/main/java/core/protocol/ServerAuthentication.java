@@ -7,7 +7,7 @@ import java.net.Socket;
 public class ServerAuthentication {
     public boolean authenticateCandidate(String email, String password) {
         try {
-            Socket socket = new Socket("127.0.0.1", 1010);
+            Socket socket = new Socket("127.0.0.1", 2005);
             DataInputStream inData = new DataInputStream(socket.getInputStream());
 
             Jobs4UProtocol protocol = new Jobs4UProtocol(socket);

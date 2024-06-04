@@ -11,34 +11,34 @@ import infrastructure.AppSettings;
 import java.io.IOException;
 
 public class FollowUpServer {
-    private static final int PORT = 1010;
+    private static final int PORT = 2005;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         try {
             Server server = new Server(PORT);
-            init();
+            startServer();
 
             Thread serverThread = new Thread(server);
-            serverThread.setDaemon(true); //ver para q serve
+            serverThread.setDaemon(true);
             serverThread.start();
 
             Console.readLine("To stop the server press 'ENTER'...");
 
             server.stop();
-            stop(serverThread);
+            stopServer(serverThread);
         } catch (IOException e) {
             System.out.println("Could not bind to port " + PORT);
             System.out.println("Exiting the application...");
         }
     }
 
-    public static void init() {
-        System.out.println("Initializing server...");
+    public static void startServer() {
+        System.out.println("Starting Follow-Up Server...");
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new AppSettings();
     }
 
-    public static void stop(Thread thread) {
+    public static void stopServer(Thread thread) {
         thread.interrupt();
     }
 }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class DataChunk implements Serializable {
     private UnsignedInteger dataLengthL;
     private UnsignedInteger dataLenghtM;
-    private byte[] data;
+    private final byte[] data;
 
     public DataChunk(UnsignedInteger dataLengthL, UnsignedInteger dataLenghtM, byte[] data) {
         this.dataLengthL = dataLengthL;

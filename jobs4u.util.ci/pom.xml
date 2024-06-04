@@ -60,8 +60,18 @@
             <artifactId>jobs4u.customer.app</artifactId>
         </dependency>
         <dependency>
+            <groupId>followUp</groupId>
+            <artifactId>jobs4u.follow.up.server</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
             <groupId>infrastructure</groupId>
             <artifactId>jobs4u.infrastructure</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>plugin</groupId>
+            <artifactId>jobs4u.plugin</artifactId>
             <version>0.1.0</version>
         </dependency>
         <dependency>

@@ -16,16 +16,10 @@ activate CM
     activate System
 
 
-       System --> CM : lists job opening and asks to select one
+       System --> CM : shows job opening status and asks if it wants to change
     deactivate System
 
-    CM -> System : selects job opening
-    activate System
-
-        System --> CM : lists current phase for the selected job opening \n and asks to move back actor forward
-    deactivate System
-
-    CM -> System : selects option
+    CM -> System : selects if it wants to go back for forward
     activate System
 
         System --> CM : displays updated phase for the job opening \n and operation sucess

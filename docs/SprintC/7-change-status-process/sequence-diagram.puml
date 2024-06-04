@@ -31,24 +31,44 @@ activate CustomerManager
                     JobOpeningService -> JobOpeningRepository : findAll()
                     activate JobOpeningRepository
 
-                        JobOpeningRepository --> JobOpeningService : jobOpenings
+                        JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
                     deactivate JobOpeningRepository
 
-                    JobOpeningService --> ListJobOpeningController : jobOpenings
+                    JobOpeningService --> ListJobOpeningController : Iterable<JobOpening> jobOpenings
                 deactivate JobOpeningService
 
-                ListJobOpeningController --> SelectJobOpeningController : jobOpenings
+                ListJobOpeningController --> SelectJobOpeningController : Iterable<JobOpening> jobOpenings
             deactivate ListJobOpeningController
 
             SelectJobOpeningController -> SelectJobOpeningController : selectorPart(List<JobOpening> list)
+            activate SelectJobOpeningController
 
-            SelectJobOpeningController --> ChangeProcessStatusUI : jobOpening
+                SelectJobOpeningController -> ListJobOpeningController : findJobOpeningByJobReference(jobReference)
+                activate ListJobOpeningController
+
+                    ListJobOpeningController -> JobOpeningService : findJobOpening(jobReference)
+                    activate JobOpeningService
+
+                        JobOpeningService -> JobOpeningRepository : findAll()
+                        activate JobOpeningRepository
+
+                            JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
+                        deactivate JobOpeningRepository
+
+                        JobOpeningService --> ListJobOpeningController : job opening
+                    deactivate JobOpeningService
+
+                    ListJobOpeningController --> SelectJobOpeningController : job opening
+                deactivate ListJobOpeningController
+            deactivate SelectJobOpeningController
+
+            SelectJobOpeningController --> ChangeProcessStatusUI : job Opening
         deactivate SelectJobOpeningController
 
-        ChangeProcessStatusUI -> CustomerManager : shows job opening status \nand asks if wants to change
+        ChangeProcessStatusUI -> CustomerManager : shows job opening status \nand asks if it wants to change
     deactivate ChangeProcessStatusUI
 
-    CustomerManager -> ChangeProcessStatusUI : selects if wants to go back or forward
+    CustomerManager -> ChangeProcessStatusUI : selects if it wants to go back or forward
     activate ChangeProcessStatusUI
 
         ChangeProcessStatusUI -> ChangeProcessStatusController : changeProcessStatus(processStatus,process);

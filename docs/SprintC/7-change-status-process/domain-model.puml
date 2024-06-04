@@ -102,12 +102,6 @@ entity Process <<entity>><<root>>
     end note
 }
 
-package "Customer Manager Aggregate"{
-entity CustomerManager <<entity>><<root>>
-
-}
-
     JobOpening  --> Process
-    CustomerManager "1" ---> "N" JobOpening : manages
 
 @enduml

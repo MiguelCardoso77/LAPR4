@@ -20,7 +20,7 @@ public class CallResponder extends Handler {
     }
 
     @Override
-    public void handle() {
+    public void startHandler() {
         System.out.println("Connection established!");
 
         try {

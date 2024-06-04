@@ -104,8 +104,8 @@ class ApplicationTest {
 
     @Test
     void testStatus() {
-        application.changeStatus(Status.PENDING);
-        assertEquals(Status.PENDING, application.status()); // assuming the initial status is PENDING
+        application.changeStatus(Status.CHOSEN);
+        assertEquals(Status.CHOSEN, application.status()); // assuming the initial status is PENDING
     }
 
     @Test

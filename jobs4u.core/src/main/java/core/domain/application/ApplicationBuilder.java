@@ -46,7 +46,7 @@ public class ApplicationBuilder implements DomainFactory<Application> {
                                       final JobOpening jobReference , final Candidate telephoneNumber, final SystemUser operator) {
         this.rank = rank;
         this.submissionDate = Calendar.getInstance();
-        this.status = Status.SUBMITTED;
+        this.status = Status.RECEIVED;
         this.applicationFiles = applicationFiles;
         this.jobReference = jobReference;
         this.telephoneNumber = telephoneNumber;

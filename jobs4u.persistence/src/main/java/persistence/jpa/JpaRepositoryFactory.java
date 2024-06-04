@@ -122,6 +122,15 @@ public class JpaRepositoryFactory implements RepositoryFactory {
         return new JpaProcessRepository(Application.settings().getPersistenceUnitName());
     }
 
+    @Override
+    public NotificationRepository notifications(TransactionalContext autoTx) {
+        return new JpaNotificationRepository(autoTx);
+    }
+
+    @Override
+    public NotificationRepository notifications() {
+        return new JpaNotificationRepository(Application.settings().getPersistenceUnitName());
+    }
 
 
 }

@@ -13,10 +13,8 @@ import eapli.framework.domain.model.ValueObject;
  * @author Tomás Gonçalves
  */
 public enum Status implements ValueObject {
-    SUBMITTED,
-    PENDING,
+    RECEIVED,
+    CHOSEN,
     ACCEPTED,
-    DECLINED
+    DECLINED,
 }
-
-

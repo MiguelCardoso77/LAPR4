@@ -8,14 +8,14 @@ public class StatusTest {
 
     @Test
     public void testSubmitted() {
-        Status status = Status.SUBMITTED;
-        assertEquals("SUBMITTED", status.toString());
+        Status status = Status.RECEIVED;
+        assertEquals("RECEIVED", status.toString());
     }
 
     @Test
     public void testPending() {
-        Status status = Status.PENDING;
-        assertEquals("PENDING", status.toString());
+        Status status = Status.CHOSEN;
+        assertEquals("CHOSEN", status.toString());
     }
 
     @Test

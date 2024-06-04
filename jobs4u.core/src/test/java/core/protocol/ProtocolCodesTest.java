@@ -38,7 +38,7 @@ class ProtocolCodesTest {
 
     @Test
     void testListApplicationsCode() {
-        assertEquals((byte) 6, ProtocolCodes.LIST_APPLICATIONS.code());
+        assertEquals((byte) 6, ProtocolCodes.APPLICATIONS.code());
     }
 
     @Test

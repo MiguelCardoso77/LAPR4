@@ -230,8 +230,6 @@ public class Application implements AggregateRoot<Integer> {
         this.status = status;
     }
 
-
-
     /**
      * Generates a string representation of this application.
      *

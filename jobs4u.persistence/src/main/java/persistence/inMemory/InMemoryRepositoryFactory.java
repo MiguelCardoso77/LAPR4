@@ -122,4 +122,14 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return null;
     }
 
+    @Override
+    public NotificationRepository notifications(TransactionalContext autoTx) {
+        return new InMemoryNotificationRepository();
+    }
+
+    @Override
+    public NotificationRepository notifications() {
+        return null;
+    }
+
 }

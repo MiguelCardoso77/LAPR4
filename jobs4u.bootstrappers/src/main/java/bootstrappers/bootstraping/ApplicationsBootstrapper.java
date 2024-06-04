@@ -67,11 +67,11 @@ public class ApplicationsBootstrapper implements Action {
         changeApplicationStatus(applications.get(0), Status.ACCEPTED);
         changeApplicationStatus(applications.get(1), Status.DECLINED);
         changeApplicationStatus(applications.get(2), Status.ACCEPTED);
-        changeApplicationStatus(applications.get(3), Status.PENDING);
-        changeApplicationStatus(applications.get(4), Status.PENDING);
-        changeApplicationStatus(applications.get(5), Status.PENDING);
-        changeApplicationStatus(applications.get(6), Status.SUBMITTED);
-        changeApplicationStatus(applications.get(7), Status.SUBMITTED);
+        changeApplicationStatus(applications.get(3), Status.CHOSEN);
+        changeApplicationStatus(applications.get(4), Status.CHOSEN);
+        changeApplicationStatus(applications.get(5), Status.CHOSEN);
+        changeApplicationStatus(applications.get(6), Status.RECEIVED);
+        changeApplicationStatus(applications.get(7), Status.RECEIVED);
 
         return true;
     }

@@ -1,0 +1,124 @@
+@startuml
+autonumber
+
+actor CustomerManager
+
+participant VerificationRequirementsUI <<presentation>>
+
+
+participant SelectJobOpeningController <<controller>>
+participant ListJobOpeningController <<controller>>
+participant ListJobOpeningApplicationsController <<controller>>
+participant VerificationRequirementsController <<controller>>
+participant ChangeJobInterviewStatusController <<controller>>
+participant ListJobOpeningController <<controller>>
+
+participant JobOpeningService <<service>>
+participant ApplicationService <<service>>
+participant JobInterviewService <<service>>
+
+database JobOpeningRepository <<repository>>
+database ApplicationRepository <<repository>>
+database JobInterviewRepository <<repository>>
+
+activate CustomerManager
+
+        CustomerManager -> VerificationRequirementsUI : asks to verify requirements of applications for a job opening
+
+        activate VerificationRequirementsUI
+
+        VerificationRequirementsUI -> SelectJobOpeningController : selectJobOpening()
+
+        activate SelectJobOpeningController
+
+
+
+            SelectJobOpeningController --> JobOpeningService : allJobOpenings()
+
+        activate JobOpeningService
+
+        JobOpeningService -> JobOpeningRepository : findAll()
+
+        activate JobOpeningRepository
+
+        JobOpeningRepository --> JobOpeningService  : list of all job openings
+
+        deactivate JobOpeningRepository
+
+        JobOpeningService --> SelectJobOpeningController : list of all job openings
+
+        deactivate JobOpeningService
+
+        SelectJobOpeningController --> VerificationRequirementsUI : list of all job openings
+
+        deactivate SelectJobOpeningController
+
+        VerificationRequirementsUI --> CustomerManager : lists job opening and asks to select one
+
+        deactivate VerificationRequirementsUI
+
+CustomerManager -> VerificationRequirementsUI : selects job opening
+
+    activate VerificationRequirementsUI
+
+        VerificationRequirementsUI -> ListJobOpeningApplicationsController : allApplicationsOfJobOpening(jobOpening.jobReference()
+        activate ListJobOpeningApplicationsController
+
+            ListJobOpeningApplicationsController -> ApplicationService : allApplications()
+            activate ApplicationService
+
+                ApplicationService -> ApplicationRepository : allApplications()
+                activate ApplicationRepository
+
+                    ApplicationRepository --> ApplicationService : Iterable<Application> allApplications
+                deactivate ApplicationRepository
+
+
+            ApplicationService --> ListJobOpeningApplicationsController : Iterable<Application> allApplications
+
+                deactivate ApplicationService
+
+            ListJobOpeningApplicationsController --> VerificationRequirementsUI : Iterable<Application> applicationList
+
+        deactivate ListJobOpeningApplicationsController
+
+loop for each application
+
+        VerificationRequirementsUI -> VerificationRequirementsController : mapCandidate(candidateRequirements.candidateRequirements())
+
+        activate VerificationRequirementsController
+
+        VerificationRequirementsController --> VerificationRequirementsUI : map of Candidate
+
+        deactivate VerificationRequirementsController
+
+        VerificationRequirementsUI -> VerificationRequirementsController : pluginRequirements(path, clientRequirements)
+
+        activate VerificationRequirementsController
+
+        VerificationRequirementsController -> RequirementsPlugin : pluginRequirements(path, clientRequirements)
+
+        activate RequirementsPlugin
+
+        RequirementsPlugin --> VerificationRequirementsController : result(accepted or declined)
+
+        deactivate RequirementsPlugin
+
+        VerificationRequirementsController --> VerificationRequirementsUI : result(accepted or declined)
+
+end
+
+        deactivate VerificationRequirementsController
+
+        VerificationRequirementsUI --> CustomerManager : display list of result of all applications of the selected job opening
+
+
+
+
+
+
+deactivate CustomerManager
+
+@enduml
+
+

@@ -27,24 +27,17 @@ public class VerificationRequirementsUI extends AbstractUI {
     private final ChangeJobInterviewStatusController changeJobInterviewStatusController = new ChangeJobInterviewStatusController();
     private final RequirementsPlugin requirementsPlugin = new RequirementsPlugin();
 
-    final List<Application> list1 = new ArrayList<>();
 
+    final String RED = "\u001B[31m";
+    final String GREEN = "\u001B[32m";
+    final String RESET = "\u001B[0m";
 
     @Override
     protected boolean doShow() {
-
-        final String RED = "\u001B[31m";
-        final String GREEN = "\u001B[32m";
-        final String RESET = "\u001B[0m";
-
-
         JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
         JobReference jobReference = jobOpening.identity();
 
         Iterable<Application> jobOpeningApplications = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
-
-
-        //Application applicationToVerify = selectApplication(jobOpeningApplication);
 
         if (jobOpeningApplications == null) {
             System.out.println(RED + "No applications for this job opening" + RESET);
@@ -53,26 +46,7 @@ public class VerificationRequirementsUI extends AbstractUI {
                 if (applicationToVerify != null) {
 
                     CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
-                    JobRequirementsSpecification jobOpeningRequirement = jobOpening.jobRequirementsSpecification();
                     String path = jobOpening.jobRequirementsSpecification().jobRequirementsPath();
-
-
-                    List<String> jobRequirements = verificationRequirementsController.listJobRequirements(jobOpeningRequirement);
-
-            /*boolean acceptedApplication = verificationRequirementsController.verifyCandidate(jobRequirements, candidateRequirements.candidateRequirements());
-
-            Status statusFinal;
-
-
-            if(acceptedApplication){
-                statusFinal = Status.ACCEPTED;
-                changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal , applicationToVerify);
-                System.out.println("The candidate is valid for this job opening");
-            } else{
-                statusFinal = Status.DECLINED;
-                changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal , applicationToVerify);
-                System.out.println("This candidate isn't valid for this job opening");
-            }*/
 
                     Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
 
@@ -89,46 +63,12 @@ public class VerificationRequirementsUI extends AbstractUI {
                         changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal, applicationToVerify);
                         System.out.println(RED + "This candidate isn't valid for this job opening" + RESET);
                     }
-
                     System.out.println("=========================================================================================================");
-
-
                 }
             }
         }
         return true;
     }
-
-
-    public Application selectApplication(JobOpening jobOpeningApplication) {
-        Application applicationToVerify = null;
-
-        if (jobOpeningApplication != null) {
-            final Iterable<Application> iterable1 = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpeningApplication.jobReference());
-            if (!iterable1.iterator().hasNext()) {
-                System.out.println("There are no applications for this job opening ");
-            } else {
-                System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status", "Job Reference", "Candidate");
-                for (Application application : iterable1) {
-                    list1.add(application);
-                    System.out.printf("%-30s%-30s%-30s%-30s%-30s%n", application.identity(), application.rank(), "Submitted", application.jobReference().jobReference(), application.candidate().user().identity());
-                }
-                final int option = Console.readInteger("Enter the number of application");
-                if (option == 0) {
-                    System.out.println("No application selected");
-                } else {
-                    try {
-                        applicationToVerify = verificationRequirementsController.findApplicationById(list1.get(option - 1));
-                    } catch (IntegrityViolationException | ConcurrencyException ex) {
-                        System.out.println(
-                                "Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
-                    }
-                }
-            }
-        }
-        return applicationToVerify;
-    }
-
 
     /**
      * Retrieves all job openings.

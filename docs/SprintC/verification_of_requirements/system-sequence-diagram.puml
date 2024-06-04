@@ -21,18 +21,17 @@ activate CM
     CM -> System : selects a job opening
     activate System
 
-    System --> CM : shows the list of applications of the selected job opening
-    deactivate System
+loop for each application of the selected job opening
 
-loop
+    CM -> System : selects an application
 
-    CM -> System : selects a application
-    activate System
-
-    System --> CM : verify the requirements and show the result (accepted or declined)
-    deactivate System
-
+    System --> CM : verify the requirements
 end loop
+
+    System --> CM : show the result(accepted or declined) of all applications
+
+    deactivate System
+
 
 
 

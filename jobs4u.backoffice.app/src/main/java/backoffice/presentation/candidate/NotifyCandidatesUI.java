@@ -37,13 +37,7 @@ public class NotifyCandidatesUI extends AbstractUI {
     }
 
     private String buildBody(Application application, String status) {
-        /**return "Dear Candidate,\n\n"
-                + "We are writing to inform you about an update regarding your application titled '" + application.dataFile() + "'. "
-                + "The status of your application has been updated to: **'" + status + "'**.\n\n"
-                + "Best regards,\n"
-                + "Jobs4U\n";
-         **/
-        return "Test";
+        return "The status of your application has been updated to: " + status;
     }
 
     @Override

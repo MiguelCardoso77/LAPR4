@@ -190,4 +190,6 @@ that follows the rules set by the protocol.
 ## 4. Testing
 
 ## 5. Demonstration
+![demonstration.png](demonstration.png)
 
+![emailProof.png](emailProof.png)

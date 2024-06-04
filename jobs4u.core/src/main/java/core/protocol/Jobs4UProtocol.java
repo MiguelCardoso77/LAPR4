@@ -168,51 +168,116 @@ public class Jobs4UProtocol {
         outData.write(requestedData);
     }
 
+    public void sendApplications(String email) throws IOException {
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+        final int MAX_CHUNK_LEN = 255 + 256 * 255;
+
+        byte[] rawData = email.getBytes();
+        int index = 0;
+        int chunkSize = Math.min(MAX_CHUNK_LEN, rawData.length - index);
+        byte[] arr = new byte[chunkSize];
+
+        for (int j = 0; j < chunkSize; j++) {
+            arr[j] = rawData[index];
+            index++;
+        }
+
+        byte data1LenL = (byte) (chunkSize % 256);
+        byte data1LenM = (byte) (chunkSize / 256);
+
+        DataChunk dataChunk = new DataChunk(new UnsignedInteger(data1LenL), new UnsignedInteger(data1LenM), arr);
+
+        byteArrayOut.write(VERSION);
+        byteArrayOut.write(ProtocolCodes.APPLICATIONS.code());
+
+        byteArrayOut.write(dataChunk.dataLenL().rawValue());
+        byteArrayOut.write(dataChunk.dataLenM().rawValue());
+        byteArrayOut.write(dataChunk.data());
+
+        byteArrayOut.write(0);
+        byteArrayOut.write(0);
+
+        byte[] requestedData = byteArrayOut.toByteArray();
+        outData.write(requestedData);
+    }
+
+    public boolean receiveListApplications(String json) throws IOException {
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+        final int MAX_CHUNK_LEN = 255 + 256 * 255;
+
+        byte[] rawData = json.getBytes();
+        int index = 0;
+        int chunkSize = Math.min(MAX_CHUNK_LEN, rawData.length - index);
+        byte[] arr = new byte[chunkSize];
+
+        for (int j = 0; j < chunkSize; j++) {
+            arr[j] = rawData[index];
+            index++;
+        }
+
+        byte data1LenL = (byte) (chunkSize % 256);
+        byte data1LenM = (byte) (chunkSize / 256);
+
+        DataChunk dataChunk = new DataChunk(new UnsignedInteger(data1LenL), new UnsignedInteger(data1LenM), arr);
+
+        byteArrayOut.write(dataChunk.dataLenL().rawValue());
+        byteArrayOut.write(dataChunk.dataLenM().rawValue());
+        byteArrayOut.write(dataChunk.data());
+
+        byteArrayOut.write(0);
+        byteArrayOut.write(0);
+
+        byte[] requestedData = byteArrayOut.toByteArray();
+        outData.write(requestedData);
+
+        return true;
+    }
+
 /**
-    public boolean commTest() throws IOException, ClassNotFoundException {
-        Packet response = null;
-        int tries = MAX_TRIES;
-        do {
-            if (tries == 0) return false;
-            Packet p = new Packet(VERSION, ProtocolCodes.COMMTEST, null);
-            output.writeObject(p);
-            response = ((Packet<?>) input.readObject());
-            tries--;
-        } while (response == null || response.code() != ProtocolCodes.ACK);
-        return true;
-    }
+ public boolean commTest() throws IOException, ClassNotFoundException {
+ Packet response = null;
+ int tries = MAX_TRIES;
+ do {
+ if (tries == 0) return false;
+ Packet p = new Packet(VERSION, ProtocolCodes.COMMTEST, null);
+ output.writeObject(p);
+ response = ((Packet<?>) input.readObject());
+ tries--;
+ } while (response == null || response.code() != ProtocolCodes.ACK);
+ return true;
+ }
 
-    public <T> boolean send(T object, ProtocolCodes code) throws IOException, ClassNotFoundException {
-        Packet response = null;
-        int tries = MAX_TRIES;
-        do {
-            if (tries == 0) return false;
-            Packet p = new Packet(VERSION, code, object);
-            output.writeObject(p);
-            response = ((Packet<?>) input.readObject());
-            tries--;
-        } while (response == null || response.code() != ProtocolCodes.ACK);
-        return true;
-    }
+ public <T> boolean send(T object, ProtocolCodes code) throws IOException, ClassNotFoundException {
+ Packet response = null;
+ int tries = MAX_TRIES;
+ do {
+ if (tries == 0) return false;
+ Packet p = new Packet(VERSION, code, object);
+ output.writeObject(p);
+ response = ((Packet<?>) input.readObject());
+ tries--;
+ } while (response == null || response.code() != ProtocolCodes.ACK);
+ return true;
+ }
 
-    public <T> T receive() throws IOException, ClassNotFoundException {
-        Packet<T> response = null;
-        int tries = MAX_TRIES;
-        do {
-            if (tries == 0) return null;
-            Packet p = new Packet(VERSION, ProtocolCodes.ACK, null);
-            response = ((Packet<T>) input.readObject());
+ public <T> T receive() throws IOException, ClassNotFoundException {
+ Packet<T> response = null;
+ int tries = MAX_TRIES;
+ do {
+ if (tries == 0) return null;
+ Packet p = new Packet(VERSION, ProtocolCodes.ACK, null);
+ response = ((Packet<T>) input.readObject());
 
-            if (response != null && response.code() != ProtocolCodes.ERR) {
-                return (T) response.data();
-            }
+ if (response != null && response.code() != ProtocolCodes.ERR) {
+ return (T) response.data();
+ }
 
-            output.writeObject(new Packet<>(VERSION, ProtocolCodes.ERR, null));
+ output.writeObject(new Packet<>(VERSION, ProtocolCodes.ERR, null));
 
-            tries--;
-        } while (response == null || response.code() != ProtocolCodes.ACK);
-        return (T) response.data();
-    }
+ tries--;
+ } while (response == null || response.code() != ProtocolCodes.ACK);
+ return (T) response.data();
+ }
  **/
 
 

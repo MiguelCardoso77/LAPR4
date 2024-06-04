@@ -1,5 +1,7 @@
 package followUp.server;
 
+import core.protocol.Jobs4UProtocol;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,33 +18,39 @@ public class Server implements Runnable {
 
     public void start() {
         running = true;
+
         while (running) {
             try {
                 Socket connection = socket.accept();
-                if (!running) return; //Force exit new connections TODO: Add exit handler to communicate server shutdown
-                ServerSemaphore.getInstance().enterCriticalSection(); //ver para q server
+
+                if (!running) {
+                    Jobs4UProtocol protocol = new Jobs4UProtocol(connection);
+                    protocol.sendDisconnect();
+                    return;
+                }
+
+                ServerSemaphore.getInstance().enterCriticalSection();
                 Thread thread = new Thread(serverThreadGroup, new CallResponder(connection));
                 thread.start();
-            } catch (IOException e) {
+
+            } catch (IOException | InterruptedException | ClassNotFoundException e) {
                 System.out.println("Could not accept new connection!");
-            } catch (InterruptedException e) {
-                System.out.println("Could not wait for connection. Listening to new ones...");
             }
         }
     }
 
     public void stop() {
         this.running = false;
-    }
 
-
-    @Override
-    public void run() {
-        start();
         try {
             socket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void run() {
+        start();
     }
 }

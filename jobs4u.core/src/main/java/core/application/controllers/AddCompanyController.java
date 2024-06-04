@@ -12,7 +12,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
  *
  * @author 1220812@isep.ipp.pt
  */
-@UseCaseController
+//@UseCaseController
 public class AddCompanyController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final CompanyService companyService = new CompanyService();

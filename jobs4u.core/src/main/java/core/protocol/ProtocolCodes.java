@@ -7,7 +7,7 @@ public enum ProtocolCodes {
     ERR((byte) 3),
     AUTH((byte) 4),
     EMAIL((byte) 5),
-    LIST_APPLICATIONS((byte) 6),
+    APPLICATIONS((byte) 6),
     LIST_JOB_OPENINGS((byte) 7);
     private final byte code;
 

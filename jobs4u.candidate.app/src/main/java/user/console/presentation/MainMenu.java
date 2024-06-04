@@ -7,6 +7,7 @@ import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
+import user.console.presentation.applications.ListCandidateApplicationsAction;
 import user.console.presentation.email.CheckEmailsAction;
 
 /**
@@ -27,7 +28,7 @@ class MainMenu extends CandidateUserUI {
     private static final String SEPARATOR_LABEL = "--------------";
     private static final int EXIT_OPTION = 0;
     private static final int USER_PROFILE_OPTION = 1;
-    private static final int CHECK_EMAILS = 2;
+    private static final int LIST_ALL_MY_APPLICATIONS = 2;
 
     /**
      * Displays the main menu and handles user input.
@@ -63,10 +64,15 @@ class MainMenu extends CandidateUserUI {
         final Menu myUserMenu = new MyUserMenu();
 
         mainMenu.addSubMenu(USER_PROFILE_OPTION, myUserMenu);
-        mainMenu.addItem(CHECK_EMAILS, "Check Emails", new CheckEmailsAction());
+        mainMenu.addItem(LIST_ALL_MY_APPLICATIONS, "List all my Applications", new ListCandidateApplicationsAction());
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         return mainMenu;
+    }
+
+    @Override
+    public String headline() {
+        return "Candidate Menu";
     }
 }

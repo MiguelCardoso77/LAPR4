@@ -8,11 +8,9 @@ import java.io.*;
 import java.net.Socket;
 
 public abstract class Handler implements Runnable {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(Handler.class);
 
     private final Socket socket;
-
     protected DataInputStream inData;
     protected DataOutputStream outData;
     protected Jobs4UProtocol protocol;
@@ -24,21 +22,25 @@ public abstract class Handler implements Runnable {
         this.protocol = new Jobs4UProtocol(socket);
     }
 
-    public abstract void handle();
+    public abstract void startHandler();
 
     @Override
     public void run() {
         try {
-            handle();
+
+            startHandler();
             ServerSemaphore.getInstance().exitCriticalSection();
+
         } catch (Exception e) {
-            LOGGER.error("There was an error during handler. Closing connection...", e);
+            LOGGER.error("An error occurred during handling. Closing connection...", e);
+
             try {
                 socket.close();
-            } catch (IOException ex) {
-                LOGGER.error("There was an error closing socket. Ignoring closing...", ex);
+            } catch (IOException ee) {
+                LOGGER.error("An error occurred closing socket.", ee);
                 return;
             }
+
             LOGGER.info("Socket closed successfully!");
         }
     }

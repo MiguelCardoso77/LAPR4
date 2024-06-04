@@ -8,7 +8,6 @@
     <artifactId>jobs4u</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>jobs4u.applications.file.bot</module>
         <module>jobs4u.backoffice.app</module>
         <module>jobs4u.bootstrap</module>
         <module>jobs4u.bootstrappers</module>
@@ -104,6 +103,12 @@
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
             <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.11.0</version>
         </dependency>
 
         <!-- Mockito -->

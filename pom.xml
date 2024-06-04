@@ -17,9 +17,9 @@
         <module>jobs4u.core</module>
         <module>jobs4u.customer.app</module>
         <module>jobs4u.follow.up.server</module>
-        <module>jobs4u.grammar</module>
         <module>jobs4u.infrastructure</module>
         <module>jobs4u.persistence</module>
+        <module>jobs4u.plugin</module>
         <module>jobs4u.util.ci</module>
     </modules>
     <version>0.1.0</version>

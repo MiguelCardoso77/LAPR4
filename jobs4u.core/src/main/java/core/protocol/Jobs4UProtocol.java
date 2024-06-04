@@ -15,6 +15,22 @@ public class Jobs4UProtocol {
         outData = new DataOutputStream(connection.getOutputStream());
     }
 
+    public boolean sendCommTest() throws IOException {
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+        byteArrayOut.write(VERSION);
+        byteArrayOut.write(ProtocolCodes.COMMTEST.code());
+
+        byteArrayOut.write(0);
+        byteArrayOut.write(0);
+
+        byte[] requestedData = byteArrayOut.toByteArray();
+
+        System.out.println("Sending COMMTEST ...");
+        outData.write(requestedData);
+
+        return true;
+    }
+
     public boolean sendAck() throws IOException {
         ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
         byteArrayOut.write(VERSION);

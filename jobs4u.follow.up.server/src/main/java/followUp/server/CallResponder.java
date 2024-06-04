@@ -29,15 +29,50 @@ public class CallResponder extends Handler {
 
             byte code = inData.readByte();
 
-            if (code == 4) {
-                handleCode4();
-            } else if (code == 5) {
-                handleCode5();
+            switch (code) {
+                case 0:
+                    handleCode0();
+                    break;
+                case 1:
+                    handleCode1();
+                    break;
+                case 2:
+                    handleCode2();
+                    break;
+                case 3:
+                    handleCode3();
+                    break;
+                case 4:
+                    handleCode4();
+                    break;
+                case 5:
+                    handleCode5();
+                    break;
+                default:
+                    System.out.println("Invalid code received!");
+                    protocol.sendErr();
             }
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void handleCode0() throws IOException {
+        System.out.println("Code 0 received! -> COMMTEST\n");
+        protocol.sendAck();
+    }
+
+    private void handleCode1() throws IOException {
+        System.out.println("Code 1 received! -> DISCONNECT\n");
+    }
+
+    private void handleCode2() throws IOException {
+        System.out.println("Code 2 received! -> ACK\n");
+    }
+
+    private void handleCode3() throws IOException {
+        System.out.println("Code 3 received! -> ERR\n");
     }
 
     private void handleCode4() throws IOException, ClassNotFoundException {

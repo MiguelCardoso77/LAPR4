@@ -2,8 +2,11 @@ package core.application.controllers;
 
 import core.domain.customer.Customer;
 import core.domain.jobOpening.JobOpeningDTO;
+import core.services.CustomerApplicationService;
 import core.services.CustomerJobOpeningsService;
 import eapli.framework.application.UseCaseController;
+import eapli.framework.infrastructure.authz.application.AuthorizationService;
+import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.List;
 /**
@@ -15,14 +18,11 @@ import java.util.List;
 @UseCaseController
 public class ListCustomerJobOpeningsController {
     private final CustomerJobOpeningsService customerJobOpeningsService = new CustomerJobOpeningsService();
-
+    private final CustomerApplicationService customerAppService = new CustomerApplicationService();
+    private final AuthorizationService authz = AuthzRegistry.authorizationService();
     /**
-     * Retrieves all job openings for a given customer.
-     *
-     * @param customer The customer whose job openings are to be retrieved.
-     * @return A list of JobOpeningDTOs representing the job openings for the specified customer.
-     */
-    public List<JobOpeningDTO> customerJobOpenings(Customer customer){
-        return customerJobOpeningsService.allCustomersJobOpenings(customer);
+    public void sendCustomerJobOpenings(String email){
+        customerAppService.requestJobOpenings(email);
     }
+    */
 }

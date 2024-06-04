@@ -18,7 +18,6 @@ import java.util.List;
 
 public class CustomerJobOpeningsService {
     private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
-
     private final ApplicationService applicationService = new ApplicationService();
 
     /**

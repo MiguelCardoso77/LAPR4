@@ -75,4 +75,12 @@ public interface RepositoryFactory {
      */
     ProcessRepository processRepository(TransactionalContext autoTx);
     ProcessRepository processRepository();
+
+    /**
+     * Notification repository.
+     */
+    NotificationRepository notifications(TransactionalContext autoTx);
+
+    NotificationRepository notifications();
+
 }

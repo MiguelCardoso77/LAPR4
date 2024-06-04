@@ -132,6 +132,7 @@ public class JobOpeningService {
         return customerJobOpenings;
     }
 
+
     /**
      * Retrieves all job openings.
      *

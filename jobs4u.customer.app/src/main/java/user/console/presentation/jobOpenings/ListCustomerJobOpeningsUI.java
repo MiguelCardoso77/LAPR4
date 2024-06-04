@@ -16,6 +16,7 @@ import java.util.List;
  *
  * @author 1220812@isep.ipp.pt
  */
+
 public class ListCustomerJobOpeningsUI extends AbstractUI {
 
     private final AddUserController controller = new AddUserController();
@@ -27,12 +28,14 @@ public class ListCustomerJobOpeningsUI extends AbstractUI {
      *
      * @return true if the display was successful, false otherwise.
      */
+
+
     @Override
     protected boolean doShow() {
-        SystemUser customer = getAuthenticatedCustomer();
-        Customer customerObj = getCustomer(customer);
+        //SystemUser customer = getAuthenticatedCustomer();
+        //Customer customerObj = getCustomer(customer);
 
-        displayCustomerJobOpenings(customerObj);
+        //displayCustomerJobOpenings(customerObj);
 
         return true;
     }
@@ -61,6 +64,8 @@ public class ListCustomerJobOpeningsUI extends AbstractUI {
      *
      * @param customer logged in customer
      */
+
+    /**
     private void displayCustomerJobOpenings(Customer customer) {
         // To change
         List<JobOpeningDTO> customerJobOpenings = theController.customerJobOpenings(customer);
@@ -75,6 +80,9 @@ public class ListCustomerJobOpeningsUI extends AbstractUI {
             }
         }
     }
+
+     */
+
 
     /**
      * Provides the headline for the UI.

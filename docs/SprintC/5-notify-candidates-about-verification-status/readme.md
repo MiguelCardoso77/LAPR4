@@ -137,6 +137,56 @@ does not invalidate the “results” of the verification process.
 
 ## 3. Implementation
 
+In order to send emails to the follow up server, and then online we implemented this method in the `Jobs4UProtocol` class
+that follows the rules set by the protocol.
+
+```java
+    public void sendEmail(String toWho, String subject, String body) throws IOException {
+        List<String> data = new ArrayList<>();
+        data.add(toWho);
+        data.add(subject);
+        data.add(body);
+
+        List<DataChunk> dataChunkList = new ArrayList<>();
+        final int MAX_CHUNK_LEN = 255 + 256 * 255;
+
+        for (String s : data) {
+            byte[] rawData = s.getBytes();
+            int index = 0;
+
+            int chunkSize = Math.min(MAX_CHUNK_LEN, rawData.length - index);
+            byte[] arr = new byte[chunkSize];
+
+            for (int j = 0; j < chunkSize; j++) {
+                arr[j] = rawData[index];
+                index++;
+            }
+
+            byte data1LenL = (byte) (chunkSize % 256);
+            byte data1LenM = (byte) (chunkSize / 256);
+
+            dataChunkList.add(new DataChunk(new UnsignedInteger(data1LenL), new UnsignedInteger(data1LenM), arr));
+        }
+
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+        byteArrayOut.write(VERSION);
+        byteArrayOut.write(ProtocolCodes.EMAIL.code());
+
+        for (DataChunk chunk : dataChunkList) {
+            byteArrayOut.write(chunk.dataLenL().rawValue());
+            byteArrayOut.write(chunk.dataLenM().rawValue());
+            byteArrayOut.write(chunk.data());
+        }
+
+        byteArrayOut.write(0);
+        byteArrayOut.write(0);
+
+        byte[] requestedData = byteArrayOut.toByteArray();
+
+        outData.write(requestedData);
+    }
+```
+
 ## 4. Testing
 
 ## 5. Demonstration

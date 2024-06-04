@@ -25,9 +25,9 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
         if (requirements.isEmpty()) {
             System.out.println("there are no job openings with requirements");
         } else {
-            System.out.println("Job Opening: ");
+            System.out.printf("%-30s%-30s%-30s%-30s%n", "Job Opening Number:" , "Job Reference:", "Title or Function:", "Job Opening Customer:");
             for (JobOpening jobOpening : requirements) {
-                System.out.printf("%-6s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.customer());
+                System.out.printf("%-30s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.customer());
                 cont++;
             }
             JobOpening jobOpening = selectJobOpeningController.selectorPart(requirements);

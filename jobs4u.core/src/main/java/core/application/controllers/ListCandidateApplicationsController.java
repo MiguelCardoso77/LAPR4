@@ -1,14 +1,11 @@
 package core.application.controllers;
 
-
-import core.services.CandidateService;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import core.services.CandidateApplicationsService;
 
 public class ListCandidateApplicationsController {
+    CandidateApplicationsService candidateApplicationsService = new CandidateApplicationsService();
 
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    CandidateService candidateService = new CandidateService();
-
-
+    public void sendApplicationsRequest(String email){
+        candidateApplicationsService.requestApplications(email);
+    }
 }

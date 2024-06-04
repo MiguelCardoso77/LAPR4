@@ -1,15 +1,23 @@
 package followUp.server;
 
+import com.google.gson.Gson;
+import core.domain.application.Application;
+import core.domain.candidate.Candidate;
 import core.domain.email.EmailHandler;
 import core.domain.user.Jobs4URoles;
+import core.protocol.DataChunk;
+import core.protocol.UnsignedInteger;
 import core.services.ApplicationService;
 import core.services.CandidateService;
 import infrastructure.authz.AuthenticationCredentialHandler;
 import infrastructure.authz.CredentialHandler;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CallResponder extends Handler {
     private final ApplicationService applicationService = new ApplicationService();
@@ -47,6 +55,9 @@ public class CallResponder extends Handler {
                     break;
                 case 5:
                     handleCode5();
+                    break;
+                case 6:
+                    handleCode6();
                     break;
                 default:
                     System.out.println("Invalid code received!");
@@ -149,4 +160,39 @@ public class CallResponder extends Handler {
             protocol.sendErr();
         }
     }
+
+    private void handleCode6() throws IOException {
+        System.out.println("Code 6 received! -> List Candidate Applications Request\n");
+
+        byte emailDataLenL = inData.readByte();
+        byte emailDataLenM = inData.readByte();
+
+        byte lenghtEmail = (byte) (256 * emailDataLenM + emailDataLenL);
+
+        byte[] emailBytes = inData.readNBytes(lenghtEmail);
+        String email = new String(emailBytes, StandardCharsets.UTF_8);
+        System.out.println("Email: " + email);
+
+        Iterable<Application> allApplications = applicationService.allApplications();
+        List<Integer> candidateApplicationsIds = new ArrayList<>();
+
+        Candidate candidate = candidateService.findCandidateByEmail(email);
+
+        for (Application application : allApplications) {
+            if (application.candidate().equals(candidate)) {
+                candidateApplicationsIds.add(application.identity());
+            }
+        }
+        String json = new Gson().toJson(candidateApplicationsIds);
+
+        boolean flag = protocol.receiveListApplications(json);
+        if (flag) {
+            System.out.println("\nApplications Listed!");
+        } else {
+            System.out.println("\nError listing applications!");
+            protocol.sendErr();
+        }
+
+    }
+
 }

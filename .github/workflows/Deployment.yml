@@ -27,6 +27,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Set execute permission for properties.sh
+        run: chmod +x ./properties.sh
+
       - name: Run properties.sh
         run: ./properties.sh
 

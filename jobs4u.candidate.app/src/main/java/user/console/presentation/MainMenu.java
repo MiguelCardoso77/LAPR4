@@ -29,6 +29,12 @@ class MainMenu extends CandidateUserUI {
     private static final int EXIT_OPTION = 0;
     private static final int USER_PROFILE_OPTION = 1;
     private static final int LIST_ALL_MY_APPLICATIONS = 2;
+    private String email;
+
+    public MainMenu(String email){
+        super();
+        this.email = email;
+    }
 
     /**
      * Displays the main menu and handles user input.
@@ -64,7 +70,7 @@ class MainMenu extends CandidateUserUI {
         final Menu myUserMenu = new MyUserMenu();
 
         mainMenu.addSubMenu(USER_PROFILE_OPTION, myUserMenu);
-        mainMenu.addItem(LIST_ALL_MY_APPLICATIONS, "List all my Applications", new ListCandidateApplicationsAction());
+        mainMenu.addItem(LIST_ALL_MY_APPLICATIONS, "List all my Applications", new ListCandidateApplicationsAction(email));
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 

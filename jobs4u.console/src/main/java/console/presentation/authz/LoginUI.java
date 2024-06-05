@@ -20,6 +20,7 @@ public class LoginUI extends AbstractUI {
     private static final int DEFAULT_MAX_ATTEMPTS = 3;
     private final int maxAttempts;
     private boolean serverUsage;
+    private String email;
 
     private final CredentialHandler credentialHandler;
 
@@ -129,6 +130,7 @@ public class LoginUI extends AbstractUI {
 
             ServerAuthentication serverAuthentication = new ServerAuthentication();
             if (serverAuthentication.authenticateCandidate(email, password)) {
+                this.email = email;
                 return true;
             }
 
@@ -138,6 +140,8 @@ public class LoginUI extends AbstractUI {
 
         return false;
     }
+
+    public String email() { return email; }
 
     /**
      * Returns the headline for the login user interface.

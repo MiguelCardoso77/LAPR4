@@ -43,7 +43,7 @@ public class FrontMenu extends AbstractUI {
         final Menu menu = new Menu("Candidate Menu Options:");
         LoginUI loginUI = new LoginUI(new AuthenticationCredentialHandler(), Jobs4URoles.CANDIDATE, true);
 
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(loginUI::show, () -> {new MainMenu().mainLoop();return true;}));
+        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(loginUI::show,() -> {new MainMenu(loginUI.email()).mainLoop();return true;}));
         menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);

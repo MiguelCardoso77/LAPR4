@@ -41,4 +41,7 @@ public class Email implements Serializable {
                 "Subject: " + subject + "\n\n" +
                 body + "\n";
     }
+
+
+
 }

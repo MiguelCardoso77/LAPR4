@@ -44,10 +44,16 @@ public class ApplicationsBootstrapper implements Action {
         }
         SystemUser operator = operators.get(0);
 
-        registerApplication("1", "fileBot_OutputDirectory/IBM-000123/1", jobOpenings.get(0), candidates.get(0), operator);
-        registerApplication("Not Ranked", "FEUPApp2", jobOpenings.get(0), candidates.get(1), operator);
-        registerApplication("Not Ranked", "FEUPApp3", jobOpenings.get(0), candidates.get(2), operator);
+        registerApplication("Not Ranked", "FEUPApp2", jobOpenings.get(0), candidates.get(0), operator);
+        registerApplication("1", "FEUPApp3", jobOpenings.get(0), candidates.get(1), operator);
+        registerApplication("2", "FEUPApp2", jobOpenings.get(0), candidates.get(2), operator);
+        registerApplication("3", "FEUPApp3", jobOpenings.get(0), candidates.get(3), operator);
+        registerApplication("4", "FEUPApp3", jobOpenings.get(0), candidates.get(4), operator);
+        registerApplication("Not Ranked", "FEUPApp3", jobOpenings.get(0), candidates.get(5), operator);
         registerApplication("4", "FEUP2App1", jobOpenings.get(1), candidates.get(0), operator);
+        registerApplication("Not Ranked", "FEUP2App2", jobOpenings.get(1), candidates.get(1), operator);
+        registerApplication("6", "FEUP2App3", jobOpenings.get(1), candidates.get(2), operator);
+        registerApplication("3", "FEUP2App1", jobOpenings.get(1), candidates.get(0), operator);
         registerApplication("Not Ranked", "FEUP2App2", jobOpenings.get(1), candidates.get(1), operator);
         registerApplication("6", "FEUP2App3", jobOpenings.get(1), candidates.get(2), operator);
         registerApplication("Not Ranked", "ISEPApp1", jobOpenings.get(2), candidates.get(0), operator);
@@ -64,14 +70,20 @@ public class ApplicationsBootstrapper implements Action {
         addRequirements("jobs4u.core/src/main/resources/requirements/requirements4.txt", applications.get(6));
         addRequirements("jobs4u.core/src/main/resources/requirements/requirements4.txt", applications.get(7));
 
-        changeApplicationStatus(applications.get(0), Status.ACCEPTED);
-        changeApplicationStatus(applications.get(1), Status.DECLINED);
+        changeApplicationStatus(applications.get(0), Status.RECEIVED);
+        changeApplicationStatus(applications.get(1), Status.ACCEPTED);
         changeApplicationStatus(applications.get(2), Status.ACCEPTED);
-        changeApplicationStatus(applications.get(3), Status.CHOSEN);
-        changeApplicationStatus(applications.get(4), Status.CHOSEN);
-        changeApplicationStatus(applications.get(5), Status.CHOSEN);
-        changeApplicationStatus(applications.get(6), Status.RECEIVED);
+        changeApplicationStatus(applications.get(3), Status.ACCEPTED);
+        changeApplicationStatus(applications.get(4), Status.DECLINED);
+        changeApplicationStatus(applications.get(5), Status.RECEIVED);;
+        changeApplicationStatus(applications.get(6), Status.DECLINED);
         changeApplicationStatus(applications.get(7), Status.RECEIVED);
+        changeApplicationStatus(applications.get(8), Status.DECLINED);
+        changeApplicationStatus(applications.get(9), Status.ACCEPTED);
+        changeApplicationStatus(applications.get(10), Status.DECLINED);
+        changeApplicationStatus(applications.get(11), Status.RECEIVED);
+        changeApplicationStatus(applications.get(12), Status.DECLINED);
+
 
         return true;
     }

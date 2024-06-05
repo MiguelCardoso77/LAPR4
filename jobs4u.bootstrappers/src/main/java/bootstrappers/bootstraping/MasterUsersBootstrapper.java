@@ -32,6 +32,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
         registerBootstrapCandidate("Diogo", "Ribeiro", "1220812@isep.ipp.pt", "922222222", "fileBot_OutputDirectory/3");
         registerBootstrapCandidate("Miguel", "Cardoso", "1220772@isep.ipp.pt", "933333333", "curriculumPathThree");
         registerBootstrapCandidate("Tomás", "Gonçalves", "1220917@isep.ipp.pt", "944444444", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
+        registerBootstrapCandidate("Marco", "Ferrerira", "1220913@isep.ipp.pt", "955555555", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
 
         registerCustomer("CustomerOne", "ExampleOne", "customerOne@jobs4u.com");
         registerCustomer("CustomerTwo", "ExampleTwo", "customerTwo@jobs4u.com");

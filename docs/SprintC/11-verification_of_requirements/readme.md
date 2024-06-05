@@ -56,6 +56,10 @@ the requirements. The user should fix the error and submit again. Only US 1015 r
 > **AC1:**
 > The costumer manager should select the job opening for which he wants to verify the requirements of its applications.
 
+> **AC2:**
+> The verification is only executed if the candidate has already the candidate requirement file submitted.
+
+
 ### 1.4. Found out Dependencies
 
 
@@ -143,6 +147,19 @@ protected boolean doShow() {
     return true;
 }
 ```
+
+## 4. Demonstration
+
+    *Requirements Accepted**
+![requirements_accepted.png](requirements_accepted.png)
+
+    *Requirements Declined**
+![requirements_declined.png](requirements_declined.png)
+
+    *No applications**
+![no_applications.png](no_applications.png)
+
+
 
 
 

@@ -41,9 +41,9 @@ public class FrontMenu extends AbstractUI {
     @Override
     public boolean doShow() {
         final Menu menu = new Menu("Customer Menu Options:");
-        LoginUI loginUI = new LoginUI(new AuthenticationCredentialHandler(), Jobs4URoles.CUSTOMER);
+        LoginUI loginUI = new LoginUI(new AuthenticationCredentialHandler(), Jobs4URoles.CUSTOMER, true);
 
-        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(loginUI::show, () -> {new MainMenu().mainLoop();return true;}));
+        menu.addItem(LOGIN_OPTION, "Login", new ChainedAction(loginUI::show, () -> {new MainMenu(loginUI.email()).mainLoop();return true;}));
         menu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);

@@ -11,10 +11,12 @@ import java.util.Date;
  */
 @DTO
 public class JobOpeningDTO{
+
     public String jobReference;
     public String position;
     public Date activeSince;
     public int numberOfApplicants;
+
 
     /**
      * Creates a new instance of {@code JobOpeningDTO} with the provided attributes.
@@ -30,7 +32,43 @@ public class JobOpeningDTO{
         this.activeSince = activeSince;
         this.numberOfApplicants = numberOfApplicants;
     }
-
+    /**
+     * Returns the job reference of the job opening.
+     *
+     * @return The job reference of the job opening.
+     */
+    public String myJobReference(){
+        return jobReference;
+    }
+    /**
+     * Returns the position of the job opening.
+     *
+     * @return The position of the job opening.
+     */
+    public String myPosition(){
+        return position;
+    }
+    /**
+     * Returns the date when the job opening was activated.
+     *
+     * @return The date when the job opening was activated.
+     */
+    public Date myActiveSince(){
+        return activeSince;
+    }
+    /**
+     * Returns the number of applicants for the job opening.
+     *
+     * @return The number of applicants for the job opening.
+     */
+    public int myNumberOfApplicants(){
+        return numberOfApplicants;
+    }
+    /**
+     * Returns a string representation of the job opening.
+     *
+     * @return A string representation of the job opening.
+     */
     @Override
     public String toString() {
         return "jobReference : " + jobReference +

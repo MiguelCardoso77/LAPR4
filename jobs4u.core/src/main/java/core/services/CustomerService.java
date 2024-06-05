@@ -79,4 +79,24 @@ public class CustomerService {
         }
         return null;
     }
+
+    /**
+     * Finds the customer associated with a given email.
+     *
+     * @param email The email whose associated customer is to be found.
+     * @return The customer associated with the specified email, or null if no such customer is found.
+     */
+    public Customer findCustomerByEmail(String email){
+        EmailAddress emailAddress = EmailAddress.valueOf(email);
+
+        Iterable<Customer> allCustomers = customerRepository.findAll();
+        if(allCustomers.iterator().hasNext()){
+            for(Customer customer : allCustomers){
+                if(customer.identity().equals(emailAddress)){
+                    return customer;
+                }
+            }
+        }
+        return null;
+    }
 }

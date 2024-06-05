@@ -45,4 +45,10 @@ public class NotifyCandidatesController {
     public void sendEmails(List<Email> emailsToSend) {
         emailService.sendAllEmails(emailsToSend);
     }
+
+    public void sendEmailCostumer(Email emailsToSend) {
+        emailService.sendEmailCostumer(emailsToSend);
+    }
+
+
 }

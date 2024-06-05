@@ -42,4 +42,30 @@ public class EmailService {
         }
     }
 
+    public void sendEmailCostumer(Email emailsToSend){
+        try {
+            Socket socket = new Socket("127.0.0.1", 2005);
+            DataInputStream inData = new DataInputStream(socket.getInputStream());
+
+            Jobs4UProtocol protocol = new Jobs4UProtocol(socket);
+            protocol.sendEmail(emailsToSend.toWho(), emailsToSend.subject(), emailsToSend.body());
+
+            inData.readByte();
+            byte code = inData.readByte();
+
+            if (code == ProtocolCodes.ACK.code()) {
+                System.out.println("ACK Code Received: Email to " + emailsToSend.toWho() + " sent successfully!");
+            } else if (code == ProtocolCodes.ERR.code()) {
+                System.out.println("ERR Code Received: Could not send email to " + emailsToSend.toWho() + "!");
+            }
+
+            socket.close();
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
 }

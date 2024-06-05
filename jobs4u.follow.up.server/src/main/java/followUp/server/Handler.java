@@ -29,7 +29,7 @@ public abstract class Handler implements Runnable {
         try {
 
             startHandler();
-            ServerSemaphore.getInstance().exitCriticalSection();
+            ConnectionLimiter.instance().releaseConnection();
 
         } catch (Exception e) {
             LOGGER.error("An error occurred during handling. Closing connection...", e);

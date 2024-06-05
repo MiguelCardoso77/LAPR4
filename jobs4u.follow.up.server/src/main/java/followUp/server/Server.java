@@ -9,27 +9,27 @@ import java.net.Socket;
 public class Server implements Runnable {
     private static final ThreadGroup serverThreadGroup = new ThreadGroup("server-thread-group");
     private final ServerSocket socket;
-    private boolean running;
+    private boolean isRunning;
 
     public Server(int port) throws IOException {
         socket = new ServerSocket(port);
-        running = false;
+        isRunning = false;
     }
 
     public void start() {
-        running = true;
+        isRunning = true;
 
-        while (running) {
+        while (isRunning) {
             try {
                 Socket connection = socket.accept();
 
-                if (!running) {
+                if (!isRunning) {
                     Jobs4UProtocol protocol = new Jobs4UProtocol(connection);
                     protocol.sendDisconnect();
                     return;
                 }
 
-                ServerSemaphore.getInstance().enterCriticalSection();
+                ConnectionLimiter.instance().takeConnection();
                 Thread thread = new Thread(serverThreadGroup, new CallResponder(connection));
                 thread.start();
 
@@ -40,7 +40,7 @@ public class Server implements Runnable {
     }
 
     public void stop() {
-        this.running = false;
+        this.isRunning = false;
 
         try {
             socket.close();

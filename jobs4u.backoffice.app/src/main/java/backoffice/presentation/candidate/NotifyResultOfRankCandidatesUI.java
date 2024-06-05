@@ -1,9 +1,6 @@
 package backoffice.presentation.candidate;
 
-import core.application.controllers.ListJobOpeningApplicationsController;
-import core.application.controllers.ListJobOpeningController;
-import core.application.controllers.NotifyCandidatesController;
-import core.application.controllers.NotifyResultOfRankCandidatesController;
+import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.application.Rank;
 import core.domain.application.Status;
@@ -21,24 +18,21 @@ public class NotifyResultOfRankCandidatesUI {
     private final NotifyResultOfRankCandidatesController notifyResultOfRankCandidatesController = new NotifyResultOfRankCandidatesController();
     private final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
-
+    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
 
     protected boolean doShow() {
 
         List<Email> emailsToSend = new ArrayList<>();
 
 
-        listJobOpeningController.showJobOpenings();
-
-        int selectedJobOpening = selectJobOpening();
-
-        JobOpening jobOpening = listJobOpeningController.getJobOpeningAt(listJobOpeningController.allJobOpenings(), selectedJobOpening);
+        JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
 
         JobReference jobReference = jobOpening.jobReference();
 
         Iterable<Application> allApplicationsOfJobOpening = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
 
         List<Application> appToNotify = notifyResultOfRankCandidatesController.verify(allApplicationsOfJobOpening);
+
 
         for (Application application : appToNotify) {
             boolean ranked = notifyResultOfRankCandidatesController.accepted(application, jobOpening);

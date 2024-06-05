@@ -21,11 +21,8 @@ public class MostReferencedWordsUI extends AbstractUI {
 
             for (Application application : applicationsFromCM) {
                 System.out.println("Application ID: " + application.identity());
-                System.out.println("Candidate: " + application.candidate().toString());
-                System.out.println("Job Opening: " + application.jobReference().toString());
-                System.out.println("Status: " + application.status().toString());
-                System.out.println("Rank: " + application.rank().toString());
-                System.out.println("Submission Date: " + application.submissionDate().toString());
+                System.out.println("Candidate: " + application.candidate().user().email());
+                System.out.println("Job Opening: " + application.jobReference().jobReference());
                 System.out.println("Files: " + application.dataFile());
                 System.out.println();
             }
@@ -33,11 +30,28 @@ public class MostReferencedWordsUI extends AbstractUI {
             Candidate selectedCandidate = selectCandidate(applicationsFromCM);
             List<File> candidateFiles = theController.getCandidateFiles(selectedCandidate.curriculum().curriculumPath());
 
-            Map<String, Integer> topWords = theController.findMostReferencedWords(candidateFiles);
+            Map<String, Map<String, Integer>> topWords = theController.findMostReferencedWords(candidateFiles);
 
+            int countPlacement = 1;
             System.out.println(ConsoleColors.CYAN + "\nTop 20 most referenced words in the files provided by the Candidate: " + ConsoleColors.RESET);
-            for (Map.Entry<String, Integer> entry : topWords.entrySet()) {
-                System.out.println(entry.getKey() + " : " + entry.getValue() + " occurrences");
+            for (Map.Entry<String, Map<String, Integer>> entry : topWords.entrySet()) {
+                String currentWord = entry.getKey();
+                Map<String, Integer> fileCounts = entry.getValue();
+
+                int totalOccurrences = 0;
+                for (int count : fileCounts.values()) {
+                    totalOccurrences += count;
+                }
+
+                System.out.println("\n" + ConsoleColors.PURPLE + countPlacement + ". " + ConsoleColors.RESET + currentWord + " : " + totalOccurrences + " occurrences");
+
+                for (Map.Entry<String, Integer> fileEntry : fileCounts.entrySet()) {
+                    String fileName = fileEntry.getKey();
+                    int count = fileEntry.getValue();
+                    System.out.println("  " + fileName + " : " + count + " occurrences");
+                }
+
+                countPlacement++;
             }
 
         } catch (Exception e) {

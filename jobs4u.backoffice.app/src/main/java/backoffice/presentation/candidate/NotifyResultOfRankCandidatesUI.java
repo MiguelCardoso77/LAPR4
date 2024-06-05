@@ -4,6 +4,8 @@ import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.application.Rank;
 import core.domain.application.Status;
+import core.domain.candidate.Candidate;
+import core.domain.candidate.TelephoneNumber;
 import core.domain.email.Email;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
@@ -28,16 +30,14 @@ public class NotifyResultOfRankCandidatesUI {
 
         JobReference jobReference = jobOpening.jobReference();
 
-        Iterable<Application> allApplicationsOfJobOpening = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
-
-        List<Application> appToNotify = notifyResultOfRankCandidatesController.verify(allApplicationsOfJobOpening);
+        Iterable<Application> appToNotify = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
 
         for (Application application : appToNotify) {
 
             String candidateEmail = notifyCandidatesController.findCandidateEmail(application);
             String subject = buildSubject(application);
             String body = buildBody1(application, application.rank(), application.status());
-            String body2 = buildBody2(application, application.rank(), application.status());
+            String body2 = buildBody2(application.candidate());
             Email emailObj = notifyCandidatesController.createEmail(candidateEmail, subject, body);
             emailToCostumer.add(body2);
             emailsToSend.add(emailObj);
@@ -53,6 +53,10 @@ public class NotifyResultOfRankCandidatesUI {
 
             Email emailcostumer = notifyCandidatesController.createEmail(costumerEmail, subject1, body3);
 
+        System.out.println(emailToCostumer);
+        System.out.println("========================");
+        System.out.println(emailsToSend);
+
             notifyCandidatesController.sendEmails(emailsToSend);
 
             notifyCandidatesController.sendEmailCostumer(emailcostumer);
@@ -66,11 +70,11 @@ public class NotifyResultOfRankCandidatesUI {
 
 
     private String buildBody1(Application application, Rank rank, Status status) {
-        return "Through your application_"+ application.identity()  + ", you placed in rank " +  rank + " so you have been " + status+ "." ;
+        return "Through your application_"+ application.identity()  + ", you placed in rank " +  rank + " so you have been " + status+ ".You will be contacted soon by our company." ;
     }
 
-    private String buildBody2(Application application, Rank rank, Status status) {
-        return "The application_"+ application.identity()  + ", placed in rank " +  rank + " have been " + status+ ".\n" ;
+    private String buildBody2(Candidate candidate) {
+        return "Candidate: " + candidate.user().email() + ", Telephone number: " + candidate.identity();
     }
 
     private String buildSubject1(JobReference jobReference) {

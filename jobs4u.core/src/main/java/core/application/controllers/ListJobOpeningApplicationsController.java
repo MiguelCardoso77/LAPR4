@@ -35,7 +35,7 @@ public class ListJobOpeningApplicationsController {
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
         for (Application a : allApplications) {
-            if (a.jobReference().sameReference(jobReference)) {
+            if (a.jobReference().sameReference(jobReference) && a.status().toString().equals("ACCEPTED")) {
                 allApplicationsJobOpening.add(a);
                 count++;
             }

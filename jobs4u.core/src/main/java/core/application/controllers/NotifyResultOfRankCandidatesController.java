@@ -19,7 +19,7 @@ public class NotifyResultOfRankCandidatesController {
         List<Application> appsToNotify = new ArrayList<>();
 
         for (Application application : allApplicationsOfJobOpening) {
-            if (application.status() == Status.ACCEPTED || application.status() == Status.DECLINED) {
+            if (application.status() == Status.ACCEPTED) {
                 appsToNotify.add(application);
             }
         }

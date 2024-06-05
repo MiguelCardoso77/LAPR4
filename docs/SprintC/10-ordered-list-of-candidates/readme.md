@@ -38,13 +38,20 @@ As Customer Manager, I want to get an ordered list of candidates, using the job 
 > **AC1:**
 > The costumer manager should select the job opening for which he wants the list of candidates.
 
+> **AC2:**
+> The ordering must be descending, from the one with the highest score for the one with the lowest score.
+
+
 ### 1.4. Found out Dependencies
 
 [Register a candidate](..%2F..%2FSprintB%2Fregister-a-candidate)
 
 [Register a job opening](..%2F..%2FSprintB%2Fadd-jobOpening)
 
-[Register an application](..%2F..%2FSprintB%2Fregister-an-application)
+[Display candidate's data](..%2F..%2FSprintB%2Fdisplay-candidate's-data)
+
+[List job openings' application](..%2F..%2FSprintB%2Flist-job-openings'-application)
+
 
 
 
@@ -101,6 +108,19 @@ The `OrderedListOfCandidatesController` class is mainly used to order by grade a
   return true;
 }
 ```
+
+
+## 4. Demonstration
+
+    **job_opening_with_interviews**
+
+![with_interview.png](with_interview.png)
+
+    **job_opening_with_no_interviews**
+
+![no_interview.png](no_interviews.png)
+
+
 
 
 

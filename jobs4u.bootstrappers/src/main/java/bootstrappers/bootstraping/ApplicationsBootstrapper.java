@@ -46,15 +46,15 @@ public class ApplicationsBootstrapper implements Action {
 
         registerApplication("Not Ranked", "FEUPApp2", jobOpenings.get(0), candidates.get(0), operator);
         registerApplication("1", "FEUPApp3", jobOpenings.get(0), candidates.get(1), operator);
-        registerApplication("4", "FEUPApp3", jobOpenings.get(0), candidates.get(3), operator);
-        registerApplication("Not Ranked", "FEUPApp3", jobOpenings.get(0), candidates.get(4), operator);
-        registerApplication("4", "FEUP2App1", jobOpenings.get(1), candidates.get(0), operator);
-        registerApplication("Not Ranked", "FEUP2App2", jobOpenings.get(1), candidates.get(1), operator);
-        registerApplication("6", "FEUP2App3", jobOpenings.get(1), candidates.get(2), operator);
-        registerApplication("3", "FEUP2App1", jobOpenings.get(1), candidates.get(3), operator);
-        registerApplication("Not Ranked", "FEUP2App2", jobOpenings.get(1), candidates.get(4), operator);
+        registerApplication("4", "FEUPApp1", jobOpenings.get(0), candidates.get(3), operator);
+        registerApplication("Not Ranked", "FEUPApp4", jobOpenings.get(0), candidates.get(4), operator);
+        registerApplication("4", "FADEUPApp1", jobOpenings.get(1), candidates.get(0), operator);
+        registerApplication("Not Ranked", "FADEUPApp2", jobOpenings.get(1), candidates.get(1), operator);
+        registerApplication("6", "FADEUPApp3", jobOpenings.get(1), candidates.get(2), operator);
+        registerApplication("3", "FADEUPApp5", jobOpenings.get(1), candidates.get(3), operator);
+        registerApplication("Not Ranked", "FADEUPApp4", jobOpenings.get(1), candidates.get(4), operator);
         registerApplication("Not Ranked", "ISEPApp1", jobOpenings.get(2), candidates.get(0), operator);
-        registerApplication("8", "ISEPApp2", jobOpenings.get(2), candidates.get(1), operator);
+        registerApplication("2", "ISEPApp2", jobOpenings.get(2), candidates.get(1), operator);
 
         List<Application> applications = (List<Application>) applicationRepository.allApplications();
 

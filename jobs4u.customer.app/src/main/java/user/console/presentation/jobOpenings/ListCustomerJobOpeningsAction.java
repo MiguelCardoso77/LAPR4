@@ -10,6 +10,17 @@ import eapli.framework.actions.Action;
  * @author 1220812@isep.ipp.pt
  */
 public class ListCustomerJobOpeningsAction implements Action {
+
+    private final String email;
+    /**
+     * Constructs a new ListCustomerJobOpeningsAction.
+     *
+     * @param email The email of the customer.
+     */
+    public ListCustomerJobOpeningsAction(String email) {
+        this.email = email;
+    }
+
     /**
      * Executes the action to list customer job openings.
      *
@@ -17,6 +28,6 @@ public class ListCustomerJobOpeningsAction implements Action {
      */
     @Override
     public boolean execute() {
-        return new ListCustomerJobOpeningsUI().show();
+        return new ListCustomerJobOpeningsUI(email).show();
     }
 }

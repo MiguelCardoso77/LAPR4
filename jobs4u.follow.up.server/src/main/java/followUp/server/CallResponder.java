@@ -6,7 +6,6 @@ import core.domain.candidate.Candidate;
 import core.domain.customer.Customer;
 import core.domain.email.EmailHandler;
 import core.domain.jobOpening.JobOpening;
-import core.domain.jobOpening.JobReference;
 import core.domain.user.Jobs4URoles;
 
 import core.services.*;
@@ -19,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CallResponder extends Handler {
+public class CallResponder extends BaseResponder {
     private final ApplicationService applicationService = new ApplicationService();
     private final CandidateService candidateService = new CandidateService();
     private final CustomerService customerService = new CustomerService();

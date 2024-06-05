@@ -7,15 +7,15 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.Socket;
 
-public abstract class Handler implements Runnable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Handler.class);
+public abstract class BaseResponder implements Runnable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseResponder.class);
 
     private final Socket socket;
     protected DataInputStream inData;
     protected DataOutputStream outData;
     protected Jobs4UProtocol protocol;
 
-    public Handler(Socket socket) throws IOException {
+    public BaseResponder(Socket socket) throws IOException {
         this.socket = socket;
         this.inData = new DataInputStream(socket.getInputStream());
         this.outData = new DataOutputStream(socket.getOutputStream());

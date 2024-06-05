@@ -43,24 +43,18 @@ public class NotifyResultOfRankCandidatesUI {
         for (Application application : appToNotify) {
             boolean ranked = notifyResultOfRankCandidatesController.accepted(application, jobOpening);
 
-            if (ranked) {
+            if (ranked == true) {
                 String candidateEmail = notifyCandidatesController.findCandidateEmail(application);
                 String subject = buildSubject(application);
                 String body = buildBody1(application, application.rank(), application.status());
                 Email emailObj = notifyCandidatesController.createEmail(candidateEmail, subject, body);
                 emailsToSend.add(emailObj);
-                System.out.println(emailObj);
-
-
-            } else {
+            } else  if (ranked == false) {
                 String candidateEmail = notifyCandidatesController.findCandidateEmail(application);
                 String subject = buildSubject(application);
                 String body = buildBody1(application, application.rank(), application.status());
                 Email emailObj = notifyCandidatesController.createEmail(candidateEmail, subject, body);
                 emailsToSend.add(emailObj);
-                System.out.println(emailObj);
-
-
             }
 
             notifyCandidatesController.sendEmails(emailsToSend);
@@ -86,6 +80,6 @@ public class NotifyResultOfRankCandidatesUI {
 
 
     private String buildBody1(Application application, Rank rank, Status status) {
-        return "Through your application"+ application.identity()  + ", you placed in rank " +  rank + "so you have been " + status+ "." ;
+        return "Through your application_"+ application.identity()  + ", you placed in rank " +  rank + " so you have been " + status+ "." ;
     }
 }

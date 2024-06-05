@@ -3,16 +3,16 @@ package followUp.server;
 import com.google.gson.Gson;
 import core.domain.application.Application;
 import core.domain.candidate.Candidate;
+import core.domain.customer.Customer;
 import core.domain.email.EmailHandler;
+import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobReference;
 import core.domain.user.Jobs4URoles;
-import core.protocol.DataChunk;
-import core.protocol.UnsignedInteger;
-import core.services.ApplicationService;
-import core.services.CandidateService;
+
+import core.services.*;
 import infrastructure.authz.AuthenticationCredentialHandler;
 import infrastructure.authz.CredentialHandler;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -22,6 +22,8 @@ import java.util.List;
 public class CallResponder extends Handler {
     private final ApplicationService applicationService = new ApplicationService();
     private final CandidateService candidateService = new CandidateService();
+    private final CustomerService customerService = new CustomerService();
+    private final JobOpeningService jobOpeningService = new JobOpeningService();
 
     public CallResponder(Socket socket) throws IOException {
         super(socket);
@@ -58,6 +60,9 @@ public class CallResponder extends Handler {
                     break;
                 case 6:
                     handleCode6();
+                    break;
+                case 7:
+                    handleCode7();
                     break;
                 default:
                     System.out.println("Invalid code received!");
@@ -190,6 +195,45 @@ public class CallResponder extends Handler {
             System.out.println("\nApplications Listed!");
         } else {
             System.out.println("\nError listing applications!");
+            protocol.sendErr();
+        }
+
+    }
+
+    private void handleCode7() throws IOException{
+        System.out.println("Code 7 received! -> List Customer Job Openings request\n");
+
+        byte emailDataLenL = inData.readByte();
+        byte emailDataLenM = inData.readByte();
+
+        byte lengthEmail = (byte) (256 * emailDataLenM + emailDataLenL);
+
+        byte[] emailBytes = inData.readNBytes(lengthEmail);
+        String email = new String(emailBytes, StandardCharsets.UTF_8);
+        System.out.println("Email: " + email);
+
+        Iterable<JobOpening> allJobOpenings = jobOpeningService.allJobOpenings();
+
+        List<String> customerJobOpenings = new ArrayList<>();
+
+        Customer customer = customerService.findCustomerByEmail(email);
+
+        System.out.println(customer);
+
+        for (JobOpening jobOpening : allJobOpenings) {
+            if (jobOpening.customer().equals(customer)) {
+                customerJobOpenings.add(jobOpening.jobReference().toString());
+            }
+        }
+
+        String json = new Gson().toJson(customerJobOpenings);
+
+        boolean flag =  protocol.receiveJobOpeningLists(json);
+
+        if(flag){
+            System.out.println("\nJob Openings Listed!");
+        } else{
+            System.out.println("\nError listing job openings!");
             protocol.sendErr();
         }
 

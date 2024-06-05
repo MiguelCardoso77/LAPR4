@@ -9,7 +9,7 @@ on:
       branch:
         description: "Branch to build"
         required: true
-        default: "master"
+        default: "main"
 
 jobs:
   deployment:
@@ -46,6 +46,17 @@ jobs:
           source: "jobs4u.bootstrap/target/*,deploy.sh"
           target: "~/deploy"
           rm: true
+          timeout: 30s
+          command_timeout: 10m
+          use_insecure_cipher: false
+          debug: false
+          strip_components: 0
+          overwrite: false
+          tar_dereference: false
+          tar_exec: tar
+          proxy_port: 22
+          proxy_timeout: 30s
+          proxy_use_insecure_cipher: false
 
       - name: Deploy Server
         uses: appleboy/ssh-action@v0.1.10

@@ -1,0 +1,138 @@
+@startuml
+autonumber
+
+actor CustomerManager
+
+participant OrderedListOfCandidatesUI <<presentation>>
+participant OrderedListOfCandidatesController <<controller>>
+participant SelectJobOpeningController <<controller>>
+participant ListJobOpeningApplicationsController <<controller>>
+participant ListJobInterviewsApplicationController <<controller>>
+participant ListJobOpeningController <<controller>>
+
+
+
+participant JobOpeningService <<service>>
+participant ApplicationService <<service>>
+participant JobInterviewService <<service>>
+
+database JobOpeningRepository <<repository>>
+database ApplicationRepository <<repository>>
+database JobInterviewRepository <<repository>>
+
+activate CustomerManager
+
+    CustomerManager -> OrderedListOfCandidatesUI : asks to list candidates by grades
+    activate OrderedListOfCandidatesUI
+
+        OrderedListOfCandidatesUI -> SelectJobOpeningController : selects a job opening
+        activate SelectJobOpeningController
+
+            SelectJobOpeningController -> ListJobOpeningController : selectJobOpening()
+            activate ListJobOpeningController
+
+                ListJobOpeningController --> SelectJobOpeningController : showJobOpenings()
+
+            deactivate ListJobOpeningController
+
+            SelectJobOpeningController --> JobOpeningService : allJobOpenings()
+
+        activate JobOpeningService
+
+        JobOpeningService -> JobOpeningRepository : allJobOpenings()
+
+        activate JobOpeningRepository
+
+        JobOpeningRepository --> JobOpeningService  : list of all job openings
+
+        deactivate JobOpeningRepository
+
+        JobOpeningService --> SelectJobOpeningController : list of all job openings
+
+        deactivate JobOpeningService
+
+        SelectJobOpeningController --> OrderedListOfCandidatesUI : list of all job openings
+
+        deactivate SelectJobOpeningController
+
+        OrderedListOfCandidatesUI -> CustomerManager : lists job opening and asks to select one
+
+    deactivate OrderedListOfCandidatesUI
+
+    CustomerManager -> OrderedListOfCandidatesUI : selects job opening
+
+    activate OrderedListOfCandidatesUI
+
+        OrderedListOfCandidatesUI -> ListJobOpeningApplicationsController : allApplicationsOfJobOpening(jobOpening.jobReference()
+        activate ListJobOpeningApplicationsController
+
+            ListJobOpeningApplicationsController -> ApplicationService : allApplications()
+            activate ApplicationService
+
+                ApplicationService -> ApplicationRepository : allApplications()
+                activate ApplicationRepository
+
+                    ApplicationRepository --> ApplicationService : Iterable<Application> allApplications
+                deactivate ApplicationRepository
+
+
+            ApplicationService --> ListJobOpeningApplicationsController : Iterable<Application> allApplications
+
+                deactivate ApplicationService
+
+            ListJobOpeningApplicationsController --> OrderedListOfCandidatesUI : Iterable<Application> applicationList
+
+        deactivate ListJobOpeningApplicationsController
+
+
+
+           OrderedListOfCandidatesUI -> OrderedListOfCandidatesController : orderedList(applicationList)
+
+        activate OrderedListOfCandidatesController
+
+loop for each application in applicationList
+
+            OrderedListOfCandidatesController -> ListJobInterviewsApplicationController : allJobInterviewsOfApplication(application)
+
+            activate ListJobInterviewsApplicationController
+
+            ListJobInterviewsApplicationController -> JobInterviewService : allJobInterviews()
+
+            activate JobInterviewService
+
+            JobInterviewService -> JobInterviewRepository : allJobInterviews()
+
+            activate JobInterviewRepository
+
+            JobInterviewRepository --> JobInterviewService : all Job Interviews
+
+            deactivate JobInterviewRepository
+
+            JobInterviewService -->  ListJobInterviewsApplicationController :allJobInterviewsApplication
+
+            deactivate JobInterviewService
+
+end loop
+            activate ListJobInterviewsApplicationController
+
+            ListJobInterviewsApplicationController --> OrderedListOfCandidatesController: Iterable<JobInterview> orderedList
+
+            deactivate ListJobInterviewsApplicationController
+
+            OrderedListOfCandidatesController --> OrderedListOfCandidatesUI: Iterable<JobInterview> orderedList
+
+            deactivate OrderedListOfCandidatesController
+
+            OrderedListOfCandidatesUI -> OrderedListOfCandidatesController :applicationList(orderedList)
+
+             activate OrderedListOfCandidatesController
+
+             OrderedListOfCandidatesController --> OrderedListOfCandidatesUI : applicationsList
+
+             deactivate OrderedListOfCandidatesController
+
+             OrderedListOfCandidatesUI --> CustomerManager : display orderedList
+
+@enduml
+
+

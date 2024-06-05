@@ -13,7 +13,7 @@ if [[ $1 == "--help" || $1 == "-h" ]]; then
 fi
 
 # Use find to locate directories that match the pattern and contain application.example.properties
-find . -type d -name "ecourse.*" | while read -r dir; do
+find . -type d -name "jobs4u.*" | while read -r dir; do
   resource_path="$dir/src/main/resources"
   example_properties="$resource_path/application.example.properties"
   actual_properties="$resource_path/application.properties"

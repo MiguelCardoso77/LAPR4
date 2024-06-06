@@ -2,7 +2,6 @@ package backoffice.presentation.jobOpening;
 
 import core.application.ListCustomerController;
 import core.application.controllers.AddJobOpeningController;
-import core.application.controllers.ListCompaniesController;
 import core.domain.customer.Customer;
 import core.domain.jobOpening.ContractType;
 import core.domain.jobOpening.JobReference;
@@ -13,14 +12,12 @@ import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddJobOpeningUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
     private final AddJobOpeningController theController = new AddJobOpeningController();
-    private final ListCompaniesController companiesController = new ListCompaniesController();
     private final ListCustomerController customerController = new ListCustomerController();
 
     @Override

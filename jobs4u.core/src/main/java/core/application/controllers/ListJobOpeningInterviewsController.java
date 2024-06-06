@@ -21,7 +21,6 @@ public class ListJobOpeningInterviewsController {
 
     /**
      * Retrieves all job interviews associated with a specific job opening.
-     *
      * This method first retrieves all applications for the given job opening, then retrieves all job interviews
      * for each application, and collects them into a list.
      *

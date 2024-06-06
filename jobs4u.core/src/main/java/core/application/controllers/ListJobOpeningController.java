@@ -4,7 +4,6 @@ import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import core.domain.process.ProcessState;
 import core.services.JobOpeningService;
-import java.util.Iterator;
 
 
 public class ListJobOpeningController {
@@ -50,25 +49,6 @@ public class ListJobOpeningController {
 
     public JobOpening findJobOpeningByJobReference(JobReference jobReference) {
         return jobOpeningService.findJobOpening(jobReference);
-    }
-
-    public  JobOpening getJobOpeningAt(Iterable<JobOpening> allJobOpenings, int selected) {
-        if (selected < 0) {
-            throw new IllegalArgumentException("Selected index cannot be negative");
-        }
-
-        Iterator<JobOpening> iterator = allJobOpenings.iterator();
-        int currentIndex = 0;
-
-        while (iterator.hasNext()) {
-            JobOpening currentJob = iterator.next();
-            if (currentIndex == selected) {
-                return currentJob;
-            }
-            currentIndex++;
-        }
-
-        throw new IndexOutOfBoundsException("Selected index is out of bounds");
     }
 }
 

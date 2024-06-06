@@ -1,8 +1,6 @@
 package core.application.controllers;
 
-import core.domain.application.Application;
 import core.domain.interviewModel.InterviewModel;
-import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import core.persistence.PersistenceContext;
 import core.repositories.InterviewModelRepository;
@@ -10,21 +8,12 @@ import core.services.JobOpeningService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.io.util.Console;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @UseCaseController
 public class SelectInterviewModelController {
-    final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
-
     final JobOpeningService jobOpeningService = new JobOpeningService();
-    List<Application> applicationList = new ArrayList<>();
-
-
-    public Iterable<Application> applicationsOfJobOpening(JobOpening jobOpening) {
-        return applicationList = (List<Application>) jobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpening.identity());
-    }
 
     public InterviewModel listAndSelectInterviewModels() {
         List<InterviewModel> interviewModels = (List<InterviewModel>) interviewModelRepository.findAll();

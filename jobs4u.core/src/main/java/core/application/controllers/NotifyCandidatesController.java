@@ -6,8 +6,6 @@ import core.domain.email.Email;
 import core.services.ApplicationService;
 import core.services.EmailService;
 import eapli.framework.application.UseCaseController;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,6 @@ import java.util.List;
 @UseCaseController
 public class NotifyCandidatesController {
     private final ApplicationService applicationService = new ApplicationService();
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final EmailService emailService = new EmailService();
 
     public List<Application> findApplicationsToNotify() {

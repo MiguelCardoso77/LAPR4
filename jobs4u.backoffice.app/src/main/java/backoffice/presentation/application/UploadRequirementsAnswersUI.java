@@ -6,19 +6,16 @@ import core.domain.application.Application;
 import core.domain.jobOpening.JobOpening;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class UploadRequirementsAnswersUI extends AbstractUI {
-    final GenerateRequirementsAnswersTemplateController generateRequirementsAnswersTemplateController = new GenerateRequirementsAnswersTemplateController();
     final UploadRequirementsAnswersController uploadRequirementsAnswersController = new UploadRequirementsAnswersController();
     final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
 
     @Override
     protected boolean doShow() {
-        List<JobOpening> requirements = generateRequirementsAnswersTemplateController.findAllJobOpeningsWithJobRequirements();
+        List<JobOpening> requirements = uploadRequirementsAnswersController.findAllJobOpeningsWithJobRequirements();
 
         int cont = 1;
         if (requirements.isEmpty()) {

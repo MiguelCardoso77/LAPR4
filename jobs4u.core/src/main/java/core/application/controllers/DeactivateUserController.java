@@ -46,9 +46,9 @@ public class DeactivateUserController {
         return userSvc.activeUsers();
     }
 
-    public SystemUser deactivateUser(final SystemUser user) {
+    public void deactivateUser(final SystemUser user) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
 
-        return userSvc.deactivateUser(user);
+        userSvc.deactivateUser(user);
     }
 }

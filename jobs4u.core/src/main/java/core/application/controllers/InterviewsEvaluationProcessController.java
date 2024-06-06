@@ -17,8 +17,8 @@ import java.util.List;
 
 @UseCaseController
 public class InterviewsEvaluationProcessController {
-    private JobInterviewService jobInterviewModelService = new JobInterviewService();
-    private InterviewPlugin interviewPlugin = new InterviewPlugin();
+    private final JobInterviewService jobInterviewModelService = new JobInterviewService();
+    private final InterviewPlugin interviewPlugin = new InterviewPlugin();
 
     final String RED = "\u001B[31m";
     final String GREEN = "\u001B[32m";

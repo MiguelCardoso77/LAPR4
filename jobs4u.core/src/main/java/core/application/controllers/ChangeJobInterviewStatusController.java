@@ -8,8 +8,8 @@ import core.repositories.ApplicationRepository;
 public class ChangeJobInterviewStatusController {
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
 
-    public Application changeJobInterviewStatus(Status applicationStatus, Application application) {
+    public void changeJobInterviewStatus(Status applicationStatus, Application application) {
         application.changeStatus(applicationStatus);
-        return applicationRepository.save(application);
+        applicationRepository.save(application);
     }
 }

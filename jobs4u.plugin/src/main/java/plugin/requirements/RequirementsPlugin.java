@@ -9,6 +9,7 @@ import plugin.requirements.autogen.RequirementsGrammarParser;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 public class RequirementsPlugin {
@@ -46,4 +47,33 @@ public class RequirementsPlugin {
 
         return false;
     }
+
+
+    public List<String> retrieveAnswersRequirements(String path){
+        try {
+            // Read the input file
+            String input = new String(Files.readAllBytes(Paths.get(path)));
+
+            // Create a lexer and parser for the input
+            RequirementsGrammarLexer lexer = new RequirementsGrammarLexer(CharStreams.fromString(input));
+            CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+            RequirementsGrammarParser parser = new RequirementsGrammarParser(tokenStream);
+
+            // Parse the input file
+            ParseTree tree = parser.start(); // Assuming 'start' is the entry point of your grammar
+
+            // Create a custom listener
+            ResponseRequirementsVisitor visitor = new ResponseRequirementsVisitor();
+            visitor.visit(tree);
+
+            return visitor.retrieveResponseRequirements();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
 }

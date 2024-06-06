@@ -96,7 +96,7 @@ public class ApplicationsBootstrapper implements Action {
     }
 
     private void addRequirements(String candidateRequirementsPath, Application application) {
-        List<String> requirements = uploadRequirementsAnswersController.readFile(candidateRequirementsPath);
+        List<String> requirements = uploadRequirementsAnswersController.retrieveResponseRequirements(candidateRequirementsPath);
         uploadRequirementsAnswersController.uploadRequirements(requirements, application);
         LOGGER.debug("»»» Uploading requirements {}", candidateRequirementsPath);
     }

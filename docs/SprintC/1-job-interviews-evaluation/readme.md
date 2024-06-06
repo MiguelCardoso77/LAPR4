@@ -59,7 +59,7 @@ The ANTLR tool should be used (https://www.antlr.org/).
 
 [Register a job opening](..%2F..%2FSprintB%2Fadd-jobOpening)
 
-open or close phases of the process for a job opening.
+[Change Job Opening phase](..%2F7-change-status-process)
 
 ## 2.0. Analysis
 

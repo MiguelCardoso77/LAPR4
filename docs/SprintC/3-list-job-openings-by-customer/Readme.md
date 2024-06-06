@@ -24,6 +24,14 @@ tasks must be executed in background by the Follow Up Server.
 
 * Question:
 
+        Q34 Beatriz – US3002, lista job openings, position o que é?
+
+* Answer:
+
+        A34 Nessa US quando referimos “position” tem o mesmo significado que “title or function” na secção 2.2.2.
+
+* Question:
+
         Q172 Varela – US3002 - Job Openings Clarifications - You stated that one of the this to show in the listing of job openings is "active since". You've clarified that an active job opening is the one where its recruitment process is on-going. Are the job openings listed in this funcionality only the ones with recruitment process on-going? Or also the ones without recruitment processes, the ones with processes that haven't yet started or have ended?
 
 * Answer:
@@ -51,6 +59,8 @@ tasks must be executed in background by the Follow Up Server.
 [Register a Job Opening](..%2F..%2FSprintB%2Fadd-jobOpening)
 
 [Register a Customer](..%2F..%2FSprintB%2Fregister-a-customer)
+
+[Customer Application Login](..%2F12-customer-application-login)
 
 ## 2. Analysis
 

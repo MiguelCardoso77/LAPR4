@@ -40,11 +40,11 @@ public class Jobs4UBootstrapper implements Action {
         authenticateForBootstrapping();
 
         final Action[] actions = {
-                new AddRequirementsBootstrapper(),
+                new InterviewModelBootstrapper(),
+                new RequirementsBootstrapper(),
                 new CompanyBootstrapper(),
                 new MasterUsersBootstrapper(),
                 new ProcessBootstrapper(),
-                new InterviewModelBootstrapper(),
                 new JobsBootstrapper(),
                 new ApplicationsBootstrapper(),
                 new JobInterviewsBootstrapper()};

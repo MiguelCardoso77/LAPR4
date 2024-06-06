@@ -24,26 +24,24 @@ public class JobInterviewsBootstrapper implements Action {
         Calendar createdOn = Calendar.getInstance();
         List<Application> applications = (List<Application>) applicationRepository.allApplications();
 
-        registerJobInterview(createdOn, 20, 80, "Passed", applications.get(0));
-        registerJobInterview(createdOn,20, 30, "Not approved", applications.get(1));
-        registerJobInterview(createdOn, 30, 90, "Passed", applications.get(2));
-        registerJobInterview(createdOn, 30, 20, "Not approved", applications.get(3));
-        registerJobInterview(createdOn, 40, 40, "Not approved", applications.get(4));
-        registerJobInterview(createdOn, 40, 50, "Passed", applications.get(5));
+        registerJobInterview(createdOn, 20, 10, "Not approved", applications.get(0));
+        registerJobInterview(createdOn, 20, 20, "Not approved", applications.get(1));
+        registerJobInterview(createdOn, 30, 30, "Passed", applications.get(2));
+        registerJobInterview(createdOn, 30, 40, "Passed", applications.get(3));
+        registerJobInterview(createdOn, 40, 50, "Not approved", applications.get(4));
+        registerJobInterview(createdOn, 40, 60, "Passed", applications.get(5));
 
-        JobInterview jobInterview = listJobInterviewsApplicationController.findJobInterviewById(4);
-        JobInterview jobInterview2 = listJobInterviewsApplicationController.findJobInterviewById(5);
-        JobInterview jobInterview1 = listJobInterviewsApplicationController.findJobInterviewById(6);
+        JobInterview jobInterview = listJobInterviewsApplicationController.findJobInterviewById(1);
+        JobInterview jobInterview1 = listJobInterviewsApplicationController.findJobInterviewById(2);
 
-        List<String> responses = uploadResponsesController.retrieveResponses("jobs4u.core/src/main/resources/answeringTemplates/jobInterview-id-3-answerTemplate.txt");
-
+        List<String> responses = uploadResponsesController.retrieveResponses("jobs4u.core/src/main/resources/answered/interview/interview1.txt");
         uploadResponsesController.uploadResponses(responses, jobInterview);
         uploadResponsesController.uploadResponses(responses, jobInterview1);
 
         return true;
     }
 
-    private void registerJobInterview(Calendar createdOn, Integer time, Integer score, String result, Application application){
+    private void registerJobInterview(Calendar createdOn, Integer time, Integer score, String result, Application application) {
         controller.addJobInterview(createdOn, time, score, result, application);
         LOGGER.debug("»»» {}", application);
     }

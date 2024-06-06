@@ -13,9 +13,9 @@ public class InterviewModelBootstrapper implements Action {
 
     @Override
     public boolean execute() {
-        registerInterviewModel("jobs4u.core/src/main/resources/interviewModels/interviewModel1.txt");
-        registerInterviewModel("jobs4u.core/src/main/resources/interviewModels/interviewModel2.txt");
-        registerInterviewModel("jobs4u.core/src/main/resources/interviewModels/interviewModel3.txt");
+        registerInterviewModel("jobs4u.core/src/main/resources/templates/interview/interview1.txt");
+        registerInterviewModel("jobs4u.core/src/main/resources/templates/interview/interviewModel2.txt");
+        registerInterviewModel("jobs4u.core/src/main/resources/templates/interview/interviewModel3.txt");
 
         return true;
     }

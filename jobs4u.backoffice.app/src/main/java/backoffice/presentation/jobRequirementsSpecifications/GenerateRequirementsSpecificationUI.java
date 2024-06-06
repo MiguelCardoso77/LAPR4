@@ -32,7 +32,7 @@ public class GenerateRequirementsSpecificationUI extends AbstractUI {
         int id = jobopening.jobRequirementsSpecification().identity();
 
         String fileName = jobReference + "-requirementsAnswers-" + id  ;
-        theController.writeListToFile(templateLines, "jobs4u.core/src/main/resources/jobOpeningRequirements/" + fileName + ".txt");
+        theController.writeListToFile(templateLines, "jobs4u.core/src/main/resources/answeringRequirementsTemplates/" + fileName + ".txt");
 
         return true;
 

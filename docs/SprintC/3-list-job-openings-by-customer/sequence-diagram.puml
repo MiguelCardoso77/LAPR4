@@ -1,11 +1,107 @@
 @startuml
-'https://plantuml.com/sequence-diagram
-
 autonumber
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+title List Job Openings by Customer
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor Customer
+
+participant ListCustomerJobOpeningsUI <<presentation>>
+
+participant ListCustomerJobOpeningsController <<controller>>
+
+participant CustomerJobOpeningsService <<service>>
+participant JobOpeningService <<service>>
+participant JobOpeningDTOService <<service>>
+
+participant Jobs4UProtocol <<protocol>>
+
+participant JobOpeningDTO <<DTO>>
+participant Jobs4UProtocol <<protocol>>
+
+database JobOpeningRepository <<repository>>
+
+
+activate Customer
+
+Customer -> ListCustomerJobOpeningsUI : asks to list all of his job openings
+activate ListCustomerJobOpeningsUI
+
+ListCustomerJobOpeningsUI -> ListCustomerJobOpeningsController : sendCustomerJobOpenings(email)
+
+activate ListCustomerJobOpeningsController
+
+ListCustomerJobOpeningsController -> CustomerJobOpeningsService : requestJobOpenings(email)
+
+activate CustomerJobOpeningsService
+
+CustomerJobOpeningsService -> Jobs4UProtocol : sendJobOpenings(email)
+
+activate Jobs4UProtocol
+
+Jobs4UProtocol --> CustomerJobOpeningsService : list of all job openings of a customer \n and operation success
+
+deactivate Jobs4UProtocol
+
+CustomerJobOpeningsService -> JobOpeningService : allJobOpenings()
+
+activate JobOpeningService
+
+JobOpeningService -> JobOpeningRepository : allJobOpenings()
+
+activate JobOpeningRepository
+
+JobOpeningRepository --> JobOpeningService : all job openings
+
+deactivate JobOpeningRepository
+
+JobOpeningService --> CustomerJobOpeningsService : all job openings
+
+deactivate JobOpeningService
+
+loop for each job opening on the list
+
+CustomerJobOpeningsService -> JobOpeningDTOService : toDTO(jobOpening)
+
+activate JobOpeningDTOService
+
+JobOpeningDTOService --> CustomerJobOpeningsService : JobOpeningDTO
+
+deactivate JobOpeningDTOService
+
+end
+
+loop for each job opening dto on the list
+
+CustomerJobOpeningsService -> JobOpeningDTO : identity()
+
+activate JobOpeningDTO
+
+JobOpeningDTO --> CustomerJobOpeningsService : jobReference
+
+deactivate JobOpeningDTO
+
+alt identity == jobReference
+
+CustomerJobOpeningsService -> JobOpeningDTOService : findById(jobReference)
+
+activate JobOpeningDTOService
+
+JobOpeningDTOService --> CustomerJobOpeningsService : JobOpeningDTO
+
+deactivate JobOpeningDTOService
+
+end
+
+end
+
+CustomerJobOpeningsService --> ListCustomerJobOpeningsController : List<JobOpeningDTO> customerJobOpenings
+
+deactivate CustomerJobOpeningsService
+
+ListCustomerJobOpeningsController --> ListCustomerJobOpeningsUI : List<JobOpeningDTO> customerJobOpenings
+
+deactivate ListCustomerJobOpeningsController
+
+ListCustomerJobOpeningsUI --> Customer : lists all job openings of customer \n and displays operation success
+
 @enduml

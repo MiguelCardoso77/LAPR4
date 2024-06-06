@@ -1,4 +1,4 @@
 # Requirements:
 -> Academic Degree: Master
--> Programming Languages: Portuguese, French
+-> Languages: Portuguese, French
 -> Years of Experience: 9

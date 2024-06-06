@@ -1,11 +1,212 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+skinparam linetype ortho
+'left to right direction
 
-autonumber
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+title CD - List Job Openings by Customer
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+package "presentation" {
+    class ListCustomerJobOpeningsUI {
+        + ListCustomerJobOpeningsUI(email)
+        + doShow() : boolean
+        + headline() : String
+    }
+}
+
+package "application" {
+    class ListCustomerJobOpeningsController {
+        + sendJobOpeningsRequest(email) : List<JobOpeningDTO>
+    }
+}
+
+package "customer"{
+    package "domain"{
+            class Customer{
+             - emailAddress : EmailAddress
+             - customerManager : SystemUser
+             - company : Company
+             + Customer(user, emailAddress, customerManager, company) : Customer
+               Customer()
+             + user() : SystemUser
+             + company() : Company
+             + customerManager() : SystemUser
+             + identity() : EmailAddress
+             + equals(otherObject) : boolean
+             + sameAs(otherObject) : boolean
+             + hashCode() : int
+             + toString() : String
+            }
+            note right of Customer
+                        - The SystemUser and EmailAddress classes are provided by the framework,
+                        so that there's no need in representing them
+                     end note
+        }
+
+        package "service"{
+            class CustomerService{
+            + registerCustomer(user, emailAddress, customerManager, company) : Customer
+            + allCustomers() : Iterable<Customer>
+            + findCustomer(emailAddress) : Customer
+            + findCustomerByUser(user) : Customer
+            }
+
+            class CustomerJobOpeningsService{
+            + requestJobOpenings(email) : List<JobOpeningDTO>
+            + jobOpeningDTOS(jobOpenings) : List<JobOpeningDTO>
+            }
+
+        }
+
+        package "repository"{
+            Interface CustomerRepository{
+                findAllActive() : Iterable<Customer>
+                findByEmailAddress(emailAddress) : Customer
+            }
+        }
+}
+
+
+
+
+package "jobOpening"{
+    package "domain"{
+        class JobOpening{
+            + JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer, jobRequirementsSpecification, process, interviewModel) : JobOpening
+            JobOpening()
+            + identity() : JobReference
+            + equals(otherObject) : boolean
+            + sameAs(otherObject) : boolean
+            + jobReference() : JobReference
+            + description() : Description
+            + vacanciesNumber() : VacanciesNumber
+            + address() : Address
+            + mode() :  Mode
+            + contractType() : ContractType
+            + titleOrFunction() : TitleOrFunction
+            + customer() : Customer
+            + jobRequirementsSpecification() : JobRequirementsSpecification
+            + process() : Process
+            + myInterviewModel() : InterviewModel
+            + updateJobRequirements(jobRequirementsSpecification)
+            + updateInterviewModel(interviewModel)
+            + sameReference(jobReference) : boolean
+            + toString() : String
+        }
+
+        class Address{
+            - address : String
+            + Address(address) : Address
+            Address()
+            + valueOf(address) : Address
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+        Enum ContractType{
+            FULL_TIME
+            PART_TIME
+        }
+
+        class Description{
+            - description : String
+            + Description(description) : Description
+            Description()
+            + valueOf(description) : Description
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+        class JobReference{
+            - private jobReference : String
+            - private lastSequentialNumber : int
+            JobReference()
+            + JobReference(companyName, generate) : JobReference
+            - buildCompanyReference(companyName) : String
+            + buildReference(companyReference) : String
+            + valueOf(jobReference) : JobReference
+            + stringToJobReference(jobReference) : JobReference
+            + toString() : String
+            + compareTo(otherObject) : int
+            + hashCode() : int
+            + equals(otherObject) : boolean
+        }
+
+        Enum Mode{
+            REMOTE
+            HYBRID
+            ON_SITE
+        }
+
+        class TitleOrFunction{
+            - titleOrFunction : String
+            + TitleOrFunction(titleOrFunction) : TitleOrFunction
+            TitleOrFunction()
+            + valueOf(titleOrFunction) : TitleOrFunction
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+        class VacanciesNumber{
+            - vacanciesNumber : int
+            + VacanciesNumber(vacanciesNumber) : VacanciesNumber
+            VacanciesNumber()
+            + valueOf(vacanciesNumber) : VacanciesNumber
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+        }
+
+        class JobOpeningService{
+                        + registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer) : JobOpening
+                        + findJobOpening(jobReference) : JobOpening
+                        + updateJobOpening(jobReference, jobRequirementsSpecification) : JobOpening
+                        + updateInterviewModel(jobReference, interviewModel) : JobOpening
+                        + verifyJobOpening(jobReference) : boolean
+                        + findByCustomer(customer) : List<JobOpening>
+                        + allJobOpenings() : Iterable<JobOpening>
+                    }
+
+                    package "repositories"{
+                        interface JobOpeningRepository {
+                            + allJobOpenings() : List<JobOpening>
+                            + ofIdentity(id) : JobOpening
+                        }
+                    }
+
+    }
+
+ListCustomerJobOpeningsUI --> ListCustomerJobOpeningsController
+
+ListCustomerJobOpeningsController --> CustomerJobOpeningsService
+
+CustomerJobOpeningsService --> CustomerService
+CustomerJobOpeningsService --> JobOpeningService
+
+CustomerService --> Customer
+CustomerService --> CustomerRepository
+
+JobOpening --> Address
+JobOpening --> Mode
+JobOpening --> ContractType
+JobOpening --> Description
+JobOpening --> JobReference
+JobOpening --> TitleOrFunction
+JobOpening --> VacanciesNumber
+JobOpening --> Customer
+
+JobOpeningService --> JobOpening
+JobOpeningService --> JobOpeningRepository
+
+
 @enduml

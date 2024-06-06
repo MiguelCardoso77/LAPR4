@@ -6,7 +6,6 @@ import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import core.persistence.PersistenceContext;
 import core.repositories.InterviewModelRepository;
-import core.services.JobInterviewService;
 import core.services.JobOpeningService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.io.util.Console;
@@ -16,10 +15,8 @@ import java.util.List;
 
 @UseCaseController
 public class SelectInterviewModelController {
-
     final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
-    final JobInterviewService service = new JobInterviewService();
 
     final JobOpeningService jobOpeningService = new JobOpeningService();
     List<Application> applicationList = new ArrayList<>();
@@ -33,9 +30,10 @@ public class SelectInterviewModelController {
         List<InterviewModel> interviewModels = (List<InterviewModel>) interviewModelRepository.findAll();
         int cont = 1;
         for (InterviewModel interviewModel : interviewModels) {
-            System.out.println("id: " + cont + " - " + interviewModel);
+            System.out.println("ID: " + cont + " - " + interviewModel);
             cont++;
         }
+
         int option;
         do {
             option = Console.readInteger("Enter the number of the file you want to select (0 to cancel): ");

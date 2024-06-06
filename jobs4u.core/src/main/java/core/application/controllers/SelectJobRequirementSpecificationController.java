@@ -7,6 +7,7 @@ import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
 
 import java.util.List;
+
 /**
  * Controller class for selecting one job requirements specifications.
  *
@@ -15,15 +16,17 @@ import java.util.List;
 @UseCaseController
 public class SelectJobRequirementSpecificationController {
     final ListJobRequirementsSpecificationController listJobRequirementsSpecificationController = new ListJobRequirementsSpecificationController();
+
     /**
      * Lists all job requirements specifications and allows the user to select one.
      *
      * @return The selected JobRequirementsSpecification object, or null if no selection was made.
      */
-    public JobRequirementsSpecification selectJobRequirementSpecification(){
+    public JobRequirementsSpecification selectJobRequirementSpecification() {
         final List<JobRequirementsSpecification> requirements = (List<JobRequirementsSpecification>) listJobRequirementsSpecificationController.allJobRequirementsSpecification();
         return selectorPart(requirements);
     }
+
     /**
      * Handles the selection of a job requirements specification from a provided list.
      *

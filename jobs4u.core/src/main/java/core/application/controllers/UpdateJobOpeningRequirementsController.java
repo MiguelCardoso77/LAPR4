@@ -20,11 +20,11 @@ public class UpdateJobOpeningRequirementsController {
     /**
      * Updates a job opening with the given job requirements specification.
      *
-     * @param jobReference The reference of the job opening to be updated.
+     * @param jobReference                 The reference of the job opening to be updated.
      * @param jobRequirementsSpecification The job requirements specification to be associated with the job opening.
      * @return The updated JobOpening object.
      */
-    public JobOpening updateJobOpening(JobReference jobReference, JobRequirementsSpecification jobRequirementsSpecification){
+    public JobOpening updateJobOpening(JobReference jobReference, JobRequirementsSpecification jobRequirementsSpecification) {
         return jobOpeningService.updateJobRequirements(jobReference, jobRequirementsSpecification);
     }
 }

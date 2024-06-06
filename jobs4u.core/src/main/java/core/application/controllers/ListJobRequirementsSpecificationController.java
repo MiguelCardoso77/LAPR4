@@ -18,7 +18,7 @@ public class ListJobRequirementsSpecificationController {
      * @return An Iterable containing all job requirements specifications.
      */
 
-    public Iterable<JobRequirementsSpecification> allJobRequirementsSpecification(){
+    public Iterable<JobRequirementsSpecification> allJobRequirementsSpecification() {
         return service.allJobRequirementsSpecification();
     }
 
@@ -29,7 +29,7 @@ public class ListJobRequirementsSpecificationController {
      * @return The found JobRequirementsSpecification object, or null if not found.
      */
 
-    public JobRequirementsSpecification findJobRequirementSpecification(Integer id){
+    public JobRequirementsSpecification findJobRequirementSpecification(Integer id) {
         return service.findJobRequirementsSpecification(id);
     }
 }

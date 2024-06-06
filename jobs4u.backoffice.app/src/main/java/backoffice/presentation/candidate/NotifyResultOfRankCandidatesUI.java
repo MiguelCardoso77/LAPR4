@@ -5,7 +5,6 @@ import core.domain.application.Application;
 import core.domain.application.Rank;
 import core.domain.application.Status;
 import core.domain.candidate.Candidate;
-import core.domain.candidate.TelephoneNumber;
 import core.domain.email.Email;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
@@ -16,7 +15,6 @@ import java.util.List;
 public class NotifyResultOfRankCandidatesUI {
 
     private final NotifyCandidatesController notifyCandidatesController = new NotifyCandidatesController();
-    private final NotifyResultOfRankCandidatesController notifyResultOfRankCandidatesController = new NotifyResultOfRankCandidatesController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
 
@@ -30,7 +28,7 @@ public class NotifyResultOfRankCandidatesUI {
 
         JobReference jobReference = jobOpening.jobReference();
 
-        Iterable<Application> appToNotify = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
+        Iterable<Application> appToNotify = listJobOpeningApplicationsController.allApplicationsOfJobOpeningAccepted(jobReference);
 
         for (Application application : appToNotify) {
 
@@ -42,24 +40,15 @@ public class NotifyResultOfRankCandidatesUI {
             emailToCostumer.add(body2);
             emailsToSend.add(emailObj);
         }
+        String costumerEmail = jobOpening.customer().identity().toString();
+        String subject1 = buildSubject1(jobReference);
+        String body3 = emailToCostumer.toString();
 
+        Email emailcostumer = notifyCandidatesController.createEmail(costumerEmail, subject1, body3);
 
+        notifyCandidatesController.sendEmails(emailsToSend);
 
-            String costumerEmail = jobOpening.customer().identity().toString();
-
-            String subject1 = buildSubject1(jobReference);
-
-            String body3 = emailToCostumer.toString();
-
-            Email emailcostumer = notifyCandidatesController.createEmail(costumerEmail, subject1, body3);
-
-        System.out.println(emailToCostumer);
-        System.out.println("========================");
-        System.out.println(emailsToSend);
-
-            notifyCandidatesController.sendEmails(emailsToSend);
-
-            notifyCandidatesController.sendEmailCostumer(emailcostumer);
+        notifyCandidatesController.sendEmailCostumer(emailcostumer);
 
         return true;
     }

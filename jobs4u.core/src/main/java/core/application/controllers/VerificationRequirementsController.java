@@ -102,15 +102,14 @@ public class VerificationRequirementsController {
 
         Map<String, String> candidateRequirementsMap = new HashMap<>();
         for (String requirement : candidateRequirements) {
-            int startIndex = requirement.indexOf("->");
             int endIndex = requirement.indexOf(":");
-            if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
-                String typeRequirement = requirement.substring(startIndex + 2, endIndex).trim();
+            if (endIndex != -1 ) {
+                String typeRequirement = requirement.substring(0, endIndex).trim();
                 String valueRequirement = requirement.substring(endIndex + 2).trim();
                 candidateRequirementsMap.put(typeRequirement, valueRequirement);
             }
         }
-
+        System.out.println(candidateRequirementsMap);
         return candidateRequirementsMap;
 
 }

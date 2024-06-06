@@ -25,7 +25,6 @@ public class VerificationRequirementsUI extends AbstractUI {
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
     private final ChangeJobInterviewStatusController changeJobInterviewStatusController = new ChangeJobInterviewStatusController();
-    private final RequirementsPlugin requirementsPlugin = new RequirementsPlugin();
 
 
     final String RED = "\u001B[31m";
@@ -35,7 +34,7 @@ public class VerificationRequirementsUI extends AbstractUI {
     @Override
     protected boolean doShow() {
         JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
-        JobReference jobReference = jobOpening.identity();
+        JobReference jobReference = jobOpening.jobReference();
 
         Iterable<Application> jobOpeningApplications = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
 
@@ -47,6 +46,7 @@ public class VerificationRequirementsUI extends AbstractUI {
 
                     CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
                     String path = jobOpening.jobRequirementsSpecification().jobRequirementsPath();
+
 
                     Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
 

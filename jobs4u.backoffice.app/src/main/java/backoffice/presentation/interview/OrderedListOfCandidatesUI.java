@@ -31,7 +31,7 @@ public class OrderedListOfCandidatesUI {
         return true;
     }
 
-    public List<Candidate> displayList(List<Application> finalList, List<JobInterview> orderedList) {
+    public void  displayList(List<Application> finalList, List<JobInterview> orderedList) {
 
     int count= 0;
 
@@ -50,10 +50,8 @@ public class OrderedListOfCandidatesUI {
         if(count == 0 ){
             System.out.println("There are no candidates with grade for this job opening.");
         }
-
-            return null;
-        }
     }
+}
 
 
 

@@ -35,7 +35,7 @@ public class ListJobOpeningApplicationsController {
 
         List<Application> allApplicationsJobOpening = new ArrayList<>();
         for (Application a : allApplications) {
-            if (a.jobReference().sameReference(jobReference) && a.status().toString().equals("ACCEPTED")) {
+            if (a.jobReference().sameReference(jobReference)) {
                 allApplicationsJobOpening.add(a);
                 count++;
             }
@@ -44,6 +44,23 @@ public class ListJobOpeningApplicationsController {
             return null;
         }
         return allApplicationsJobOpening;
+    }
+
+    public Iterable<Application> allApplicationsOfJobOpeningAccepted(JobReference jobReference) {
+        Iterable<Application> allApplications = appServ.allApplications();
+        int count = 0;
+
+        List<Application> allApplicationsOfJobOpeningAccepted = new ArrayList<>();
+        for (Application a : allApplications) {
+            if (a.jobReference().sameReference(jobReference) && a.status().toString().equals("ACCEPTED")) {
+                allApplicationsOfJobOpeningAccepted.add(a);
+                count++;
+            }
+        }
+        if(count == 0){
+            return null;
+        }
+        return allApplicationsOfJobOpeningAccepted;
     }
 
     public Iterable<Application> showApplicationsOfJobOpening(JobReference jobReference) {

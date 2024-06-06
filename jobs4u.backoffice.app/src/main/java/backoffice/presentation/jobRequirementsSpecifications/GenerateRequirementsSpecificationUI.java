@@ -13,16 +13,11 @@ public class GenerateRequirementsSpecificationUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        List<JobOpening> allJobOpening = theController.findAllJobOpeningAssigned();
-
-        System.out.println("Job Opening: ");
-        for (JobOpening jobOpening : allJobOpening) {
-            System.out.println("ID: " + jobOpening.identity() + " - " + jobOpening.jobRequirementsSpecification());
-        }
 
         JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
 
         List<String> model = theController.readFile(jobOpening.jobRequirementsSpecification().jobRequirementsPath());
+
         List<String> templateLines = theController.processLines(model);
         String jobReference = String.valueOf(jobOpening.jobReference());
 
@@ -33,8 +28,11 @@ public class GenerateRequirementsSpecificationUI extends AbstractUI {
 
     }
 
+
+
     @Override
     public String headline() {
         return "Generate Template File";
     }
+
 }

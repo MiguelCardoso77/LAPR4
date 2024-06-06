@@ -85,16 +85,24 @@ public class RequirementsVisitor extends RequirementsGrammarBaseVisitor<Object> 
             System.out.println("Required Degree -> " + ctx.getText());
             System.out.println("Candidate Degree -> " + candidateRequirement);
 
-            if (ctx.getText().equals(candidateRequirement)) {
-                System.out.println("Academic Degree Requirement Met");
-                if (!requirementsMet) {
-                    requirementsMet = false;
-                } else {
-                    requirementsMet = true;
-                }
-            } else {
-                System.out.println("Academic Degree Requirement Not Met");
-                requirementsMet = false;
+            switch (ctx.getText()){
+                case ("Bachelor"):
+                    requirementsMet = candidateRequirement.equals("Bachelor") || candidateRequirement.equals("Master") || candidateRequirement.equals("Doctorate");
+                    break;
+                case ("Master"):
+                    if(candidateRequirement.equals("Master") ||candidateRequirement.equals("Doctorate") ){
+                        requirementsMet = true;
+                    }else {
+                        requirementsMet = false;
+                    }
+                    break;
+                case ("Doctorate"):
+                    if(candidateRequirement.equals("Doctorate") ){
+                        requirementsMet = true;
+                    }else {
+                        requirementsMet = false;
+                    }
+                    break;
             }
         }
 

@@ -1,0 +1,152 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
+
+Title "Class Diagram - Notify the rank by email"
+
+package "presentation" {
+    class NotifyResultOfRankCandidatesUI {
+        + doShow()
+        + buildSubject(application)
+        + buildBody1(application, rank, status)
+        + buildBody2(candidate)
+        + buildSubject1(jobReference)
+    }
+}
+
+
+package "application" {
+
+    class NotifyCandidatesController{
+        + findApplicationsToNotify()
+        + findCandidateEmail(application)
+        + checkApplicationStatus(application)
+        + createEmail(candidateEmail, subject, body)
+        + sendEmails(emailsToSend)
+        + sendEmailCostumer(Email emailsToSend)
+    }
+
+    class SelectJobOpeningController {
+        + selectJobOpening()
+        + selectJobOpeningAnalysis()
+        + selectorPart(list)
+    }
+
+    class ListJobOpeningApplicationsController {
+        + allApplicationsOfJobOpening(jobReference)
+        + allApplicationsOfJobOpeningAccepted(jobReference)
+        + showApplicationsOfJobOpening(jobReference)
+        + selectApplication()
+        + findJobOpening(jobReference)
+        + findApplicationByID(id)
+    }
+
+    class ListJobOpeningController {
+         + showJobOpenings()
+         + showJobOpeningsAnalysis()
+         + allJobOpenings()
+         + findJobOpeningByJobReference(jobReference)
+         }
+
+}
+
+    package "services" {
+            class ApplicationService {
+                + registerApplication(rank, applicationFiles, jobReference, candidate, operator)
+                + findApplicationById(applicationID)
+                + allApplications()
+                + findApplicationsForJobOpening(jobOpening)
+                + updateRank(rank, application)
+                + applicationsByCM(cm)
+            }
+
+            class JobOpeningService {
+                + registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company)
+                + findJobOpening(jobReference)
+                + updateJobRequirements(jobReference, jobRequirementsSpecification)
+                + verifyJobReference(jobReference)
+                + allJobOpenings()
+            }
+            class EmailService {
+                 + createEmail( candidateEmail,  subject,  body)
+                 + sendAllEmails(emailsToSend)
+                 + sendEmailCostumer(emailsToSend)
+            }
+    }
+
+package "repositories" {
+            interface ApplicationRepository {
+                + allApplications()
+                + ofIdentity(applicationId)
+            }
+
+            interface JobOpeningRepository {
+                + allJobOpenings()
+                + ofIdentity(jobReference)
+            }
+        }
+
+
+package "domain" {
+    class Application {
+        + Application(rank, createdOn, applicationFiles, jobReference, candidate, operator)
+        + sameAs(otherApplication)
+        + equals(otherApplication)
+        + hashCode()
+        + compareTo(otherApplication)
+        + identity()
+        + rank()
+        + submissionDate()
+        + status()
+        + dataFile()
+        + operator()
+        + candidate()
+        + jobReference()
+        + updateRank(rank)
+        + toString()
+    }
+
+    class JobOpening {
+        + JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, Company)
+        + identity()
+        + sameAs(otherJobOpening)
+        + jobReference()
+        + description()
+        + vacanciesNumber()
+        + address()
+        + mode()
+        + contractType()
+        + titleOrFunction()
+        + company()
+    }
+
+ }
+
+NotifyResultOfRankCandidatesUI --> SelectJobOpeningController
+SelectJobOpeningController -> ListJobOpeningController
+NotifyResultOfRankCandidatesUI --> ListJobOpeningApplicationsController
+NotifyResultOfRankCandidatesUI --> NotifyCandidatesController
+
+JobOpeningService ----> JobOpeningRepository
+ApplicationService ----> ApplicationRepository
+
+ApplicationRepository --> Application : stores
+JobOpeningRepository --> JobOpening : stores
+
+ListJobOpeningApplicationsController --> JobOpeningService
+ListJobOpeningApplicationsController --> ApplicationService
+
+ListJobOpeningController -> JobOpeningService
+
+NotifyCandidatesController -> EmailService
+NotifyCandidatesController -> ApplicationService
+
+@enduml
+
+
+

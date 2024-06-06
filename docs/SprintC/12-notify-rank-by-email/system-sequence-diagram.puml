@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Notify rank of candidates
+
+autonumber
+
+actor "Customer Manager" as CM
+participant ":System" as System
+
+activate CM
+
+    CM -> System : asks to order the candidates of a job opening by grades
+    activate System
+
+
+       System --> CM : lists job openings and asks to select one
+    deactivate System
+
+    CM -> System : selects job opening
+    activate System
+
+loop application with status accepted
+        System --> CM : notify the candidate by email the result
+end
+
+    System --> CM : notify the costumer of the list of candidates accepted
+
+    deactivate System
+
+deactivate CM
+
+@enduml
+

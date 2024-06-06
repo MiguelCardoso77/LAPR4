@@ -44,13 +44,6 @@ entity JobRequirementsSpecification <<entity>><<root>>
 
 }
 
-
-package "Customer Manager Aggregate"{
-entity CustomerManager <<entity>><<root>>
-
-}
-
-
 package "Job Opening Aggregate"{
 entity JobOpening <<entity>><<root>>
 
@@ -92,8 +85,82 @@ entity JobOpening <<entity>><<root>>
 
 }
 
-CustomerManager -> JobRequirementsSpecification
-JobRequirementsSpecification --> JobOpening
+package "User Aggregate"{
+entity User <<entity>><<root>>
+
+    card UserEmail <<Value Object>> {
+    }
+    card UserName <<Value Object>> {
+    }
+    card UserPassword <<Value Object>> {
+    }
+    card Username<<Value Object>> {
+    }
+
+    User --> UserEmail
+    User --> UserName
+    User --> Username
+    User --> UserPassword
+
+}
+
+package "Application Aggregate"{
+entity Application <<entity>><<root>>
+
+    card ApplicationFiles <<Value Object>>{
+    }
+    card Status <<Value Object>>{
+    }
+    card SubmissionDate <<Value Object>>{
+    }
+    card Rank <<Value Object>>{
+    }
+
+    Application --> ApplicationFiles
+    Application --> Status
+    Application --> SubmissionDate
+    Application --> Rank
+
+    note right of Status
+        Can be one of the following:
+        - submitted
+        - pending
+        - accepted
+        - declined
+    end note
+
+    note right of ApplicationFiles
+        Can be one of the following:
+        - text file with the contents of the email
+        - file for each file attached to the email
+        - text file with the contents of each file attached to the email
+        - text file with the data of the application and candidate
+    end note
+
+}
+
+package "Candidate Aggregate"{
+entity Candidate <<entity>><<root>>
+
+    card Curriculum <<Value Object>> {
+    }
+    card TelephoneNumber <<Value Object>>{
+    }
+
+    Candidate --> Curriculum
+    Candidate --> TelephoneNumber
+}
+
+JobOpening "1" <-- "N " Application : has
+Application "N" --> "1" Candidate
+JobRequirementsSpecification "1" <-- "N" JobOpening : associated
+User "1" ---> "N" JobOpening : Customer Manager manages >
+
+User "1" ---> "N" Application : Operator registers >
+
+User "1" --> "N" JobRequirementsSpecification : Language Engineer creates >
+Candidate --> User
+
 
 
 @enduml

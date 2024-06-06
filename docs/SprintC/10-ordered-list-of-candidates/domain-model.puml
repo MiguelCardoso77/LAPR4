@@ -131,17 +131,44 @@ entity Candidate <<entity>><<root>>
     Candidate --> TelephoneNumber
 }
 
+package "Candidate Aggregate"{
+entity Candidate <<entity>><<root>>
 
-package "Customer Manager Aggregate"{
-entity CustomerManager <<entity>><<root>>
+    card Curriculum <<Value Object>> {
+    }
+    card TelephoneNumber <<Value Object>>{
+    }
+
+    Candidate --> Curriculum
+    Candidate --> TelephoneNumber
+}
+package "User Aggregate"{
+entity User <<entity>><<root>>
+
+    card UserEmail <<Value Object>> {
+    }
+    card UserName <<Value Object>> {
+    }
+    card UserPassword <<Value Object>> {
+    }
+    card Username<<Value Object>> {
+    }
+
+    User --> UserEmail
+    User --> UserName
+    User --> Username
+    User --> UserPassword
 
 }
 
-Application "1" ---> "1" JobInterview
-JobOpening "1" <-- "N " Application : has
-Application "N" ---> "1" Candidate
-CustomerManager "1" ---> "N" JobOpening : manages
-JobOpening "N" ---> "1" Customer : associated
+
+
+
+
+Application "1" --> "1" JobInterview
+JobOpening "1" <--- "N " Application : has
+Application "N" -> "1" Candidate
+Candidate --> User
 
 
 

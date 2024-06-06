@@ -44,9 +44,10 @@ public class GenerateAnswersTemplateUI extends AbstractUI {
 
         List<String> model = theController.readFile(interviewModel.model());
         List<String> templateLines = theController.processLines(model);
+        String jobReference = "Por"; // String.valueOf(jobOpening.jobReference());
 
-        String fileName = "interviewModel-id-" + selectedID + "-answerTemplate";
-        boolean writeFile = theController.writeListToFile(templateLines, "jobs4u.core/src/main/resources/answeringTemplates/" + fileName + ".txt");
+        String fileName = jobReference + "-answerTemplate";
+        boolean writeFile = theController.writeListToFile(templateLines, "jobs4u.core/src/main/resources/answeringTemplates/interview/" + fileName + ".txt");
 
         if (writeFile) {
             System.out.println(ConsoleColors.GREEN + "Answers template generated successfully." + ConsoleColors.RESET);

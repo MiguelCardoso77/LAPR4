@@ -1,5 +1,0 @@
-# Questions:
--> Numeric Range: <What is the minimum and maximum number of tables in a restaurant?>
--> Single Choice: <What is the most important thing in a restaurant? (Food, Service, Ambiance)>
--> Multiple Choice: <What are the most useful utensils in a restaurant? (Fork, Knife, Spoon, Chopsticks)>
--> Multiple Choice: <What are the most popular drinks in a restaurant? (Water, Tea, Coffee, Beer)>

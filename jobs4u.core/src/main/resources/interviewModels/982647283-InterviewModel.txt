@@ -1,3 +1,0 @@
-# Questions:
--> Integer Number: <How many programming languages are needed for this job?> 3 40%
--> True/False: <Do you know programming in java?> True 60%

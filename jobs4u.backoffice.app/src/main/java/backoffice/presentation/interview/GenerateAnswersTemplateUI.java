@@ -2,10 +2,7 @@ package backoffice.presentation.interview;
 
 import console.presentation.utils.ConsoleColors;
 import core.application.controllers.GenerateAnswersTemplateController;
-import core.domain.application.Application;
 import core.domain.interviewModel.InterviewModel;
-import core.domain.interview.JobInterview;
-import core.domain.jobOpening.JobOpening;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
@@ -35,22 +32,20 @@ public class GenerateAnswersTemplateUI extends AbstractUI {
      */
     @Override
     protected boolean doShow() {
-        List<JobOpening> allJobOpenings = theController.findAllJobOpeningsWithInterviewModelAssigned();
-        List<Application> applications = theController.findAllApplicationsWithInterviewModel(allJobOpenings);
-        List<JobInterview> allJobInterviews = theController.findAllInterviewsWithModelAssigned(applications);
+        Iterable<InterviewModel> interviews = theController.findAllInterviewModels();
 
         System.out.println("Interview Models Available: ");
-        for (JobInterview jobInterview : allJobInterviews) {
-            System.out.println("ID: " + jobInterview.identity());
+        for (InterviewModel model : interviews) {
+            System.out.println("ID: " + model.identity() + ", Model: " + model.model());
         }
 
-        int jobInterviewID = Console.readInteger("\nSelect an Interview Model: ");
-        InterviewModel interviewModel = theController.getInterviewModelByJobInterviewID(jobInterviewID);
+        int selectedID = Console.readInteger("\nSelect an Interview Model: ");
+        InterviewModel interviewModel = theController.findInterviewModelByID(selectedID);
 
         List<String> model = theController.readFile(interviewModel.model());
         List<String> templateLines = theController.processLines(model);
 
-        String fileName = "jobInterview-id-" + jobInterviewID + "-answerTemplate";
+        String fileName = "interviewModel-id-" + selectedID + "-answerTemplate";
         boolean writeFile = theController.writeListToFile(templateLines, "jobs4u.core/src/main/resources/answeringTemplates/" + fileName + ".txt");
 
         if (writeFile) {

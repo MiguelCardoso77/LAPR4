@@ -18,8 +18,7 @@ public class UploadRequirementsAnswersController {
         applicationRepository.save(application);
     }
 
-
-    public List<String> retrieveResponseRequirements(String path){
+    public List<String> retrieveResponseRequirements(String path) {
         RequirementsPlugin plugin = new RequirementsPlugin();
         return plugin.retrieveAnswersRequirements(path);
     }

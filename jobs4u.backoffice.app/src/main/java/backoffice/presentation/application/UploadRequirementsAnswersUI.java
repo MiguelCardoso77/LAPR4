@@ -16,25 +16,24 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
     final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
 
-    Iterable<Application> applications = new ArrayList<>();
-
     @Override
     protected boolean doShow() {
         List<JobOpening> requirements = generateRequirementsAnswersTemplateController.findAllJobOpeningsWithJobRequirements();
 
         int cont = 1;
         if (requirements.isEmpty()) {
-            System.out.println("there are no job openings with requirements");
+            System.out.println(ConsoleColors.RED + "There are no job openings with requirements" + ConsoleColors.RESET);
             return false;
         } else {
-            System.out.printf("%-30s%-30s%-30s%-30s%n", "Job Opening Number:" , "Job Reference:", "Title or Function:", "Job Opening Customer:");
+            System.out.printf("%-30s%-30s%-30s%-30s%n", "Job Opening Number:", "Job Reference:", "Title or Function:", "Job Opening Customer:");
+
             for (JobOpening jobOpening : requirements) {
                 System.out.printf("%-30s%-30s%-30s%-30s%n", cont, jobOpening.jobReference(), jobOpening.titleOrFunction(), jobOpening.customer());
                 cont++;
             }
-            JobOpening jobOpening = selectJobOpeningController.selectorPart(requirements);
 
-            applications = listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobOpening.jobReference());
+            JobOpening jobOpening = selectJobOpeningController.selectorPart(requirements);
+            listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobOpening.jobReference());
             Application application = listJobOpeningApplicationsController.selectApplication();
 
             String path = Console.readLine("\nEnter the path to the file with the requirements: ");
@@ -42,6 +41,7 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
 
             uploadRequirementsAnswersController.uploadRequirements(candidateRequirements, application);
             System.out.println(ConsoleColors.GREEN + " Candidate Requirements uploaded successfully!" + ConsoleColors.RESET);
+
             return true;
         }
     }

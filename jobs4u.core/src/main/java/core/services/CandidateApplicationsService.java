@@ -54,7 +54,7 @@ public class CandidateApplicationsService {
                 }
                 return applications;
             } else {
-                protocol.sendErr();
+                System.out.println("You do not have any applications! ");
                 return null;
             }
         } catch (

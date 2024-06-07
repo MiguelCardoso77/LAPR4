@@ -28,7 +28,7 @@ public class NotifyResultOfRankCandidatesUI {
 
         JobReference jobReference = jobOpening.jobReference();
 
-        Iterable<Application> appToNotify = listJobOpeningApplicationsController.allApplicationsOfJobOpeningAccepted(jobReference);
+        Iterable<Application> appToNotify = listJobOpeningApplicationsController.allApplicationsOfJobOpeningAccepted(jobOpening);
 
         for (Application application : appToNotify) {
 
@@ -40,6 +40,7 @@ public class NotifyResultOfRankCandidatesUI {
             emailToCostumer.add(body2);
             emailsToSend.add(emailObj);
         }
+
         String costumerEmail = jobOpening.customer().identity().toString();
         String subject1 = buildSubject1(jobReference);
         String body3 = emailToCostumer.toString();

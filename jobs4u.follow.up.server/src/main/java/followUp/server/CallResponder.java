@@ -8,6 +8,7 @@ import core.domain.email.EmailHandler;
 import core.domain.jobOpening.JobOpening;
 import core.domain.user.Jobs4URoles;
 
+import core.protocol.UnsignedInteger;
 import core.services.*;
 import infrastructure.authz.AuthenticationCredentialHandler;
 import infrastructure.authz.CredentialHandler;
@@ -93,19 +94,13 @@ public class CallResponder extends BaseResponder {
     private void handleCode4() throws IOException, ClassNotFoundException {
         System.out.println("Code 4 received! -> Authentication Request\n");
 
-        byte emailDataLenL = inData.readByte();
-        byte emailDataLenM = inData.readByte();
-
-        byte lenghtEmail = (byte) (256 * emailDataLenM + emailDataLenL);
+        int lenghtEmail = readLenght();
 
         byte[] emailBytes = inData.readNBytes(lenghtEmail);
         String email = new String(emailBytes, StandardCharsets.UTF_8);
         System.out.println("Email: " + email);
 
-        byte passwordDataLenL = inData.readByte();
-        byte passwordDataLenM = inData.readByte();
-
-        byte lenghtPassword = (byte) (256 * passwordDataLenM + passwordDataLenL);
+        int lenghtPassword = readLenght();
 
         byte[] passwordBytes = inData.readNBytes(lenghtPassword);
         String password = new String(passwordBytes, StandardCharsets.UTF_8);
@@ -127,28 +122,19 @@ public class CallResponder extends BaseResponder {
     private void handleCode5() throws IOException {
         System.out.println("Code 5 received! -> Email Request\n");
 
-        byte toWhoDataLenL = inData.readByte();
-        byte toWhoDataLenM = inData.readByte();
-
-        byte lenghtToWho = (byte) (256 * toWhoDataLenM + toWhoDataLenL);
+        int lenghtToWho = readLenght();
 
         byte[] toWhoBytes = inData.readNBytes(lenghtToWho);
         String toWho = new String(toWhoBytes, StandardCharsets.UTF_8);
         System.out.println("To: " + toWho);
 
-        byte subjectDataLenL = inData.readByte();
-        byte subjectDataLenM = inData.readByte();
-
-        byte lenghtSubject = (byte) (256 * subjectDataLenM + subjectDataLenL);
+        int lenghtSubject = readLenght();
 
         byte[] subjectBytes = inData.readNBytes(lenghtSubject);
         String subject = new String(subjectBytes, StandardCharsets.UTF_8);
         System.out.println("Subject: " + subject);
 
-        byte bodyDataLenL = inData.readByte();
-        byte bodyDataLenM = inData.readByte();
-
-        byte lenghtBody = (byte) (256 * bodyDataLenM + bodyDataLenL);
+        int lenghtBody = readLenght();
 
         byte[] bodyBytes = inData.readNBytes(lenghtBody);
         String body = new String(bodyBytes, StandardCharsets.UTF_8);
@@ -168,10 +154,7 @@ public class CallResponder extends BaseResponder {
     private void handleCode6() throws IOException {
         System.out.println("Code 6 received! -> List Candidate Applications Request\n");
 
-        byte emailDataLenL = inData.readByte();
-        byte emailDataLenM = inData.readByte();
-
-        byte lenghtEmail = (byte) (256 * emailDataLenM + emailDataLenL);
+        int lenghtEmail = readLenght();
 
         byte[] emailBytes = inData.readNBytes(lenghtEmail);
         String email = new String(emailBytes, StandardCharsets.UTF_8);
@@ -208,10 +191,7 @@ public class CallResponder extends BaseResponder {
     private void handleCode7() throws IOException {
         System.out.println("Code 7 received! -> List Customer Job Openings request\n");
 
-        byte emailDataLenL = inData.readByte();
-        byte emailDataLenM = inData.readByte();
-
-        byte lengthEmail = (byte) (256 * emailDataLenM + emailDataLenL);
+        int lengthEmail = readLenght();
 
         byte[] emailBytes = inData.readNBytes(lengthEmail);
         String email = new String(emailBytes, StandardCharsets.UTF_8);
@@ -242,6 +222,13 @@ public class CallResponder extends BaseResponder {
             protocol.sendErr();
         }
 
+    }
+
+    private int readLenght() throws IOException {
+        int dataLenL = new UnsignedInteger(inData.readByte()).positiveValue();
+        int dataLenM = new UnsignedInteger(inData.readByte()).positiveValue();
+
+        return 256 * dataLenM + dataLenL;
     }
 
 }

@@ -3,6 +3,8 @@ package core.services;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobOpeningDTO;
 import core.protocol.Jobs4UProtocol;
+import core.protocol.ProtocolCodes;
+import core.protocol.UnsignedInteger;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -19,7 +21,6 @@ import java.util.List;
  */
 public class CustomerJobOpeningsService {
     JobOpeningDTOService jobOpeningDTOService = new JobOpeningDTOService();
-    JobOpeningService jobOpeningService = new JobOpeningService();
 
     /**
      * Requests job openings from the server and returns a list of matched job openings.
@@ -28,9 +29,8 @@ public class CustomerJobOpeningsService {
      * @return A list of matched job openings.
      */
 
-    public List<JobOpeningDTO> requestJobOpenings(String email) {
-        List<JobOpeningDTO> jobOpeningDTOs;
-        List<JobOpeningDTO> matchedJobOpenings = new ArrayList<>();
+    public List<String> requestJobOpenings(String email) {
+        List<String> matchedJobOpenings = new ArrayList<>();
         try {
             Socket socket = new Socket("127.0.0.1", 2005);
             DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -38,30 +38,31 @@ public class CustomerJobOpeningsService {
             Jobs4UProtocol protocol = new Jobs4UProtocol(socket);
             protocol.sendJobOpenings(email);
 
-            byte list = in.readByte();
-            byte[] jobOpenings = in.readNBytes(list);
+            in.readByte();
+            byte code = in.readByte();
 
-            String jobOpening = new String(jobOpenings, StandardCharsets.UTF_8);
+            if(code == ProtocolCodes.JOB_OPENINGS.code()) {
+                int dataLenL = new UnsignedInteger(in.readByte()).positiveValue();
+                int dataLenM = new UnsignedInteger(in.readByte()).positiveValue();
 
-            List<JobOpening> allJobOpenings = (List<JobOpening>) jobOpeningService.allJobOpenings();
+                int lengthData = (256 * dataLenM) + dataLenL;
 
-            jobOpeningDTOs = jobOpeningDTOS(allJobOpenings);
+                byte[] jobOpenings = in.readNBytes(lengthData);
 
-            String[] appEntries = jobOpening.replaceAll("[\\[\\]\"]", "").split(",");
+                String jobOpening = new String(jobOpenings, StandardCharsets.UTF_8);
 
-            for (String entry : appEntries) {
-                String cleanedEntry = entry.trim();
-                if (!cleanedEntry.isEmpty()) {
-                    for (JobOpeningDTO jobOpeningDTO : jobOpeningDTOs) {
-                        if (jobOpeningDTO.myJobReference().equals(cleanedEntry)) {
-                            matchedJobOpenings.add(jobOpeningDTO);
-                        }
-                    }
-                }else{
-                    System.out.println("No job openings found for the customer.");
-                }
+                String jobOpeningsArray = jobOpening.replaceAll("[\\[\\]\"]", "").trim();
+
+                String[] appEntries = jobOpeningsArray.split(",");
+
+                socket.close();
+
+                return new ArrayList<>(List.of(appEntries));
+
+            }else{
+                System.out.println("No job openings found for the customer.");
+                return null;
             }
-            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,6 +6,7 @@ import core.domain.candidate.Candidate;
 import core.domain.customer.Customer;
 import core.domain.email.EmailHandler;
 import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobOpeningDTO;
 import core.domain.user.Jobs4URoles;
 
 import core.protocol.UnsignedInteger;
@@ -24,6 +25,7 @@ public class CallResponder extends BaseResponder {
     private final CandidateService candidateService = new CandidateService();
     private final CustomerService customerService = new CustomerService();
     private final JobOpeningService jobOpeningService = new JobOpeningService();
+    private final JobOpeningDTOService jobOpeningDTOService = new JobOpeningDTOService();
 
     public CallResponder(Socket socket) throws IOException {
         super(socket);
@@ -197,18 +199,26 @@ public class CallResponder extends BaseResponder {
         String email = new String(emailBytes, StandardCharsets.UTF_8);
         System.out.println("Email: " + email);
 
-        Iterable<JobOpening> allJobOpenings = jobOpeningService.allJobOpenings();
+        List<JobOpening> allJobOpenings = (List<JobOpening>) jobOpeningService.allJobOpenings();
+
+        List<JobOpening> customerJobOpenings1 = new ArrayList<>();
 
         List<String> customerJobOpenings = new ArrayList<>();
 
-        Customer customer = customerService.findCustomerByEmail(email);
 
-        System.out.println(customer);
+        Customer customer = customerService.findCustomerByEmail(email);
 
         for (JobOpening jobOpening : allJobOpenings) {
             if (jobOpening.customer().equals(customer)) {
-                customerJobOpenings.add(jobOpening.jobReference().toString());
+                customerJobOpenings1.add(jobOpening);
             }
+        }
+
+        List<JobOpeningDTO> jobOpeningDTOs = jobOpeningDTOS(customerJobOpenings1);
+
+        for (JobOpeningDTO jobOpeningDTO : jobOpeningDTOs) {
+            String string = jobOpeningDTO.toString();
+            customerJobOpenings.add(string);
         }
 
         String json = new Gson().toJson(customerJobOpenings);
@@ -229,6 +239,15 @@ public class CallResponder extends BaseResponder {
         int dataLenM = new UnsignedInteger(inData.readByte()).positiveValue();
 
         return 256 * dataLenM + dataLenL;
+    }
+
+    public List<JobOpeningDTO> jobOpeningDTOS(List<JobOpening> jobOpenings) {
+        List<JobOpeningDTO> jobOpeningDTOs = new ArrayList<>();
+        for (JobOpening jobOpening : jobOpenings) {
+            JobOpeningDTO jobOpeningDTO = jobOpeningDTOService.toDTO(jobOpening);
+            jobOpeningDTOs.add(jobOpeningDTO);
+        }
+        return jobOpeningDTOs;
     }
 
 }

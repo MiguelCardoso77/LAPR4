@@ -20,7 +20,7 @@ public class ListCustomerJobOpeningsController {
      * @param email The email of the customer.
      * @return A list of JobOpeningDTO objects representing the job openings for the customer.
      */
-    public List<JobOpeningDTO> sendCustomerJobOpenings(String email){
+    public List<String> sendCustomerJobOpenings(String email){
         return customerAppService.requestJobOpenings(email);
     }
 }

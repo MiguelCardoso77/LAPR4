@@ -23,7 +23,6 @@ public class ListCustomerJobOpeningsUI extends AbstractUI {
         this.email = email;
     }
 
-
     /**
      * Displays the list of job openings for the logged in customer.
      *
@@ -31,12 +30,12 @@ public class ListCustomerJobOpeningsUI extends AbstractUI {
      */
     @Override
     protected boolean doShow() {
-        List<JobOpeningDTO> jobOpenings = theController.sendCustomerJobOpenings(email);
+        List<String> jobOpenings = theController.sendCustomerJobOpenings(email);
 
         if(jobOpenings != null){
-            System.out.printf("%-30s%-30s%-60s%-20s\n", "Job Reference", "Position", "Active Since", "Number of Applicants");
-            for (JobOpeningDTO jobOpening : jobOpenings) {
-                System.out.printf("%-30s%-30s%-60s%-20s\n", jobOpening.myJobReference(), jobOpening.myPosition(), jobOpening.myActiveSince(), jobOpening.myNumberOfApplicants());
+            System.out.printf("%-30s%-30s%-40s%-30s\n", "Job Reference", "Active Since", "Number of Applicants", "Position");
+            for (String jobOpening : jobOpenings) {
+                System.out.printf("%-140s\n", jobOpening);
             }
         }
         return true;

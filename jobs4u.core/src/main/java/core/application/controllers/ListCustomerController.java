@@ -1,4 +1,4 @@
-package core.application;
+package core.application.controllers;
 
 import core.domain.customer.Customer;
 import core.services.CustomerService;

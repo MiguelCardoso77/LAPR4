@@ -171,25 +171,11 @@ public class Jobs4UProtocol {
 
     public void sendApplications(String email) throws IOException {
         ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
-        final int MAX_CHUNK_LEN = 255 + 256 * 255;
-
-        byte[] rawData = email.getBytes();
-        int index = 0;
-        int chunkSize = Math.min(MAX_CHUNK_LEN, rawData.length - index);
-        byte[] arr = new byte[chunkSize];
-
-        for (int j = 0; j < chunkSize; j++) {
-            arr[j] = rawData[index];
-            index++;
-        }
-
-        byte data1LenL = (byte) (chunkSize % 256);
-        byte data1LenM = (byte) (chunkSize / 256);
-
-        DataChunk dataChunk = new DataChunk(new UnsignedInteger(data1LenL), new UnsignedInteger(data1LenM), arr);
 
         byteArrayOut.write(VERSION);
         byteArrayOut.write(ProtocolCodes.APPLICATIONS.code());
+
+        DataChunk dataChunk = buildDataChunk(email);
 
         byteArrayOut.write(dataChunk.dataLenL().rawValue());
         byteArrayOut.write(dataChunk.dataLenM().rawValue());
@@ -202,27 +188,13 @@ public class Jobs4UProtocol {
         outData.write(requestedData);
     }
 
-    public boolean receiveListApplications(String json) throws IOException {
+    public boolean receiveListApplications(String applicationsJSON) throws IOException {
         ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
-        final int MAX_CHUNK_LEN = 255 + 256 * 255;
-
-        byte[] rawData = json.getBytes();
-        int index = 0;
-        int chunkSize = Math.min(MAX_CHUNK_LEN, rawData.length - index);
-        byte[] arr = new byte[chunkSize];
-
-        for (int j = 0; j < chunkSize; j++) {
-            arr[j] = rawData[index];
-            index++;
-        }
-
-        byte data1LenL = (byte) (chunkSize % 256);
-        byte data1LenM = (byte) (chunkSize / 256);
-
-        DataChunk dataChunk = new DataChunk(new UnsignedInteger(data1LenL), new UnsignedInteger(data1LenM), arr);
 
         byteArrayOut.write(VERSION);
         byteArrayOut.write(ProtocolCodes.APPLICATIONS.code());
+
+        DataChunk dataChunk = buildDataChunk(applicationsJSON);
 
         byteArrayOut.write(dataChunk.dataLenL().rawValue());
         byteArrayOut.write(dataChunk.dataLenM().rawValue());
@@ -371,5 +343,24 @@ public class Jobs4UProtocol {
         outData.write(requestedData);
 
         return true;
+    }
+
+    private DataChunk buildDataChunk(String data) {
+        final int MAX_CHUNK_LEN = 255 + 256 * 255;
+
+        byte[] rawData = data.getBytes();
+        int index = 0;
+        int chunkSize = Math.min(MAX_CHUNK_LEN, rawData.length - index);
+        byte[] arr = new byte[chunkSize];
+
+        for (int j = 0; j < chunkSize; j++) {
+            arr[j] = rawData[index];
+            index++;
+        }
+
+        byte data1LenL = (byte) (chunkSize % 256);
+        byte data1LenM = (byte) (chunkSize / 256);
+
+        return new DataChunk(new UnsignedInteger(data1LenL), new UnsignedInteger(data1LenM), arr);
     }
 }

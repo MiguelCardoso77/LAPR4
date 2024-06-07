@@ -29,15 +29,15 @@ public class ApplicationService {
     /**
      * Registers a new job application.
      *
-     * @param rank              The rank of the application.
-     * @param applicationFiles  The files associated with the application.
-     * @param jobReference      The job opening reference for which the application is made.
-     * @param candidate         The candidate who submitted the application.
-     * @param operator          The system user who registered the application.
-     * @return                  The registered application.
+     * @param rank             The rank of the application.
+     * @param applicationFiles The files associated with the application.
+     * @param jobReference     The job opening reference for which the application is made.
+     * @param candidate        The candidate who submitted the application.
+     * @param operator         The system user who registered the application.
+     * @return The registered application.
      */
     @Transactional
-    public Application registerApplication(Rank rank, String applicationFiles, JobOpening jobReference, Candidate candidate, SystemUser operator){
+    public Application registerApplication(Rank rank, String applicationFiles, JobOpening jobReference, Candidate candidate, SystemUser operator) {
         ApplicationBuilder applicationBuilder = new ApplicationBuilder();
         applicationBuilder.withAll(rank, applicationFiles, jobReference, candidate, operator);
         Application application = applicationBuilder.build();
@@ -47,13 +47,13 @@ public class ApplicationService {
     /**
      * Finds an application by its ID.
      *
-     * @param applicationID     The ID of the application to find.
-     * @return                  The application with the specified ID, or {@code null} if not found.
+     * @param applicationID The ID of the application to find.
+     * @return The application with the specified ID, or {@code null} if not found.
      */
-    public Application findApplicationById(int applicationID){
+    public Application findApplicationById(int applicationID) {
         Iterable<Application> applications = applicationRepository.allApplications();
-        for(Application application : applications){
-            if(application.identity().equals(applicationID)){
+        for (Application application : applications) {
+            if (application.identity().equals(applicationID)) {
                 return application;
             }
         }
@@ -63,7 +63,7 @@ public class ApplicationService {
     /**
      * Retrieves all applications.
      *
-     * @return  An iterable collection of all applications.
+     * @return An iterable collection of all applications.
      */
     public Iterable<Application> allApplications() {
         return applicationRepository.allApplications();
@@ -117,10 +117,10 @@ public class ApplicationService {
         return applications;
     }
 
-    public int numberOfApplicationsForJobOpening(JobOpening jobOpening){
+    public int numberOfApplicationsForJobOpening(JobOpening jobOpening) {
         int count = 0;
-        for(Application application : applicationRepository.allApplications()){
-            if(application.jobReference().jobReference().equals(jobOpening.jobReference())){
+        for (Application application : applicationRepository.allApplications()) {
+            if (application.jobReference().jobReference().equals(jobOpening.jobReference())) {
                 count++;
             }
         }

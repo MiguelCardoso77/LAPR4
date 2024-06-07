@@ -26,7 +26,6 @@ public class CandidateApplicationsService {
             byte code = inData.readByte();
 
             if (code == ProtocolCodes.APPLICATIONS.code()) {
-
                 int dataLenL = new UnsignedInteger(inData.readByte()).positiveValue();
                 int dataLenM = new UnsignedInteger(inData.readByte()).positiveValue();
 
@@ -37,7 +36,10 @@ public class CandidateApplicationsService {
                 String application = new String(listApp, StandardCharsets.UTF_8);
 
                 String applicationsArray = application.replaceAll("[\\[\\]\"]", "").trim();
+
                 String[] appEntries = applicationsArray.split(",");
+
+                socket.close();
 
                 return new ArrayList<>(Arrays.asList(appEntries));
             } else {
@@ -49,4 +51,6 @@ public class CandidateApplicationsService {
             throw new RuntimeException(e);
         }
     }
+
+
 }

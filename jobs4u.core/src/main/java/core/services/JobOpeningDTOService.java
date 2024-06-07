@@ -54,4 +54,18 @@ public class JobOpeningDTOService {
         }
         return jobOpeningsDTO;
     }
+    /**
+     * Converts a list of JobOpening entities to a list of JobOpeningDTOs.
+     *
+     * @param jobOpenings The list of JobOpening entities to convert.
+     * @return The list of converted JobOpeningDTOs.
+     */
+    public List<JobOpeningDTO> jobOpeningDTOS(List<JobOpening> jobOpenings) {
+        List<JobOpeningDTO> jobOpeningDTOs = new ArrayList<>();
+        for (JobOpening jobOpening : jobOpenings) {
+            JobOpeningDTO jobOpeningDTO = toDTO(jobOpening);
+            jobOpeningDTOs.add(jobOpeningDTO);
+        }
+        return jobOpeningDTOs;
+    }
 }

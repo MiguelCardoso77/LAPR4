@@ -7,6 +7,7 @@ import core.domain.customer.Customer;
 import core.domain.email.EmailHandler;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobOpeningDTO;
+import core.domain.notification.Notification;
 import core.domain.user.Jobs4URoles;
 
 import core.protocol.UnsignedInteger;
@@ -26,6 +27,7 @@ public class CallResponder extends BaseResponder {
     private final CustomerService customerService = new CustomerService();
     private final JobOpeningService jobOpeningService = new JobOpeningService();
     private final JobOpeningDTOService jobOpeningDTOService = new JobOpeningDTOService();
+    private final NotificationService notificationService = new NotificationService();
 
     public CallResponder(Socket socket) throws IOException {
         super(socket);
@@ -65,6 +67,9 @@ public class CallResponder extends BaseResponder {
                     break;
                 case 7:
                     handleCode7();
+                    break;
+                case 8:
+                    handleCode8();
                     break;
                 default:
                     System.out.println("Invalid code received!");
@@ -214,7 +219,7 @@ public class CallResponder extends BaseResponder {
             }
         }
 
-        List<JobOpeningDTO> jobOpeningDTOs = jobOpeningDTOS(customerJobOpenings1);
+        List<JobOpeningDTO> jobOpeningDTOs = jobOpeningDTOService.jobOpeningDTOS(customerJobOpenings1);
 
         for (JobOpeningDTO jobOpeningDTO : jobOpeningDTOs) {
             String string = jobOpeningDTO.toString();
@@ -234,20 +239,44 @@ public class CallResponder extends BaseResponder {
 
     }
 
+    private void handleCode8() throws IOException{
+        System.out.println("Code 8 received! -> List Candidate notifications request\n");
+
+        int lengthEmail = readLenght();
+
+        byte[] emailBytes = inData.readNBytes(lengthEmail);
+        String email = new String(emailBytes, StandardCharsets.UTF_8);
+        System.out.println("Email: " + email);
+
+        List<Notification> allNotifications = (List<Notification>) notificationService.allNotifications();
+
+        List<String> candidateNotifications = new ArrayList<>();
+
+        Candidate candidate = candidateService.findCandidateByEmail(email);
+
+        for(Notification notification : allNotifications){
+            if(notification.candidate().equals(candidate)){
+                candidateNotifications.add(notification.toString());
+            }
+        }
+
+        String json = new Gson().toJson(candidateNotifications);
+
+        boolean flag = protocol.receiveNotificationsList(json);
+
+        if(flag){
+            System.out.println("\nNotifications Listed!");
+        } else {
+            System.out.println("\nError listing notifications!");
+            protocol.sendErr();
+        }
+    }
+
     private int readLenght() throws IOException {
         int dataLenL = new UnsignedInteger(inData.readByte()).positiveValue();
         int dataLenM = new UnsignedInteger(inData.readByte()).positiveValue();
 
         return 256 * dataLenM + dataLenL;
-    }
-
-    public List<JobOpeningDTO> jobOpeningDTOS(List<JobOpening> jobOpenings) {
-        List<JobOpeningDTO> jobOpeningDTOs = new ArrayList<>();
-        for (JobOpening jobOpening : jobOpenings) {
-            JobOpeningDTO jobOpeningDTO = jobOpeningDTOService.toDTO(jobOpening);
-            jobOpeningDTOs.add(jobOpeningDTO);
-        }
-        return jobOpeningDTOs;
     }
 
 }

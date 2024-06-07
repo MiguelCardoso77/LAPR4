@@ -31,7 +31,6 @@ public class Notification implements AggregateRoot<Integer> {
     @JoinColumn(name = "CANDIDATE_ID")
     @ManyToOne
     private Candidate candidate;
-    private boolean read;
 
     /**
      * Protected constructor used by ORM.
@@ -124,21 +123,6 @@ public class Notification implements AggregateRoot<Integer> {
     }
 
     /**
-     * Returns the read status of this notification.
-     *
-     * @return the read status of this notification.
-     */
-    public boolean read() {
-        return read;
-    }
-    /**
-     * Marks this notification as read.
-     */
-    public void readMarker(){
-        this.read = true;
-    }
-
-    /**
      * Returns a string representation of this notification.
      * The string representation includes the id, application, message, and candidate.
      *
@@ -146,9 +130,6 @@ public class Notification implements AggregateRoot<Integer> {
      */
     @Override
     public String toString() {
-        return "notification id = " + id +
-                ", application id = " + application +
-                ", message = " + message +
-                ", candidate = " + candidate;
+        return "Your application on the Job Opening " + application.jobReference() + "has been" + application.status() + "!";
     }
 }

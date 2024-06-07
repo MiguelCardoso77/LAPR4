@@ -45,5 +45,8 @@ class ProtocolCodesTest {
     void testListJobOpeningsCode() {
         assertEquals((byte) 7, ProtocolCodes.JOB_OPENINGS.code());
     }
-
+    @Test
+    void testListNotificationsCode() {
+        assertEquals((byte) 8, ProtocolCodes.NOTIFICATIONS.code());
+    }
 }

@@ -1,7 +1,8 @@
 package core.services;
 
-import core.domain.notification.Notification;
 import core.protocol.Jobs4UProtocol;
+import core.protocol.ProtocolCodes;
+import core.protocol.UnsignedInteger;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import java.util.List;
  */
 
 public class CandidateNotificationsService {
-    NotificationService notificationService = new NotificationService();
 
     /**
      * Requests notifications for the specified email.
@@ -32,8 +32,7 @@ public class CandidateNotificationsService {
      * @param email The email for which to request notifications.
      * @return A list of notifications that match the requested notifications.
      */
-    public List<Notification> requestNotifications(String email) {
-        List<Notification> matchedNotifications = new ArrayList<>();
+    public List<String> requestNotifications(String email) {
         try {
             Socket socket = new Socket("127.0.0.1", 2005);
             DataInputStream inData = new DataInputStream(socket.getInputStream());
@@ -41,34 +40,32 @@ public class CandidateNotificationsService {
             Jobs4UProtocol protocol = new Jobs4UProtocol(socket);
             protocol.sendNotifications(email);
 
-            byte list = inData.readByte();
-            byte[] listNot = inData.readNBytes(list);
+            inData.readByte();
+            byte code = inData.readByte();
 
-            String notification = new String(listNot, StandardCharsets.UTF_8);
+            if(code == ProtocolCodes.NOTIFICATIONS.code()){
+                int dataLenL = new UnsignedInteger(inData.readByte()).positiveValue();
+                int dataLenM = new UnsignedInteger(inData.readByte()).positiveValue();
 
-            List<Notification> allNotifications = (List<Notification>) notificationService.allNotifications();
+                int lengthData = (256 * dataLenM) + dataLenL;
 
-            String[] notificationEntries = notification.replaceAll("[\\[\\]]", "").split(",");
+                byte[] notifications = inData.readNBytes(lengthData);
 
-            for (String entry : notificationEntries) {
-                String cleanedEntry = entry.replaceAll("[^0-9]", "");
-                if (!cleanedEntry.isEmpty()) {
-                    int id = Integer.parseInt(cleanedEntry);
+                String notification = new String(notifications, StandardCharsets.UTF_8);
 
-                    for (Notification notification1 : allNotifications) {
-                        if (notification1.identity().equals(id)) {
-                            matchedNotifications.add(notification1);
-                        }
-                    }
-                } else {
-                    System.out.println("You don't have any notifications! ");
-                }
+                String notificationEntries = notification.replaceAll("[\\[\\]\"]", "").trim();
+
+                String[] appEntries = notificationEntries.split(",");
+
+                socket.close();
+
+                return new ArrayList<>(List.of(appEntries));
+            } else{
+                System.out.println("No notifications found for the candidate.");
+                return null;
             }
-            socket.close();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return matchedNotifications;
     }
 }

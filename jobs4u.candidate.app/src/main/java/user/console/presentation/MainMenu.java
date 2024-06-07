@@ -9,6 +9,7 @@ import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 import user.console.presentation.applications.ListCandidateApplicationsAction;
 import user.console.presentation.email.CheckEmailsAction;
+import user.console.presentation.notifications.ListCandidateNotificationsAction;
 
 /**
  * Represents the main menu of the Candidate App.
@@ -29,6 +30,7 @@ class MainMenu extends CandidateUserUI {
     private static final int EXIT_OPTION = 0;
     private static final int USER_PROFILE_OPTION = 1;
     private static final int LIST_ALL_MY_APPLICATIONS = 2;
+    private static final int CHECK_NOTIFICATIONS = 3;
     private String email;
 
     public MainMenu(String email){
@@ -71,6 +73,7 @@ class MainMenu extends CandidateUserUI {
 
         mainMenu.addSubMenu(USER_PROFILE_OPTION, myUserMenu);
         mainMenu.addItem(LIST_ALL_MY_APPLICATIONS, "List all my Applications", new ListCandidateApplicationsAction(email));
+        mainMenu.addItem(CHECK_NOTIFICATIONS, "Check Notifications", new ListCandidateNotificationsAction(email));
         mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
         mainMenu.addItem(EXIT_OPTION, "Exit", new ExitWithMessageAction("Bye, Bye"));
 

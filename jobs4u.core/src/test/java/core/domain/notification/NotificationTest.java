@@ -73,12 +73,6 @@ class NotificationTest {
     }
 
     @Test
-    void testToString() {
-        assertNotNull(notification.toString());
-        assertTrue(notification.toString().contains("notification id"));
-    }
-
-    @Test
     void testIdentity() {
         assertNotNull(notification.identity()); // ID should be null initially
     }

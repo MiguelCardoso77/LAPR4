@@ -1,6 +1,6 @@
 package backoffice.presentation.jobOpening;
 
-import core.application.ListCustomerController;
+import core.application.controllers.ListCustomerController;
 import core.application.controllers.AddJobOpeningController;
 import core.domain.customer.Customer;
 import core.domain.jobOpening.ContractType;

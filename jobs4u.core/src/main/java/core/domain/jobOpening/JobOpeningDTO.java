@@ -71,9 +71,6 @@ public class JobOpeningDTO{
      */
     @Override
     public String toString() {
-        return "jobReference : " + jobReference +
-                ", position : " + position +
-                ", date of activation : " + activeSince +
-                ", number of applicants = " + numberOfApplicants;
+        return jobReference + "                    " + activeSince + "    " + numberOfApplicants + "                                    " + position;
     }
 }

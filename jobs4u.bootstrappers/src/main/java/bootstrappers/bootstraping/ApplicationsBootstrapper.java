@@ -65,17 +65,17 @@ public class ApplicationsBootstrapper implements Action {
         insertRequirementsResponses(("jobs4u.core/src/main/resources/answered/requirements/requirements1.txt"), applications.get(2));
         insertRequirementsResponses(("jobs4u.core/src/main/resources/answered/requirements/requirements2.txt"), applications.get(3));
 
-        changeApplicationStatus(applications.get(0), Status.ACCEPTED);
+        changeApplicationStatus(applications.get(0), Status.RECEIVED);
         changeApplicationStatus(applications.get(1), Status.ACCEPTED);
         changeApplicationStatus(applications.get(2), Status.DECLINED);
-        changeApplicationStatus(applications.get(3), Status.DECLINED);
+        changeApplicationStatus(applications.get(3), Status.RECEIVED);
         changeApplicationStatus(applications.get(4), Status.ACCEPTED);
-        changeApplicationStatus(applications.get(5), Status.ACCEPTED);
-        changeApplicationStatus(applications.get(6), Status.ACCEPTED);
-        changeApplicationStatus(applications.get(7), Status.DECLINED);
-        changeApplicationStatus(applications.get(8), Status.DECLINED);
+        changeApplicationStatus(applications.get(5), Status.RECEIVED);
+        changeApplicationStatus(applications.get(6), Status.DECLINED);
+        changeApplicationStatus(applications.get(7), Status.ACCEPTED);
+        changeApplicationStatus(applications.get(8), Status.RECEIVED);
         changeApplicationStatus(applications.get(9), Status.RECEIVED);
-        changeApplicationStatus(applications.get(10), Status.RECEIVED);
+        changeApplicationStatus(applications.get(10), Status.ACCEPTED);
 
         return true;
     }

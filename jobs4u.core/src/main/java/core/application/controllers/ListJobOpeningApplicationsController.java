@@ -57,12 +57,14 @@ public class ListJobOpeningApplicationsController {
 
         List<Application> allApplicationsOfJobOpeningAccepted = new ArrayList<>();
         for (Application a : allApplications) {
-            int rankCandidate = Integer.parseInt(a.rank().toString());
-
-            if (a.jobReference().sameReference(jobOpening.jobReference()) && a.status().toString().equals("ACCEPTED") && rankCandidate<= vacancies ) {
-                allApplicationsOfJobOpeningAccepted.add(a);
-                count++;
-                a.changeStatus(Status.CHOSEN);
+            String rankCandidate = a.rank().toString();
+            if(!rankCandidate.equals("Not Ranked")) {
+                int rankCandidate1 = Integer.parseInt(a.rank().toString());
+                if (a.jobReference().sameReference(jobOpening.jobReference()) && a.status().toString().equals("ACCEPTED") && rankCandidate1 <= vacancies) {
+                    allApplicationsOfJobOpeningAccepted.add(a);
+                    count++;
+                    a.changeStatus(Status.CHOSEN);
+                }
             }
         }
         if(count == 0){

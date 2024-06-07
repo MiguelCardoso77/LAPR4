@@ -43,17 +43,17 @@ public class NotifyResultOfRankCandidatesUI {
                 emailToCostumer.add(body2);
                 emailsToSend.add(emailObj);
             }
+
+            String costumerEmail = jobOpening.customer().identity().toString();
+            String subject1 = buildSubject1(jobReference);
+            String body3 = emailToCostumer.toString();
+
+            Email emailcostumer = notifyCandidatesController.createEmail(costumerEmail, subject1, body3);
+
+            notifyCandidatesController.sendEmails(emailsToSend);
+
+            notifyCandidatesController.sendEmailCostumer(emailcostumer);
         }
-        String costumerEmail = jobOpening.customer().identity().toString();
-        String subject1 = buildSubject1(jobReference);
-        String body3 = emailToCostumer.toString();
-
-        Email emailcostumer = notifyCandidatesController.createEmail(costumerEmail, subject1, body3);
-
-        notifyCandidatesController.sendEmails(emailsToSend);
-
-        notifyCandidatesController.sendEmailCostumer(emailcostumer);
-
         return true;
     }
 
@@ -63,7 +63,12 @@ public class NotifyResultOfRankCandidatesUI {
 
 
     private String buildBody1(Application application, Rank rank, Status status) {
-        return "Through your application_"+ application.identity()  + ", you placed in rank " +  rank + " so you have been " + status+ ".You will be contacted soon by our company." ;
+        return  "Dear Candidate,\n\n "+
+                "We hope this message finds you well.\n\n" +
+                "We are writing to congrats you because your application "+ application.dataFile() + ", placed in rank \""+  rank + "have been changed to " + status +".\n"+
+                "You will be contacted soon by our company.\n\n" +
+                "Best regards,\n" +
+                "Jobs4U\n";
     }
 
     private String buildBody2(Candidate candidate) {

@@ -9,21 +9,20 @@ import java.util.List;
 
 public class ListCandidateApplicationsUI extends AbstractUI {
     private final ListCandidateApplicationsController listCandidateApplicationsController = new ListCandidateApplicationsController();
-    private  String email;
+    private String email;
 
-    public  ListCandidateApplicationsUI (String email) {
+    public ListCandidateApplicationsUI(String email) {
         this.email = email;
     }
 
     @Override
     protected boolean doShow() {
-        List<Application> applications = listCandidateApplicationsController.sendApplicationsRequest(email);
+        List<String> applications = listCandidateApplicationsController.sendApplicationsRequest(email);
 
-        if (applications != null){
-        System.out.printf("%-30s%-30s%-30s%-30s%n", "Application ID", "Rank", "Status", "Job Reference");
-        for (Application applicationCandidate : applications) {
-            System.out.printf("%-30s%-30s%-30s%-30s%n", applicationCandidate.identity(), applicationCandidate.rank(), applicationCandidate.status().name(), applicationCandidate.jobReference().jobReference());
-        }
+        if (applications != null) {
+            for (String applicationCandidate : applications) {
+                System.out.println(applicationCandidate);
+            }
         }
 
         return true;

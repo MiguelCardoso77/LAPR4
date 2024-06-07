@@ -246,6 +246,12 @@ public class Application implements AggregateRoot<Integer> {
                 ", registered by " + operator;
     }
 
+    public String toStringServer() {
+        return "Application: " + applicationID +
+                " with status: " + status +
+                " submitted for the job opening: " + jobReference.identity();
+    }
+
     public void uploadCandidateRequirements(CandidateRequirements candidateRequirements) {
         Preconditions.nonNull(candidateRequirements, "Candidate Requirements answers cannot be null");
         this.candidateRequirements = candidateRequirements;

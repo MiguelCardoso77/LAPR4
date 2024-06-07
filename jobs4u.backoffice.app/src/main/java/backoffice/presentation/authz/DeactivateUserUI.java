@@ -75,7 +75,7 @@ public class DeactivateUserUI extends AbstractUI {
                 } catch (IntegrityViolationException | ConcurrencyException ex) {
 
                     LOGGER.error("Error performing the operation", ex);
-                    System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system admnistrator.");
+                    System.out.println("Unfortunately there was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
                 }
             }
         }

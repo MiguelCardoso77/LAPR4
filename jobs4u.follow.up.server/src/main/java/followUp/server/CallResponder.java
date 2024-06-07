@@ -187,19 +187,25 @@ public class CallResponder extends BaseResponder {
                 candidateApplicationsIds.add(application.identity());
             }
         }
-        String json = new Gson().toJson(candidateApplicationsIds);
 
-        boolean flag = protocol.receiveListApplications(json);
-        if (flag) {
-            System.out.println("\nApplications Listed!");
-        } else {
-            System.out.println("\nError listing applications!");
+        if (candidateApplicationsIds.isEmpty()) {
             protocol.sendErr();
+
+        } else {
+            String json = new Gson().toJson(candidateApplicationsIds);
+            boolean flag = protocol.receiveListApplications(json);
+
+            if (flag) {
+                System.out.println("\nApplications Listed!");
+            } else {
+                System.out.println("\nError listing applications!");
+                protocol.sendErr();
+            }
         }
 
     }
 
-    private void handleCode7() throws IOException{
+    private void handleCode7() throws IOException {
         System.out.println("Code 7 received! -> List Customer Job Openings request\n");
 
         byte emailDataLenL = inData.readByte();
@@ -227,11 +233,11 @@ public class CallResponder extends BaseResponder {
 
         String json = new Gson().toJson(customerJobOpenings);
 
-        boolean flag =  protocol.receiveJobOpeningLists(json);
+        boolean flag = protocol.receiveJobOpeningLists(json);
 
-        if(flag){
+        if (flag) {
             System.out.println("\nJob Openings Listed!");
-        } else{
+        } else {
             System.out.println("\nError listing job openings!");
             protocol.sendErr();
         }

@@ -80,7 +80,7 @@ class NotificationTest {
 
     @Test
     void testIdentity() {
-        assertNull(notification.identity()); // ID should be null initially
+        assertNotNull(notification.identity()); // ID should be null initially
     }
 
     @Test

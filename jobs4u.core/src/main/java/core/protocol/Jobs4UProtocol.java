@@ -3,6 +3,7 @@ package core.protocol;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Jobs4UProtocol {
@@ -256,7 +257,7 @@ public class Jobs4UProtocol {
         DataChunk dataChunk = new DataChunk(new UnsignedInteger(data1LenL), new UnsignedInteger(data1LenM), arr);
 
         byteArrayOut.write(VERSION);
-        byteArrayOut.write(ProtocolCodes.LIST_JOB_OPENINGS.code());
+        byteArrayOut.write(ProtocolCodes.JOB_OPENINGS.code());
 
         byteArrayOut.write(dataChunk.dataLenL().rawValue());
         byteArrayOut.write(dataChunk.dataLenM().rawValue());
@@ -301,4 +302,6 @@ public class Jobs4UProtocol {
         return true;
     }
 
+    public void sendNotifications(String email) {
+    }
 }

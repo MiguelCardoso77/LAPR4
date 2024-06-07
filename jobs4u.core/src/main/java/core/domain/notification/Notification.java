@@ -21,7 +21,8 @@ import java.util.Objects;
 public class Notification implements AggregateRoot<Integer> {
 
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     @JoinColumn(name = "APPLICATION_ID")
     @ManyToOne
     private Application application;
@@ -30,6 +31,7 @@ public class Notification implements AggregateRoot<Integer> {
     @JoinColumn(name = "CANDIDATE_ID")
     @ManyToOne
     private Candidate candidate;
+    private boolean read;
 
     /**
      * Protected constructor used by ORM.
@@ -119,6 +121,21 @@ public class Notification implements AggregateRoot<Integer> {
      */
     public Candidate candidate() {
         return candidate;
+    }
+
+    /**
+     * Returns the read status of this notification.
+     *
+     * @return the read status of this notification.
+     */
+    public boolean read() {
+        return read;
+    }
+    /**
+     * Marks this notification as read.
+     */
+    public void readMarker(){
+        this.read = true;
     }
 
     /**

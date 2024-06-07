@@ -161,21 +161,21 @@ public class CallResponder extends BaseResponder {
         System.out.println("Email: " + email);
 
         Iterable<Application> allApplications = applicationService.allApplications();
-        List<Integer> candidateApplicationsIds = new ArrayList<>();
+        List<String> candidateApplications = new ArrayList<>();
 
         Candidate candidate = candidateService.findCandidateByEmail(email);
 
         for (Application application : allApplications) {
             if (application.candidate().equals(candidate)) {
-                candidateApplicationsIds.add(application.identity());
+                candidateApplications.add(application.toStringServer());
             }
         }
 
-        if (candidateApplicationsIds.isEmpty()) {
+        if (candidateApplications.isEmpty()) {
             protocol.sendErr();
 
         } else {
-            String json = new Gson().toJson(candidateApplicationsIds);
+            String json = new Gson().toJson(candidateApplications);
             boolean flag = protocol.receiveListApplications(json);
 
             if (flag) {

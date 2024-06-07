@@ -14,7 +14,7 @@
     <class>core.domain.company.Company</class>
     <class>core.domain.customer.Customer</class>
     <class>core.domain.jobRequirementsSpecification.JobRequirementsSpecification</class>
-    <class>core.domain.jobRequirementsSpecification.JobRequirementsSpecification</class>
+    <class>core.domain.notification.Notification</class>
     <class>core.domain.interview.JobInterview</class>
     <class>core.domain.interviewModel.InterviewModel</class>
 

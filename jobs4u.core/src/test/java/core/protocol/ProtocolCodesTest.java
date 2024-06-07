@@ -43,7 +43,7 @@ class ProtocolCodesTest {
 
     @Test
     void testListJobOpeningsCode() {
-        assertEquals((byte) 7, ProtocolCodes.LIST_JOB_OPENINGS.code());
+        assertEquals((byte) 7, ProtocolCodes.JOB_OPENINGS.code());
     }
 
 }

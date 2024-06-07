@@ -8,6 +8,7 @@ import core.domain.jobOpening.JobReference;
 import core.domain.jobOpening.VacanciesNumber;
 import core.services.ApplicationService;
 import core.services.JobOpeningService;
+import core.services.NotificationService;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
@@ -24,6 +25,8 @@ public class ListJobOpeningApplicationsController {
 
     private final JobOpeningService jobserv = new JobOpeningService();
     private final ApplicationService appServ = new ApplicationService();
+    private final NotificationService notificationService = new NotificationService();
+
 
     /**
      * Retrieves all applications associated with a specific job opening.
@@ -62,6 +65,7 @@ public class ListJobOpeningApplicationsController {
                 if (a.jobReference().sameReference(jobOpening.jobReference()) && a.status().toString().equals("ACCEPTED") && rankCandidate1 <= vacancies) {
                     allApplicationsOfJobOpeningAccepted.add(a);
                     appServ.updateStatus(Status.CHOSEN , a);
+                    notificationService.createNotification(a, "You have been chosen for the job opening ", a.candidate());
                     count++;
                 }
             }

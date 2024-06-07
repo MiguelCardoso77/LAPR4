@@ -44,7 +44,7 @@ public class ProcessBuilder implements DomainFactory<Process> {
             LOGGER.error("Missing mandatory information to build a Process");
             return null;
         } else {
-            LOGGER.debug("Building Process with processState{}, processDate{} and processStatus{}", processState, processDate, processStatus);
+            LOGGER.debug("Creating a new process... ");
             process = new Process(processState, processDate, processStatus);
         }
         return process;

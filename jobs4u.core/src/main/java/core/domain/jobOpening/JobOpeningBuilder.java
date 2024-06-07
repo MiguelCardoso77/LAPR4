@@ -73,7 +73,6 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
             LOGGER.error("Missing mandatory information to build a JobOpening");
             return null;
         } else {
-            LOGGER.debug("Building JobOpening with reference {}, description {}, vacancies number {}, adress {}, mode {}, contract type {}, title or function {}, company {}", jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer);
             jobOpening = new JobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer, null, process, null);
         }
         return jobOpening;

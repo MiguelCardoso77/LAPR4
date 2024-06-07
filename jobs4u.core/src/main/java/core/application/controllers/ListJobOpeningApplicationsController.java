@@ -1,8 +1,11 @@
 package core.application.controllers;
 
 import core.domain.application.Application;
+import core.domain.application.Rank;
+import core.domain.application.Status;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
+import core.domain.jobOpening.VacanciesNumber;
 import core.services.ApplicationService;
 import core.services.JobOpeningService;
 import eapli.framework.domain.repositories.ConcurrencyException;
@@ -46,15 +49,20 @@ public class ListJobOpeningApplicationsController {
         return allApplicationsJobOpening;
     }
 
-    public Iterable<Application> allApplicationsOfJobOpeningAccepted(JobReference jobReference) {
+    public Iterable<Application> allApplicationsOfJobOpeningAccepted(JobOpening jobOpening) {
         Iterable<Application> allApplications = appServ.allApplications();
         int count = 0;
 
+        int vacancies = Integer.parseInt(jobOpening.vacanciesNumber().toString());
+
         List<Application> allApplicationsOfJobOpeningAccepted = new ArrayList<>();
         for (Application a : allApplications) {
-            if (a.jobReference().sameReference(jobReference) && a.status().toString().equals("ACCEPTED")) {
+            int rankCandidate = Integer.parseInt(a.rank().toString());
+
+            if (a.jobReference().sameReference(jobOpening.jobReference()) && a.status().toString().equals("ACCEPTED") && rankCandidate<= vacancies ) {
                 allApplicationsOfJobOpeningAccepted.add(a);
                 count++;
+                a.changeStatus(Status.CHOSEN);
             }
         }
         if(count == 0){

@@ -46,7 +46,9 @@ public class Jobs4UBootstrapper implements Action {
                 new MasterUsersBootstrapper(),
                 new JobsBootstrapper(),
                 new ApplicationsBootstrapper(),
-                new JobInterviewsBootstrapper()};
+                new JobInterviewsBootstrapper(),
+                new NotificationsBootstrapper(),
+        };
 
         // execute all bootstrapping
         boolean ret = true;

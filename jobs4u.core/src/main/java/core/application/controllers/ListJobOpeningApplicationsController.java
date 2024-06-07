@@ -25,7 +25,6 @@ public class ListJobOpeningApplicationsController {
     private final JobOpeningService jobserv = new JobOpeningService();
     private final ApplicationService appServ = new ApplicationService();
 
-
     /**
      * Retrieves all applications associated with a specific job opening.
      *
@@ -62,8 +61,8 @@ public class ListJobOpeningApplicationsController {
                 int rankCandidate1 = Integer.parseInt(a.rank().toString());
                 if (a.jobReference().sameReference(jobOpening.jobReference()) && a.status().toString().equals("ACCEPTED") && rankCandidate1 <= vacancies) {
                     allApplicationsOfJobOpeningAccepted.add(a);
+                    appServ.updateStatus(Status.CHOSEN , a);
                     count++;
-                    a.changeStatus(Status.CHOSEN);
                 }
             }
         }

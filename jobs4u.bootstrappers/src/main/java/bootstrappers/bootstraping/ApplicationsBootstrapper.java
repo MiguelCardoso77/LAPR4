@@ -53,7 +53,7 @@ public class ApplicationsBootstrapper implements Action {
         registerApplication("4", "App5", jobOpenings.get(1), candidates.get(0), operator);
         registerApplication("Not Ranked", "App6", jobOpenings.get(1), candidates.get(1), operator);
         registerApplication("6", "App7", jobOpenings.get(1), candidates.get(2), operator);
-        registerApplication("3", "App8", jobOpenings.get(1), candidates.get(3), operator);
+        registerApplication("2", "App8", jobOpenings.get(1), candidates.get(3), operator);
         registerApplication("Not Ranked", "App9", jobOpenings.get(1), candidates.get(4), operator);
         registerApplication("Not Ranked", "App10", jobOpenings.get(2), candidates.get(0), operator);
         registerApplication("2", "App11", jobOpenings.get(2), candidates.get(1), operator);
@@ -69,7 +69,7 @@ public class ApplicationsBootstrapper implements Action {
         changeApplicationStatus(applications.get(1), Status.ACCEPTED);
         changeApplicationStatus(applications.get(2), Status.DECLINED);
         changeApplicationStatus(applications.get(3), Status.RECEIVED);
-        changeApplicationStatus(applications.get(4), Status.ACCEPTED);
+        changeApplicationStatus(applications.get(4), Status.DECLINED);
         changeApplicationStatus(applications.get(5), Status.RECEIVED);
         changeApplicationStatus(applications.get(6), Status.DECLINED);
         changeApplicationStatus(applications.get(7), Status.ACCEPTED);

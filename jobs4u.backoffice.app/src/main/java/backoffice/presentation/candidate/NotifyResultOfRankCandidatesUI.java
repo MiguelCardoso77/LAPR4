@@ -30,17 +30,20 @@ public class NotifyResultOfRankCandidatesUI {
 
         Iterable<Application> appToNotify = listJobOpeningApplicationsController.allApplicationsOfJobOpeningAccepted(jobOpening);
 
-        for (Application application : appToNotify) {
+        if(appToNotify == null ){
+            System.out.println("There is no applications accepted for this job opening");
+        }else {
+            for (Application application : appToNotify) {
 
-            String candidateEmail = notifyCandidatesController.findCandidateEmail(application);
-            String subject = buildSubject(application);
-            String body = buildBody1(application, application.rank(), application.status());
-            String body2 = buildBody2(application.candidate());
-            Email emailObj = notifyCandidatesController.createEmail(candidateEmail, subject, body);
-            emailToCostumer.add(body2);
-            emailsToSend.add(emailObj);
+                String candidateEmail = notifyCandidatesController.findCandidateEmail(application);
+                String subject = buildSubject(application);
+                String body = buildBody1(application, application.rank(), application.status());
+                String body2 = buildBody2(application.candidate());
+                Email emailObj = notifyCandidatesController.createEmail(candidateEmail, subject, body);
+                emailToCostumer.add(body2);
+                emailsToSend.add(emailObj);
+            }
         }
-
         String costumerEmail = jobOpening.customer().identity().toString();
         String subject1 = buildSubject1(jobReference);
         String body3 = emailToCostumer.toString();

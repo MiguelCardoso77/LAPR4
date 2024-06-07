@@ -126,4 +126,9 @@ public class ApplicationService {
         }
         return count;
     }
+
+    public Application updateStatus(Status status, Application application) {
+        application.changeStatus(status);
+        return applicationRepository.save(application);
+    }
 }

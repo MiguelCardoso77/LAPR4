@@ -1,0 +1,70 @@
+@startuml
+autonumber
+
+actor CustomerManager
+
+participant MostReferencedWordsUI <<presentation>>
+participant MostReferencedWordsController <<controller>>
+
+participant ApplicationService <<service>>
+database ApplicationRepository <<repository>>
+
+participant Thread <<thread>>
+
+activate CustomerManager
+
+    CustomerManager -> MostReferencedWordsUI : asks to check the most referenced \nwords in candidate files
+    activate MostReferencedWordsUI
+
+        MostReferencedWordsUI -> MostReferencedWordsController : findCustomerManagerApplications()
+        activate MostReferencedWordsController
+
+            MostReferencedWordsController -> ApplicationService : applicationsByCM(session)
+            activate ApplicationService
+
+                ApplicationService -> ApplicationRepository : findAll()
+                activate ApplicationRepository
+
+                    ApplicationRepository --> ApplicationService : return applications
+                deactivate ApplicationRepository
+
+                ApplicationService --> MostReferencedWordsController : return applications
+            deactivate ApplicationService
+
+            MostReferencedWordsController --> MostReferencedWordsUI : return applications
+        deactivate MostReferencedWordsController
+
+        MostReferencedWordsUI --> CustomerManager : lists applications and asks to select one
+    deactivate MostReferencedWordsUI
+
+    CustomerManager -> MostReferencedWordsUI : selects one
+    activate MostReferencedWordsUI
+
+        MostReferencedWordsUI -> MostReferencedWordsController : getCandidateFiles(selectedCandidate)
+        activate MostReferencedWordsController
+
+            MostReferencedWordsController --> MostReferencedWordsUI : return candidate files
+        deactivate MostReferencedWordsController
+
+        MostReferencedWordsUI --> MostReferencedWordsController : findMostReferencedWords(candidateFiles)
+        activate MostReferencedWordsController
+
+loop for each file
+
+            MostReferencedWordsController -> Thread : new Thread()
+            activate Thread
+
+                Thread --> MostReferencedWordsController : countWordsFile(file, fileLines)
+            deactivate Thread
+
+end loop
+
+            MostReferencedWordsController --> MostReferencedWordsUI : return most referenced words
+        deactivate MostReferencedWordsController
+
+        MostReferencedWordsUI --> CustomerManager : display top 20 most referenced words
+    deactivate MostReferencedWordsUI
+
+deactivate CustomerManager
+
+@enduml

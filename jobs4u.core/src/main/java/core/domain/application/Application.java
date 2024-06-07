@@ -249,7 +249,7 @@ public class Application implements AggregateRoot<Integer> {
     public String toStringServer() {
         return "Application: " + applicationID +
                 " with status: " + status +
-                " submitted for the job opening: " + jobReference.identity();
+                " submitted for the job opening: " + jobReference.identity() + " ";
     }
 
     public void uploadCandidateRequirements(CandidateRequirements candidateRequirements) {

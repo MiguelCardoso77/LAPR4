@@ -2,6 +2,7 @@ package followUp.server;
 
 import com.google.gson.Gson;
 import core.domain.application.Application;
+import core.domain.application.ApplicationsDTO;
 import core.domain.candidate.Candidate;
 import core.domain.customer.Customer;
 import core.domain.email.EmailHandler;
@@ -26,6 +27,7 @@ public class CallResponder extends BaseResponder {
     private final CustomerService customerService = new CustomerService();
     private final JobOpeningService jobOpeningService = new JobOpeningService();
     private final JobOpeningDTOService jobOpeningDTOService = new JobOpeningDTOService();
+    private final ApplicationsDTOService applicationsDTOService = new ApplicationsDTOService();
 
     public CallResponder(Socket socket) throws IOException {
         super(socket);
@@ -163,22 +165,33 @@ public class CallResponder extends BaseResponder {
         System.out.println("Email: " + email);
 
         Iterable<Application> allApplications = applicationService.allApplications();
-        List<String> candidateApplications = new ArrayList<>();
+        List<Application> candidateApplications = new ArrayList<>();
+        List<String> candidateApplicationsDTO = new ArrayList<>();
+        List<Integer> numberApplicants = new ArrayList<>();
 
         Candidate candidate = candidateService.findCandidateByEmail(email);
 
         for (Application application : allApplications) {
             if (application.candidate().equals(candidate)) {
-                candidateApplications.add(application.toStringServer());
+                candidateApplications.add(application);
+                numberApplicants.add(applicationService.numberOfApplicationsForJobOpening(application.jobReference()));
             }
         }
 
-        if (candidateApplications.isEmpty()) {
+        List<ApplicationsDTO> applicationsDTOS = applicationsDTOS(candidateApplications);
+
+        for (ApplicationsDTO applicationDTO : applicationsDTOS) {
+            String string = applicationDTO.toString();
+            candidateApplicationsDTO.add(string);
+        }
+
+
+        if (candidateApplications.isEmpty() || candidateApplicationsDTO.isEmpty()) {
             protocol.sendErr();
 
         } else {
-            String json = new Gson().toJson(candidateApplications);
-            boolean flag = protocol.receiveListApplications(json);
+            String applicationsJSON = new Gson().toJson(candidateApplicationsDTO);
+            boolean flag = protocol.receiveListApplications(applicationsJSON);
 
             if (flag) {
                 System.out.println("\nApplications Listed!");
@@ -250,4 +263,15 @@ public class CallResponder extends BaseResponder {
         return jobOpeningDTOs;
     }
 
+
+    public List<ApplicationsDTO> applicationsDTOS(List<Application> applications) {
+        List<ApplicationsDTO> applicationsDTOS = new ArrayList<>();
+        for (Application application : applications) {
+            ApplicationsDTO applicationDTO = applicationsDTOService.toDTO(application);
+            applicationsDTOS.add(applicationDTO);
+        }
+
+        return applicationsDTOS;
+
+    }
 }

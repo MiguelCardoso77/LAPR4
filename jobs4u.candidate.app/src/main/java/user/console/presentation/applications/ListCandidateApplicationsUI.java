@@ -21,7 +21,7 @@ public class ListCandidateApplicationsUI extends AbstractUI {
 
         if (applications != null) {
             for (String applicationCandidate : applications) {
-                System.out.println(applicationCandidate);
+                System.out.printf("%-140s \n", applicationCandidate);
             }
         }
 

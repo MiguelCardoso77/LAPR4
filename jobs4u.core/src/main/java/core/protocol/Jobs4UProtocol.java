@@ -188,13 +188,13 @@ public class Jobs4UProtocol {
         outData.write(requestedData);
     }
 
-    public boolean receiveListApplications(String json) throws IOException {
+    public boolean receiveListApplications(String applicationsJSON) throws IOException {
         ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
 
         byteArrayOut.write(VERSION);
         byteArrayOut.write(ProtocolCodes.APPLICATIONS.code());
 
-        DataChunk dataChunk = buildDataChunk(json);
+        DataChunk dataChunk = buildDataChunk(applicationsJSON);
 
         byteArrayOut.write(dataChunk.dataLenL().rawValue());
         byteArrayOut.write(dataChunk.dataLenM().rawValue());

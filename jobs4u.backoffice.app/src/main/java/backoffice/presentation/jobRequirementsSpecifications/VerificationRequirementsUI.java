@@ -10,13 +10,10 @@ import eapli.framework.presentation.console.AbstractUI;
 import java.util.Map;
 
 public class VerificationRequirementsUI extends AbstractUI {
-
-
     private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
     private final ChangeJobInterviewStatusController changeJobInterviewStatusController = new ChangeJobInterviewStatusController();
-
 
     final String RED = "\u001B[31m";
     final String GREEN = "\u001B[32m";

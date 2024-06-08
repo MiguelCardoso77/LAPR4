@@ -22,6 +22,15 @@ package "presentation" {
 
 package "application" {
 
+    class NotifyResultOfRankCandidatesController{
+        + selectJobOpening()
+        + allApplicationsOfJobOpeningAccepted(jobOpening)
+        + String findCandidateEmail(application)
+        + createEmail(candidateEmail, subject, body)
+        + sendEmails(emailsToSend)
+        + sendEmailCostumer( emailsToSend)
+    }
+
     class NotifyCandidatesController{
         + findApplicationsToNotify()
         + findCandidateEmail(application)
@@ -126,11 +135,13 @@ package "domain" {
     }
 
  }
+NotifyResultOfRankCandidatesUI -> NotifyResultOfRankCandidatesController
 
-NotifyResultOfRankCandidatesUI --> SelectJobOpeningController
+NotifyResultOfRankCandidatesController --> ListJobOpeningApplicationsController
+NotifyResultOfRankCandidatesController --> NotifyCandidatesController
+NotifyResultOfRankCandidatesController --> SelectJobOpeningController
 SelectJobOpeningController -> ListJobOpeningController
-NotifyResultOfRankCandidatesUI --> ListJobOpeningApplicationsController
-NotifyResultOfRankCandidatesUI --> NotifyCandidatesController
+
 
 JobOpeningService ----> JobOpeningRepository
 ApplicationService ----> ApplicationRepository

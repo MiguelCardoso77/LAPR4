@@ -92,21 +92,20 @@ The `displayList` method was implemented to print the list that is the final res
 The `OrderedListOfCandidatesController` class is mainly used to order by grade all candidates that have an application for the selected job opening.
 
 ```java
-    public boolean doShow() {
+ public boolean doShow() {
 
-  JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
-  JobReference jobReference = jobOpening.jobReference();
+    JobOpening jobOpening = orderedListOfCandidatesController.selectJobOpening();
 
-  Iterable<Application> applicationList = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
+    Iterable<Application> applicationList = orderedListOfCandidatesController.allApplicationsOfJobOpening(jobOpening.jobReference());
 
-  List<JobInterview> orderedList = orderedListOfCandidatesController.orderedList(applicationList);
+    List<JobInterview> orderedList = orderedListOfCandidatesController.orderedList(applicationList);
 
-  List<Application> finalList = orderedListOfCandidatesController.applicationList(orderedList);
+    List<Application> finalList = orderedListOfCandidatesController.applicationList(orderedList);
 
-  displayList(finalList, orderedList);
+    displayList(finalList, orderedList);
 
 
-  return true;
+    return true;
 }
 ```
 

@@ -23,10 +23,10 @@ activate CM
     activate System
 
 loop application with status accepted
-        System --> CM : notify the candidate by email the result
+        System --> CM :show the result of notifications of the email to candidates
 end
 
-    System --> CM : notify the costumer of the list of candidates accepted
+    System --> CM : show the result of notification of the email to costumer
 
     deactivate System
 

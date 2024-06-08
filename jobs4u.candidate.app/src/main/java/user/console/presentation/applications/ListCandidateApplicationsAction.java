@@ -3,7 +3,7 @@ package user.console.presentation.applications;
 import eapli.framework.actions.Action;
 
 public class ListCandidateApplicationsAction implements Action {
-    private String email;
+    private final String email;
 
     public ListCandidateApplicationsAction(String email) {
         this.email = email;

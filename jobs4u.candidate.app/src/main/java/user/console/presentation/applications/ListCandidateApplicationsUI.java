@@ -1,15 +1,13 @@
 package user.console.presentation.applications;
 
 import core.application.controllers.ListCandidateApplicationsController;
-import core.domain.application.Application;
-import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.List;
 
 public class ListCandidateApplicationsUI extends AbstractUI {
     private final ListCandidateApplicationsController listCandidateApplicationsController = new ListCandidateApplicationsController();
-    private String email;
+    private final String email;
 
     public ListCandidateApplicationsUI(String email) {
         this.email = email;

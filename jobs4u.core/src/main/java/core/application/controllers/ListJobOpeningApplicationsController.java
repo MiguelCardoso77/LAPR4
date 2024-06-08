@@ -1,11 +1,9 @@
 package core.application.controllers;
 
 import core.domain.application.Application;
-import core.domain.application.Rank;
 import core.domain.application.Status;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
-import core.domain.jobOpening.VacanciesNumber;
 import core.services.ApplicationService;
 import core.services.JobOpeningService;
 import core.services.NotificationService;

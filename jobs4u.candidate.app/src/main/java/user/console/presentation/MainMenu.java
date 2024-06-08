@@ -8,7 +8,6 @@ import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
 import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 import user.console.presentation.applications.ListCandidateApplicationsAction;
-import user.console.presentation.email.CheckEmailsAction;
 import user.console.presentation.notifications.ListCandidateNotificationsAction;
 
 /**
@@ -31,7 +30,7 @@ class MainMenu extends CandidateUserUI {
     private static final int USER_PROFILE_OPTION = 1;
     private static final int LIST_ALL_MY_APPLICATIONS = 2;
     private static final int CHECK_NOTIFICATIONS = 3;
-    private String email;
+    private final String email;
 
     public MainMenu(String email){
         super();

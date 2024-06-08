@@ -1,0 +1,29 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Most Referenced Words
+
+autonumber
+
+actor "Customer Manager" as CMAN
+participant ":System" as System
+
+activate CMAN
+
+    CMAN -> System:  asks to check the most referenced \nwords in candidate files
+    activate System
+
+        System --> CMAN : lists applications and asks to select one
+    deactivate System
+
+    CMAN -> System: selects an application
+    activate System
+
+        System --> CMAN : displays top 20 most referenced words \n in the files of the candidate
+    deactivate System
+
+deactivate CMAN
+
+@enduml

@@ -97,10 +97,10 @@ Mas talvez não faça sentido fazer isso se já estamos a receber candidaturas.
 ### 1.3. Acceptance Criteria
 
 > **AC1:**
-> The costumer manager should select the job opening for which he wants to update process status
+> The costumer manager should be able to select the job opening for which he wants to update process status
 
 > **AC2:**
-> The costumer manager should select the status he intends for the job opening selected
+> The costumer manager should be able to select the status he intends for the job opening selected
 
 ### 1.4. Input and Output Data
 

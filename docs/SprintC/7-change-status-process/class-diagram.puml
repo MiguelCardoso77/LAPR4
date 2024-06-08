@@ -25,7 +25,9 @@ package "presentation" {
 
 package "application" {
     class ChangeProcessStatusController {
+        + selectJobOpening()
         + changeProcessStatus(processStatus ,process)
+        + changeProcessState(processState ,process)
     }
     class ChangeProcessStateController {
         + changeProcessState(processState ,process)

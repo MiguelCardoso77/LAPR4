@@ -33,6 +33,24 @@ As Customer Manager, I want to get an ordered list of candidates, using the job 
 > 
 > Esta US não faz sentido para processos que não tenham entrevista.
 
+> **Question 204**
+>
+>Paula – US 1019– segundo a resposta A197, devemos então apenas permitir a listagem de job openings que tenham entrevista?
+>
+> **Answer**
+> 
+> Penso que não percebi bem a referência à listagem de job openings. Esta US não faz sentido para job openings que não tenham entrevista, uma vez que assenta na listagem dos candidatos e dos seus pontos nas entrevista.
+
+> **Question 226**
+> 
+>Bernardo Barbosa – US 1019 - Na descrição da user story : " As Customer Manager, I want to get an ordered list of candidates, using the job interview points (grades), to help me analyze the candidates". A intenção "analyze the candidates" impõe alguma mudança/remoção de candidatos no sistema?
+>
+> **Answer**
+>
+> A referência a “analize the candidates” é apenas para passar a ideia que se pretende nesta US que o sistema disponibilize uma forma do Customer Manager conseguir consultar o resultado das entrevistas de forma a ajudar a decidir o ranking dos candidatos. Nada mais. O ranking doa candidatos é registado no sistema através da US 1013
+
+
+
 ### 1.3. Acceptance Criteria
 
 > **AC1:**

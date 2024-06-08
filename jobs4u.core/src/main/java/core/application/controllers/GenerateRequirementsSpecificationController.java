@@ -3,6 +3,7 @@ package core.application.controllers;
 import core.domain.jobOpening.JobOpening;
 import core.persistence.PersistenceContext;
 import core.repositories.JobOpeningRepository;
+import core.services.JobOpeningService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,9 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenerateRequirementsSpecificationController {
-
-
-    private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
+    private final JobOpeningService jobOpeningService = new JobOpeningService();
 
 
     public List<String> readFile(String filePath) {
@@ -38,7 +37,7 @@ public class GenerateRequirementsSpecificationController {
     public List<JobOpening> findAllJobOpeningAssigned() {
         List<JobOpening> filteredJobOpening = new ArrayList<>();
 
-        for (JobOpening jobOpening : jobOpeningRepository.allJobOpenings()) {
+        for (JobOpening jobOpening : jobOpeningService.allJobOpenings()) {
             if (jobOpening.jobRequirementsSpecification() != null) {
                 filteredJobOpening.add(jobOpening);
             }
@@ -46,9 +45,6 @@ public class GenerateRequirementsSpecificationController {
 
         return filteredJobOpening;
     }
-
-
-
 
 
     public List<String> processLines(List<String> lines) {

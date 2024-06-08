@@ -131,4 +131,8 @@ public class ApplicationService {
         application.changeStatus(status);
         return applicationRepository.save(application);
     }
+
+    public void uploadCandidateRequirements(Application application, CandidateRequirements candidateRequirements) {
+        application.uploadCandidateRequirements(candidateRequirements);
+    }
 }

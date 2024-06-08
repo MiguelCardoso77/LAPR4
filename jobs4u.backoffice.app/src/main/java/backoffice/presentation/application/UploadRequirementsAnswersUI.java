@@ -7,6 +7,7 @@ import core.domain.jobOpening.JobOpening;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 public class UploadRequirementsAnswersUI extends AbstractUI {
@@ -35,8 +36,13 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
             String path = Console.readLine("\nEnter the path to the file with the requirements: ");
             List<String> candidateRequirements = uploadRequirementsAnswersController.retrieveResponseRequirements(path);
 
-            uploadRequirementsAnswersController.uploadRequirements(candidateRequirements, application);
-            System.out.println(ConsoleColors.GREEN + " Candidate Requirements uploaded successfully!" + ConsoleColors.RESET);
+            if (!candidateRequirements.isEmpty()){
+                uploadRequirementsAnswersController.uploadRequirements(candidateRequirements, application);
+                System.out.println(ConsoleColors.GREEN + " Candidate Requirements uploaded successfully!" + ConsoleColors.RESET);
+            } else{
+                System.out.println("Invalid Path!");
+            }
+
 
             return true;
         }

@@ -7,9 +7,6 @@ participant ListCandidateApplicationsUI <<presentation>>
 participant ListCandidateApplicationsController <<controller>>
 participant CandidateApplicationsService <<service>>
 participant Jobs4UProtocol <<protocol>>
-participant ApplicationService <<service>>
-database ApplicationRepository <<repository>>
-participant Application <<application>>
 
 activate Candidate
 
@@ -25,37 +22,10 @@ activate Candidate
                 CandidateApplicationsService -> Jobs4UProtocol : sendApplications(email)
                 activate Jobs4UProtocol
 
-                    Jobs4UProtocol --> CandidateApplicationsService : list of all applications of a candidate \n and operation success
+                    Jobs4UProtocol --> CandidateApplicationsService : list of all applications of a candidate
                 deactivate Jobs4UProtocol
 
-                CandidateApplicationsService -> ApplicationService : allApplications()
-                activate ApplicationService
-
-                    ApplicationService -> ApplicationRepository : allApplications()
-                    activate ApplicationRepository
-
-                        ApplicationRepository --> ApplicationService : all applications
-                    deactivate ApplicationRepository
-
-                    ApplicationService --> CandidateApplicationsService : all applications
-                deactivate ApplicationService
-
-                loop for each application on the list
-
-                CandidateApplicationsService -> Application : identity()
-                activate Application
-
-                    Application --> CandidateApplicationsService : Integer id
-                deactivate Application
-
-                CandidateApplicationsService -> Application : equals(id)
-                activate Application
-
-                    Application --> CandidateApplicationsService : return true
-                deactivate Application
-                end loop
-
-                CandidateApplicationsService --> ListCandidateApplicationsController : List<Application> applications
+                CandidateApplicationsService --> ListCandidateApplicationsController: list of all applications of a candidate
             deactivate CandidateApplicationsService
 
             ListCandidateApplicationsController --> ListCandidateApplicationsUI : List<Application> applications

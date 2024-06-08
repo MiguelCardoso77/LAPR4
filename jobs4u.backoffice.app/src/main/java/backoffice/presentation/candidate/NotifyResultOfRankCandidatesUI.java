@@ -49,11 +49,11 @@ public class NotifyResultOfRankCandidatesUI extends AbstractUI {
             String subject1 = buildSubject1(jobReference);
             String body3 = emailToCostumer.toString();
 
-            Email emailcostumer = notifyResultOfRankCandidatesController.createEmail(costumerEmail, subject1, body3);
+            Email emailCostumer = notifyResultOfRankCandidatesController.createEmail(costumerEmail, subject1, body3);
 
             notifyResultOfRankCandidatesController.sendEmails(emailsToSend);
 
-            notifyResultOfRankCandidatesController.sendEmailCostumer(emailcostumer);
+            notifyResultOfRankCandidatesController.sendEmailCostumer(emailCostumer);
         }
         return true;
     }

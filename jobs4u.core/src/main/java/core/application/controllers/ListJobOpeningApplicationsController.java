@@ -16,8 +16,10 @@ import java.util.List;
 
 /**
  * Controller responsible for listing applications of a job opening.
+ * Provides methods to retrieve applications based on different criteria
+ * and allows selecting specific applications or job openings.
  *
- * @author Tomás Gonçalves
+ * @autor Tomás Gonçalves
  */
 public class ListJobOpeningApplicationsController {
 
@@ -49,6 +51,12 @@ public class ListJobOpeningApplicationsController {
         return allApplicationsJobOpening;
     }
 
+    /**
+     * Retrieves all applications associated with a specific job opening that have status RECEIVED.
+     *
+     * @param jobReference The reference to the job opening.
+     * @return Iterable of applications associated with the specified job opening.
+     */
     public Iterable<Application> allApplicationsOfJobOpeningReceived(JobReference jobReference) {
         Iterable<Application> allApplications = appServ.allApplications();
         int count = 0;
@@ -66,6 +74,12 @@ public class ListJobOpeningApplicationsController {
         return allApplicationsJobOpening;
     }
 
+    /**
+     * Retrieves all applications associated with a specific job opening that have status ACCEPTED.
+     *
+     * @param jobOpening The job opening.
+     * @return Iterable of applications associated with the specified job opening.
+     */
     public Iterable<Application> allApplicationsOfJobOpeningAccepted(JobOpening jobOpening) {
         Iterable<Application> allApplications = appServ.allApplications();
         int count = 0;
@@ -91,6 +105,12 @@ public class ListJobOpeningApplicationsController {
         return allApplicationsOfJobOpeningAccepted;
     }
 
+    /**
+     * Displays all applications associated with a specific job opening.
+     *
+     * @param jobReference The reference to the job opening.
+     * @return Iterable of applications associated with the specified job opening.
+     */
     public Iterable<Application> showApplicationsOfJobOpening(JobReference jobReference) {
         Iterable<Application> iterable = allApplicationsOfJobOpening(jobReference);
 
@@ -106,6 +126,11 @@ public class ListJobOpeningApplicationsController {
         return iterable;
     }
 
+    /**
+     * Allows the user to select an application by entering its ID.
+     *
+     * @return The selected Application object, or null if no application was selected.
+     */
     public Application selectApplication() {
         Application application = null;
         final int option = Console.readInteger("Enter the id of the application");

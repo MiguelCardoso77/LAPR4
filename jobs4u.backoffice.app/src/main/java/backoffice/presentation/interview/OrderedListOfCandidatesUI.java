@@ -8,11 +8,21 @@ import core.domain.jobOpening.JobOpening;
 
 import java.util.List;
 
+/**
+ * User Interface for displaying an ordered list of candidates based on their interview scores
+ * for a selected job opening.
+ *
+ * @autor Tomás Gonçalves
+ */
 public class OrderedListOfCandidatesUI {
 
     private final OrderedListOfCandidatesController orderedListOfCandidatesController = new OrderedListOfCandidatesController();
 
-
+    /**
+     * Displays the ordered list of candidates for a selected job opening.
+     *
+     * @return true if the process was successful.
+     */
     public boolean doShow() {
 
         JobOpening jobOpening = orderedListOfCandidatesController.selectJobOpening();
@@ -29,6 +39,12 @@ public class OrderedListOfCandidatesUI {
         return true;
     }
 
+    /**
+     * Displays the final list of applications along with their corresponding job interviews.
+     *
+     * @param finalList A list of applications corresponding to the ordered job interviews.
+     * @param orderedList A list of job interviews ordered by their scores.
+     */
     public void  displayList(List<Application> finalList, List<JobInterview> orderedList) {
 
     int count= 0;

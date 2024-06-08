@@ -88,20 +88,22 @@ the requirements. The user should fix the error and submit again. Only US 1015 r
     * List of results for  each candidate's application of the selected job opening.
 
 
-
+### 1.6. System Sequence Diagram (SSD)
+![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ## 2. Analysis and Design
+
+### Analysis
 
 ### 2.1. Domain Model
 ![domain-model.svg](domain-model.svg)
 
+### Design
+
 ### 2.2. Class Diagram
 ![class-diagram.svg](class-diagram.svg)
 
-### 2.3. System Sequence Diagram (SSD)
-![system-sequence-diagram.svg](system-sequence-diagram.svg)
-
-### 2.4. Sequence Diagram (SD)
+### 2.3. Sequence Diagram (SD)
 ![sequence-diagram.svg](sequence-diagram.svg)
 
 
@@ -152,7 +154,59 @@ protected boolean doShow() {
 
 ```
 
-## 4. Demonstration
+## 4. Testing
+
+The classes `Application`, `JobOpening` and `Candidate`  are fully tested to ensure the status, rank and all other attributes are correctly updated and retrieved:
+
+```java
+@Test
+    void testIdentity() {
+        assertEquals(jobReference, jobOpening.identity());
+    }
+
+    @Test
+    void testJobReference() {
+        assertEquals(jobReference, jobOpening.jobReference());
+    }
+
+    @Test
+    void testRank() {
+        assertEquals(rank, application.rank());
+    }
+
+    @Test
+    void testCandidateRequirements() {
+        assertEquals(candidateRequirements, application.candidateRequirements());
+    }
+
+    @Test
+    void testIdentity() {
+        assertNotNull(application.identity());
+    }
+
+    @Test
+    void testStatus() {
+        application.changeStatus(Status.CHOSEN);
+        assertEquals(Status.CHOSEN, application.status()); // assuming the initial status is PENDING
+    }
+
+    @Test
+    void testChangeStatus() {
+        Status newStatus = Status.ACCEPTED; // replace with actual Status
+        application.changeStatus(newStatus);
+        assertEquals(newStatus, application.status());
+    }
+
+    @Test
+    void testIdentity() {
+        assertEquals(telephoneNumber, candidate.identity());
+    }
+
+```
+
+
+
+## 5. Demonstration
 
     *Requirements Accepted**
 ![requirements_accepted.png](requirements_accepted.png)

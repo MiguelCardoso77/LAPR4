@@ -1,5 +1,6 @@
 package backoffice.presentation.candidate;
 
+import console.presentation.utils.ConsoleColors;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.application.Rank;
@@ -14,9 +15,7 @@ import java.util.List;
 
 public class NotifyResultOfRankCandidatesUI {
 
-    private final NotifyCandidatesController notifyCandidatesController = new NotifyCandidatesController();
-    private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
-    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
+    private final NotifyResultOfRankCandidatesController notifyResultOfRankCandidatesController = new NotifyResultOfRankCandidatesController();
 
     protected boolean doShow() {
 
@@ -24,22 +23,22 @@ public class NotifyResultOfRankCandidatesUI {
 
         List<String> emailToCostumer = new ArrayList<>();
 
-        JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
+        JobOpening jobOpening = notifyResultOfRankCandidatesController.selectJobOpening();
 
         JobReference jobReference = jobOpening.jobReference();
 
-        Iterable<Application> appToNotify = listJobOpeningApplicationsController.allApplicationsOfJobOpeningAccepted(jobOpening);
+        Iterable<Application> appToNotify = notifyResultOfRankCandidatesController.allApplicationsOfJobOpeningAccepted(jobOpening);
 
         if(appToNotify == null ){
-            System.out.println("There is no applications accepted for this job opening");
+            System.out.println(ConsoleColors.RED + "There are no applications accepted for this job opening." + ConsoleColors.RESET);
         }else {
             for (Application application : appToNotify) {
 
-                String candidateEmail = notifyCandidatesController.findCandidateEmail(application);
+                String candidateEmail = notifyResultOfRankCandidatesController.findCandidateEmail(application);
                 String subject = buildSubject(application);
                 String body = buildBody1(application, application.rank(), application.status());
                 String body2 = buildBody2(application.candidate());
-                Email emailObj = notifyCandidatesController.createEmail(candidateEmail, subject, body);
+                Email emailObj = notifyResultOfRankCandidatesController.createEmail(candidateEmail, subject, body);
                 emailToCostumer.add(body2);
                 emailsToSend.add(emailObj);
             }
@@ -48,24 +47,24 @@ public class NotifyResultOfRankCandidatesUI {
             String subject1 = buildSubject1(jobReference);
             String body3 = emailToCostumer.toString();
 
-            Email emailcostumer = notifyCandidatesController.createEmail(costumerEmail, subject1, body3);
+            Email emailcostumer = notifyResultOfRankCandidatesController.createEmail(costumerEmail, subject1, body3);
 
-            notifyCandidatesController.sendEmails(emailsToSend);
+            notifyResultOfRankCandidatesController.sendEmails(emailsToSend);
 
-            notifyCandidatesController.sendEmailCostumer(emailcostumer);
+            notifyResultOfRankCandidatesController.sendEmailCostumer(emailcostumer);
         }
         return true;
     }
 
     private String buildSubject(Application application) {
-        return "Verification Process - " + application.dataFile();
+        return "Verification of Candidates - " + application.dataFile();
     }
 
 
     private String buildBody1(Application application, Rank rank, Status status) {
-        return  "Dear Candidate,\n\n "+
+        return  "Dear Candidate,\n\n"+
                 "We hope this message finds you well.\n\n" +
-                "We are writing to congrats you because your application "+ application.dataFile() + ", placed in rank \""+  rank + "have been changed to " + status +".\n"+
+                "We are writing this to congratulate you because your application "+ application.dataFile() + ", placed in rank " +  rank + " has been changed to " + status +".\n"+
                 "You will be contacted soon by our company.\n\n" +
                 "Best regards,\n" +
                 "Jobs4U\n";

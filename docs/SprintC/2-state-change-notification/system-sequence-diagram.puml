@@ -14,10 +14,10 @@ participant ": System" as S
 
 activate C
 
-    C -> S: asks to see the applications's state changes notifications
+    C -> S: asks to list all of his notifications
     activate S
 
-        S --> C : shows all the notifications
+        S --> C : list all applications of candidate \nand display operation success
         deactivate S
 
 @enduml

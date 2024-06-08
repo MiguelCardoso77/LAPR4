@@ -1,11 +1,91 @@
 @startuml
-'https://plantuml.com/sequence-diagram
-
 autonumber
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+Title : State Change Notification
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor Candidate
+
+participant ListCandidateNotificationsUI <<presentation>>
+participant ListCandidateNotificationsController <<controller>>
+
+participant CandidateNotificationsService <<service>>
+
+participant Jobs4UProtocol <<protocol>>
+
+participant NotificationService <<service>>
+
+database NotificationRepository <<repository>>
+
+participant Notification <<application>>
+
+activate Candidate
+
+Candidate -> ListCandidateNotificationsUI : asks to list all of his notifications
+
+activate ListCandidateNotificationsUI
+
+ListCandidateNotificationsUI -> ListCandidateNotificationsController : sendNotificationsRequest(email)
+
+activate ListCandidateNotificationsController
+
+ListCandidateNotificationsController -> CandidateNotificationsService : requestNotifications(email)
+
+activate CandidateNotificationsService
+
+CandidateNotificationsService -> Jobs4UProtocol : sendNotifications(email)
+
+activate Jobs4UProtocol
+
+Jobs4UProtocol --> CandidateNotificationsService : list of all notifications of a candidate \n and operation success
+
+deactivate Jobs4UProtocol
+
+CandidateNotificationsService -> NotificationService : allNotifications()
+
+activate NotificationService
+
+NotificationService -> NotificationRepository : allNotifications()
+
+activate NotificationRepository
+
+NotificationRepository --> NotificationService : all notifications
+
+deactivate NotificationRepository
+
+NotificationService --> CandidateNotificationsService : all notifications
+
+deactivate NotificationService
+
+loop for each notification on the list
+
+CandidateNotificationsService -> Notification : identity()
+
+activate Notification
+
+Notification --> CandidateNotificationsService : Integer id
+
+deactivate Notification
+
+CandidateNotificationsService -> Notification : equals(id)
+
+activate Notification
+
+Notification --> CandidateNotificationsService : return true
+
+deactivate Notification
+
+end loop
+
+CandidateNotificationsService --> ListCandidateNotificationsController : List<Notification> notifications
+
+deactivate CandidateNotificationsService
+
+ListCandidateNotificationsController --> ListCandidateNotificationsUI : List<Notification> notifications
+
+deactivate ListCandidateNotificationsController
+
+ListCandidateNotificationsUI --> Candidate :lists all notifications of candidate \n and displays operation success
+
+deactivate ListCandidateNotificationsUI
+
 @enduml

@@ -1,11 +1,265 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+skinparam linetype ortho
+'left to right direction
 
-autonumber
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+    FontColor Black
+    FontSize 14
+}
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+title CD - State Change Notification
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+package "ui"{
+    class ListCandidateNotificationsUI{
+    + headline() : String
+    + doShow() : boolean
+    }
+}
+
+package "controller"{
+    class ListCandidateNotificationsController{
+    + sendNotifications(email) : List<String>
+    }
+}
+
+package "application"{
+    package "domain"{
+        class Application{
+            - applicationID : int
+            - rank : Rank
+            - submissionDate : Date
+            - status : Status
+            - jobOpening : JobOpening
+            - candidate : Candidate
+            - candidateRequirements : CandidateRequirements
+            - applicationFiles : String
+            - operator : SystemUser
+            + Application(rank, submissionDate, jobOpening, candidate, applicationFiles, operator) : Application
+            Application()
+            + sameAs(otherObject) : boolean
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + compareTo() : int
+            + identity() : Integer
+            + rank() : Rank
+            + submissionDate() : Date
+            + status() : Status
+            + jobOpening() : JobOpening
+            + candidate() : Candidate
+            + candidateRequirements() : CandidateRequirements
+            + applicationFiles() : String
+            + operator() : SystemUser
+            + changeStatus(status)
+            + updateRank(rank)
+            + toString() : String
+            + uploadCandidateRequirements(candidateRequirements)
+        }
+
+        note right of Application
+                            - The SystemUser class is provided by the framework,
+                            so that there's no need in representing it
+                         end note
+
+        class CandidateRequirements{
+            - candidateRequirements : List<String>
+            + CandidateRequirements(candidateRequirements) : CandidateRequirements
+            CandidateRequirements()
+            + equals(otherObject) : boolean
+            + candidateRequirements() : List<String>
+            + hashCode() : int
+            + toString() : String
+        }
+
+        class Rank{
+            - rank : String
+            + Rank(rank) : Rank
+            Rank()
+            + isRanked() : boolean
+            + valueOf(rank) : Rank
+            + equals(otherObject) : boolean
+            + toString() : String
+        }
+
+        Enum Status{
+            SUBMITTED
+            ACCEPTED
+            DECLINED
+            PENDING
+        }
+    }
+
+    package "service"{
+        class ApplicationService{
+            + registerApplication(rank, submissionDate, jobOpening, candidate, applicationFiles, operator) : Application
+            + findApplicationByID(id) : Application
+            + allApplications() : Iterable<Application>
+            + findApplicationForJobOpening(jobOpening) : Iterable<Application>
+            + findApplicationByCandidate(candidate) : Iterable<Application>
+            + updateRank(rank, application) : Application
+            + applicationByCM(customerManager) : Iterable<Application>
+            + numberOfApplicationsForJobOpening(jobOpening) : int
+        }
+    }
+
+    package "repository"{
+        Interface ApplicationRepository{
+            allApplications() : Iterable<Application>
+            ofIdentity(id) : Application
+        }
+    }
+}
+
+package "candidate"{
+    package "domain"{
+        class Candidate{
+            - telephoneNumber : TelephoneNumber
+            - curriculum : Curriculum
+            - user : SystemUser
+            + Candidate(user, telephoneNumber, curriculum) : Candidate
+            Candidate()
+            + curriculum() : Curriculum
+            + user() : SystemUser
+            + identity() : EmailAddress
+            + equals(otherObject) : boolean
+            + sameAs(otherObject) : boolean
+            + toString() : String
+        }
+
+        note right of Candidate
+                            - The SystemUser class is provided by the framework,
+                            so that there's no need in representing it
+                         end note
+
+        class TelephoneNumber{
+            - telephoneNumber : String
+            + TelephoneNumber(telephoneNumber) : TelephoneNumber
+            TelephoneNumber()
+            + valueOf(telephoneNumber) : TelephoneNumber
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+            + compareTo(otherObject) : int
+        }
+
+        class Curriculum{
+            - curriculumPath : String
+            + Curriculum(curriculumPath) : Curriculum
+            Curriculum()
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+    }
+
+    package "service"{
+        class CandidateService{
+            + registerCandidate(user, telephoneNumber, curriculum) : Candidate
+            + allCandidates() : Iterable<Candidate>
+            + findCandidateByTelephoneNumber(telephoneNumber) : Candidate
+            + findCandidateByEmail(emailAddress) : Candidate
+            + findCandidateByUser(user) : Candidate
+        }
+    }
+
+    package "repository"{
+        Interface CandidateRepository{
+            allCandidates() : Iterable<Candidate>
+            findByTelephoneNumber(telephoneNumber) : Candidate
+        }
+    }
+
+}
+
+package "notification"{
+    package "domain"{
+    class Notification{
+            - id : int
+            - application : Application
+            - message : Message
+            - candidate : Candidate
+            Notification()
+            + Notification(application, message, candidate) : Notification
+            + identity() : Integer
+            + application() : Application
+            + message() : Message
+            + candidate() : Candidate
+            + equals(otherObject) : boolean
+            + sameAs(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+    class Message{
+        - message : String
+            + Message(message) : Message
+            Message()
+            + valueOf(message) : Message
+            + equals(otherObject) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+    class NotificationBuilder{
+    - application : Application
+        - message : Message
+        - candidate : Candidate
+        + withAll(application, message, candidate) : Notification
+        + build() : Notification
+    }
+    }
+
+    package "service"{
+        class NotificationService{
+            + registerNotification(notificationType, notificationStatus, notificationMessage, notificationReceiver, notificationSender) : Notification
+            + findNotificationByID(id) : Notification
+            + allNotifications() : Iterable<Notification>
+        }
+
+        class CandidateNotificationsService{
+        + requestNotifications(email) : List<String>
+        }
+    }
+
+    package "repository"{
+        Interface NotificationRepository{
+            allNotifications() : Iterable<Notification>
+            ofIdentity(id) : Notification
+        }
+    }
+}
+
+ListCandidateNotificationsUI --> ListCandidateNotificationsController
+
+ListCandidateNotificationsController --> CandidateNotificationsService
+
+CandidateNotificationsService --> NotificationService
+
+NotificationService --> NotificationRepository
+
+NotificationRepository --> Notification
+
+Notification --> Application
+
+Notification --> Message
+
+Notification --> Candidate
+
+NotificationBuilder --> Notification
+
+Application --> Rank
+Application --> Status
+Application --> CandidateRequirements
+Application --> Candidate
+
+Candidate --> Curriculum
+Candidate --> TelephoneNumber
+
+CandidateService --> CandidateRepository
+CandidateService --> Candidate
+
+ApplicationService --> ApplicationRepository
+ApplicationService --> Application
+
+
 @enduml

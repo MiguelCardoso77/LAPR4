@@ -26,7 +26,6 @@ public abstract class CandidateUserUI extends AbstractUI {
      */
     @Override
     public String headline() {
-
         return authz.session().map(s -> "Candidate App [ @" + s.authenticatedUser().identity() + " ] ").orElse("Candidate App [ ==Anonymous== ]");
     }
 

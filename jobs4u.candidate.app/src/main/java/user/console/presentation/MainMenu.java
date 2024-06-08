@@ -32,7 +32,7 @@ class MainMenu extends CandidateUserUI {
     private static final int CHECK_NOTIFICATIONS = 3;
     private final String email;
 
-    public MainMenu(String email){
+    public MainMenu(String email) {
         super();
         this.email = email;
     }
@@ -57,7 +57,6 @@ class MainMenu extends CandidateUserUI {
     public boolean doShow() {
         final Menu menu = buildMainMenu();
         final MenuRenderer renderer = new VerticalMenuRenderer(menu, MenuItemRenderer.DEFAULT);
-
         return renderer.render();
     }
 

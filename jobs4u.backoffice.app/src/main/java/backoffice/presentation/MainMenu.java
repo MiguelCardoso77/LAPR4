@@ -83,10 +83,6 @@ public class MainMenu extends AbstractUI {
             mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, operatorMenu);
         }
 
-        if (!Application.settings().isMenuLayoutHorizontal()) {
-            mainMenu.addItem(MenuItem.separator(SEPARATOR_LABEL));
-        }
-
         if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.LANGUAGE_ENGINEER)) {
             final Menu languageEngineerMenu = buildLanguageEnginnerMenu();
             mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, languageEngineerMenu);

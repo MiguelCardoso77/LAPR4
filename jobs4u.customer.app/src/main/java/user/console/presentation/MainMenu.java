@@ -26,8 +26,6 @@ package user.console.presentation;
 import console.presentation.authz.MyUserMenu;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.actions.menu.MenuItem;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
-import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.presentation.console.ExitWithMessageAction;
 import eapli.framework.presentation.console.menu.MenuItemRenderer;
 import eapli.framework.presentation.console.menu.MenuRenderer;
@@ -42,8 +40,7 @@ class MainMenu extends CustomerUserUI {
     private static final int EXIT_OPTION = 0;
     private static final int MY_USER_OPTION = 1;
     private static final int LIST_JOB_OPENINGS_OPTION = 2;
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private String email;
+    private final String email;
 
     /**
      * Constructs a new MainMenu.

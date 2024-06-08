@@ -26,7 +26,6 @@ public abstract class CustomerUserUI extends AbstractUI {
      */
     @Override
     public String headline() {
-
         return authz.session().map(s -> "Customer App [ @" + s.authenticatedUser().identity() + " ] ").orElse("Customer App [ ==Anonymous== ]");
     }
 

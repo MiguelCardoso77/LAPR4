@@ -47,7 +47,7 @@ public class OrderedListOfCandidatesController {
     }
 
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference){
-        return listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobReference);
+        return listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
     }
 
 }

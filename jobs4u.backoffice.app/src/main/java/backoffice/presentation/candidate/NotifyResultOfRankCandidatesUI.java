@@ -9,14 +9,16 @@ import core.domain.candidate.Candidate;
 import core.domain.email.Email;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
+import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotifyResultOfRankCandidatesUI {
+public class NotifyResultOfRankCandidatesUI extends AbstractUI {
 
     private final NotifyResultOfRankCandidatesController notifyResultOfRankCandidatesController = new NotifyResultOfRankCandidatesController();
 
+    @Override
     protected boolean doShow() {
 
         List<Email> emailsToSend = new ArrayList<>();
@@ -29,9 +31,9 @@ public class NotifyResultOfRankCandidatesUI {
 
         Iterable<Application> appToNotify = notifyResultOfRankCandidatesController.allApplicationsOfJobOpeningAccepted(jobOpening);
 
-        if(appToNotify == null ){
+        if (appToNotify == null) {
             System.out.println(ConsoleColors.RED + "There are no applications accepted for this job opening." + ConsoleColors.RESET);
-        }else {
+        } else {
             for (Application application : appToNotify) {
 
                 String candidateEmail = notifyResultOfRankCandidatesController.findCandidateEmail(application);
@@ -56,15 +58,20 @@ public class NotifyResultOfRankCandidatesUI {
         return true;
     }
 
+    @Override
+    public String headline() {
+        return "Notify Result of Ranking";
+    }
+
     private String buildSubject(Application application) {
         return "Verification of Candidates - " + application.dataFile();
     }
 
 
     private String buildBody1(Application application, Rank rank, Status status) {
-        return  "Dear Candidate,\n\n"+
+        return "Dear Candidate,\n\n" +
                 "We hope this message finds you well.\n\n" +
-                "We are writing this to congratulate you because your application "+ application.dataFile() + ", placed in rank " +  rank + " has been changed to " + status +".\n"+
+                "We are writing this to congratulate you because your application " + application.dataFile() + ", placed in rank " + rank + " has been changed to " + status + ".\n" +
                 "You will be contacted soon by our company.\n\n" +
                 "Best regards,\n" +
                 "Jobs4U\n";
@@ -77,6 +84,5 @@ public class NotifyResultOfRankCandidatesUI {
     private String buildSubject1(JobReference jobReference) {
         return "Verification Process - " + jobReference.toString();
     }
-
 
 }

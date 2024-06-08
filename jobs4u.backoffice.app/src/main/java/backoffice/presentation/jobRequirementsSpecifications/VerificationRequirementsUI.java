@@ -10,10 +10,8 @@ import eapli.framework.presentation.console.AbstractUI;
 import java.util.Map;
 
 public class VerificationRequirementsUI extends AbstractUI {
-    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
-    private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
+
     private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
-    private final ChangeJobInterviewStatusController changeJobInterviewStatusController = new ChangeJobInterviewStatusController();
 
     final String RED = "\u001B[31m";
     final String GREEN = "\u001B[32m";
@@ -21,10 +19,10 @@ public class VerificationRequirementsUI extends AbstractUI {
 
     @Override
     protected boolean doShow() {
-        JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
+        JobOpening jobOpening = verificationRequirementsController.selectJobOpening();
         JobReference jobReference = jobOpening.jobReference();
 
-        Iterable<Application> jobOpeningApplications = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
+        Iterable<Application> jobOpeningApplications = verificationRequirementsController.allApplicationsOfJobOpeningReceived(jobReference);
 
         if (jobOpeningApplications == null) {
             System.out.println(RED + "No applications for this job opening" + RESET);
@@ -44,11 +42,11 @@ public class VerificationRequirementsUI extends AbstractUI {
 
                     if (result) {
                         statusFinal = Status.ACCEPTED;
-                        changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+                        verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
                         System.out.println(GREEN + "The candidate is valid for this job opening" + RESET);
                     } else {
                         statusFinal = Status.DECLINED;
-                        changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+                        verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
                         System.out.println(RED + "This candidate isn't valid for this job opening" + RESET);
                     }
                     System.out.println("=========================================================================================================");

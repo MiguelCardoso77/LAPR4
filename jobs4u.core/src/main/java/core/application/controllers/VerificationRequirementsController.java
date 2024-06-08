@@ -4,13 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import core.domain.application.Application;
+import core.domain.application.Status;
+import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobReference;
 import plugin.requirements.RequirementsPlugin;
 
 
 public class VerificationRequirementsController {
 
     private final RequirementsPlugin requirementsPlugin = new RequirementsPlugin();
-
+    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
+    private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
+    private final ChangeJobInterviewStatusController changeJobInterviewStatusController = new ChangeJobInterviewStatusController();
 
     public Map<String, String> mapCandidate(List<String> candidateRequirements) {
 
@@ -34,5 +40,18 @@ public class VerificationRequirementsController {
         return requirementsPlugin.checkRequirements(path, clientRequirements);
     }
 
+    public JobOpening selectJobOpening() {
+        return selectJobOpeningController.selectJobOpening();
+    }
+
+
+    public Iterable<Application> allApplicationsOfJobOpeningReceived(JobReference jobReference) {
+        return listJobOpeningApplicationsController.allApplicationsOfJobOpeningReceived(jobReference);
+
+    }
+
+    public void changeJobInterviewStatus(Status statusFinal, Application applicationToVerify) {
+        changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+    }
 
 }

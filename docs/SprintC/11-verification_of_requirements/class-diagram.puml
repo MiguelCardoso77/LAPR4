@@ -34,6 +34,10 @@ package "application" {
     class VerificationRequirementsController {
         + mapCandidate(candidateRequirements)
         + listJobRequirements(jobOpeningRequirement)
+        + pluginRequirements( path, clientRequirements)
+        + selectJobOpening()
+        + allApplicationsOfJobOpeningReceived( jobReference)
+        + changeJobInterviewStatus(statusFinal, applicationToVerify)
     }
 
     class ChangeJobInterviewStatusController {
@@ -182,11 +186,12 @@ package "domain" {
             + equals(jobInterview)
         }
 
-VerificationRequirementsUI -> SelectJobOpeningController
-VerificationRequirementsUI --> ListJobOpeningApplicationsController
 VerificationRequirementsUI --> VerificationRequirementsController
-VerificationRequirementsUI ---> ChangeJobInterviewStatusController
-VerificationRequirementsUI -> RequirementsPlugin
+
+VerificationRequirementsController --> SelectJobOpeningController
+VerificationRequirementsController --> ListJobOpeningApplicationsController
+VerificationRequirementsController -->RequirementsPlugin
+VerificationRequirementsController --> ChangeJobInterviewStatusController
 
 
 SelectJobOpeningController --> ListJobOpeningController

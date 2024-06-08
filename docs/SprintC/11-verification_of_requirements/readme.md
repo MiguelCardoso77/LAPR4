@@ -71,6 +71,8 @@ the requirements. The user should fix the error and submit again. Only US 1015 r
 
 [List all applications of a job opening](..%2F..%2FSprintB%2Flist-job-openings'-application)
 
+[Upload requirements](..%2F..%2FSprintB%2FUpload-requirements)
+
 
 
 
@@ -111,10 +113,10 @@ The `VerificationRequirementsController` class is mainly used to get all require
 
 ```java
 protected boolean doShow() {
-    JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
-    JobReference jobReference = jobOpening.identity();
+    JobOpening jobOpening = verificationRequirementsController.selectJobOpening();
+    JobReference jobReference = jobOpening.jobReference();
 
-    Iterable<Application> jobOpeningApplications = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
+    Iterable<Application> jobOpeningApplications = verificationRequirementsController.allApplicationsOfJobOpeningReceived(jobReference);
 
     if (jobOpeningApplications == null) {
         System.out.println(RED + "No applications for this job opening" + RESET);
@@ -125,6 +127,7 @@ protected boolean doShow() {
                 CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
                 String path = jobOpening.jobRequirementsSpecification().jobRequirementsPath();
 
+
                 Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
 
                 boolean result = verificationRequirementsController.pluginRequirements(path, clientRequirements);
@@ -133,11 +136,11 @@ protected boolean doShow() {
 
                 if (result) {
                     statusFinal = Status.ACCEPTED;
-                    changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+                    verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
                     System.out.println(GREEN + "The candidate is valid for this job opening" + RESET);
                 } else {
                     statusFinal = Status.DECLINED;
-                    changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+                    verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
                     System.out.println(RED + "This candidate isn't valid for this job opening" + RESET);
                 }
                 System.out.println("=========================================================================================================");
@@ -146,6 +149,7 @@ protected boolean doShow() {
     }
     return true;
 }
+
 ```
 
 ## 4. Demonstration

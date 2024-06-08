@@ -5,21 +5,20 @@ actor CustomerManager
 
 participant VerificationRequirementsUI <<presentation>>
 
+participant VerificationRequirementsController <<controller>>
 
 participant SelectJobOpeningController <<controller>>
-participant ListJobOpeningController <<controller>>
 participant ListJobOpeningApplicationsController <<controller>>
-participant VerificationRequirementsController <<controller>>
 participant ChangeJobInterviewStatusController <<controller>>
-participant ListJobOpeningController <<controller>>
+
+participant RequirementsPlugin <<core>>
+
 
 participant JobOpeningService <<service>>
 participant ApplicationService <<service>>
-participant JobInterviewService <<service>>
 
 database JobOpeningRepository <<repository>>
 database ApplicationRepository <<repository>>
-database JobInterviewRepository <<repository>>
 
 activate CustomerManager
 
@@ -27,7 +26,11 @@ activate CustomerManager
 
         activate VerificationRequirementsUI
 
-        VerificationRequirementsUI -> SelectJobOpeningController : selectJobOpening()
+        VerificationRequirementsUI -> VerificationRequirementsController: selectJobOpening()
+
+        activate VerificationRequirementsController
+
+        VerificationRequirementsController -> SelectJobOpeningController : selectJobOpening()
 
         activate SelectJobOpeningController
 
@@ -49,9 +52,13 @@ activate CustomerManager
 
         deactivate JobOpeningService
 
-        SelectJobOpeningController --> VerificationRequirementsUI : list of all job openings
+        SelectJobOpeningController --> VerificationRequirementsController : list of all job openings
 
         deactivate SelectJobOpeningController
+
+        VerificationRequirementsController --> VerificationRequirementsUI : list of all job openings
+
+        deactivate VerificationRequirementsController
 
         VerificationRequirementsUI --> CustomerManager : lists job opening and asks to select one
 
@@ -61,7 +68,12 @@ CustomerManager -> VerificationRequirementsUI : selects job opening
 
     activate VerificationRequirementsUI
 
-        VerificationRequirementsUI -> ListJobOpeningApplicationsController : allApplicationsOfJobOpening(jobOpening.jobReference()
+        VerificationRequirementsUI -> VerificationRequirementsController : allApplicationsOfJobOpeningReceived(jobOpening.jobReference())
+
+        activate VerificationRequirementsController
+
+        VerificationRequirementsController -> ListJobOpeningApplicationsController : allApplicationsOfJobOpeningReceived(jobOpening.jobReference())
+
         activate ListJobOpeningApplicationsController
 
             ListJobOpeningApplicationsController -> ApplicationService : allApplications()
@@ -70,17 +82,21 @@ CustomerManager -> VerificationRequirementsUI : selects job opening
                 ApplicationService -> ApplicationRepository : allApplications()
                 activate ApplicationRepository
 
-                    ApplicationRepository --> ApplicationService : Iterable<Application> allApplications
+                    ApplicationRepository --> ApplicationService : Iterable<Application> allApplicationsReceived
                 deactivate ApplicationRepository
 
 
-            ApplicationService --> ListJobOpeningApplicationsController : Iterable<Application> allApplications
+            ApplicationService --> ListJobOpeningApplicationsController : Iterable<Application> allApplicationsReceived
 
                 deactivate ApplicationService
 
-            ListJobOpeningApplicationsController --> VerificationRequirementsUI : Iterable<Application> applicationList
+            ListJobOpeningApplicationsController --> VerificationRequirementsController : Iterable<Application> applicationListReceived
 
         deactivate ListJobOpeningApplicationsController
+
+        VerificationRequirementsController --> VerificationRequirementsUI : Iterable<Application> applicationListReceived
+
+        deactivate VerificationRequirementsController
 
 loop for each application
 
@@ -96,7 +112,7 @@ loop for each application
 
         activate VerificationRequirementsController
 
-        VerificationRequirementsController -> RequirementsPlugin : pluginRequirements(path, clientRequirements)
+        VerificationRequirementsController -> RequirementsPlugin : checkRequirements(path, clientRequirements)
 
         activate RequirementsPlugin
 
@@ -106,7 +122,27 @@ loop for each application
 
         VerificationRequirementsController --> VerificationRequirementsUI : result(accepted or declined)
 
+        deactivate VerificationRequirementsController
+
+        VerificationRequirementsUI -> VerificationRequirementsController : changeJobInterviewStatus(statusFinal, applicationToVerify);
+
+        activate VerificationRequirementsController
+
+        VerificationRequirementsController -> ChangeJobInterviewStatusController: verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+
+        deactivate VerificationRequirementsController
+        activate ChangeJobInterviewStatusController
+
+        ChangeJobInterviewStatusController -> ApplicationService : updateStatus(applicationStatus, application);
+        deactivate ChangeJobInterviewStatusController
+        activate ApplicationService
+
+        ApplicationService -> ApplicationRepository: save(application)
+
+        deactivate ApplicationService
+
 end
+
 
         deactivate VerificationRequirementsController
 

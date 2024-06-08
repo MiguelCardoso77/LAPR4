@@ -31,4 +31,12 @@ public class ProcessService {
     }
 
     public Iterable<Process> allProcesses() { return processRepository.findAll(); }
+
+    public void changeProcessStatus(ProcessStatus processStatus, Process process){
+        process.changeProcessStatus(processStatus);
+    }
+
+    public void changeProcessState(ProcessState processState, Process process){
+        process.changeProcessState(processState);
+    }
 }

@@ -15,8 +15,6 @@ import eapli.framework.presentation.console.AbstractUI;
  */
 public class ChangeProcessStatusUI extends AbstractUI {
     final ChangeProcessStatusController changeProcessStatusController = new ChangeProcessStatusController();
-    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
-    final ChangeProcessStateController changeProcessStateController = new ChangeProcessStateController();
 
     /**
      * Displays the UI for changing the process status.
@@ -27,7 +25,7 @@ public class ChangeProcessStatusUI extends AbstractUI {
     protected boolean doShow() {
 
         System.out.println("\nAvailable Job Openings: ");
-        JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
+        JobOpening jobOpening = changeProcessStatusController.selectJobOpening();
         selectStatus(jobOpening);
 
         return false;
@@ -40,11 +38,11 @@ public class ChangeProcessStatusUI extends AbstractUI {
         ProcessStatus status = process.processStatus();
         String nameState = state.name();
         String nameStatus = status.name();
-        System.out.printf("%-30s%-30s%-30S%n", "Job Opening", "State" , "Status");
-        System.out.printf("%-30s%-30s%-30S%n",jobOpening.identity() ,nameState, nameStatus);
+        System.out.printf("%-30s%-30s%-30S%n", "Job Opening", "State", "Status");
+        System.out.printf("%-30s%-30s%-30S%n", jobOpening.identity(), nameState, nameStatus);
         final int optionMove = Console.readInteger("\nDo you want to move: \n 1 - Back \n 2 - Forward \n" + "Choose an option: ");
 
-        if (optionMove == 1){
+        if (optionMove == 1) {
             switch (nameState) {
                 case "APPLICATION":
                     System.out.println("You cannot move backwards because this is the first state of the process");
@@ -79,7 +77,7 @@ public class ChangeProcessStatusUI extends AbstractUI {
                     break;
             }
 
-        }else if (optionMove == 2){
+        } else if (optionMove == 2) {
             switch (nameState) {
                 case "APPLICATION":
                     changeProcessStatus(ProcessStatus.CLOSE, process);
@@ -106,7 +104,8 @@ public class ChangeProcessStatusUI extends AbstractUI {
 
                     break;
                 case "RESULT":
-                    changeProcessStatus(ProcessStatus.CLOSE, process);
+                    System.out.println("You cannot move forward because this is the last state of the process");
+                    System.out.println("Status of the process: " + process.processStatus().toString());
 
                     break;
                 default:
@@ -123,10 +122,10 @@ public class ChangeProcessStatusUI extends AbstractUI {
      * Changes the status of the process.
      *
      * @param processStatus the new status.
-     * @param process the process to change.
+     * @param process       the process to change.
      */
-    public void changeProcessStatus(ProcessStatus processStatus, Process process){
-        Process newProcess = changeProcessStatusController.changeProcessStatus(processStatus,process);
+    public void changeProcessStatus(ProcessStatus processStatus, Process process) {
+        Process newProcess = changeProcessStatusController.changeProcessStatus(processStatus, process);
         System.out.println("Success: Status was updated to " + newProcess.processStatus() + " for the process " + newProcess.identity());
     }
 
@@ -134,10 +133,10 @@ public class ChangeProcessStatusUI extends AbstractUI {
      * Changes the state of the process.
      *
      * @param processState the new state.
-     * @param process the process to change.
+     * @param process      the process to change.
      */
-    public void changeProcessState(ProcessState processState, Process process){
-        Process newProcess = changeProcessStateController.changeProcessState(processState,process);
+    public void changeProcessState(ProcessState processState, Process process) {
+        Process newProcess = changeProcessStatusController.changeProcessState(processState, process);
         System.out.println("Success: State was updated to " + newProcess.processState() + " for the process " + newProcess.identity());
     }
 

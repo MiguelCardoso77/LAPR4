@@ -49,6 +49,23 @@ public class ListJobOpeningApplicationsController {
         return allApplicationsJobOpening;
     }
 
+    public Iterable<Application> allApplicationsOfJobOpeningReceived(JobReference jobReference) {
+        Iterable<Application> allApplications = appServ.allApplications();
+        int count = 0;
+
+        List<Application> allApplicationsJobOpening = new ArrayList<>();
+        for (Application a : allApplications) {
+            if (a.jobReference().sameReference(jobReference) && a.status().toString().equals("RECEIVED")) {
+                allApplicationsJobOpening.add(a);
+                count++;
+            }
+        }
+        if(count == 0){
+            System.out.println("There is no applications in status: RECEIVED , for the selected job opening.");
+        }
+        return allApplicationsJobOpening;
+    }
+
     public Iterable<Application> allApplicationsOfJobOpeningAccepted(JobOpening jobOpening) {
         Iterable<Application> allApplications = appServ.allApplications();
         int count = 0;

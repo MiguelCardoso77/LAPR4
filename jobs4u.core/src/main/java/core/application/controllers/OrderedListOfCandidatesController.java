@@ -2,6 +2,8 @@ package core.application.controllers;
 
 import core.domain.application.Application;
 import core.domain.interview.JobInterview;
+import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobReference;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,6 +13,8 @@ public class OrderedListOfCandidatesController {
 
 
     private final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
+    private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
+    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
 
     public List<JobInterview> orderedList(Iterable<Application> applicationList){
         List<JobInterview> orderedList = new ArrayList<>();
@@ -31,15 +35,19 @@ public class OrderedListOfCandidatesController {
     public List<Application> applicationList (List<JobInterview> orderedList){
         List<Application> applicationsList = new ArrayList<>();
 
-
         for(JobInterview jobInterview : orderedList){
             Application application = jobInterview.application();
             applicationsList.add(application);}
 
-
-
-
         return applicationsList;
+    }
+
+    public JobOpening selectJobOpening(){
+        return selectJobOpeningController.selectJobOpening();
+    }
+
+    public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference){
+        return listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobReference);
     }
 
 }

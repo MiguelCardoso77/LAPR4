@@ -10,16 +10,14 @@ import java.util.List;
 
 public class OrderedListOfCandidatesUI {
 
-    private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
-    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final OrderedListOfCandidatesController orderedListOfCandidatesController = new OrderedListOfCandidatesController();
 
 
     public boolean doShow() {
 
-        JobOpening jobOpening = selectJobOpeningController.selectJobOpening();
+        JobOpening jobOpening = orderedListOfCandidatesController.selectJobOpening();
 
-        Iterable<Application> applicationList = listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpening.jobReference());
+        Iterable<Application> applicationList = orderedListOfCandidatesController.allApplicationsOfJobOpening(jobOpening.jobReference());
 
         List<JobInterview> orderedList = orderedListOfCandidatesController.orderedList(applicationList);
 

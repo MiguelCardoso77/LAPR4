@@ -52,6 +52,7 @@ As Customer Manager, I want to get an ordered list of candidates, using the job 
 
 [List job openings' application](..%2F..%2FSprintB%2Flist-job-openings'-application)
 
+[Job interviews evaluation](..%2F..%2FSprintB%2Fjob-interviews-evaluation)
 
 
 

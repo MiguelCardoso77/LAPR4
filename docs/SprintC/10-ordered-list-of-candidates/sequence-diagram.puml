@@ -8,7 +8,6 @@ participant OrderedListOfCandidatesController <<controller>>
 participant SelectJobOpeningController <<controller>>
 participant ListJobOpeningApplicationsController <<controller>>
 participant ListJobInterviewsApplicationController <<controller>>
-participant ListJobOpeningController <<controller>>
 
 
 
@@ -25,21 +24,20 @@ activate CustomerManager
     CustomerManager -> OrderedListOfCandidatesUI : asks to list candidates by grades
     activate OrderedListOfCandidatesUI
 
-        OrderedListOfCandidatesUI -> SelectJobOpeningController : selects a job opening
+        OrderedListOfCandidatesUI -> OrderedListOfCandidatesController : selects a job opening
+        activate OrderedListOfCandidatesController
+
+        OrderedListOfCandidatesController-> SelectJobOpeningController: selectJobOpening()
+
         activate SelectJobOpeningController
 
-            SelectJobOpeningController -> ListJobOpeningController : selectJobOpening()
-            activate ListJobOpeningController
 
-                ListJobOpeningController --> SelectJobOpeningController : showJobOpenings()
-
-            deactivate ListJobOpeningController
 
             SelectJobOpeningController --> JobOpeningService : allJobOpenings()
 
         activate JobOpeningService
 
-        JobOpeningService -> JobOpeningRepository : allJobOpenings()
+        JobOpeningService -> JobOpeningRepository : findAll()
 
         activate JobOpeningRepository
 
@@ -51,9 +49,13 @@ activate CustomerManager
 
         deactivate JobOpeningService
 
-        SelectJobOpeningController --> OrderedListOfCandidatesUI : list of all job openings
+        SelectJobOpeningController --> OrderedListOfCandidatesController : list of all job openings
 
         deactivate SelectJobOpeningController
+
+        OrderedListOfCandidatesController --> OrderedListOfCandidatesUI : list of all job openings
+
+        deactivate OrderedListOfCandidatesController
 
         OrderedListOfCandidatesUI -> CustomerManager : lists job opening and asks to select one
 
@@ -63,7 +65,11 @@ activate CustomerManager
 
     activate OrderedListOfCandidatesUI
 
-        OrderedListOfCandidatesUI -> ListJobOpeningApplicationsController : allApplicationsOfJobOpening(jobOpening.jobReference()
+        OrderedListOfCandidatesUI -> OrderedListOfCandidatesController : allApplicationsOfJobOpening(jobOpening.jobReference()
+        activate OrderedListOfCandidatesController
+
+        OrderedListOfCandidatesController -> ListJobOpeningApplicationsController : allApplications()
+
         activate ListJobOpeningApplicationsController
 
             ListJobOpeningApplicationsController -> ApplicationService : allApplications()
@@ -80,11 +86,13 @@ activate CustomerManager
 
                 deactivate ApplicationService
 
-            ListJobOpeningApplicationsController --> OrderedListOfCandidatesUI : Iterable<Application> applicationList
+            ListJobOpeningApplicationsController --> OrderedListOfCandidatesController : Iterable<Application> applicationList
 
-        deactivate ListJobOpeningApplicationsController
+            deactivate ListJobOpeningApplicationsController
 
+            OrderedListOfCandidatesController --> OrderedListOfCandidatesUI : Iterable<Application> applicationList
 
+        deactivate OrderedListOfCandidatesController
 
            OrderedListOfCandidatesUI -> OrderedListOfCandidatesController : orderedList(applicationList)
 
@@ -104,11 +112,11 @@ loop for each application in applicationList
 
             activate JobInterviewRepository
 
-            JobInterviewRepository --> JobInterviewService : all Job Interviews
+            JobInterviewRepository --> JobInterviewService : all JobInterviews' Application
 
             deactivate JobInterviewRepository
 
-            JobInterviewService -->  ListJobInterviewsApplicationController :allJobInterviewsApplication
+            JobInterviewService -->  ListJobInterviewsApplicationController : all JobInterviews' Application
 
             deactivate JobInterviewService
 

@@ -20,6 +20,8 @@ package "application" {
     class OrderedListOfCandidatesController {
         + orderedList(applicationList)
         + applicationList(orderedList)
+        + selectJobOpening()
+        + allApplicationsOfJobOpening(JobReference jobReference)
     }
 
     class SelectJobOpeningController {
@@ -157,8 +159,9 @@ package "domain" {
 }
 
 OrderedListOfCandidatesUI --> OrderedListOfCandidatesController
-OrderedListOfCandidatesUI --> SelectJobOpeningController
-OrderedListOfCandidatesUI --> ListJobOpeningApplicationsController
+
+OrderedListOfCandidatesController --> SelectJobOpeningController
+OrderedListOfCandidatesController --> ListJobOpeningApplicationsController
 
 OrderedListOfCandidatesUI ---> Candidate
 

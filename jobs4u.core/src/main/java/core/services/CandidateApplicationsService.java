@@ -51,6 +51,4 @@ public class CandidateApplicationsService {
             throw new RuntimeException(e);
         }
     }
-
-
 }

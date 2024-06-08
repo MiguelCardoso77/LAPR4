@@ -4,9 +4,9 @@ import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.candidate.Candidate;
 import core.domain.interview.JobInterview;
-import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobOpening;import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.List;
+import java.util.AbstractList;import java.util.List;
 
 /**
  * User Interface for displaying an ordered list of candidates based on their interview scores
@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @autor Tomás Gonçalves
  */
-public class OrderedListOfCandidatesUI {
+public class OrderedListOfCandidatesUI extends AbstractUI {
 
     private final OrderedListOfCandidatesController orderedListOfCandidatesController = new OrderedListOfCandidatesController();
 
@@ -64,6 +64,11 @@ public class OrderedListOfCandidatesUI {
         if(count == 0 ){
             System.out.println("There are no candidates with grade for this job opening.");
         }
+    }
+
+    @Override
+    public String headline() {
+        return "Order list of candidates";
     }
 }
 

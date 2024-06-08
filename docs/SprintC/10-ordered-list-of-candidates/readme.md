@@ -84,21 +84,22 @@ As Customer Manager, I want to get an ordered list of candidates, using the job 
 
     * List of candidates ordered by score
 
-
-
+### 1.6. System Sequence Diagram (SSD)
+![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ## 2. Analysis and Design
+
+### Analysis
 
 ### 2.1. Domain Model
 ![domain-model.svg](domain-model.svg)
 
+### Design
+
 ### 2.2. Class Diagram
 ![class-diagram.svg](class-diagram.svg)
 
-### 2.3. System Sequence Diagram (SSD)
-![system-sequence-diagram.svg](system-sequence-diagram.svg)
-
-### 2.4. Sequence Diagram (SD)
+### 2.3. Sequence Diagram (SD)
 ![sequence-diagram.svg](sequence-diagram.svg)
 
 
@@ -126,9 +127,85 @@ The `OrderedListOfCandidatesController` class is mainly used to order by grade a
     return true;
 }
 ```
+```java
+public void  displayList(List<Application> finalList, List<JobInterview> orderedList) {
+
+    int count= 0;
+
+    if(orderedList != null && finalList!= null)  {
+        for (JobInterview jobInterview : orderedList) {
+            if (finalList.contains(jobInterview.application())) {
+                count++;
+                if(count == 1) {
+                    System.out.printf("%-50s | %-50s | %-30s | \n", "Telephone Number", "Curriculum", "Grade");
+                }
+                Candidate candidate = jobInterview.application().candidate();
+                System.out.printf("%-50s | %-50s | %-30s | \n", candidate.identity(), candidate.curriculum(), jobInterview.score());
+            }
+        }
+    }
+    if(count == 0 ){
+        System.out.println("There are no candidates with grade for this job opening.");
+    }
+}
+```
+```java
+public List<JobInterview> orderedList(Iterable<Application> applicationList){
+    List<JobInterview> orderedList = new ArrayList<>();
+
+    for(Application application : applicationList){
+        Iterable<JobInterview> list = listJobInterviewsApplicationController.allJobInterviewsOfApplication(application);
+        for(JobInterview jobInterview : list){
+            orderedList.add(jobInterview);
+        }
+    }
+
+    orderedList.sort(Comparator.comparing(JobInterview::returnScore).reversed());
+
+    return orderedList;
+}
+```
 
 
-## 4. Demonstration
+## 4. Testing
+
+Classes `Application` ,`JobInterview` and the `Candidate` are fully tested to ensure the score and all other attributes are correctly updated and retrieved:
+
+```java
+    @Test
+    void testJobReference() {
+    assertEquals(jobReference, application.jobReference());
+    }
+
+    @Test
+    void testReturnScore() {
+        assertEquals(score.getScore(), jobInterview.returnScore());
+    }
+
+    @Test
+    void testScore() {
+        assertEquals(score, jobInterview.score());
+    }
+    
+    @Test
+    void testUser() {
+        assertEquals(candidateUser, candidate.user());
+    }
+
+    @Test
+    void testCurriculum() {
+        assertEquals(curriculum, candidate.curriculum());
+    }
+
+    @Test
+    void testIdentity() {
+        assertEquals(telephoneNumber, candidate.identity());
+    }
+    
+
+```
+
+## 5. Demonstration
 
     **job_opening_with_interviews**
 

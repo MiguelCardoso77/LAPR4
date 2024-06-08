@@ -69,7 +69,7 @@ public class RequirementsPlugin {
             return visitor.retrieveResponseRequirements();
 
         } catch (IOException e){
-            e.printStackTrace();
+            System.out.println("Invalid Path!");
         }
 
         return null;

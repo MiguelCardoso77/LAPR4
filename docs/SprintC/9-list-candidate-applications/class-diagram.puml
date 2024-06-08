@@ -7,7 +7,7 @@ skinparam class {
     FontSize 14
 }
 
-Title "Class Diagram - Register a candidate"
+Title "Class Diagram - List Candidate's Applications"
 
 package "presentation" {
     class ListCandidateApplicationsUI {
@@ -22,52 +22,16 @@ package "application" {
     }
 }
 
-package "repositories" {
-    interface ApplicationRepository {
-        + allApplications()
-        + ofIdentity(id)
-    }
-}
-
-package "domain" {
-    class Application {
-        + Application(rank, createdOn, applicationFiles, jobReference,
-            candidate, operator)
-        + Application()
-        + sameAs(other)
-        + equals(other)
-        + hashCode()
-        + compareTo(other)
-        + identity()
-        + rank()
-        + submissionDate()
-        + status()
-        + dataFile()
-        + operator()
-        + candidate()
-        + jobReference()
-        + candidateRequirements()
-        + updateRank(rank)
-        + changeStatus(status)
-        + toString()
-        + uploadCandidateRequirements(candidateRequirements)
-    }
-}
 
 package "services" {
     class CandidateApplicationsService {
         + requestApplications(email)
     }
+}
 
-    class ApplicationService {
-        + registerApplication(rank, applicationFiles, jobReference, candidate, operator)
-        + findApplicationById(applicationID)
-        + allApplications()
-        + findApplicationsForJobOpening(jobOpening)
-        + updateRank(rank, application)
-        + applicationsByCM(cm)
-        + applicationsByCandidate(candidate)
-        + numberOfApplicationsForJobOpening(jobOpening)
+package "protocol" {
+    class Jobs4UProtocol {
+        + sendApplications(email)
     }
 }
 
@@ -75,11 +39,8 @@ ListCandidateApplicationsUI --> ListCandidateApplicationsController
 
 ListCandidateApplicationsController --> CandidateApplicationsService
 
-CandidateApplicationsService --> ApplicationService
+CandidateApplicationsService --> Jobs4UProtocol
 
-CandidateApplicationsService --> Application
-
-ApplicationService --> ApplicationRepository
 
 
 

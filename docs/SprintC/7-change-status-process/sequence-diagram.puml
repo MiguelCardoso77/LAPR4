@@ -4,12 +4,13 @@ autonumber
 actor CustomerManager
 
 participant ChangeProcessStatusUI <<presentation>>
+participant ChangeProcessStatusController <<controller>>
 participant SelectJobOpeningController <<controller>>
 participant ListJobOpeningController <<controller>>
 participant JobOpeningService <<service>>
 database JobOpeningRepository <<repository>>
-participant ChangeProcessStatusController <<controller>>
 participant ChangeProcessStateController <<controller>>
+participant ProcessService <<service>>
 participant Process <<process>>
 database ProcessRepository <<repository>>
 
@@ -19,34 +20,16 @@ activate CustomerManager
     CustomerManager -> ChangeProcessStatusUI : asks to change phase \nstatus of a job opening
     activate ChangeProcessStatusUI
 
-        ChangeProcessStatusUI -> SelectJobOpeningController : selectJobOpening()
-        activate SelectJobOpeningController
+        ChangeProcessStatusUI -> ChangeProcessStatusController : selectJobOpening()
+        activate ChangeProcessStatusController
 
-            SelectJobOpeningController -> ListJobOpeningController : showJobOpenings()
-            activate ListJobOpeningController
-
-                ListJobOpeningController -> JobOpeningService : allJobOpenings()
-                activate JobOpeningService
-
-                    JobOpeningService -> JobOpeningRepository : findAll()
-                    activate JobOpeningRepository
-
-                        JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
-                    deactivate JobOpeningRepository
-
-                    JobOpeningService --> ListJobOpeningController : Iterable<JobOpening> jobOpenings
-                deactivate JobOpeningService
-
-                ListJobOpeningController --> SelectJobOpeningController : Iterable<JobOpening> jobOpenings
-            deactivate ListJobOpeningController
-
-            SelectJobOpeningController -> SelectJobOpeningController : selectorPart(List<JobOpening> list)
+            ChangeProcessStatusController -> SelectJobOpeningController : selectJobOpening()
             activate SelectJobOpeningController
 
-                SelectJobOpeningController -> ListJobOpeningController : findJobOpeningByJobReference(jobReference)
+                SelectJobOpeningController -> ListJobOpeningController : showJobOpenings()
                 activate ListJobOpeningController
 
-                    ListJobOpeningController -> JobOpeningService : findJobOpening(jobReference)
+                    ListJobOpeningController -> JobOpeningService : allJobOpenings()
                     activate JobOpeningService
 
                         JobOpeningService -> JobOpeningRepository : findAll()
@@ -55,15 +38,39 @@ activate CustomerManager
                             JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
                         deactivate JobOpeningRepository
 
-                        JobOpeningService --> ListJobOpeningController : job opening
+                        JobOpeningService --> ListJobOpeningController : Iterable<JobOpening> jobOpenings
                     deactivate JobOpeningService
 
-                    ListJobOpeningController --> SelectJobOpeningController : job opening
+                    ListJobOpeningController --> SelectJobOpeningController : Iterable<JobOpening> jobOpenings
                 deactivate ListJobOpeningController
+
+                SelectJobOpeningController -> SelectJobOpeningController : selectorPart(List<JobOpening> list)
+                activate SelectJobOpeningController
+
+                    SelectJobOpeningController -> ListJobOpeningController : findJobOpeningByJobReference(jobReference)
+                    activate ListJobOpeningController
+
+                        ListJobOpeningController -> JobOpeningService : findJobOpening(jobReference)
+                        activate JobOpeningService
+
+                            JobOpeningService -> JobOpeningRepository : findAll()
+                            activate JobOpeningRepository
+
+                                JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
+                            deactivate JobOpeningRepository
+
+                            JobOpeningService --> ListJobOpeningController : job opening
+                        deactivate JobOpeningService
+
+                        ListJobOpeningController --> SelectJobOpeningController : job opening
+                    deactivate ListJobOpeningController
+                deactivate SelectJobOpeningController
+
+                SelectJobOpeningController --> ChangeProcessStatusController : job opening
             deactivate SelectJobOpeningController
 
-            SelectJobOpeningController --> ChangeProcessStatusUI : job Opening
-        deactivate SelectJobOpeningController
+            ChangeProcessStatusController --> ChangeProcessStatusUI : job opening
+        deactivate ChangeProcessStatusController
 
         ChangeProcessStatusUI -> CustomerManager : shows job opening status \nand asks if it wants to change
     deactivate ChangeProcessStatusUI
@@ -74,11 +81,17 @@ activate CustomerManager
         ChangeProcessStatusUI -> ChangeProcessStatusController : changeProcessStatus(processStatus,process);
         activate ChangeProcessStatusController
 
-            ChangeProcessStatusController -> Process : changeProcessStatus(processStatus)
-            activate Process
+            ChangeProcessStatusController -> ProcessService : changeProcessStatus(processStatus)
+            activate ProcessService
 
-                Process --> ChangeProcessStatusController : true
-            deactivate Process
+                ProcessService -> Process : changeProcessStatus(processStatus)
+                activate Process
+
+                    Process --> ProcessService : true
+                deactivate Process
+
+                ProcessService --> ChangeProcessStatusController : true
+            deactivate ProcessService
 
             ChangeProcessStatusController -> ProcessRepository : save(process)
             activate ProcessRepository
@@ -89,27 +102,37 @@ activate CustomerManager
             ChangeProcessStatusController --> ChangeProcessStatusUI : process status altered
         deactivate ChangeProcessStatusController
 
-        ChangeProcessStatusUI -> ChangeProcessStateController : changeProcessState(processState,process)
-        activate ChangeProcessStateController
+        ChangeProcessStatusUI -> ChangeProcessStatusController : changeProcessState(processState,process)
+        activate ChangeProcessStatusController
 
-            ChangeProcessStateController -> Process : changeProcessState(processState)
-            activate Process
+            ChangeProcessStatusController -> ChangeProcessStateController : changeProcessState(processState,process)
+            activate ChangeProcessStateController
 
-                Process --> ChangeProcessStateController : true
-            deactivate Process
+                ChangeProcessStateController -> ProcessService : changeProcessState(processState)
+                activate ProcessService
 
-            ChangeProcessStateController -> ProcessRepository : save(process)
-            activate ProcessRepository
+                    ProcessService -> Process : changeProcessState(processState)
+                    activate Process
 
-                ProcessRepository --> ChangeProcessStateController : true
-            deactivate ProcessRepository
+                        Process --> ProcessService : true
+                    deactivate Process
 
-            ChangeProcessStateController --> ChangeProcessStatusUI : process state altered
-        deactivate ChangeProcessStateController
+                    ProcessService --> ChangeProcessStateController : true
+                deactivate ProcessService
+
+                ChangeProcessStateController -> ProcessRepository : save(process)
+                activate ProcessRepository
+
+                    ProcessRepository --> ChangeProcessStateController : true
+                deactivate ProcessRepository
+
+                ChangeProcessStateController --> ChangeProcessStatusController : process state altered
+            deactivate ChangeProcessStateController
+
+            ChangeProcessStatusController --> ChangeProcessStatusUI : process state altered
+        deactivate ChangeProcessStatusController
 
     ChangeProcessStatusUI --> CustomerManager : operation success message
-
-
     deactivate ChangeProcessStatusUI
 
 deactivate CustomerManager

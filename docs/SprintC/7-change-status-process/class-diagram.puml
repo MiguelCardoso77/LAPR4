@@ -1,4 +1,8 @@
 @startuml
+'skinparam linetype ortho
+'left to right direction
+
+
 skinparam class {
     BackgroundColor White
     ArrowColor Black
@@ -77,21 +81,32 @@ package "services" {
         + allJobOpenings()
 
     }
+
+    class ProcessService {
+        + registerProcess(processState)
+        + findProcessByID(id)
+        + allProcesses()
+        + changeProcessStatus(processStatus, process)
+        + changeProcessState(processState, process)
+    }
 }
 
-ChangeProcessStatusUI --> ChangeProcessStatusController
-ChangeProcessStatusUI --> ChangeProcessStateController
-ChangeProcessStatusUI --> SelectJobOpeningController
+ChangeProcessStatusUI ---> ChangeProcessStatusController
 
-SelectJobOpeningController --> ListJobOpeningController
+ChangeProcessStatusController ---> SelectJobOpeningController
+ChangeProcessStatusController ---> ChangeProcessStateController
+ChangeProcessStatusController ---> ProcessRepository
+ChangeProcessStatusController ---> ProcessService
 
-ListJobOpeningController --> JobOpeningService
+ChangeProcessStateController ---> ProcessRepository
+ChangeProcessStateController ---> ProcessService
 
-JobOpeningService -> JobOpeningRepository
-ChangeProcessStateController --> ProcessRepository
-ChangeProcessStatusController --> ProcessRepository
+SelectJobOpeningController ---> ListJobOpeningController
 
-ChangeProcessStateController -> Process
-ChangeProcessStatusController -> Process
+ListJobOpeningController ---> JobOpeningService
+
+JobOpeningService ---> JobOpeningRepository
+
+ProcessService ---> Process
 
 @enduml

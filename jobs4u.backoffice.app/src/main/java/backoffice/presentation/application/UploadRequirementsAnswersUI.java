@@ -6,12 +6,11 @@ import core.domain.application.Application;
 import core.domain.jobOpening.JobOpening;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
+
 import java.util.List;
 
 public class UploadRequirementsAnswersUI extends AbstractUI {
     final UploadRequirementsAnswersController uploadRequirementsAnswersController = new UploadRequirementsAnswersController();
-    final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
-    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
 
     @Override
     protected boolean doShow() {
@@ -29,9 +28,9 @@ public class UploadRequirementsAnswersUI extends AbstractUI {
                 cont++;
             }
 
-            JobOpening jobOpening = selectJobOpeningController.selectorPart(requirements);
-            listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobOpening.jobReference());
-            Application application = listJobOpeningApplicationsController.selectApplication();
+            JobOpening jobOpening = uploadRequirementsAnswersController.selectJobOpening(requirements);
+            uploadRequirementsAnswersController.showApplicationsOfJobOpening(jobOpening.jobReference());
+            Application application = uploadRequirementsAnswersController.selectApplication();
 
             String path = Console.readLine("\nEnter the path to the file with the requirements: ");
             List<String> candidateRequirements = uploadRequirementsAnswersController.retrieveResponseRequirements(path);

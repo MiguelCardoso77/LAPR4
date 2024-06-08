@@ -3,6 +3,7 @@ package core.application.controllers;
 import core.domain.application.Application;
 import core.domain.application.CandidateRequirements;
 import core.domain.jobOpening.JobOpening;
+import core.domain.jobOpening.JobReference;
 import core.persistence.PersistenceContext;
 import core.repositories.ApplicationRepository;
 import plugin.requirements.RequirementsPlugin;
@@ -10,6 +11,8 @@ import java.util.List;
 
 public class UploadRequirementsAnswersController {
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
+    final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
+    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final GenerateRequirementsSpecificationController generateRequirementsSpecificationController = new GenerateRequirementsSpecificationController();
 
     public void uploadRequirements(List<String> requirements, Application application) {
@@ -26,5 +29,17 @@ public class UploadRequirementsAnswersController {
 
     public List<JobOpening> findAllJobOpeningsWithJobRequirements() {
         return generateRequirementsSpecificationController.findAllJobOpeningAssigned();
+    }
+
+    public Iterable<Application> showApplicationsOfJobOpening(JobReference jobReference) {
+        return listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobReference);
+    }
+
+    public Application selectApplication() {
+        return listJobOpeningApplicationsController.selectApplication();
+    }
+
+    public JobOpening selectJobOpening(List<JobOpening> requirements) {
+        return selectJobOpeningController.selectorPart(requirements);
     }
 }

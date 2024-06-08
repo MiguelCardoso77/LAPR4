@@ -18,6 +18,7 @@ import infrastructure.authz.CredentialHandler;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -252,7 +253,7 @@ public class CallResponder extends BaseResponder {
 
     }
 
-    private void handleCode8() throws IOException{
+    private void handleCode8() throws IOException {
         System.out.println("Code 8 received! -> List Candidate notifications request\n");
 
         int lengthEmail = readLenght();
@@ -261,14 +262,26 @@ public class CallResponder extends BaseResponder {
         String email = new String(emailBytes, StandardCharsets.UTF_8);
         System.out.println("Email: " + email);
 
+        Candidate candidate = candidateService.findCandidateByEmail(email);
+
+        listCandidateNotifications(candidate);
+
+        new Thread(() -> {
+            try {
+                checkForNewNotifications(candidate);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void listCandidateNotifications(Candidate candidate) throws IOException {
         List<Notification> allNotifications = (List<Notification>) notificationService.allNotifications();
 
         List<String> candidateNotifications = new ArrayList<>();
 
-        Candidate candidate = candidateService.findCandidateByEmail(email);
-
-        for(Notification notification : allNotifications){
-            if(notification.candidate().equals(candidate)){
+        for (Notification notification : allNotifications) {
+            if (notification.candidate().equals(candidate)) {
                 candidateNotifications.add(notification.toString());
             }
         }
@@ -277,11 +290,42 @@ public class CallResponder extends BaseResponder {
 
         boolean flag = protocol.receiveNotificationsList(json);
 
-        if(flag){
+        if (flag) {
             System.out.println("\nNotifications Listed!");
         } else {
             System.out.println("\nError listing notifications!");
             protocol.sendErr();
+        }
+    }
+
+    private void checkForNewNotifications(Candidate candidate) throws IOException {
+        while (true) {
+            try {
+                List<Notification> pendingNotifications = notificationService.findNotificationsByCandidate(candidate);
+                if (!pendingNotifications.isEmpty()) {
+                    List<String> notificationMessages = new ArrayList<>();
+                    for (Notification notification : pendingNotifications) {
+                        notificationMessages.add(notification.toString());
+                    }
+                    String json = new Gson().toJson(notificationMessages);
+                    boolean success = protocol.receiveNotificationsList(json);
+                    if (success) {
+                        System.out.println("Notifications sent successfully!");
+                    } else {
+                        System.out.println("Error sending notifications!");
+                    }
+                }
+                Thread.sleep(2500000);
+            } catch (SocketException e) {
+                System.err.println("SocketException: Connection lost or closed. Stopping notification checks.");
+                break;
+            } catch (IOException e) {
+                System.err.println("IOException occurred: " + e.getMessage());
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                System.err.println("InterruptedException occurred: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 

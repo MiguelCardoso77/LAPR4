@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Service class for managing notifications.
@@ -26,6 +28,7 @@ public class NotificationService {
      * The repository for accessing notifications.
      */
     private final NotificationRepository notificationRepository = PersistenceContext.repositories().notifications();
+
     /**
      * The service for accessing applications.
      */

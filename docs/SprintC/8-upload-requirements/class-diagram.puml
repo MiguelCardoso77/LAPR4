@@ -7,7 +7,7 @@ skinparam class {
     FontSize 14
 }
 
-Title "Class Diagram - Register a candidate"
+Title "Class Diagram - Upload Requirements Answers of a Candidate "
 
 package "presentation" {
     class UploadRequirementsAnswersUI {
@@ -17,12 +17,19 @@ package "presentation" {
 }
 
 package "application" {
+    class UploadRequirementsAnswersController {
+        + retrieveResponseRequirements(path)
+        + uploadRequirements(requirements, application)
+        + findAllJobOpeningsWithJobRequirements()
+        + showApplicationsOfJobOpening(jobReference)
+        + selectApplication()
+        + selectJobOpening(requirements)
+    }
     class GenerateRequirementsAnswersTemplateController {
         + findAllJobOpeningsWithJobRequirements()
-    }
-    class UploadRequirementsAnswersController {
-        + readFile(path)
-        + uploadRequirements(requirements, application)
+        + processLines(lines)
+        + writeListToFile(questionForFile, filePath)
+        + readFile(filePath)
     }
     class ListJobOpeningApplicationsController {
         + allApplicationsOfJobOpening(jobReference)
@@ -30,12 +37,12 @@ package "application" {
         + selectApplication()
         + findJobOpening(jobReference)
         + findApplicationByID(id)
+        + uploadCandidateRequirements(application, candidateRequirements)
     }
-    class ListJobOpeningController {
-        + showJobOpenings()
-        + showJobOpeningsAnalysis()
-        + allJobOpenings()
-        + findJobOpeningByJobReference(jobReference)
+    class SelectJobOpeningController {
+        + selectJobOpening()
+        + selectorPart(list)
+        + selectJobOpeningAnalysis()
     }
 }
 
@@ -102,30 +109,31 @@ package "services" {
         + updateRank(rank, application)
         + applicationsByCM(cm)
     }
+
+    class CandidateRequirementsService {
+        + registerCandidateRequirements(requirements)
+    }
 }
 
-UploadRequirementsAnswersUI --> GenerateRequirementsAnswersTemplateController
 
-GenerateRequirementsAnswersTemplateController --> ListJobOpeningController
 
-ListJobOpeningController --> JobOpeningService
+UploadRequirementsAnswersUI ---> UploadRequirementsAnswersController
 
-JobOpeningService --> JobOpeningRepository
-
-UploadRequirementsAnswersUI --> ListJobOpeningApplicationsController
-
-ListJobOpeningApplicationsController --> ApplicationService
-
-ApplicationService --> ApplicationRepository
-
-UploadRequirementsAnswersUI --> UploadRequirementsAnswersController
-
-UploadRequirementsAnswersController ---> CandidateRequirements
-
-UploadRequirementsAnswersController ---> Application
-
+UploadRequirementsAnswersController ---> GenerateRequirementsAnswersTemplateController
+UploadRequirementsAnswersController ---> ListJobOpeningApplicationsController
+UploadRequirementsAnswersController ---> SelectJobOpeningController
+UploadRequirementsAnswersController ---> CandidateRequirementsService
+UploadRequirementsAnswersController ---> ApplicationService
 UploadRequirementsAnswersController ---> ApplicationRepository
 
+GenerateRequirementsAnswersTemplateController ---> JobOpeningService
 
+JobOpeningService ---> JobOpeningRepository
 
+ListJobOpeningApplicationsController ---> ApplicationService
+
+ApplicationService ---> ApplicationRepository
+ApplicationService ---> Application
+
+CandidateRequirementsService ---> CandidateRequirements
 @enduml

@@ -4,18 +4,17 @@ autonumber
 actor Operator
 
 participant UploadRequirementsAnswersUI <<presentation>>
+participant UploadRequirementsAnswersController <<controller>>
 participant GenerateRequirementsAnswersTemplateController <<controller>>
-participant ListJobOpeningController <<controller>>
 participant JobOpeningService <<service>>
 database    JobOpeningRepository <<repository>>
 participant ListJobOpeningApplicationsController <<controller>>
 participant ApplicationService <<service>>
-participant UploadRequirementsAnswersController <<controller>>
 database ApplicationRepository <<repository>>
 participant RequirementsPlugin <<plugin>>
-participant CandidateRequirements <<candidateRequirements>>
-
+participant CandidateRequirementsService <<service>>
 participant Application <<application>>
+participant CandidateRequirements <<candidateRequirements>>
 
 
 activate Operator
@@ -23,29 +22,29 @@ activate Operator
     Operator -> UploadRequirementsAnswersUI : asks to upload the requirements of and candidate
     activate UploadRequirementsAnswersUI
 
-        UploadRequirementsAnswersUI -> GenerateRequirementsAnswersTemplateController : findAllJobOpeningsWithJobRequirements()
-        activate GenerateRequirementsAnswersTemplateController
+        UploadRequirementsAnswersUI -> UploadRequirementsAnswersController : findAllJobOpeningsWithJobRequirements()
+        activate UploadRequirementsAnswersController
 
-            GenerateRequirementsAnswersTemplateController -> ListJobOpeningController : allJobOpenings()
-            activate ListJobOpeningController
+            UploadRequirementsAnswersController -> GenerateRequirementsAnswersTemplateController : findAllJobOpeningsWithJobRequirements()
+            activate GenerateRequirementsAnswersTemplateController
 
-                ListJobOpeningController -> JobOpeningService : allJobOpenings()
+                GenerateRequirementsAnswersTemplateController -> JobOpeningService : allJobOpenings()
                 activate JobOpeningService
 
                     JobOpeningService -> JobOpeningRepository : findAll()
                     activate JobOpeningRepository
 
-                        JobOpeningRepository --> JobOpeningService : all Job Openings
+                        JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> allJobOpenings
                     deactivate JobOpeningRepository
 
-                    JobOpeningService --> ListJobOpeningController : all Job Openings
+                    JobOpeningService --> GenerateRequirementsAnswersTemplateController : Iterable<JobOpening> allJobOpenings
                 deactivate JobOpeningService
 
-                ListJobOpeningController -> GenerateRequirementsAnswersTemplateController : all Job Openings
-            deactivate ListJobOpeningController
+                GenerateRequirementsAnswersTemplateController --> UploadRequirementsAnswersController : List<JobOpening> requirements
+            deactivate GenerateRequirementsAnswersTemplateController
 
-            GenerateRequirementsAnswersTemplateController --> UploadRequirementsAnswersUI : job Openings With Requirements
-        deactivate GenerateRequirementsAnswersTemplateController
+            UploadRequirementsAnswersController --> UploadRequirementsAnswersUI: List<JobOpening> requirements
+        deactivate UploadRequirementsAnswersController
 
         UploadRequirementsAnswersUI --> Operator : lists job openings with requirements \n and asks to select one
     deactivate UploadRequirementsAnswersUI
@@ -53,27 +52,33 @@ activate Operator
     Operator -> UploadRequirementsAnswersUI : selects job Opening
     activate UploadRequirementsAnswersUI
 
-        UploadRequirementsAnswersUI -> ListJobOpeningApplicationsController : showApplicationsOfJobOpening(jobReference)
-        activate ListJobOpeningApplicationsController
+        UploadRequirementsAnswersUI -> UploadRequirementsAnswersController : showApplicationsOfJobOpening(jobReference)
+        activate UploadRequirementsAnswersController
 
-            ListJobOpeningApplicationsController -> ListJobOpeningApplicationsController : allApplicationsOfJobOpening(jobReference)
+            UploadRequirementsAnswersController -> ListJobOpeningApplicationsController : showApplicationsOfJobOpening(jobReference)
             activate ListJobOpeningApplicationsController
 
-                ListJobOpeningApplicationsController -> ApplicationService : allApplications()
-                activate ApplicationService
+                ListJobOpeningApplicationsController -> ListJobOpeningApplicationsController : allApplicationsOfJobOpening(jobReference)
+                activate ListJobOpeningApplicationsController
 
-                    ApplicationService -> ApplicationRepository : allApplications()
-                    activate ApplicationRepository
+                    ListJobOpeningApplicationsController -> ApplicationService : allApplications()
+                    activate ApplicationService
 
-                        ApplicationRepository --> ApplicationService : allApplications
-                    deactivate ApplicationRepository
+                        ApplicationService -> ApplicationRepository : allApplications()
+                        activate ApplicationRepository
 
-                    ApplicationService --> ListJobOpeningApplicationsController : all Applications Of Job Opening
-                deactivate ApplicationService
+                            ApplicationRepository --> ApplicationService : Iterable<Application> allApplications
+                        deactivate ApplicationRepository
+
+                        ApplicationService --> ListJobOpeningApplicationsController : Iterable<Application> applicationsOfJobOpening
+                    deactivate ApplicationService
+                deactivate ListJobOpeningApplicationsController
+
+                ListJobOpeningApplicationsController --> UploadRequirementsAnswersController : Iterable<Application> applicationsOfJobOpening
             deactivate ListJobOpeningApplicationsController
 
-            ListJobOpeningApplicationsController --> UploadRequirementsAnswersUI : applications Of Job Opening
-        deactivate ListJobOpeningApplicationsController
+            UploadRequirementsAnswersController --> UploadRequirementsAnswersUI : Iterable<Application> applicationsOfJobOpening
+        deactivate UploadRequirementsAnswersController
 
         UploadRequirementsAnswersUI --> Operator : lists applications of that job opening \n and asks to select one
     deactivate UploadRequirementsAnswersUI
@@ -103,17 +108,29 @@ activate Operator
         UploadRequirementsAnswersUI -> UploadRequirementsAnswersController : uploadRequirements(candidateRequirements, application)
         activate UploadRequirementsAnswersController
 
-            UploadRequirementsAnswersController -> CandidateRequirements** : new CandidateRequirements(requirements)
-            activate CandidateRequirements
+            UploadRequirementsAnswersController -> CandidateRequirementsService : registerCandidateRequirements(requirements)
+            activate CandidateRequirementsService
 
-                CandidateRequirements --> UploadRequirementsAnswersController : candidate Requirements
-            deactivate CandidateRequirements
+                CandidateRequirementsService -> CandidateRequirements** : new CandidateRequirements(requirements)
+                activate CandidateRequirements
 
-            UploadRequirementsAnswersController -> Application : uploadCandidateRequirements(candidateRequirements)
-            activate Application
+                    CandidateRequirements --> CandidateRequirementsService : candidate requirements
+                deactivate CandidateRequirements
 
-                Application --> UploadRequirementsAnswersController : application
-            deactivate Application
+                CandidateRequirementsService --> UploadRequirementsAnswersController : candidate requirements
+            deactivate CandidateRequirementsService
+
+            UploadRequirementsAnswersController -> ApplicationService : uploadCandidateRequirements(application, candidateRequirements)
+            activate ApplicationService
+
+                ApplicationService -> Application : uploadCandidateRequirements(candidateRequirements)
+                activate Application
+
+                    Application --> ApplicationService : true
+                deactivate Application
+
+                ApplicationService --> UploadRequirementsAnswersController : true
+            deactivate ApplicationService
 
             UploadRequirementsAnswersController -> ApplicationRepository : save(application)
             activate ApplicationRepository

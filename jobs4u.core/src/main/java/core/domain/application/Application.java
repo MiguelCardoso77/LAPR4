@@ -252,6 +252,10 @@ public class Application implements AggregateRoot<Integer> {
                 " submitted for the job opening: " + jobReference.identity() + " ";
     }
 
+    public String notificationServer(){
+        return "Your application on the Job Opening " + jobReference.identity() + " has been " + status + "!";
+    }
+
     public void uploadCandidateRequirements(CandidateRequirements candidateRequirements) {
         Preconditions.nonNull(candidateRequirements, "Candidate Requirements answers cannot be null");
         this.candidateRequirements = candidateRequirements;

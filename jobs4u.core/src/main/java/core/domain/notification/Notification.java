@@ -130,6 +130,6 @@ public class Notification implements AggregateRoot<Integer> {
      */
     @Override
     public String toString() {
-        return "Your application on the Job Opening " + application.jobReference() + "has been" + application.status() + "!";
+        return application().notificationServer();
     }
 }

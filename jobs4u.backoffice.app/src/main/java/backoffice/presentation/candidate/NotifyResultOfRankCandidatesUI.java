@@ -14,6 +14,11 @@ import eapli.framework.presentation.console.AbstractUI;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * User interface for notifying candidates of their ranking results for a job opening.
+ *
+ * @author tomasgoncalves
+ */
 public class NotifyResultOfRankCandidatesUI extends AbstractUI {
 
     private final NotifyResultOfRankCandidatesController notifyResultOfRankCandidatesController = new NotifyResultOfRankCandidatesController();

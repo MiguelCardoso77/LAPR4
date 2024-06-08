@@ -64,7 +64,6 @@ candidatos selecionados que deve incluir o nome e dados de contacto do candidato
 
 
 
-
 ### 1.5. Input and Output Data
 
 **Selected Data:**
@@ -76,19 +75,22 @@ candidatos selecionados que deve incluir o nome e dados de contacto do candidato
     * Notification for each accepted candidate for the selected job opening.
     * Notification for costumer manager of the list of the selected candidates
 
+### 1.6. System Sequence Diagram (SSD)
+![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ## 2. Analysis and Design
+
+### Analysis
 
 ### 2.1. Domain Model
 ![domain-model.svg](domain-model.svg)
 
+### Design
+
 ### 2.2. Class Diagram
 ![class-diagram.svg](class-diagram.svg)
 
-### 2.3. System Sequence Diagram (SSD)
-![system-sequence-diagram.svg](system-sequence-diagram.svg)
-
-### 2.4. Sequence Diagram (SD)
+### 2.3. Sequence Diagram (SD)
 ![sequence-diagram.svg](sequence-diagram.svg)
 
 
@@ -138,7 +140,35 @@ protected boolean doShow() {
     return true;
 }
 ```
+```java
+public void sendAllEmails(List<Email> emailsToSend) {
+    for (Email email : emailsToSend) {
+        try {
+            Socket socket = new Socket("127.0.0.1", 2005);
+            DataInputStream inData = new DataInputStream(socket.getInputStream());
+
+            Jobs4UProtocol protocol = new Jobs4UProtocol(socket);
+            protocol.sendEmail(email.toWho(), email.subject(), email.body());
+
+            inData.readByte();
+            byte code = inData.readByte();
+
+            if (code == ProtocolCodes.ACK.code()) {
+                System.out.println("ACK Code Received: Email to " + email.toWho() + " sent successfully!");
+            } else if (code == ProtocolCodes.ERR.code()) {
+                System.out.println("ERR Code Received: Could not send email to " + email.toWho() + "!");
+            }
+
+            socket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
 
 ## 4. Testing
+
+
 
 ## 5. Demonstration

@@ -4,6 +4,7 @@ import core.application.controllers.ListCandidateNotificationsController;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * UI for listing candidate applications.
@@ -28,12 +29,32 @@ public class ListCandidateNotificationsUI extends AbstractUI {
      */
     @Override
     protected boolean doShow() {
-        List<String> notifications = listCandidateNotificationsController.sendNotificationsRequest(email);
 
-        if(notifications != null) {
-            for(String notification : notifications) {
-                System.out.println(notification);
-            }
+        int selection = showMenuAndGetSelection();
+        List<String> notifications;
+
+        switch (selection) {
+            case 1:
+                System.out.println("Fetching new notifications...");
+                notifications = listCandidateNotificationsController.sendNewNotificationsRequest(email);
+                if(notifications != null) {
+                    for(String notification : notifications) {
+                        System.out.println(notification);
+                    }
+                }
+                break;
+            case 2:
+                System.out.println("Fetching old notifications...");
+                notifications = listCandidateNotificationsController.sendOldNotificationsRequest(email);
+                if(notifications != null) {
+                    for(String notification : notifications) {
+                        System.out.println(notification);
+                    }
+                }
+                break;
+            default:
+                System.out.println("Invalid option.");
+                return false;
         }
 
         return true;
@@ -46,6 +67,21 @@ public class ListCandidateNotificationsUI extends AbstractUI {
     @Override
     public String headline() {
         return "List all candidate notifications";
+    }
+    /**
+     * Shows a menu and gets the user's selection.
+     * @return The user's selection.
+     */
+    private int showMenuAndGetSelection() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Please select an option:");
+        System.out.println("1. List new notifications");
+        System.out.println("2. List old notifications");
+
+        System.out.print("Your selection: ");
+        System.out.println();
+        return scanner.nextInt();
     }
 
 }

@@ -47,6 +47,11 @@ class ProtocolCodesTest {
     }
     @Test
     void testListNotificationsCode() {
-        assertEquals((byte) 8, ProtocolCodes.NOTIFICATIONS.code());
+        assertEquals((byte) 8, ProtocolCodes.NEW_NOTIFICATIONS.code());
+    }
+
+    @Test
+    void testListOldNotificationsCode() {
+        assertEquals((byte) 9, ProtocolCodes.OLD_NOTIFICATIONS.code());
     }
 }

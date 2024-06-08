@@ -74,6 +74,9 @@ public class CallResponder extends BaseResponder {
                 case 8:
                     handleCode8();
                     break;
+                case 9:
+                    handleCode9();
+                    break;
                 default:
                     System.out.println("Invalid code received!");
                     protocol.sendErr();
@@ -254,7 +257,7 @@ public class CallResponder extends BaseResponder {
     }
 
     private void handleCode8() throws IOException {
-        System.out.println("Code 8 received! -> List Candidate notifications request\n");
+        System.out.println("Code 8 received! -> List Candidate new notifications request\n");
 
         int lengthEmail = readLenght();
 
@@ -264,7 +267,7 @@ public class CallResponder extends BaseResponder {
 
         Candidate candidate = candidateService.findCandidateByEmail(email);
 
-        listCandidateNotifications(candidate);
+        listNewCandidateNotifications(candidate);
 
         new Thread(() -> {
             try {
@@ -275,20 +278,64 @@ public class CallResponder extends BaseResponder {
         }).start();
     }
 
-    private void listCandidateNotifications(Candidate candidate) throws IOException {
+    private void handleCode9() throws IOException {
+        System.out.println("Code 9 received! -> List Candidate old notifications request\n");
+
+        int lengthEmail = readLenght();
+
+        byte[] emailBytes = inData.readNBytes(lengthEmail);
+        String email = new String(emailBytes, StandardCharsets.UTF_8);
+        System.out.println("Email: " + email);
+
+        Candidate candidate = candidateService.findCandidateByEmail(email);
+
+        listOldCandidateNotifications(candidate);
+    }
+
+
+
+    private void listNewCandidateNotifications(Candidate candidate) throws IOException {
         List<Notification> allNotifications = (List<Notification>) notificationService.allNotifications();
 
         List<String> candidateNotifications = new ArrayList<>();
 
         for (Notification notification : allNotifications) {
             if (notification.candidate().equals(candidate)) {
-                candidateNotifications.add(notification.toString());
+                if(!notification.read()) {
+                    candidateNotifications.add(notification.toString());
+                    notificationService.UpdateBoolean(notification);
+                }
             }
         }
 
         String json = new Gson().toJson(candidateNotifications);
 
-        boolean flag = protocol.receiveNotificationsList(json);
+        boolean flag = protocol.receiveNewNotificationsList(json);
+
+        if (flag) {
+            System.out.println("\nNotifications Listed!");
+        } else {
+            System.out.println("\nError listing notifications!");
+            protocol.sendErr();
+        }
+    }
+
+    private void listOldCandidateNotifications(Candidate candidate) throws IOException {
+        List<Notification> allNotifications = (List<Notification>) notificationService.allNotifications();
+
+        List<String> candidateNotifications = new ArrayList<>();
+
+        for (Notification notification : allNotifications) {
+            if (notification.candidate().equals(candidate)) {
+                if (notification.read()) {
+                    candidateNotifications.add(notification.toString());
+                }
+            }
+        }
+
+        String json = new Gson().toJson(candidateNotifications);
+
+        boolean flag = protocol.receiveOldNotificationsList(json);
 
         if (flag) {
             System.out.println("\nNotifications Listed!");
@@ -308,7 +355,7 @@ public class CallResponder extends BaseResponder {
                         notificationMessages.add(notification.toString());
                     }
                     String json = new Gson().toJson(notificationMessages);
-                    boolean success = protocol.receiveNotificationsList(json);
+                    boolean success = protocol.receiveNewNotificationsList(json);
                     if (success) {
                         System.out.println("Notifications sent successfully!");
                     } else {

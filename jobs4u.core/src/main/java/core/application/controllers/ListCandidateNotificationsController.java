@@ -1,8 +1,6 @@
 package core.application.controllers;
 
-import core.domain.notification.Notification;
 import core.services.CandidateNotificationsService;
-import core.services.NotificationService;
 
 import java.util.List;
 
@@ -24,7 +22,18 @@ public class ListCandidateNotificationsController {
      * @return A list of notifications for the candidate.
      */
 
-    public List<String> sendNotificationsRequest(String email) {
-        return candidateNotificationsService.requestNotifications(email);
+    public List<String> sendNewNotificationsRequest(String email) {
+        return candidateNotificationsService.requestNewNotifications(email);
+    }
+
+    /**
+     * Sends a request to the server to retrieve all old notifications for a specific candidate.
+     *
+     * @param email The email of the candidate.
+     * @return A list of old notifications for the candidate.
+     */
+
+    public List<String> sendOldNotificationsRequest(String email) {
+        return candidateNotificationsService.requestOldNotifications(email);
     }
 }

@@ -9,7 +9,8 @@ public enum ProtocolCodes {
     EMAIL((byte) 5),
     APPLICATIONS((byte) 6),
     JOB_OPENINGS((byte) 7),
-    NOTIFICATIONS((byte) 8);
+    NEW_NOTIFICATIONS((byte) 8),
+    OLD_NOTIFICATIONS((byte) 9);
     private final byte code;
 
     ProtocolCodes(byte code) {

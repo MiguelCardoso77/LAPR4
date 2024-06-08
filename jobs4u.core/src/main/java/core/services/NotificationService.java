@@ -68,6 +68,21 @@ public class NotificationService {
         }
         return candidateNotifications;
     }
+    /**
+     * Updates the read status of a notification.
+     *
+     * @param notification The notification to update.
+     * @return The updated notification, or null if the notification was null.
+     */
+    @Transactional
+    public Notification UpdateBoolean(Notification notification) {
+        if (notification != null) {
+            notification.readMarker();
+            notificationRepository.save(notification);
+            return notification;
+        }
+        return null;
+    }
 
     /**
      * Finds all notifications associated with a given application.
@@ -112,4 +127,6 @@ public class NotificationService {
     public Iterable<Notification> allNotifications() {
         return notificationRepository.allNotifications();
     }
+
+
 }

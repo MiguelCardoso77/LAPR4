@@ -32,6 +32,8 @@ public class Notification implements AggregateRoot<Integer> {
     @ManyToOne
     private Candidate candidate;
 
+    private boolean read;
+
     /**
      * Protected constructor used by ORM.
      */
@@ -121,7 +123,20 @@ public class Notification implements AggregateRoot<Integer> {
     public Candidate candidate() {
         return candidate;
     }
-
+    /**
+     * Returns the read status of this notification.
+     *
+     * @return the read status of this notification.
+     */
+    public boolean read() {
+        return read;
+    }
+    /**
+     * Marks this notification as read.
+     */
+    public void readMarker(){
+        this.read = true;
+    }
     /**
      * Returns a string representation of this notification.
      * The string representation includes the id, application, message, and candidate.

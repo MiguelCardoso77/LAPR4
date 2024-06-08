@@ -12,26 +12,34 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The RequirementsPlugin class is responsible for checking if a candidate's responses
+ * meet the specified requirements from a given file. It uses ANTLR-generated lexer and
+ * parser to process the requirements file.
+ */
 public class RequirementsPlugin {
 
+    /**
+     * Checks if the candidate's responses meet the requirements specified in the file.
+     *
+     * @param path The path to the requirements file.
+     * @param cResponses A map of candidate responses where the key is the requirement type and the value is the response.
+     * @return true if the candidate's responses meet the requirements, false otherwise.
+     */
     public boolean checkRequirements(String path, Map<String, String> cResponses) {
         try {
-            // Read the input file
             String input = new String(Files.readAllBytes(Paths.get(path)));
 
             System.out.println("Requirements Used:");
             System.out.println(input);
             System.out.println();
 
-            // Create a lexer and parser for the input
             RequirementsGrammarLexer lexer = new RequirementsGrammarLexer(CharStreams.fromString(input));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             RequirementsGrammarParser parser = new RequirementsGrammarParser(tokens);
 
-            // Parse the input file and start
-            ParseTree tree = parser.start(); // Assuming 'start' is the entry point of your grammar
+            ParseTree tree = parser.start();
 
-            // Create a custom listener
             RequirementsVisitor visitor = new RequirementsVisitor(cResponses);
             visitor.visit(tree);
 
@@ -48,21 +56,22 @@ public class RequirementsPlugin {
         return false;
     }
 
-
+    /**
+     * Retrieves the answers to the requirements specified in the file.
+     *
+     * @param path The path to the requirements file.
+     * @return A list of responses required by the requirements file.
+     */
     public List<String> retrieveAnswersRequirements(String path){
         try {
-            // Read the input file
             String input = new String(Files.readAllBytes(Paths.get(path)));
 
-            // Create a lexer and parser for the input
             RequirementsGrammarLexer lexer = new RequirementsGrammarLexer(CharStreams.fromString(input));
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);
             RequirementsGrammarParser parser = new RequirementsGrammarParser(tokenStream);
 
-            // Parse the input file
-            ParseTree tree = parser.start(); // Assuming 'start' is the entry point of your grammar
+            ParseTree tree = parser.start();
 
-            // Create a custom listener
             ResponseRequirementsVisitor visitor = new ResponseRequirementsVisitor();
             visitor.visit(tree);
 

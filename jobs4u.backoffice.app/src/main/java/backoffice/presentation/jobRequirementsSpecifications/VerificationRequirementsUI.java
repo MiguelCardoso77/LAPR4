@@ -9,6 +9,12 @@ import core.domain.jobOpening.JobReference;
 import eapli.framework.presentation.console.AbstractUI;
 import java.util.Map;
 
+/**
+ * The VerificationRequirementsUI class is responsible for displaying the
+ * user interface related to the verification of job requirements. It interacts
+ * with the VerificationRequirementsController to fetch job openings, retrieve
+ * applications, and verify candidate requirements.
+ */
 public class VerificationRequirementsUI extends AbstractUI {
 
     private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
@@ -17,6 +23,11 @@ public class VerificationRequirementsUI extends AbstractUI {
     final String GREEN = "\u001B[32m";
     final String RESET = "\u001B[0m";
 
+    /**
+     * Displays the UI and handles the logic for verifying job requirements.
+     *
+     * @return true if the UI should be displayed again, false otherwise.
+     */
     @Override
     protected boolean doShow() {
         JobOpening jobOpening = verificationRequirementsController.selectJobOpening();
@@ -56,11 +67,14 @@ public class VerificationRequirementsUI extends AbstractUI {
         return true;
     }
 
-
-
+    /**
+     * Returns the headline for the UI.
+     *
+     * @return A description as the headline.
+     */
     @Override
     public String headline() {
-        return "";
+        return "Verification of requirements";
     }
 
 

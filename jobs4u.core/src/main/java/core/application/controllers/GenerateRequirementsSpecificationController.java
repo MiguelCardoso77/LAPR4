@@ -1,8 +1,6 @@
 package core.application.controllers;
 
 import core.domain.jobOpening.JobOpening;
-import core.persistence.PersistenceContext;
-import core.repositories.JobOpeningRepository;
 import core.services.JobOpeningService;
 
 import java.io.IOException;
@@ -11,10 +9,22 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller class responsible for generating requirements specifications.
+ * This class provides methods for reading and writing files, filtering job openings with specifications,
+ * and processing lines of text.
+ *
+ * @author Diana Neves
+ */
 public class GenerateRequirementsSpecificationController {
     private final JobOpeningService jobOpeningService = new JobOpeningService();
 
-
+    /**
+     * Reads all lines from a file.
+     *
+     * @param filePath The path to the file to be read
+     * @return A list of strings containing the lines read from the file
+     */
     public List<String> readFile(String filePath) {
         try {
             return Files.readAllLines(Paths.get(filePath));
@@ -24,6 +34,12 @@ public class GenerateRequirementsSpecificationController {
         }
     }
 
+    /**
+     * Writes a list of strings to a file.
+     *
+     * @param questionForFile    The list of strings to be written to the file
+     * @param filePath The path to the file to write to
+     */
     public void writeListToFile(List<String> questionForFile, String filePath) {
         try {
             Files.write(Paths.get(filePath), questionForFile);
@@ -34,6 +50,11 @@ public class GenerateRequirementsSpecificationController {
         }
     }
 
+    /**
+     * Finds all job openings with assigned job requirements specifications.
+     *
+     * @return A list of JobOpening objects representing the job openings with specifications
+     */
     public List<JobOpening> findAllJobOpeningAssigned() {
         List<JobOpening> filteredJobOpening = new ArrayList<>();
 
@@ -46,7 +67,13 @@ public class GenerateRequirementsSpecificationController {
         return filteredJobOpening;
     }
 
-
+    /**
+     * Processes lines of text.
+     * This method adds lines containing ":" as is, and removes everything after ":" otherwise.
+     *
+     * @param lines The list of strings representing lines of text to be processed
+     * @return The processed list of strings
+     */
     public List<String> processLines(List<String> lines) {
         List<String> processedLines = new ArrayList<>();
         for (String line : lines) {

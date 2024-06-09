@@ -228,5 +228,4 @@ The testing of this functionality is done in the `Notification` class.
 
 ## 5. Demonstration
 
-
-
+![Demonstration.png](Demonstration.png)

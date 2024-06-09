@@ -12,8 +12,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Service class for handling candidate application requests.
+ *
+ * @author Diana Neves
+ */
 public class CandidateApplicationsService {
 
+    /**
+     * Sends a request to the server to retrieve the list of applications for a candidate.
+     *
+     * @param email The email of the candidate whose applications are to be retrieved
+     * @return A list of application strings, or null if no applications are found
+     */
     public List<String> requestApplications(String email) {
         try {
             Socket socket = new Socket("127.0.0.1", 2005);

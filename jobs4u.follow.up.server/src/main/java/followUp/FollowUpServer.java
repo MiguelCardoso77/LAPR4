@@ -10,9 +10,19 @@ import infrastructure.AppSettings;
 
 import java.io.IOException;
 
+/**
+ * Main class to start and stop the Follow-Up Server.
+ *
+ * @author Miguel Cardoso
+ */
 public class FollowUpServer {
     private static final int PORT = 2005;
 
+    /**
+     * Main method to start the Follow-Up Server.
+     *
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         try {
             Server server = new Server(PORT);
@@ -32,12 +42,20 @@ public class FollowUpServer {
         }
     }
 
+    /**
+     * Initializes and starts the Follow-Up Server.
+     */
     public static void startServer() {
         System.out.println("Starting Follow-Up Server...");
         AuthzRegistry.configure(PersistenceContext.repositories().users(), new Jobs4UPasswordPolicy(), new PlainTextEncoder());
         new AppSettings();
     }
 
+    /**
+     * Stops the Follow-Up Server by interrupting the specified thread.
+     *
+     * @param thread The thread running the server
+     */
     public static void stopServer(Thread thread) {
         thread.interrupt();
     }

@@ -23,9 +23,101 @@ and threads. Specific requirements will be provided in SCOMP.
 
 **From the client clarifications:**
 
+> **Question 170:**
+> 
+> Gostaria de saber se na US4000, relativa há criação da lista de palavras mais comuns, presentes nos 
+ficheiros carregados pelo candidato, pretende escolher uma candidatura desse mesmo candidato e criar a 
+respetiva lista, ou se pretende que esta lista seja criada, tendo em conta todas as candidaturas associadas
+a esse candidato.
+> 
+> **Answer:**
+> A lista de palavras é relativa a uma candidatura em particular.
+
+> **Question 181:**
+> 
+> Files for word count evaluation - When making the Top 20 Used Words by a candidate, the files subject to 
+word counting are all files of all the chosen candidate's applications? Or can the Customer Manager choose 
+a candidate's specific application and from there get the top 20 words from those files?
+> 
+> **Answer:**
+> See Q170
+ 
+> **Question 185:**
+> 
+> The order of the list is important? Does it need to be ordered by the number of occurrences of the words?
+> 
+> **Answer:**
+> Yes, the order is important. The system must present a top 20 list, from most referenced words to less referenced words.
+ 
+> **Question 186:**
+> 
+> For the word count, should all types of words be counted, or are there words that don't make sense to count, 
+such as conjunctions?
+> 
+> For the moment there are no restrictions like the one you mention since they depend on the 
+language used in the text (the solution could/would be complex).
+ 
+> **Question 187:**
+> 
+> When displaying the candidate info is expected to show the list of words for each application of the 
+candidate, or the customer manager needs to select a specific application to see the list of words?
+> 
+> **Answer:**
+> See Q170. This regards all the possible applications of a candidate that the customer manager is managing.
+ 
+> **Question 191:**
+> 
+> I think it makes sense to ignore words with less than 3 letters, or something like this, because it makes 
+no sense to have words like as, I, am... Can we make this assumption or should we count any word?
+> 
+> **Answer:**
+> See Q186. If you want, you may use a configuration file to configure the minimum number of sequence 
+of characters to be counted as a word in the process. However, this is a temporary exception, accepted, 
+but not considered as a good solution (a good solution should be one that takes into account the used language).
+ 
+> **Question 219:**
+> 
+> Recentemente, respondeu a dúvidas sobre a funcionalidade que pretende que seja feita sobre o top 20 número 
+de palavras em ficheiros de candidaturas de candidatos (Q170 e Q187). Quando analisamos as perguntas, ficámos 
+na dúvida sobre qual a interpretação a levar em conta, de que a funcionalidade deve ser feita sobre todas as 
+candidaturas do candidato (Q187), ou se o Customer Manager escolhe 1 candidatura do candidato e depois a 
+funcionalidade faz o seu trabalho sobre apenas essa candidatura.
+> 
+> **Answer:**
+> Os dados do candidato (“candidate data”) referem-se aos dados do candidato que pode ter várias candidaturas. 
+Nesse contexto ao apresentar os dados de cada candidatura devem aparecer, para cada candidatura (application), 
+o top 20.
+ 
+> **Question 220:**
+> 
+> Na us 4000 é referido, "Additionally, I require a comprehensive list of the files in which these words appear." 
+Quer apenas que para a palavra "x" digamos em que ficheiros existe ou mais alguma informação?
+> 
+> **Answer:**
+> É como indica, para cada palavra em que ficheiros aparece.
+
 ### 1.3. Acceptance Criteria
 
+* AC1: How to count words:
+
+        The system must count all words in the files, including conjunctions and prepositions.
+        A word is a sequence of characters separated by spaces, tabs, or newlines.
+
+* AC2: File reading:
+
+        The system must read the files concurrently using threads.
+
+* AC3: Thread count:
+
+        Each thread should read a file, count word occurrences, and update a shared word count map.
+
+* AC4: Final result:
+
+        The system must sort the map based on word counts and return the top 20 most referenced words.
+
 ### 1.4. Found out Dependencies
+
+* None to specify
 
 ### 1.5. Input and Output Data
 
@@ -42,7 +134,7 @@ and threads. Specific requirements will be provided in SCOMP.
 ![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ### 1.7. Sequence Diagram (SD)
-![sequence-diagram.svg](sequence-diagram.svG)
+![sequence-diagram.svg](sequence-diagram.svg)
 
 ### 1.8 Other Relevant Remarks
 

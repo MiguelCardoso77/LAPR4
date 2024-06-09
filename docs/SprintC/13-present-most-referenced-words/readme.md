@@ -42,7 +42,7 @@ and threads. Specific requirements will be provided in SCOMP.
 ![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
 ### 1.7. Sequence Diagram (SD)
-![sequence-diagram.svg](sequence-diagram.svg)
+![sequence-diagram.svg](sequence-diagram.svG)
 
 ### 1.8 Other Relevant Remarks
 
@@ -55,6 +55,7 @@ The desing of this use case is based on the following domain model and class dia
 ![domain-model.svg](domain-model.svg)
 
 ### 2.2. Class Diagram
+![class-diagram.svg](class-diagram.svg)
 
 ## 3. Implementation
 The most important method analyzes a list of candidate files to find the most referenced words across them. It spawns 
@@ -102,5 +103,83 @@ and returns the result.
 ```
 
 ## 4. Testing
+The `Application` class is fully tested in order to ensure that the implementation is correct.
+
+```java
+    @Test
+    void testRank() {
+        assertEquals(rank, application.rank());
+    }
+
+    @Test
+    void testSubmissionDate() {
+        assertEquals(createdOn, application.submissionDate());
+    }
+
+    @Test
+    void testDataFile() {
+        assertEquals(applicationFiles, application.dataFile());
+    }
+
+    @Test
+    void testOperator() {
+        assertEquals(operator, application.operator());
+    }
+
+    @Test
+    void testCandidate() {
+        assertEquals(candidate, application.candidate());
+    }
+
+    @Test
+    void testJobReference() {
+        assertEquals(jobReference, application.jobReference());
+    }
+
+    @Test
+    void testCandidateRequirements() {
+        assertEquals(candidateRequirements, application.candidateRequirements());
+    }
+
+    @Test
+    void testIdentity() {
+        assertNotNull(application.identity());
+    }
+
+    @Test
+    void testStatus() {
+        application.changeStatus(Status.CHOSEN);
+        assertEquals(Status.CHOSEN, application.status()); // assuming the initial status is PENDING
+    }
+
+    @Test
+    void testUpdateRank() {
+        Rank newRank = new Rank("2");
+        application.updateRank(2);
+        assertEquals(newRank, application.rank());
+    }
+
+    @Test
+    void testChangeStatus() {
+        Status newStatus = Status.ACCEPTED; // replace with actual Status
+        application.changeStatus(newStatus);
+        assertEquals(newStatus, application.status());
+    }
+
+    @Test
+    void testUploadCandidateRequirements() {
+        CandidateRequirements newCandidateRequirements = new CandidateRequirements(Arrays.asList("Requirement3", "Requirement4"));
+        application.uploadCandidateRequirements(newCandidateRequirements);
+        assertEquals(newCandidateRequirements, application.candidateRequirements());
+    }
+```
 
 ## 5. Demonstration
+
+![demo1.png](demo1.png)
+
+![demo2.png](demo2.png)
+
+![demo3.png](demo3.png)
+
+![demo4.png](demo4.png)

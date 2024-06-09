@@ -46,7 +46,7 @@ activate CustomerManager
             MostReferencedWordsController --> MostReferencedWordsUI : return candidate files
         deactivate MostReferencedWordsController
 
-        MostReferencedWordsUI --> MostReferencedWordsController : findMostReferencedWords(candidateFiles)
+        MostReferencedWordsUI -> MostReferencedWordsController : findMostReferencedWords(candidateFiles)
         activate MostReferencedWordsController
 
 loop for each file

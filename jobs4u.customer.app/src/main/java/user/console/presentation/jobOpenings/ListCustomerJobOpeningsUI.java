@@ -1,20 +1,16 @@
 package user.console.presentation.jobOpenings;
 
 import core.application.controllers.ListCustomerJobOpeningsController;
-import core.domain.jobOpening.JobOpeningDTO;
-import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.List;
-
 
 /**
  * User Interface for listing all job openings of a specific customer.
  * This class handles the display logic for showing job openings in the console.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 public class ListCustomerJobOpeningsUI extends AbstractUI {
     private final ListCustomerJobOpeningsController theController = new ListCustomerJobOpeningsController();
     private final String email;
@@ -32,12 +28,13 @@ public class ListCustomerJobOpeningsUI extends AbstractUI {
     protected boolean doShow() {
         List<String> jobOpenings = theController.sendCustomerJobOpenings(email);
 
-        if(jobOpenings != null){
+        if (jobOpenings != null) {
             System.out.printf("%-30s%-30s%-40s%-30s\n", "Job Reference", "Active Since", "Number of Applicants", "Position");
             for (String jobOpening : jobOpenings) {
                 System.out.printf("%-140s\n", jobOpening);
             }
         }
+
         return true;
     }
 
@@ -48,6 +45,6 @@ public class ListCustomerJobOpeningsUI extends AbstractUI {
      */
     @Override
     public String headline() {
-        return "List all customer Job Openings";
+        return "List All Customer Job Openings";
     }
 }

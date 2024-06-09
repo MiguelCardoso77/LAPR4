@@ -2,16 +2,16 @@ package user.console.presentation.jobOpenings;
 
 import eapli.framework.actions.Action;
 
-
 /**
  * Action to list all job openings for a specific customer.
  * This class is responsible for initiating the user interface to display the job openings.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 public class ListCustomerJobOpeningsAction implements Action {
 
     private final String email;
+
     /**
      * Constructs a new ListCustomerJobOpeningsAction.
      *

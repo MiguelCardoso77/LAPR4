@@ -69,6 +69,12 @@ public class ApplicationService {
         return applicationRepository.allApplications();
     }
 
+    /**
+     * Finds all applications submitted for a specific job opening.
+     *
+     * @param jobOpening the job opening for which to find applications.
+     * @return a list of applications submitted for the specified job opening.
+     */
     public List<Application> findApplicationsForJobOpening(JobOpening jobOpening) {
         List<Application> applications = new ArrayList<>();
 
@@ -81,11 +87,24 @@ public class ApplicationService {
         return applications;
     }
 
+    /**
+     * Updates the rank of an application and saves the changes.
+     *
+     * @param rank the new rank to be assigned.
+     * @param application the application to be updated.
+     * @return the updated application.
+     */
     public Application updateRank(int rank, Application application) {
         application.updateRank(rank);
         return applicationRepository.save(application);
     }
 
+    /**
+     * Retrieves a list of applications managed by a specific customer manager.
+     *
+     * @param cm the customer manager.
+     * @return a list of applications managed by the specified customer manager.
+     */
     public List<Application> applicationsByCM(SystemUser cm) {
         List<Application> applications = new ArrayList<>();
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
@@ -105,6 +124,12 @@ public class ApplicationService {
         return applications;
     }
 
+    /**
+     * Retrieves a list of applications submitted by a specific candidate.
+     *
+     * @param candidate the candidate.
+     * @return a list of applications submitted by the specified candidate.
+     */
     public List<Application> applicationsByCandidate(Candidate candidate) {
         List<Application> applications = new ArrayList<>();
 
@@ -117,6 +142,12 @@ public class ApplicationService {
         return applications;
     }
 
+    /**
+     * Counts the number of applications submitted for a specific job opening.
+     *
+     * @param jobOpening the job opening.
+     * @return the number of applications submitted for the job opening.
+     */
     public int numberOfApplicationsForJobOpening(JobOpening jobOpening) {
         int count = 0;
         for (Application application : applicationRepository.allApplications()) {
@@ -127,11 +158,24 @@ public class ApplicationService {
         return count;
     }
 
+    /**
+     * Updates the status of an application and saves the changes.
+     *
+     * @param status the new status to be assigned.
+     * @param application the application to be updated.
+     * @return the updated application.
+     */
     public Application updateStatus(Status status, Application application) {
         application.changeStatus(status);
         return applicationRepository.save(application);
     }
 
+    /**
+     * Uploads candidate requirements for an application.
+     *
+     * @param application the application to be updated.
+     * @param candidateRequirements the candidate requirements to be uploaded.
+     */
     public void uploadCandidateRequirements(Application application, CandidateRequirements candidateRequirements) {
         application.uploadCandidateRequirements(candidateRequirements);
     }

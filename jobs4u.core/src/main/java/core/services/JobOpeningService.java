@@ -107,10 +107,7 @@ public class JobOpeningService {
      * @return True if the job opening exists, false otherwise.
      */
     public boolean verifyJobReference(JobReference jobReference){
-        if(jobOpeningRepository.ofIdentity(jobReference).isPresent()){
-            return true;
-        }
-        return false;
+        return jobOpeningRepository.ofIdentity(jobReference).isPresent();
     }
 
     /**
@@ -119,7 +116,6 @@ public class JobOpeningService {
      * @param customer The customer to verify
      * @return list of the job openings associated to the customer
      */
-
     public List<JobOpening> findByCustomer(Customer customer){
         Iterable<JobOpening> jobOpenings = allJobOpenings();
 

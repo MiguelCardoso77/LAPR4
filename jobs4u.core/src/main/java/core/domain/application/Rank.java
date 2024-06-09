@@ -21,7 +21,6 @@ public class Rank implements ValueObject {
      * @param rank The rank or position.
      * @throws IllegalArgumentException if `rank` is less than 0.
      */
-
     public Rank(final String rank) {
         Preconditions.nonNull(rank);
 

@@ -69,12 +69,25 @@ public class JobInterviewService {
         return null;
     }
 
+    /**
+     * Uploads the responses to a job interview and saves the updated interview.
+     *
+     * @param interviewAnswers the answers to be uploaded.
+     * @param jobInterview     the job interview to which the answers will be uploaded.
+     * @return the updated job interview after saving.
+     */
     @Transactional
     public JobInterview uploadResponses(InterviewAnswers interviewAnswers, JobInterview jobInterview) {
         jobInterview.uploadInterviewAnswers(interviewAnswers);
         return jobInterviewRepository.save(jobInterview);
     }
 
+    /**
+     * Finds all job interviews associated with a specific application.
+     *
+     * @param application the application for which the interviews are to be found.
+     * @return a list of job interviews associated with the given application.
+     */
     public List<JobInterview> findInterviewsForApplication(Application application) {
         List<JobInterview> interviews = new ArrayList<>();
 
@@ -87,19 +100,14 @@ public class JobInterviewService {
         return interviews;
     }
 
+    /**
+     * Finds a job interview by its ID.
+     *
+     * @param id the ID of the job interview to be found.
+     * @return the job interview with the given ID, or null if no interview is found.
+     */
     public JobInterview findById(int id) {
         return jobInterviewRepository.ofIdentity(id).orElse(null);
     }
 
-    /*public List<JobInterview> sortInterviewsDescending() {
-        Comparator<JobInterview> byScoreDescending = Comparator.comparingInt(JobInterview::getScore)
-                .reversed();
-
-        List<JobInterview> sortedInterviews = jobInterviews.stream()
-                .sorted(byScoreDescending)
-                .collect(Collectors.toList());
-
-        return sortedInterviews;
-    }   return sortedInterviews;
-    }*/
 }

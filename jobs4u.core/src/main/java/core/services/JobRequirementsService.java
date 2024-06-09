@@ -59,10 +59,7 @@ public class JobRequirementsService {
      * @return True if the job requirements specification exists, otherwise false.
      */
     public boolean verifyJobRequirementsSpecification(Integer jobRequirementsSpecification){
-        if(jobRequirementsSpecificationRepository.ofIdentity(jobRequirementsSpecification).isPresent()){
-            return true;
-        }
-        return false;
+        return jobRequirementsSpecificationRepository.ofIdentity(jobRequirementsSpecification).isPresent();
     }
 
 }

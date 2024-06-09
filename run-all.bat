@@ -2,6 +2,9 @@
 ECHO Running Bootstrapp...
 java -jar jobs4u.bootstrap/target/jobs4u.bootstrap-0.1.0.jar
 
+ECHO Running Follow-Up Server...
+java -jar jobs4u.follow.up.server/target/jobs4u.follow.up.server-0.1.0.jar
+
 ECHO Running Customer App...
 java -jar jobs4u.customer.app/target/jobs4u.customer.app-0.1.0.jar
 

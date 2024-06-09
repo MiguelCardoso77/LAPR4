@@ -6,7 +6,7 @@ import eapli.framework.validations.Preconditions;
 /**
  * A factory class for creating instances of {@link Company}.
  *
- * @Author 1220812@isep.ipp.pt
+ * @author 1220812@isep.ipp.pt
  */
 public class CompanyBuilder implements DomainFactory<Company> {
 

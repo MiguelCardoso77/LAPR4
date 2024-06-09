@@ -1,6 +1,5 @@
 package core.application.controllers;
 
-import core.domain.jobOpening.JobOpeningDTO;
 import core.services.CustomerJobOpeningsService;
 import eapli.framework.application.UseCaseController;
 

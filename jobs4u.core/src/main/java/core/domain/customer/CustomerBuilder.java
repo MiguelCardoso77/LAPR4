@@ -27,11 +27,10 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 
 /**
  * A factory for Customer entities.
- *
  * This class demonstrates the use of the factory (DDD) pattern using a fluent
  * interface. It acts as a Builder (GoF).
  *
- * @Author 1220812@isep.ipp.pt
+ * @author 1220812@isep.ipp.pt
  *
  */
 public class CustomerBuilder implements DomainFactory<Customer> {
@@ -77,24 +76,12 @@ public class CustomerBuilder implements DomainFactory<Customer> {
      * Sets the created user.
      *
      * @param emailAddress the associated emailAddress
-     * @return this CustomerBuilder instance for method chaining
      * @throws IllegalArgumentException if the emailAddress is null
      */
-    public CustomerBuilder withEmailAddress(final EmailAddress emailAddress){
+    public void withEmailAddress(final EmailAddress emailAddress){
         this.emailAddress = emailAddress;
-        return this;
     }
-    /**
-     * Sets the created user.
-     *
-     * @param emailAddress the associated emailAddress
-     * @return this CustomerBuilder instance for method chaining
-     * @throws IllegalArgumentException if the emailAddress is null
-     */
-    public CustomerBuilder withEmailAddress(final String emailAddress){
-        this.emailAddress = EmailAddress.valueOf(emailAddress);
-        return this;
-    }
+
     /**
      * Builds and returns a new instance of Customer with the configured properties.
      * <p>

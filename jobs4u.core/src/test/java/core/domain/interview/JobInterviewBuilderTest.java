@@ -76,7 +76,7 @@ class JobInterviewBuilderTest {
 
     @Test
     void testWithAll() {
-        jobInterviewBuilder.withAll(createdOn, (int) time.getTime(), score.getScore(), result.toString(), application);
+        jobInterviewBuilder.withAll(createdOn, (int) time.time(), score.score(), result.toString(), application);
         JobInterview jobInterview = jobInterviewBuilder.build();
 
         assertEquals(createdOn, jobInterview.createdOn());
@@ -88,7 +88,7 @@ class JobInterviewBuilderTest {
 
     @Test
     void testBuild() {
-        jobInterviewBuilder.withAll(createdOn, (int) time.getTime(), score.getScore(), result.toString(), application);
+        jobInterviewBuilder.withAll(createdOn, (int) time.time(), score.score(), result.toString(), application);
         JobInterview jobInterview = jobInterviewBuilder.build();
 
         assertNotNull(jobInterview);

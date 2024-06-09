@@ -4,8 +4,7 @@ import core.domain.candidate.Candidate;
 import core.domain.jobOpening.JobOpening;
 import eapli.framework.domain.model.DomainFactory;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 import java.util.Calendar;
 
@@ -16,7 +15,6 @@ import java.util.Calendar;
  */
 public class ApplicationBuilder implements DomainFactory<Application> {
 
-    private int applicationID;
     private Rank rank;
     private Calendar submissionDate;
     private Status status;
@@ -25,11 +23,6 @@ public class ApplicationBuilder implements DomainFactory<Application> {
     private Candidate telephoneNumber;
 
     private SystemUser operator;
-
-    /**
-     * The logger for this class.
-     */
-    private static final Logger LOGGER = LogManager.getLogger(Application.class);
 
     /**
      * Sets all the attributes of the application builder.

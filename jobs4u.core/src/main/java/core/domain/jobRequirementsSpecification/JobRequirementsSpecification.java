@@ -58,7 +58,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JobRequirementsSpecification that = (JobRequirementsSpecification) o;
-        return idRequirements == that.idRequirements && jobRequirementsSpecificationFile == that.jobRequirementsSpecificationFile;
+        return Objects.equals(idRequirements, that.idRequirements) && Objects.equals(jobRequirementsSpecificationFile, that.jobRequirementsSpecificationFile);
     }
     /**
      * Returns a hash code value for this JobRequirementsSpecification.

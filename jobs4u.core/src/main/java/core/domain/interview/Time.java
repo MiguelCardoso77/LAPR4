@@ -70,7 +70,7 @@ public class Time implements ValueObject {
      *
      * @return The time value.
      */
-    public Integer getTime() {
+    public Integer time() {
         return time;
     }
 }

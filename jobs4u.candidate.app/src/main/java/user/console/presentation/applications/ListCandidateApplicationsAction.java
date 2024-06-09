@@ -10,10 +10,20 @@ import eapli.framework.actions.Action;
 public class ListCandidateApplicationsAction implements Action {
     private final String email;
 
+    /**
+     * Constructs a new ListCandidateApplicationsAction.
+     *
+     * @param email The email of the customer.
+     */
     public ListCandidateApplicationsAction(String email) {
         this.email = email;
     }
 
+    /**
+     * Executes the action to list candidate applications.
+     *
+     * @return true if the action was executed successfully, false otherwise.
+     */
     @Override
     public boolean execute() {
         return new ListCandidateApplicationsUI(email).show();

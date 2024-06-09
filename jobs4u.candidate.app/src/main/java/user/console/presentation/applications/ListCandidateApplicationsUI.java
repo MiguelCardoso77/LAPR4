@@ -48,6 +48,6 @@ public class ListCandidateApplicationsUI extends AbstractUI {
      */
     @Override
     public String headline() {
-        return "List all candidate applications";
+        return "List All Candidate Applications";
     }
 }

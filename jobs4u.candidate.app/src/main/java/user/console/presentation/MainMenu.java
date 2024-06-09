@@ -32,6 +32,11 @@ class MainMenu extends CandidateUserUI {
     private static final int CHECK_NOTIFICATIONS = 3;
     private final String email;
 
+    /**
+     * Constructor that receives the user's email.
+     *
+     * @param email the user's email
+     */
     public MainMenu(String email) {
         super();
         this.email = email;
@@ -78,6 +83,11 @@ class MainMenu extends CandidateUserUI {
         return mainMenu;
     }
 
+    /**
+     * Returns the headline of the main menu.
+     *
+     * @return the headline of the main menu
+     */
     @Override
     public String headline() {
         return "Candidate Menu";

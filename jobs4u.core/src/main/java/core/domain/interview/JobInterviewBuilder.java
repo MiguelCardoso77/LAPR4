@@ -4,6 +4,7 @@ import core.domain.application.Application;
 import eapli.framework.domain.model.DomainFactory;
 
 import java.util.Calendar;
+
 /**
  * Builder class for creating instances of {@link JobInterview}.
  *
@@ -19,11 +20,11 @@ public class JobInterviewBuilder implements DomainFactory<JobInterview> {
     /**
      * Sets all attributes of the builder.
      *
-     * @param createdOn      the date when the interview was created
-     * @param time           the time of the interview
-     * @param score          the score of the interview
-     * @param result         the result of the interview
-     * @param application    the application associated with the interview
+     * @param createdOn   the date when the interview was created
+     * @param time        the time of the interview
+     * @param score       the score of the interview
+     * @param result      the result of the interview
+     * @param application the application associated with the interview
      * @return this builder instance
      */
     public JobInterviewBuilder withAll(Calendar createdOn, int time, int score, String result, Application application) {
@@ -35,6 +36,7 @@ public class JobInterviewBuilder implements DomainFactory<JobInterview> {
 
         return this;
     }
+
     /**
      * Builds a new instance of {@link JobInterview}.
      *

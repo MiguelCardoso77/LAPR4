@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * Represents the specifications for job requirements in a company.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @Entity
 @Table(name = "JOB_REQUIREMENTS")
@@ -21,31 +21,34 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
 
     @Column(name = "JOB_REQUIREMENTS_PATH")
     private String jobRequirementsSpecificationFile;
+
     /**
      * Constructs a new JobRequirementsSpecification with the specified job requirements specification file path and id.
      *
-     * @param id             The Job Requirements specification identifier
+     * @param id                               The Job Requirements specification identifier
      * @param jobRequirementsSpecificationFile The Job Requirements Specification path
      */
     public JobRequirementsSpecification(final Integer id, final String jobRequirementsSpecificationFile) {
         this.idRequirements = id;
         this.jobRequirementsSpecificationFile = jobRequirementsSpecificationFile;
     }
+
     /**
      * Constructs a new JobRequirementsSpecification with the specified job requirements specification file path.
      *
      * @param jobRequirementsSpecificationFile The Job Requirements Specification path
      */
-    public JobRequirementsSpecification(final String jobRequirementsSpecificationFile){
+    public JobRequirementsSpecification(final String jobRequirementsSpecificationFile) {
         this.jobRequirementsSpecificationFile = jobRequirementsSpecificationFile;
     }
 
     /**
      * Default constructor required by the ORM framework.
      */
-    protected JobRequirementsSpecification(){
+    protected JobRequirementsSpecification() {
         //for ORM only
     }
+
     /**
      * Compares this JobRequirementsSpecification to the specified object.
      *
@@ -59,6 +62,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
         JobRequirementsSpecification that = (JobRequirementsSpecification) o;
         return Objects.equals(idRequirements, that.idRequirements) && Objects.equals(jobRequirementsSpecificationFile, that.jobRequirementsSpecificationFile);
     }
+
     /**
      * Returns a hash code value for this JobRequirementsSpecification.
      *
@@ -68,6 +72,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
     public int hashCode() {
         return Objects.hash(idRequirements, jobRequirementsSpecificationFile);
     }
+
     /**
      * Checks if this JobRequirementsSpecification is the same as another object.
      *
@@ -81,6 +86,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
         JobRequirementsSpecification that = (JobRequirementsSpecification) other;
         return Objects.equals(idRequirements, that.idRequirements);
     }
+
     /**
      * Compares this JobRequirementsSpecification to the specified id.
      *
@@ -92,7 +98,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
         return AggregateRoot.super.compareTo(other);
     }
 
-    public String jobRequirementsPath(){
+    public String jobRequirementsPath() {
         return this.jobRequirementsSpecificationFile;
     }
 
@@ -105,6 +111,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
     public Integer identity() {
         return idRequirements;
     }
+
     /**
      * Checks if this JobRequirementsSpecification has the specified identity.
      *
@@ -115,6 +122,7 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
     public boolean hasIdentity(Integer idRequirements) {
         return AggregateRoot.super.hasIdentity(idRequirements);
     }
+
     /**
      * Returns a string representation of this JobRequirementsSpecification.
      *

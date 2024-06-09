@@ -35,7 +35,7 @@ public class Process implements AggregateRoot<Integer> {
      * @param processDate   the date of the process
      * @param processStatus the status of the process
      */
-    public Process(ProcessState processState, Calendar processDate, ProcessStatus processStatus){
+    public Process(ProcessState processState, Calendar processDate, ProcessStatus processStatus) {
         this.processState = processState;
         this.processDate = processDate;
         this.processStatus = processStatus;
@@ -60,7 +60,7 @@ public class Process implements AggregateRoot<Integer> {
             return true;
         }
 
-        if (!(other instanceof Process)){
+        if (!(other instanceof Process)) {
             return false;
         }
 
@@ -75,7 +75,9 @@ public class Process implements AggregateRoot<Integer> {
      * @param other the Integer object to compare to
      * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object
      */
-    public int compareTo(Integer other) { return AggregateRoot.super.compareTo(other); }
+    public int compareTo(Integer other) {
+        return AggregateRoot.super.compareTo(other);
+    }
 
     /**
      * Retrieves the identity of this Process.
@@ -92,30 +94,42 @@ public class Process implements AggregateRoot<Integer> {
      *
      * @return the process state
      */
-    public ProcessState processState() { return this.processState; }
+    public ProcessState processState() {
+        return this.processState;
+    }
+
     /**
      * Retrieves the status of the process.
      *
      * @return the process state
      */
-
-    public ProcessStatus processStatus() { return this.processStatus; }
+    public ProcessStatus processStatus() {
+        return this.processStatus;
+    }
 
     /**
      * Retrieves the date of the process.
      *
      * @return the process date
      */
-    public Calendar processDate() { return this.processDate; }
+    public Calendar processDate() {
+        return this.processDate;
+    }
 
     /**
      * Changes the status of the associated process.
      */
-    public void changeProcessStatus(ProcessStatus processStatus) { this.processStatus = processStatus; }
+    public void changeProcessStatus(ProcessStatus processStatus) {
+        this.processStatus = processStatus;
+    }
+
     /**
      * Changes the state of the state process.
      */
-    public void changeProcessState(ProcessState processState) { this.processState = processState; }
+    public void changeProcessState(ProcessState processState) {
+        this.processState = processState;
+    }
+
     /**
      * Returns a string representation of this process
      * The string representation includes the process id, state, state date and status

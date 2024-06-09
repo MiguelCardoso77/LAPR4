@@ -9,7 +9,7 @@ import eapli.framework.domain.model.DomainFactory;
  * This builder provides methods for setting various attributes of a notification
  * and constructs the {@code Notification} object when all mandatory information is provided.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 public class NotificationBuilder implements DomainFactory<Notification> {
     private Message message;
@@ -19,17 +19,18 @@ public class NotificationBuilder implements DomainFactory<Notification> {
     /**
      * Sets all attributes of the notification.
      *
-     * @param message The message of the notification.
+     * @param message     The message of the notification.
      * @param application The application associated with the notification.
-     * @param candidate The candidate associated with the notification.
+     * @param candidate   The candidate associated with the notification.
      * @return This builder instance.
      */
-    public NotificationBuilder withAll(Message message, Application application, Candidate candidate){
+    public NotificationBuilder withAll(Message message, Application application, Candidate candidate) {
         this.message = message;
         this.application = application;
         this.candidate = candidate;
         return this;
     }
+
     /**
      * Constructs a {@code Notification} object with the provided attributes.
      *

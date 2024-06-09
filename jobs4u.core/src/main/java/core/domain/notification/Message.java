@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Represents a message.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @Embeddable
 public class Message implements ValueObject {

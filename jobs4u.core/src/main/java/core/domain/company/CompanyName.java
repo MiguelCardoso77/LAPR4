@@ -11,6 +11,8 @@ import java.util.Objects;
 /**
  * Represents the name of a company.
  * This class is a value object and is embeddable.
+ *
+ * @author Diogo Ribeiro
  */
 @Embeddable
 public class CompanyName implements ValueObject, Serializable, Comparable<CompanyName> {

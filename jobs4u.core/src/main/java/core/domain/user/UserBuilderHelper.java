@@ -13,12 +13,14 @@ import eapli.framework.util.Utility;
  */
 @Utility
 public class UserBuilderHelper {
+
     /**
      * Private constructor to prevent instantiation of this utility class.
      */
     private UserBuilderHelper() {
         // ensure utility
     }
+
     /**
      * Returns a SystemUserBuilder configured with the Jobs4UPasswordPolicy and a PlainTextEncoder.
      *

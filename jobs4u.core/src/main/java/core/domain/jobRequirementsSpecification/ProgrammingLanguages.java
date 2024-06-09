@@ -1,4 +1,5 @@
 package core.domain.jobRequirementsSpecification;
+
 /**
  * Represents the programming languages required for a job.
  * This enum provides different programming languages that can be required for a job.
@@ -6,13 +7,14 @@ package core.domain.jobRequirementsSpecification;
  * @author Tomás Gonçalves
  */
 public enum ProgrammingLanguages {
-    JAVA ("Java"),
-    JAVASCRIPT  ("JavaScript") ,
-    PYTHON  ("Python"),
-    TYPESCRIPT ("TypeScript")  ,
-    PHP ("PHP"),
-    CHASH ("C#") ;
+    JAVA("Java"),
+    JAVASCRIPT("JavaScript"),
+    PYTHON("Python"),
+    TYPESCRIPT("TypeScript"),
+    PHP("PHP"),
+    CHASH("C#");
     private final String usage;
+
     /**
      * Constructs a ProgrammingLanguages with the specified usage.
      *
@@ -21,6 +23,7 @@ public enum ProgrammingLanguages {
     ProgrammingLanguages(String usage) {
         this.usage = usage;
     }
+
     /**
      * Returns a string representation of the programming language.
      *

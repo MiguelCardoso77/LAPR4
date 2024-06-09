@@ -2,6 +2,7 @@ package core.domain.application;
 
 import eapli.framework.domain.model.ValueObject;
 import jakarta.persistence.Embeddable;
+
 import java.util.List;
 
 /**
@@ -19,14 +20,14 @@ public class CandidateRequirements implements ValueObject {
      *
      * @param candidateRequirements the list of requirements for the candidate.
      */
-    public CandidateRequirements(List<String> candidateRequirements){
+    public CandidateRequirements(List<String> candidateRequirements) {
         this.candidateRequirements = candidateRequirements;
     }
 
     /**
      * Default constructor for ORM (Object-Relational Mapping) frameworks.
      */
-    protected CandidateRequirements(){
+    protected CandidateRequirements() {
         // for ORM
     }
 
@@ -37,11 +38,11 @@ public class CandidateRequirements implements ValueObject {
      * @return {@code true} if the objects are equal, {@code false} otherwise.
      */
     @Override
-    public boolean equals(final Object o){
-        if (this == o){
+    public boolean equals(final Object o) {
+        if (this == o) {
             return true;
         }
-        if (!(o instanceof CandidateRequirements)){
+        if (!(o instanceof CandidateRequirements)) {
             return false;
         }
         final CandidateRequirements that = (CandidateRequirements) o;
@@ -53,7 +54,7 @@ public class CandidateRequirements implements ValueObject {
      *
      * @return the list of requirements.
      */
-    public List<String> candidateRequirements(){
+    public List<String> candidateRequirements() {
         return this.candidateRequirements;
     }
 
@@ -63,7 +64,9 @@ public class CandidateRequirements implements ValueObject {
      * @return the hash code.
      */
     @Override
-    public int hashCode(){ return this.candidateRequirements.hashCode(); }
+    public int hashCode() {
+        return this.candidateRequirements.hashCode();
+    }
 
     /**
      * Returns a string representation of the candidate requirements.
@@ -71,6 +74,8 @@ public class CandidateRequirements implements ValueObject {
      * @return a string containing the requirements.
      */
     @Override
-    public String toString() { return candidateRequirements.toString(); }
+    public String toString() {
+        return candidateRequirements.toString();
+    }
 
 }

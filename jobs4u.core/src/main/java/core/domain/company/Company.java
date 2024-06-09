@@ -11,8 +11,7 @@ import java.util.Objects;
  * Represents a company, including its unique number and name.
  * This class is an aggregate root and is persisted as an entity in the database.
  *
- * @author 1220812@isep.ipp.pt
- *
+ * @author Diogo Ribeiro
  */
 @Entity
 @Table(name = "COMPANY")
@@ -45,15 +44,15 @@ public class Company implements AggregateRoot<Integer> {
      * @param name the company name to set
      * @throws NullPointerException if the company name is null
      */
-    public Company(final CompanyName name){
+    public Company(final CompanyName name) {
         Preconditions.nonNull(name, "Company name cannot be null");
-        this.companyName= name;
+        this.companyName = name;
     }
 
     /**
      * Protected constructor for ORM usage.
      */
-    protected Company(){
+    protected Company() {
         // for ORM
     }
 
@@ -86,7 +85,7 @@ public class Company implements AggregateRoot<Integer> {
      *
      * @return the company name
      */
-    public CompanyName companyName(){
+    public CompanyName companyName() {
         return this.companyName;
     }
 
@@ -118,7 +117,9 @@ public class Company implements AggregateRoot<Integer> {
      * @return the company number
      */
     @Override
-    public Integer identity() { return companyNumber; }
+    public Integer identity() {
+        return companyNumber;
+    }
 
     /**
      * Returns a string representation of this Company.

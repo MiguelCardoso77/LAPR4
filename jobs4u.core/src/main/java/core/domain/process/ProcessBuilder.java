@@ -21,11 +21,10 @@ public class ProcessBuilder implements DomainFactory<Process> {
     /**
      * Sets all attributes of the builder.
      *
-     * @param processState  the state of the process
-     *
+     * @param processState the state of the process
      * @return this builder instance
      */
-    public ProcessBuilder withAll(ProcessState processState, ProcessStatus processStatus){
+    public ProcessBuilder withAll(ProcessState processState, ProcessStatus processStatus) {
         this.processState = processState;
         this.processDate = Calendar.getInstance();
         this.processStatus = processStatus;

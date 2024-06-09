@@ -1,4 +1,5 @@
 package core.domain.jobRequirementsSpecification;
+
 /**
  * Represents the academic degree required for a job.
  * This enum provides different levels of academic degrees that can be required for a job.
@@ -6,11 +7,12 @@ package core.domain.jobRequirementsSpecification;
  * @author Tomás Gonçalves
  */
 public enum AcademicDegree {
-    NONE ("None") ,
-    BACHELOR ("Bachelor") ,
-    MASTER ("Master")  ,
-    DOCTORATE ("Doctorate") ;
+    NONE("None"),
+    BACHELOR("Bachelor"),
+    MASTER("Master"),
+    DOCTORATE("Doctorate");
     private final String usage;
+
     /**
      * Constructs an AcademicDegree with the specified usage.
      *
@@ -19,6 +21,7 @@ public enum AcademicDegree {
     AcademicDegree(String usage) {
         this.usage = usage;
     }
+
     /**
      * Returns a string representation of the academic degree.
      *

@@ -16,13 +16,14 @@ public final class Jobs4URoles {
     public static final Role CUSTOMER_MANAGER = Role.valueOf("CUSTOMER_MANAGER");
     public static final Role LANGUAGE_ENGINEER = Role.valueOf("LANGUAGE_ENGINEER");
     public static final Role OPERATOR = Role.valueOf("OPERATOR");
+
     /**
      * Retrieves all the roles in the Jobs4U system.
      *
      * @return An array of all the roles.
      */
     public static Role[] allValues() {
-        return new Role[] { ADMIN, BOOTSTRAP, CANDIDATE, CUSTOMER, CUSTOMER_MANAGER, LANGUAGE_ENGINEER, OPERATOR };
+        return new Role[]{ADMIN, BOOTSTRAP, CANDIDATE, CUSTOMER, CUSTOMER_MANAGER, LANGUAGE_ENGINEER, OPERATOR};
     }
 
 }

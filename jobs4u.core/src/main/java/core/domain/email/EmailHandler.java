@@ -18,10 +18,8 @@ import javax.mail.*;
  *
  * @author Miguel Cardoso
  */
-
 public class EmailHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailHandler.class);
-    private final Session session;
     private final String username;
 
     /**
@@ -54,13 +52,12 @@ public class EmailHandler {
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.ssl.trust", "smtp.office365.com");
 
-        session = Session.getInstance(properties, new Authenticator() {
+        Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
         });
-
     }
 
     /**

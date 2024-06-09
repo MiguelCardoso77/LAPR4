@@ -11,10 +11,10 @@ import java.util.List;
  *
  * @author Miguel Cardoso
  */
-
 @Embeddable
 public class InterviewAnswers implements ValueObject {
     private List<String> answers;
+
     /**
      * Constructs an InterviewAnswers object with the specified list of answers.
      *
@@ -23,12 +23,14 @@ public class InterviewAnswers implements ValueObject {
     public InterviewAnswers(List<String> answers) {
         this.answers = answers;
     }
+
     /**
      * Protected constructor for ORM usage.
      */
     protected InterviewAnswers() {
         // for ORM
     }
+
     /**
      * Checks if this InterviewAnswers object is equal to the specified object.
      *
@@ -47,6 +49,7 @@ public class InterviewAnswers implements ValueObject {
         final InterviewAnswers that = (InterviewAnswers) o;
         return this.answers.equals(that.answers);
     }
+
     /**
      * Returns a hash code value for the object.
      *
@@ -56,6 +59,7 @@ public class InterviewAnswers implements ValueObject {
     public int hashCode() {
         return this.answers.hashCode();
     }
+
     /**
      * Returns a string representation of the object.
      *
@@ -65,6 +69,7 @@ public class InterviewAnswers implements ValueObject {
     public String toString() {
         return answers.toString();
     }
+
     /**
      * Retrieves the list of answers.
      *

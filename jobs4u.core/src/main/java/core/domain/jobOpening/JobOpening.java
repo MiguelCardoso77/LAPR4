@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 /**
  * Represents a job opening in the system.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @Entity
 @Table(name = "JOB_OPENING")
@@ -56,20 +56,21 @@ public class JobOpening implements AggregateRoot<JobReference> {
     @OneToOne
     @JoinColumn(name = "PROCESS_ID")
     private Process process;
+
     /**
      * Constructs a new job opening with the provided attributes.
      *
-     * @param jobReference               The reference of the job opening.
-     * @param description                The description of the job opening.
-     * @param vacanciesNumber            The number of vacancies for the job opening.
-     * @param address                    The address of the job opening.
-     * @param mode                       The mode of the job opening (e.g., full-time, part-time).
-     * @param contractType               The contract type of the job opening.
-     * @param titleOrFunction            The title or function of the job opening.
-     * @param customer                    The customer associated to the job opening.
+     * @param jobReference                 The reference of the job opening.
+     * @param description                  The description of the job opening.
+     * @param vacanciesNumber              The number of vacancies for the job opening.
+     * @param address                      The address of the job opening.
+     * @param mode                         The mode of the job opening (e.g., full-time, part-time).
+     * @param contractType                 The contract type of the job opening.
+     * @param titleOrFunction              The title or function of the job opening.
+     * @param customer                     The customer associated to the job opening.
      * @param jobRequirementsSpecification The job requirements specification for the job opening.
-     * @param process                    The process for the job opening.
-     * @param interviewModel             The interview model
+     * @param process                      The process for the job opening.
+     * @param interviewModel               The interview model
      */
     public JobOpening(JobReference jobReference, Description description, VacanciesNumber vacanciesNumber,
                       Address address, Mode mode, ContractType contractType, TitleOrFunction titleOrFunction, Customer customer,
@@ -122,6 +123,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public boolean sameAs(Object other) {
         return DomainEntities.areEqual(this, other);
     }
+
     /**
      * Gets the job reference.
      *
@@ -130,6 +132,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public JobReference jobReference() {
         return jobReference;
     }
+
     /**
      * Gets the description of the job opening.
      *
@@ -138,6 +141,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public Description description() {
         return description;
     }
+
     /**
      * Gets the number of vacancies for the job opening.
      *
@@ -146,6 +150,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public VacanciesNumber vacanciesNumber() {
         return vacanciesNumber;
     }
+
     /**
      * Gets the address of the job opening.
      *
@@ -154,6 +159,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public Address address() {
         return address;
     }
+
     /**
      * Gets the mode of the job opening.
      *
@@ -162,6 +168,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public Mode mode() {
         return mode;
     }
+
     /**
      * Gets the contract type of the job opening.
      *
@@ -170,6 +177,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public ContractType contractType() {
         return contractType;
     }
+
     /**
      * Gets the title or function of the job opening.
      *
@@ -178,6 +186,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public TitleOrFunction titleOrFunction() {
         return titleOrFunction;
     }
+
     /**
      * Gets the customer associated to the job opening.
      *
@@ -186,20 +195,22 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public Customer customer() {
         return customer;
     }
+
     /**
      * Gets the job requirements specification for the job opening.
      *
      * @return The job requirements specification for the job opening.
      */
-    public JobRequirementsSpecification jobRequirementsSpecification(){
+    public JobRequirementsSpecification jobRequirementsSpecification() {
         return jobRequirementsSpecification;
     }
+
     /**
      * Gets the process for the job opening.
      *
      * @return The process for the job opening.
      */
-    public Process process(){
+    public Process process() {
         return process;
     }
 
@@ -209,36 +220,40 @@ public class JobOpening implements AggregateRoot<JobReference> {
      * @return The interview model associated.
      */
 
-    public InterviewModel myInterviewModel(){
+    public InterviewModel myInterviewModel() {
         return interviewModel;
     }
+
     /**
      * Updates the job requirements specification for the job opening.
      *
      * @param jobRequirementsSpecification The new job requirements specification.
      */
-    public void updateJobRequirements(JobRequirementsSpecification jobRequirementsSpecification){
+    public void updateJobRequirements(JobRequirementsSpecification jobRequirementsSpecification) {
         this.jobRequirementsSpecification = jobRequirementsSpecification;
     }
+
     /**
      * Updates the interview model for the job opening.
      *
      * @param interviewModel The new interview model.
      */
-    public void updateInterviewModel(InterviewModel interviewModel){
+    public void updateInterviewModel(InterviewModel interviewModel) {
         this.interviewModel = interviewModel;
     }
+
     /**
      * Checks if the given job reference is the same as the job reference of this job opening.
      *
      * @param jobReference The job reference to compare.
      * @return True if the job reference matches the job reference of this job opening, false otherwise.
      */
-    public boolean sameReference(JobReference jobReference){
+    public boolean sameReference(JobReference jobReference) {
         String jobReference1 = String.valueOf(jobReference);
         String jobOpeningReference = String.valueOf(this.jobReference);
         return jobOpeningReference.equals(jobReference1);
     }
+
     /**
      * Returns a string representation of this job opening.
      * The string representation includes the job reference, description, vacancies number, address, mode,

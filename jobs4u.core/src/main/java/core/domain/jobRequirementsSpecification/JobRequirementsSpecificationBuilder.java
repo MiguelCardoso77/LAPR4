@@ -10,9 +10,8 @@ import eapli.framework.validations.Preconditions;
  * JobRequirementsSpecificationBuilder builder = new JobRequirementsSpecificationBuilder();
  * JobRequirementsSpecification requirements = builder.withAll(1, "Bachelor's Degree", 2, "Java programming").build();
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 public class JobRequirementsSpecificationBuilder {
     private Integer idRequirements;
     private String jobRequirementsFile;
@@ -20,7 +19,7 @@ public class JobRequirementsSpecificationBuilder {
     /**
      * Sets all attributes required to build a JobRequirementsSpecification.
      *
-     * @param idRequirements The ID of the job requirements specification.
+     * @param idRequirements      The ID of the job requirements specification.
      * @param jobRequirementsPath The path for the job requirements specification file.
      * @return This JobRequirementsSpecificationBuilder instance.
      */
@@ -29,13 +28,14 @@ public class JobRequirementsSpecificationBuilder {
         this.jobRequirementsFile = jobRequirementsPath;
         return this;
     }
+
     /**
      * Sets all attributes required to build a JobRequirementsSpecification.
      *
      * @param jobRequirementsFile The path for the job requirements specification file.
      * @return This JobRequirementsSpecificationBuilder instance.
      */
-    public JobRequirementsSpecificationBuilder withoutId( final String jobRequirementsFile) {
+    public JobRequirementsSpecificationBuilder withoutId(final String jobRequirementsFile) {
         this.jobRequirementsFile = jobRequirementsFile;
         return this;
     }

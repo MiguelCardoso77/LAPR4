@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import java.util.Calendar;
 import java.util.Objects;
+
 /**
  * Represents a job interview.
  * This class provides methods for getting and setting the attributes of a job interview, checking equality, generating hashcode, and getting a string representation of the job interview.
@@ -20,28 +21,34 @@ public class JobInterview implements AggregateRoot<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
+
     @Column(name = "INTERVIEW_TIME")
     private Time time;
+
     @Column(name = "SCORE")
-    private  Score score;
+    private Score score;
+
     @Column(name = "RESULT")
     private Result result;
+
     @ManyToOne
     @JoinColumn(name = "APPLICATION_ID")
     private Application application;
+
     @Column(name = "INTERVIEW_ANSWERS")
     private InterviewAnswers interviewAnswers;
 
     /**
      * Constructs a job interview with the specified attributes.
      *
-     * @param createdOn      the date when the interview was created
-     * @param time           the time of the interview
-     * @param score          the score of the interview
-     * @param result         the result of the interview
-     * @param application    the application associated with the interview
+     * @param createdOn   the date when the interview was created
+     * @param time        the time of the interview
+     * @param score       the score of the interview
+     * @param result      the result of the interview
+     * @param application the application associated with the interview
      */
     public JobInterview(Calendar createdOn, Time time, Score score, Result result, Application application, InterviewAnswers interviewAnswers) {
         this.createdOn = createdOn;
@@ -51,6 +58,7 @@ public class JobInterview implements AggregateRoot<Integer> {
         this.application = application;
         this.interviewAnswers = interviewAnswers;
     }
+
     /**
      * Default constructor required by the ORM framework.
      */
@@ -168,6 +176,7 @@ public class JobInterview implements AggregateRoot<Integer> {
     public int compareTo(Integer other) {
         return AggregateRoot.super.compareTo(other);
     }
+
     /**
      * Returns a string representation of the JobInterview object.
      * This implementation returns a string that includes the values of
@@ -188,20 +197,22 @@ public class JobInterview implements AggregateRoot<Integer> {
                 ", interviewAnswers=" + interviewAnswers +
                 '}';
     }
+
     /**
      * Updates the score of this JobInterview with a new score.
      *
      * @param newScore The new score to be set.
      */
-    public void updateScore(Score newScore){
+    public void updateScore(Score newScore) {
         score = newScore;
     }
+
     /**
      * Returns the score of the interview.
      *
      * @return The score of the interview.
      */
-    public  int returnScore() {
+    public int returnScore() {
         return score.score();
     }
 }

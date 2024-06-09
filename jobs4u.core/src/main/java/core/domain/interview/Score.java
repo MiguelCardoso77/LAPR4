@@ -3,7 +3,6 @@ package core.domain.interview;
 import eapli.framework.domain.model.ValueObject;
 import jakarta.persistence.Embeddable;
 
-
 /**
  * Represents a score, which is a value object.
  *
@@ -11,7 +10,6 @@ import jakarta.persistence.Embeddable;
  */
 @Embeddable
 public class Score implements ValueObject {
-
     private Integer score;
 
     /**
@@ -20,17 +18,16 @@ public class Score implements ValueObject {
      * @param score The score value.
      */
 
-    public Score(Integer score){
+    public Score(Integer score) {
         this.score = score;
     }
 
     /**
      * Default constructor required by the ORM framework.
      */
-    protected Score(){
+    protected Score() {
         // for ORM
     }
-
 
     /**
      * Checks if this Score is equal to another object.
@@ -61,7 +58,6 @@ public class Score implements ValueObject {
         return this.score.hashCode();
     }
 
-
     /**
      * Returns a string representation of this Score.
      *
@@ -69,7 +65,8 @@ public class Score implements ValueObject {
      */
     @Override
     public String toString() {
-        return "Score = " + score; }
+        return "Score = " + score;
+    }
 
     /**
      * Retrieves the score value.

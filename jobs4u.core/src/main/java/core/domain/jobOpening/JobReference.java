@@ -33,7 +33,7 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
             throw new IllegalArgumentException("Company Number should not be empty");
         }
 
-        if(generate){
+        if (generate) {
             String companyReference = buildCompanyReference(companyName);
             this.sequentialNumber = ++lastSequentialNumber;
             this.jobReference = buildJobReference(companyReference);
@@ -85,7 +85,7 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
      * @param jobReference The job reference string.
      * @return A JobReference instance.
      */
-    public static JobReference stringToJobReference(final String jobReference){
+    public static JobReference stringToJobReference(final String jobReference) {
         return new JobReference(jobReference, false);
     }
 

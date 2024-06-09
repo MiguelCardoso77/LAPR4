@@ -45,6 +45,7 @@ public class VacanciesNumber implements ValueObject, Comparable<VacanciesNumber>
     public static VacanciesNumber valueOf(final int vacanciesNumber) {
         return new VacanciesNumber(vacanciesNumber);
     }
+
     /**
      * Checks if this number of vacancies is equal to another object.
      *
@@ -63,6 +64,7 @@ public class VacanciesNumber implements ValueObject, Comparable<VacanciesNumber>
         final VacanciesNumber that = (VacanciesNumber) o;
         return this.number == that.number;
     }
+
     /**
      * Computes the hash code for this number of vacancies.
      *
@@ -72,6 +74,7 @@ public class VacanciesNumber implements ValueObject, Comparable<VacanciesNumber>
     public int hashCode() {
         return Integer.hashCode(this.number);
     }
+
     /**
      * Returns the string representation of this number of vacancies.
      *
@@ -81,6 +84,7 @@ public class VacanciesNumber implements ValueObject, Comparable<VacanciesNumber>
     public String toString() {
         return Integer.toString(this.number);
     }
+
     /**
      * Compares this number of vacancies to another number of vacancies.
      *
@@ -92,6 +96,7 @@ public class VacanciesNumber implements ValueObject, Comparable<VacanciesNumber>
     public int compareTo(final VacanciesNumber arg0) {
         return Integer.compare(number, arg0.number);
     }
+
     /**
      * Retrieves the number of vacancies.
      *

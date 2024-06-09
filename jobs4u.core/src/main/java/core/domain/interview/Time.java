@@ -17,14 +17,14 @@ public class Time implements ValueObject {
      *
      * @param time The time value.
      */
-    public Time(Integer time){
+    public Time(Integer time) {
         this.time = time;
     }
 
     /**
      * Default constructor required by the ORM framework.
      */
-    protected Time(){
+    protected Time() {
         // for ORM
     }
 
@@ -35,11 +35,11 @@ public class Time implements ValueObject {
      * @return True if the objects are equal, false otherwise.
      */
     @Override
-    public boolean equals(final Object o){
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Time)){
+        if (!(o instanceof Time)) {
             return false;
         }
 
@@ -63,7 +63,9 @@ public class Time implements ValueObject {
      * @return A string representation of this object.
      */
     @Override
-    public String toString() { return "Time = " + time; }
+    public String toString() {
+        return "Time = " + time;
+    }
 
     /**
      * Retrieves the time value.

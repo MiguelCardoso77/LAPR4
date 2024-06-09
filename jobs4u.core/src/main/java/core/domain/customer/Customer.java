@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 /**
  * Represents a customer entity.
  *
- * @Author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @Entity
 @Table(name = "CUSTOMER")

@@ -2,6 +2,7 @@ package core.domain.interviewModel;
 
 import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
+
 /**
  * Represents an interview model, which is a value object.
  *

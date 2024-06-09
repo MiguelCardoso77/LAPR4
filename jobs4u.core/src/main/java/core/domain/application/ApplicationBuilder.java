@@ -34,9 +34,7 @@ public class ApplicationBuilder implements DomainFactory<Application> {
      * @param operator         the operator who registered the application
      * @return this application builder instance
      */
-    public ApplicationBuilder withAll( final Rank rank,
-                                      final String applicationFiles,
-                                      final JobOpening jobReference , final Candidate telephoneNumber, final SystemUser operator) {
+    public ApplicationBuilder withAll(final Rank rank, final String applicationFiles, final JobOpening jobReference, final Candidate telephoneNumber, final SystemUser operator) {
         this.rank = rank;
         this.submissionDate = Calendar.getInstance();
         this.status = Status.RECEIVED;

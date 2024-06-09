@@ -13,20 +13,22 @@ import java.util.Objects;
  * A notification is associated with an application, a message, and a candidate.
  * This class is an aggregate root in the domain-driven design context.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 @Entity
 @Table(name = "NOTIFICATION")
 public class Notification implements AggregateRoot<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @JoinColumn(name = "APPLICATION_ID")
     @ManyToOne
     private Application application;
+
     @Column(name = "MESSAGE")
     private Message message;
+
     @JoinColumn(name = "CANDIDATE_ID")
     @ManyToOne
     private Candidate candidate;
@@ -38,6 +40,7 @@ public class Notification implements AggregateRoot<Integer> {
     protected Notification() {
         // for ORM
     }
+
     /**
      * Creates a new notification.
      *
@@ -57,7 +60,6 @@ public class Notification implements AggregateRoot<Integer> {
      * @param o The object to compare with.
      * @return true if the objects are equal, false otherwise.
      */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,11 +73,11 @@ public class Notification implements AggregateRoot<Integer> {
      *
      * @return a hash code value for this object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(id, application, message, candidate);
     }
+
     /**
      * Checks if this notification is the same as another object.
      *
@@ -86,6 +88,7 @@ public class Notification implements AggregateRoot<Integer> {
     public boolean sameAs(Object other) {
         return DomainEntities.areEqual(this, other);
     }
+
     /**
      * Returns the identity of this notification.
      *
@@ -105,6 +108,7 @@ public class Notification implements AggregateRoot<Integer> {
     public Application application() {
         return application;
     }
+
     /**
      * Returns the message of this notification.
      *
@@ -113,6 +117,7 @@ public class Notification implements AggregateRoot<Integer> {
     public Message message() {
         return message;
     }
+
     /**
      * Returns the candidate associated with this notification.
      *
@@ -121,6 +126,7 @@ public class Notification implements AggregateRoot<Integer> {
     public Candidate candidate() {
         return candidate;
     }
+
     /**
      * Returns the read status of this notification.
      *
@@ -129,12 +135,14 @@ public class Notification implements AggregateRoot<Integer> {
     public boolean read() {
         return read;
     }
+
     /**
      * Marks this notification as read.
      */
     public void readMarker(){
         this.read = true;
     }
+
     /**
      * Returns a string representation of this notification.
      * The string representation includes the id, application, message, and candidate.

@@ -28,15 +28,15 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     /**
      * Sets all attributes of the job opening.
      *
-     * @param jobReference               The reference of the job opening.
-     * @param description                The description of the job opening.
-     * @param vacanciesNumber            The number of vacancies for the job opening.
-     * @param address                    The address of the job opening.
-     * @param mode                       The mode of the job opening (e.g., full-time, part-time).
-     * @param contractType               The contract type of the job opening.
-     * @param titleOrFunction            The title or function of the job opening.
-     * @param customer                    The customer associated to the job opening.
-     * @param process                    The process for the job opening.
+     * @param jobReference    The reference of the job opening.
+     * @param description     The description of the job opening.
+     * @param vacanciesNumber The number of vacancies for the job opening.
+     * @param address         The address of the job opening.
+     * @param mode            The mode of the job opening (e.g., full-time, part-time).
+     * @param contractType    The contract type of the job opening.
+     * @param titleOrFunction The title or function of the job opening.
+     * @param customer        The customer associated to the job opening.
+     * @param process         The process for the job opening.
      * @return This builder instance.
      */
     public JobOpeningBuilder withAll(JobReference jobReference, String description, int vacanciesNumber,
@@ -53,6 +53,7 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
         this.process = process;
         return this;
     }
+
     /**
      * Constructs a {@code JobOpening} object with the provided attributes.
      *

@@ -10,7 +10,6 @@ import jakarta.persistence.Embeddable;
  *
  * @author Tomás Gonçalves
  */
-
 @Embeddable
 public class Rank implements ValueObject {
     private String rank;
@@ -27,6 +26,12 @@ public class Rank implements ValueObject {
         this.rank = rank;
     }
 
+    /**
+     * Constructs a `Rank` instance.
+     *
+     * @param rank The rank or position.
+     * @throws IllegalArgumentException if `rank` is less than 0.
+     */
     public Rank(final int rank) {
         Preconditions.nonNull(rank);
         Preconditions.nonNegative(rank);
@@ -41,6 +46,11 @@ public class Rank implements ValueObject {
         // for ORM
     }
 
+    /**
+     * Checks if this `Rank` is ranked.
+     *
+     * @return `true` if ranked, otherwise `false`.
+     */
     public boolean isRanked() {
         return !this.rank.equals("Not Ranked");
     }
@@ -73,7 +83,6 @@ public class Rank implements ValueObject {
         final Rank that = (Rank) o;
         return this.rank.equals(that.rank);
     }
-
 
     /**
      * Returns the string representation of this `Rank`.

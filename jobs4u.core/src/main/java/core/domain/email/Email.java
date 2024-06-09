@@ -10,11 +10,11 @@ import java.io.Serializable;
  *
  * @author Miguel Cardoso
  */
-
 public class Email implements Serializable {
     private String toWho;
     private String subject;
     private String body;
+
     /**
      * Constructs an Email object with the specified recipient, subject, and body.
      *
@@ -31,12 +31,14 @@ public class Email implements Serializable {
         this.subject = subject;
         this.body = body;
     }
+
     /**
      * Protected constructor for ORM usage.
      */
     protected Email() {
         // for ORM
     }
+
     /**
      * Retrieves the recipient of this email.
      *
@@ -45,6 +47,7 @@ public class Email implements Serializable {
     public String toWho() {
         return toWho;
     }
+
     /**
      * Retrieves the subject of this email.
      *
@@ -53,6 +56,7 @@ public class Email implements Serializable {
     public String subject() {
         return subject;
     }
+
     /**
      * Retrieves the body of this email.
      *
@@ -61,6 +65,7 @@ public class Email implements Serializable {
     public String body() {
         return body;
     }
+
     /**
      * Returns a string representation of this email.
      *
@@ -72,7 +77,5 @@ public class Email implements Serializable {
                 "Subject: " + subject + "\n\n" +
                 body + "\n";
     }
-
-
 
 }

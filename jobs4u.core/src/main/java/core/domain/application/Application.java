@@ -11,9 +11,10 @@ import jakarta.persistence.*;
 import java.util.Calendar;
 
 /**
- * @author 1220812@isep.ipp.pt
+ * An application represents a candidate's submission for a job opening.
+ *
+ * @author Diogo Ribeiro
  */
-
 @Entity
 @Table(name = "APPLICATION")
 public class Application implements AggregateRoot<Integer> {
@@ -225,7 +226,9 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return the candidate requirements.
      */
-    public CandidateRequirements candidateRequirements() { return this.candidateRequirements; }
+    public CandidateRequirements candidateRequirements() {
+        return this.candidateRequirements;
+    }
 
     /**
      * Updates the rank of the application.
@@ -277,7 +280,7 @@ public class Application implements AggregateRoot<Integer> {
      *
      * @return a formatted notification string containing the job reference and application status.
      */
-    public String notificationServer(){
+    public String notificationServer() {
         return "Your application on the Job Opening " + jobReference.identity() + " has been " + status + "!";
     }
 

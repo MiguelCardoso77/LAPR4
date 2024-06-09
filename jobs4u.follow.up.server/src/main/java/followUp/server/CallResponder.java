@@ -15,6 +15,8 @@ import core.protocol.UnsignedInteger;
 import core.services.*;
 import infrastructure.authz.AuthenticationCredentialHandler;
 import infrastructure.authz.CredentialHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -30,12 +32,14 @@ import java.util.List;
  * @author Miguel Cardoso
  */
 public class CallResponder extends BaseResponder {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CallResponder.class);
+
     private final ApplicationService applicationService = new ApplicationService();
+    private final ApplicationsDTOService applicationsDTOService = new ApplicationsDTOService();
     private final CandidateService candidateService = new CandidateService();
     private final CustomerService customerService = new CustomerService();
     private final JobOpeningService jobOpeningService = new JobOpeningService();
     private final JobOpeningDTOService jobOpeningDTOService = new JobOpeningDTOService();
-    private final ApplicationsDTOService applicationsDTOService = new ApplicationsDTOService();
     private final NotificationService notificationService = new NotificationService();
 
     /**
@@ -142,7 +146,7 @@ public class CallResponder extends BaseResponder {
     /**
      * Handles authentication request.
      *
-     * @throws IOException If an I/O error occurs
+     * @throws IOException            If an I/O error occurs
      * @throws ClassNotFoundException If the class of a serialized object cannot be found
      */
     private void handleCode4() throws IOException, ClassNotFoundException {
@@ -331,7 +335,7 @@ public class CallResponder extends BaseResponder {
             try {
                 checkForNewNotifications(candidate);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("An error occurred during notification checks. ", e);
             }
         }).start();
     }
@@ -368,7 +372,7 @@ public class CallResponder extends BaseResponder {
 
         for (Notification notification : allNotifications) {
             if (notification.candidate().equals(candidate)) {
-                if(!notification.read()) {
+                if (!notification.read()) {
                     candidateNotifications.add(notification.toString());
                     notificationService.UpdateBoolean(notification);
                 }
@@ -428,6 +432,7 @@ public class CallResponder extends BaseResponder {
         while (true) {
             try {
                 List<Notification> pendingNotifications = notificationService.findNotificationsByCandidate(candidate);
+
                 if (!pendingNotifications.isEmpty()) {
                     List<String> notificationMessages = new ArrayList<>();
                     for (Notification notification : pendingNotifications) {
@@ -441,16 +446,16 @@ public class CallResponder extends BaseResponder {
                         System.out.println("Error sending notifications!");
                     }
                 }
+
                 Thread.sleep(2500000);
             } catch (SocketException e) {
                 System.err.println("SocketException: Connection lost or closed. Stopping notification checks.");
                 break;
             } catch (IOException e) {
-                System.err.println("IOException occurred: " + e.getMessage());
-                e.printStackTrace();
+                LOGGER.error("An error occurred during notification checks. ", e);
             } catch (InterruptedException e) {
                 System.err.println("InterruptedException occurred: " + e.getMessage());
-                e.printStackTrace();
+                LOGGER.error("An error occurred during notification checks. ", e);
             }
         }
     }

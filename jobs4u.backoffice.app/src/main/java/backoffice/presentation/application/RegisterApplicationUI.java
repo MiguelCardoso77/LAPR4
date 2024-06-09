@@ -9,8 +9,7 @@ import core.domain.jobOpening.JobReference;
 import core.domain.user.Jobs4URoles;
 import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
-import eapli.framework.presentation.console.AbstractListUI;
-import eapli.framework.visitor.Visitor;
+import eapli.framework.presentation.console.AbstractUI;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +24,7 @@ import java.util.stream.Stream;
  * @author  1220812@isep.ipp.pt
  */
 
-public class RegisterApplicationUI extends AbstractListUI<Application> {
+public class RegisterApplicationUI extends AbstractUI {
 
     private final RegisterCandidateController registerCandidateController = new RegisterCandidateController();
     private final ApplicationRegisterController applicationRegisterController = new ApplicationRegisterController();
@@ -38,31 +37,6 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
     @Override
     public String headline() {
         return "Register Applications for a Job Opening";
-    }
-
-    @Override
-    protected Iterable<Application> elements() {
-        return Collections.emptyList(); // Return an empty list to avoid null
-    }
-
-    @Override
-    protected Visitor<Application> elementPrinter() {
-        return null; // Implement a suitable visitor if needed
-    }
-
-    @Override
-    protected String elementName() {
-        return "application";
-    }
-
-    @Override
-    protected String listHeader() {
-        return "List of Applications";
-    }
-
-    @Override
-    protected String emptyMessage() {
-        return "No applications found for this job opening.";
     }
 
     @Override

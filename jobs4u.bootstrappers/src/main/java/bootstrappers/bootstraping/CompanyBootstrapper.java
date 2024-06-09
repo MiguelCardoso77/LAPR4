@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class CompanyBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(CompanyBootstrapper.class);
-    final AddCompanyController controller = new AddCompanyController();
+    private final AddCompanyController controller = new AddCompanyController();
 
     public boolean execute() {
         registerCompany("Porto");

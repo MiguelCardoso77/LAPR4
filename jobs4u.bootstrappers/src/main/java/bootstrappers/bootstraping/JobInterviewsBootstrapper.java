@@ -14,6 +14,7 @@ import java.util.List;
 
 public class JobInterviewsBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(JobInterviewsBootstrapper.class);
+
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
     private final AddJobInterviewController controller = new AddJobInterviewController();
     private final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();

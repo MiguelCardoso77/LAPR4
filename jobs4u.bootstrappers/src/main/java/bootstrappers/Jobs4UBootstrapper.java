@@ -44,7 +44,7 @@ public class Jobs4UBootstrapper implements Action {
                 new RequirementsBootstrapper(),
                 new CompanyBootstrapper(),
                 new MasterUsersBootstrapper(),
-                new JobsBootstrapper(),
+                new JobOpeningsBootstrapper(),
                 new ApplicationsBootstrapper(),
                 new JobInterviewsBootstrapper(),
                 new NotificationsBootstrapper(),

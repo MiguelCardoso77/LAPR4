@@ -19,8 +19,9 @@ import java.util.Set;
  */
 public class MasterUsersBootstrapper extends UsersBootstrapper implements Action {
 
-    UserRepository userRepository = PersistenceContext.repositories().users();
-    CompanyRepository companyRepository = PersistenceContext.repositories().companies();
+    private final UserRepository userRepository = PersistenceContext.repositories().users();
+    private final CompanyRepository companyRepository = PersistenceContext.repositories().companies();
+
     @Override
     public boolean execute() {
         registerAdmin("AdminEx", "ExAdmin1", "Admin", "Example", "admin@jobs4u.com");
@@ -33,7 +34,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
         registerBootstrapCandidate("Miguel", "Cardoso", "1220772@isep.ipp.pt", "933333333", "curriculumPathThree");
         registerBootstrapCandidate("Tomás", "Gonçalves", "1220917@isep.ipp.pt", "944444444", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
         registerBootstrapCandidate("Marco", "Ferrerira", "1220913@isep.ipp.pt", "955555555", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
-        registerBootstrapCandidate("Carolina", "Sousa", "1220618@isep.ipp.pt", "966666666","fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
+        registerBootstrapCandidate("Carolina", "Sousa", "1220618@isep.ipp.pt", "966666666", "fileBot_OutputDirectory/IBM-000123/1/1-cv.txt");
 
         registerCustomer("CustomerOne", "ExampleOne", "customerOne@jobs4u.com");
         registerCustomer("CustomerTwo", "ExampleTwo", "customerTwo@jobs4u.com");
@@ -72,7 +73,7 @@ public class MasterUsersBootstrapper extends UsersBootstrapper implements Action
         registerUser(username, password, firstName, lastName, email, roles);
     }
 
-    private void registerCustomer(final String firstName, final String lastName, final String email){
+    private void registerCustomer(final String firstName, final String lastName, final String email) {
         Optional<SystemUser> currentUser = userRepository.ofIdentity(Username.valueOf("customermanager@jobs4u.com"));
         Optional<Company> company = companyRepository.ofIdentity(1);
 

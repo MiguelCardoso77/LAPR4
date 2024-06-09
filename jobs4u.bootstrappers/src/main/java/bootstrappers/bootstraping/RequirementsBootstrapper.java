@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 public class RequirementsBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(RequirementsBootstrapper.class);
 
-    final JobRequirementsSpecificationRepository repository = PersistenceContext.repositories().jobRequirements();
-    final JobRequirementsSpecificationBuilder builder = new JobRequirementsSpecificationBuilder();
+    private final JobRequirementsSpecificationRepository repository = PersistenceContext.repositories().jobRequirements();
+    private final JobRequirementsSpecificationBuilder builder = new JobRequirementsSpecificationBuilder();
 
     @Override
     public boolean execute() {

@@ -17,11 +17,11 @@ import java.util.Set;
 
 public class  UsersBootstrapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersBootstrapper.class);
-    final AddUserController userController = new AddUserController();
-    final RegisterCandidateController registerCandidateController = new RegisterCandidateController();
-    final ListUsersController listUserController = new ListUsersController();
 
-    final AddCustomerController customerController = new AddCustomerController();
+    private final AddUserController userController = new AddUserController();
+    private final RegisterCandidateController registerCandidateController = new RegisterCandidateController();
+    private final ListUsersController listUserController = new ListUsersController();
+    private final AddCustomerController customerController = new AddCustomerController();
 
     public UsersBootstrapper() {
         super();

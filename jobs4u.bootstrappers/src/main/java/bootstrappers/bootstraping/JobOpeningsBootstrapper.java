@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class JobsBootstrapper implements Action {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JobsBootstrapper.class);
+public class JobOpeningsBootstrapper implements Action {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobOpeningsBootstrapper.class);
 
     private final CustomerRepository customerRepository = PersistenceContext.repositories().customerUsers();
     private final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();

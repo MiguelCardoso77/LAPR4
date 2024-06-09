@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class InterviewModelBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(InterviewModelBootstrapper.class);
+
     private final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
 
     @Override

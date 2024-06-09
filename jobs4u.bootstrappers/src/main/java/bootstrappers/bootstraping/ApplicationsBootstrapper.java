@@ -6,13 +6,11 @@ import core.domain.application.Application;
 import core.domain.application.Status;
 import core.domain.candidate.Candidate;
 import core.domain.jobOpening.JobOpening;
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.domain.user.Jobs4URoles;
 import core.persistence.PersistenceContext;
 import core.repositories.ApplicationRepository;
 import core.repositories.CandidateRepository;
 import core.repositories.JobOpeningRepository;
-import core.repositories.JobRequirementsSpecificationRepository;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.infrastructure.authz.domain.repositories.UserRepository;
 import eapli.framework.actions.Action;
@@ -25,12 +23,12 @@ import java.util.List;
 public class ApplicationsBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationsBootstrapper.class);
 
-    final ApplicationRegisterController controller = new ApplicationRegisterController();
-    final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
-    final CandidateRepository candidateRepository = PersistenceContext.repositories().candidates();
-    final UserRepository userRepository = PersistenceContext.repositories().users();
-    final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
-    final UploadRequirementsAnswersController uploadRequirementsAnswersController = new UploadRequirementsAnswersController();
+    private final ApplicationRegisterController controller = new ApplicationRegisterController();
+    private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
+    private final CandidateRepository candidateRepository = PersistenceContext.repositories().candidates();
+    private final UserRepository userRepository = PersistenceContext.repositories().users();
+    private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
+    private final UploadRequirementsAnswersController uploadRequirementsAnswersController = new UploadRequirementsAnswersController();
 
     @Override
     public boolean execute() {

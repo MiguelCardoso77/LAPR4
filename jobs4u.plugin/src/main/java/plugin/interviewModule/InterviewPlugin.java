@@ -1,5 +1,7 @@
 package plugin.interviewModule;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import plugin.interviewModule.autogen.InterviewModelGrammarLexer;
 import plugin.interviewModule.autogen.InterviewModelGrammarParser;
 import org.antlr.v4.runtime.CharStreams;
@@ -11,26 +13,36 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * The InterviewPlugin class provides methods for checking the grammar of an interview model and retrieving answers from it.
+ * It uses ANTLR-generated lexer and parser to parse the input files.
+ *
+ * @author Miguel Cardoso
+ */
 public class InterviewPlugin {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InterviewPlugin.class);
 
+    /**
+     * Checks the grammar of the interview model specified by the path and computes a total score.
+     *
+     * @param path       the path to the interview model file
+     * @param cResponses the list of candidate responses
+     * @return the total score as a percentage (0-100)
+     */
     public int grammarChecker(String path, List<String> cResponses) {
         try {
-            // Read the input file
             String input = new String(Files.readAllBytes(Paths.get(path)));
 
             System.out.println("Interview Model Used:");
             System.out.println(input);
             System.out.println();
 
-            // Create a lexer and parser for the input
             InterviewModelGrammarLexer lexer = new InterviewModelGrammarLexer(CharStreams.fromString(input));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             InterviewModelGrammarParser parser = new InterviewModelGrammarParser(tokens);
 
-            // Parse the input file
-            ParseTree tree = parser.start(); // Assuming 'start' is the entry point of your grammar
+            ParseTree tree = parser.start();
 
-            // Create a custom listener
             InterviewVisitor visitor = new InterviewVisitor(cResponses);
             visitor.visit(tree);
 
@@ -40,33 +52,35 @@ public class InterviewPlugin {
             return totalScore;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error checking grammar: {}", e.getMessage());
         }
 
         return 0;
     }
 
+    /**
+     * Retrieves answers from the interview model specified by the path.
+     *
+     * @param path the path to the interview model file
+     * @return a list of retrieved answers, or null if an error occurs
+     */
     public List<String> retrieveAnswers(String path) {
         try {
-            // Read the input file
             String input = new String(Files.readAllBytes(Paths.get(path)));
 
-            // Create a lexer and parser for the input
             InterviewModelGrammarLexer lexer = new InterviewModelGrammarLexer(CharStreams.fromString(input));
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             InterviewModelGrammarParser parser = new InterviewModelGrammarParser(tokens);
 
-            // Parse the input file
-            ParseTree tree = parser.start(); // Assuming 'start' is the entry point of your grammar
+            ParseTree tree = parser.start();
 
-            // Create a custom listener
             ResponsesVisitor visitor = new ResponsesVisitor();
             visitor.visit(tree);
 
             return visitor.retrieveResponses();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error retrieving answers: {}", e.getMessage());
         }
 
         return null;

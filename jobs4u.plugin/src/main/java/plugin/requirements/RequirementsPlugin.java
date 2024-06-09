@@ -3,6 +3,8 @@ package plugin.requirements;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import plugin.requirements.autogen.RequirementsGrammarLexer;
 import plugin.requirements.autogen.RequirementsGrammarParser;
 
@@ -16,8 +18,11 @@ import java.util.Map;
  * The RequirementsPlugin class is responsible for checking if a candidate's responses
  * meet the specified requirements from a given file. It uses ANTLR-generated lexer and
  * parser to process the requirements file.
+ *
+ * @author Tomás Gonçalves
  */
 public class RequirementsPlugin {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequirementsPlugin.class);
 
     /**
      * Checks if the candidate's responses meet the requirements specified in the file.
@@ -50,7 +55,7 @@ public class RequirementsPlugin {
             return requirementsMet;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error checking requirements: {}", e.getMessage());
         }
 
         return false;

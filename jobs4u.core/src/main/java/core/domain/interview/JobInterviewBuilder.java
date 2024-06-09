@@ -9,7 +9,6 @@ import java.util.Calendar;
  */
 public class JobInterviewBuilder implements DomainFactory<JobInterview> {
 
-    private int id;
     private Calendar createdOn;
     private Time time;
     private Score score;

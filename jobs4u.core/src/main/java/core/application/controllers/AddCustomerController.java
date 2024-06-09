@@ -7,7 +7,6 @@ import core.domain.user.Jobs4URoles;
 import core.services.CustomerService;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.general.domain.model.EmailAddress;
-import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.Role;
@@ -23,8 +22,7 @@ import java.util.Set;
  */
 @UseCaseController
 public class AddCustomerController {
-    private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final AddUserController addUserController = new AddUserController();
+
     private final Jobs4UPasswordPolicy passwordPolicy = new Jobs4UPasswordPolicy();
 
     private final UserManagementService user = AuthzRegistry.userService();

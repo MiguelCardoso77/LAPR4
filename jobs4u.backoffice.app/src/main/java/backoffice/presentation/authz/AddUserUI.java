@@ -44,7 +44,7 @@ public class AddUserUI extends AbstractUI {
         } while (!show);
 
         try {
-            this.theController.addUser(email, password, firstName, lastName, email, roleTypes);
+            this.theController.addUser(password, firstName, lastName, email, roleTypes);
 
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             System.out.println("That email is already in use.");

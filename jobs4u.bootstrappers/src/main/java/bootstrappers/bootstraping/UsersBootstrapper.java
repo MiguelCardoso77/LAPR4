@@ -46,7 +46,7 @@ public class UsersBootstrapper {
      */
     protected void registerUser(final String username, final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
         try {
-            userController.addUser(username, password, firstName, lastName, email, roles);
+            userController.addUser(password, firstName, lastName, email, roles);
         } catch (final IntegrityViolationException | ConcurrencyException e) {
             listUserController.find(Username.valueOf(username)).orElseThrow(() -> e);
         }

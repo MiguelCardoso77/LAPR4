@@ -12,7 +12,6 @@ import java.util.Calendar;
  */
 public class ProcessBuilder implements DomainFactory<Process> {
     private static final Logger LOGGER = LogManager.getLogger(JobOpening.class);
-    private Integer idProcess;
     private ProcessState processState;
     private Calendar processDate;
     private ProcessStatus processStatus;

@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controller class responsible for generating requirements specifications.
@@ -18,6 +20,8 @@ import java.util.List;
  */
 public class GenerateRequirementsSpecificationController {
     private final JobOpeningService jobOpeningService = new JobOpeningService();
+
+    private static final Logger logger = Logger.getLogger(GenerateRequirementsSpecificationController.class.getName());
 
     /**
      * Reads all lines from a file.
@@ -45,8 +49,7 @@ public class GenerateRequirementsSpecificationController {
             Files.write(Paths.get(filePath), questionForFile);
             System.out.println("\nFile created successfully.");
         } catch (IOException e) {
-            System.err.println("\nError writing to file.");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error writing to file.", e);
         }
     }
 

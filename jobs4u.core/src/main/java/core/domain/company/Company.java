@@ -11,7 +11,7 @@ import java.util.Objects;
  * Represents a company, including its unique number and name.
  * This class is an aggregate root and is persisted as an entity in the database.
  *
- * @Author 1220812@isep.ipp.pt
+ * @author 1220812@isep.ipp.pt
  *
  */
 @Entity

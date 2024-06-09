@@ -24,5 +24,5 @@ public interface CompanyRepository extends DomainRepository<Integer, Company> {
      *
      * @return an iterable collection of all companies
      */
-    public Iterable<Company> allCompanies();
+    Iterable<Company> allCompanies();
 }

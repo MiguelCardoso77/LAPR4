@@ -10,6 +10,7 @@ import core.domain.application.Application;
 import eapli.framework.application.UseCaseController;
 import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
+import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.validations.Preconditions;
 
@@ -39,7 +40,7 @@ public class ApplicationRegisterController {
      * @return The currently logged-in user, or null if no user is logged in.
      */
     public SystemUser getLoggedInUser() {
-        return authz.session().map(session -> session.authenticatedUser()).orElse(null);
+        return authz.session().map(UserSession::authenticatedUser).orElse(null);
     }
 
     /**

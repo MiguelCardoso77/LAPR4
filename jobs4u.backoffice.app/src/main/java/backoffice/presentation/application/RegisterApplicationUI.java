@@ -11,7 +11,6 @@ import eapli.framework.infrastructure.authz.domain.model.Role;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import eapli.framework.presentation.console.AbstractListUI;
 import eapli.framework.visitor.Visitor;
-import jakarta.transaction.InvalidTransactionException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,9 +19,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
- * @author 1220812@isep.ipp.pt
+ * @author  1220812@isep.ipp.pt
  */
 
 public class RegisterApplicationUI extends AbstractListUI<Application> {
@@ -34,54 +34,59 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
     private final ListJobOpeningController listJobOpeningController = new ListJobOpeningController();
     private final AddUserController addUserController = new AddUserController();
     private final Calendar createdOn = Calendar.getInstance();
-    private List<String> candidateData = new ArrayList<>();
+
     @Override
-    public String headline(){
+    public String headline() {
         return "Register Applications for a Job Opening";
     }
 
     @Override
     protected Iterable<Application> elements() {
-        return null;
+        return Collections.emptyList(); // Return an empty list to avoid null
     }
 
     @Override
     protected Visitor<Application> elementPrinter() {
-        return null;
+        return null; // Implement a suitable visitor if needed
     }
 
     @Override
     protected String elementName() {
-        return null;
+        return "application";
     }
 
     @Override
     protected String listHeader() {
-        return null;
+        return "List of Applications";
     }
 
     @Override
     protected String emptyMessage() {
         return "No applications found for this job opening.";
     }
+
     @Override
-    public boolean doShow(){
+    public boolean doShow() {
         Path path = selectSubfolder();
 
+        if (path == null) {
+            System.out.println("No valid subfolder selected.");
+            return false;
+        }
+
+        List<String> candidateData;
         try {
-            candidateData = applicationRegisterController.importCandidateFile(path);
+            candidateData = ApplicationRegisterController.importCandidateFile(path);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("Candidate file not found: " + e.getMessage());
+            return false;
         }
 
         JobReference jobReference = JobReference.stringToJobReference(candidateData.get(0));
 
         if (!jobOpeningController.verifyID(jobReference)) {
-            try {
-                throw new InvalidTransactionException("The referred Job Opening identified by " + jobReference + " doesn't exist in the system!");
-            } catch (InvalidTransactionException e) {
-                throw new RuntimeException(e);
-            }
+            System.out.println("The referred Job Opening identified by " + jobReference + " doesn't exist in the system!");
+            return false;
         }
 
         SystemUser operator = addUserController.getLoggedInUser();
@@ -94,32 +99,30 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
             String lastName = candidateData.get(3);
             String telephoneNumber = candidateData.get(4);
 
-            Path cvPath = applicationRegisterController.findCVFile(path);
-            String pathCV = String.valueOf(cvPath);
+            Path cvPath = ApplicationRegisterController.findCVFile(path);
+            assert cvPath != null;
+            String pathCV = cvPath.toString();
 
             String applicationFiles = path.toString();
 
             Candidate applicationCandidate = candidate(emailAddress, firstName, lastName, telephoneNumber, pathCV);
 
             Application application = applicationRegisterController.registerApplication("to be specified", applicationFiles, jobOpening, applicationCandidate, operator);
-            if(application != null){
+            if (application != null) {
                 System.out.println("Application registered successfully");
-            }else{
+            } else {
                 System.out.println("Failed to register application.");
             }
-
-
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
 
         return true;
     }
 
-    private Candidate candidate(String emailAddress, String firstName, String lastName, String telephoneNumber, String cvPath){
+    private Candidate candidate(String emailAddress, String firstName, String lastName, String telephoneNumber, String cvPath) {
         TelephoneNumber telephoneNumber1 = TelephoneNumber.valueOf(telephoneNumber);
-        if(!registerCandidateController.verifyTelephoneNumber(telephoneNumber1)){
+        if (!registerCandidateController.verifyTelephoneNumber(telephoneNumber1)) {
             Set<Role> roles = new HashSet<>();
             roles.add(Jobs4URoles.CANDIDATE);
 
@@ -128,15 +131,19 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
         return listCandidatesController.findCandidateByTelephoneNumber(telephoneNumber1);
     }
 
-
     public Path selectSubfolder() {
         Scanner scanner = new Scanner(System.in);
         Path outputDirectory = Paths.get("SCOMP/2001/applicationEmailBot");
 
-        try {
-            List<Path> subfolders = Files.list(outputDirectory)
+        try (Stream<Path> subfoldersStream = Files.list(outputDirectory)) {
+            List<Path> subfolders = subfoldersStream
                     .filter(Files::isDirectory)
                     .collect(Collectors.toList());
+
+            if (subfolders.isEmpty()) {
+                System.out.println("No subfolders found in the specified directory.");
+                return null;
+            }
 
             for (int i = 0; i < subfolders.size(); i++) {
                 System.out.println((i + 1) + ". " + subfolders.get(i).getFileName());
@@ -145,23 +152,40 @@ public class RegisterApplicationUI extends AbstractListUI<Application> {
             System.out.println("Select the application you want to register:");
             int selectedSubfolderIndex = scanner.nextInt() - 1;
 
-            Path selectedSubfolder = subfolders.get(selectedSubfolderIndex);
-
-            List<Path> subSubfolders = Files.list(selectedSubfolder)
-                    .filter(Files::isDirectory)
-                    .collect(Collectors.toList());
-
-            for (int i = 0; i < subSubfolders.size(); i++) {
-                System.out.println((i + 1) + ". " + subSubfolders.get(i).getFileName());
+            if (selectedSubfolderIndex < 0 || selectedSubfolderIndex >= subfolders.size()) {
+                System.out.println("Invalid selection.");
+                return null;
             }
 
-            System.out.println("Select a sub-subfolder by entering its number:");
-            int selectedSubSubfolderIndex = scanner.nextInt() - 1;
+            Path selectedSubfolder = subfolders.get(selectedSubfolderIndex);
 
-            return subSubfolders.get(selectedSubSubfolderIndex);
+            try (Stream<Path> subSubfoldersStream = Files.list(selectedSubfolder)) {
+                List<Path> subSubfolders = subSubfoldersStream
+                        .filter(Files::isDirectory)
+                        .collect(Collectors.toList());
+
+                if (subSubfolders.isEmpty()) {
+                    System.out.println("No sub-subfolders found in the selected directory.");
+                    return null;
+                }
+
+                for (int i = 0; i < subSubfolders.size(); i++) {
+                    System.out.println((i + 1) + ". " + subSubfolders.get(i).getFileName());
+                }
+
+                System.out.println("Select a sub-subfolder by entering its number:");
+                int selectedSubSubfolderIndex = scanner.nextInt() - 1;
+
+                if (selectedSubSubfolderIndex < 0 || selectedSubSubfolderIndex >= subSubfolders.size()) {
+                    System.out.println("Invalid selection.");
+                    return null;
+                }
+
+                return subSubfolders.get(selectedSubSubfolderIndex);
+            }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error accessing directories: " + e.getMessage());
         }
 
         return null;

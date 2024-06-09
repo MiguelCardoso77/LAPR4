@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Fernando
  */
 @SuppressWarnings("squid:S106")

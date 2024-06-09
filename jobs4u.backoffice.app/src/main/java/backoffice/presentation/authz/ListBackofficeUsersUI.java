@@ -39,15 +39,15 @@ public class ListBackofficeUsersUI extends AbstractListUI<SystemUser> {
     }
 
     @Override
-    protected boolean doShow(){
+    protected boolean doShow() {
         final Iterable<SystemUser> iterable = elements();
 
-        if(!iterable.iterator().hasNext()) {
+        if (!iterable.iterator().hasNext()) {
             System.out.println("There is no Backoffice User");
 
         } else {
             for (SystemUser user : iterable) {
-                System.out.println(user.username() +  user.name().firstName() + user.name().lastName());
+                System.out.println(user.username() + user.name().firstName() + user.name().lastName());
             }
         }
         return false;

@@ -1,4 +1,5 @@
 package backoffice.presentation.authz;
+
 import eapli.framework.actions.Action;
 
 public class ActivateUserAction implements Action {

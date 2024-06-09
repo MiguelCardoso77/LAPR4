@@ -23,7 +23,6 @@ package backoffice.presentation.authz;
 import eapli.framework.actions.Action;
 
 /**
- *
  * @author Fernando
  */
 public class DeactivateUserAction implements Action {

@@ -60,7 +60,7 @@ public class AddUserUI extends AbstractUI {
             rolesMenu = buildOperatorAvailableRoles(roleTypes);
         } else if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.CUSTOMER_MANAGER)) {
             rolesMenu = buildCustomerManagerAvailableRoles(roleTypes);
-        } else{
+        } else {
             rolesMenu = buildRolesMenu(roleTypes);
         }
 

@@ -23,7 +23,6 @@ package backoffice.presentation.authz;
 import eapli.framework.actions.Action;
 
 /**
- *
  * @author losa
  */
 public class ListUsersAction implements Action {

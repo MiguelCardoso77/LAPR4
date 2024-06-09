@@ -106,6 +106,12 @@
                         <goals>
                             <goal>report-aggregate</goal>
                         </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>plugin/interviewModule/autogen/**/*.class</exclude>
+                                <exclude>plugin/requirements/autogen/**/*.class</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

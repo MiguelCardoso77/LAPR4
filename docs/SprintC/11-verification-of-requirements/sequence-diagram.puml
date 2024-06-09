@@ -10,6 +10,8 @@ participant VerificationRequirementsController <<controller>>
 participant SelectJobOpeningController <<controller>>
 participant ListJobOpeningApplicationsController <<controller>>
 participant ChangeJobInterviewStatusController <<controller>>
+participant ListJobOpeningController <<controller>>
+
 
 participant RequirementsPlugin <<core>>
 
@@ -22,48 +24,61 @@ database ApplicationRepository <<repository>>
 
 activate CustomerManager
 
-        CustomerManager -> VerificationRequirementsUI : asks to verify requirements of applications for a job opening
+         CustomerManager -> VerificationRequirementsUI : asks  to verify candidate requirements for a job opening
+            activate VerificationRequirementsUI
+        
+                VerificationRequirementsUI -> VerificationRequirementsController : selectJobOpening()
+                activate VerificationRequirementsController
+        
+                    VerificationRequirementsController -> SelectJobOpeningController : selectJobOpening()
+                    activate SelectJobOpeningController
+        
+                        SelectJobOpeningController -> ListJobOpeningController : showJobOpenings()
+                        activate ListJobOpeningController
+        
+                            ListJobOpeningController -> JobOpeningService : allJobOpenings()
+                            activate JobOpeningService
+        
+                                JobOpeningService -> JobOpeningRepository : findAll()
+                                activate JobOpeningRepository
+        
+                                    JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
+                                deactivate JobOpeningRepository
+        
+                                JobOpeningService --> ListJobOpeningController : Iterable<JobOpening> jobOpenings
+                            deactivate JobOpeningService
+        
+                            ListJobOpeningController --> SelectJobOpeningController : Iterable<JobOpening> jobOpenings
+                        deactivate ListJobOpeningController
+        
+                        SelectJobOpeningController -> SelectJobOpeningController : selectorPart(List<JobOpening> list)
 
-        activate VerificationRequirementsUI
+                            SelectJobOpeningController -> ListJobOpeningController : findJobOpeningByJobReference(jobReference)
+                            activate ListJobOpeningController
+        
+                                ListJobOpeningController -> JobOpeningService : findJobOpening(jobReference)
+                                activate JobOpeningService
+        
+                                    JobOpeningService -> JobOpeningRepository : findAll()
+                                    activate JobOpeningRepository
+        
+                                        JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
+                                    deactivate JobOpeningRepository
+        
+                                    JobOpeningService --> ListJobOpeningController : job opening
+                                deactivate JobOpeningService
+        
+                                ListJobOpeningController --> SelectJobOpeningController : job opening
+                            deactivate ListJobOpeningController
 
-        VerificationRequirementsUI -> VerificationRequirementsController: selectJobOpening()
-
-        activate VerificationRequirementsController
-
-        VerificationRequirementsController -> SelectJobOpeningController : selectJobOpening()
-
-        activate SelectJobOpeningController
-
-
-
-            SelectJobOpeningController --> JobOpeningService : allJobOpenings()
-
-        activate JobOpeningService
-
-        JobOpeningService -> JobOpeningRepository : findAll()
-
-        activate JobOpeningRepository
-
-        JobOpeningRepository --> JobOpeningService  : list of all job openings
-
-        deactivate JobOpeningRepository
-
-        JobOpeningService --> SelectJobOpeningController : list of all job openings
-
-        deactivate JobOpeningService
-
-        SelectJobOpeningController --> VerificationRequirementsController : list of all job openings
-
-        deactivate SelectJobOpeningController
-
-        VerificationRequirementsController --> VerificationRequirementsUI : list of all job openings
-
-        deactivate VerificationRequirementsController
-
-        VerificationRequirementsUI --> CustomerManager : lists job opening and asks to select one
-
-        deactivate VerificationRequirementsUI
-
+                        SelectJobOpeningController --> VerificationRequirementsController : job opening
+                    deactivate SelectJobOpeningController
+        
+                    VerificationRequirementsController --> VerificationRequirementsUI : job opening
+                deactivate VerificationRequirementsController
+        
+                VerificationRequirementsUI -> CustomerManager : shows all job openings and ask to select one
+            deactivate VerificationRequirementsUI
 CustomerManager -> VerificationRequirementsUI : selects job opening
 
     activate VerificationRequirementsUI

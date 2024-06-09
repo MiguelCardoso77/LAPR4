@@ -10,6 +10,13 @@ import eapli.framework.presentation.console.AbstractUI;
 
 /**
  * UI class for changing the status of a process in the job opening context.
+ * This UI allows users to navigate through different states of the job opening process
+ * and change its status accordingly.
+ * It provides options to move forward or backward in the process flow.
+ * Users can select a job opening and choose to move the process status forward or backward based on the current state.
+ * The UI displays the current state and status of the selected job opening process.
+ * Upon changing the status or state of the process, the UI provides feedback on the successful update.
+ * The headline for this UI is "change status of a phase of a job opening".
  *
  * @author Diana Neves
  */
@@ -31,6 +38,11 @@ public class ChangeProcessStatusUI extends AbstractUI {
         return false;
     }
 
+    /**
+     * Allows the user to select the status of the process based on the current state of the job opening.
+     *
+     * @param jobOpening the selected job opening.
+     */
     private void selectStatus(JobOpening jobOpening) {
 
         Process process = jobOpening.process();

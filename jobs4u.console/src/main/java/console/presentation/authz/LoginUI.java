@@ -59,6 +59,13 @@ public class LoginUI extends AbstractUI {
         this.credentialHandler = credentialHandler;
     }
 
+    /**
+     * Constructs a LoginUI instance with a specified role and a default maximum number of login attempts.
+     *
+     * @param credentialHandler the credential handler to use for authentication
+     * @param onlyWithThis      the role to restrict login to
+     * @param server            a boolean indicating if the login is for the server
+     */
     public LoginUI(CredentialHandler credentialHandler, final Role onlyWithThis, boolean server) {
         this.onlyWithThis = onlyWithThis;
         maxAttempts = DEFAULT_MAX_ATTEMPTS;
@@ -141,6 +148,11 @@ public class LoginUI extends AbstractUI {
         return false;
     }
 
+    /**
+     * Returns the email of the authenticated user.
+     *
+     * @return the email of the authenticated user
+     */
     public String email() { return email; }
 
     /**

@@ -1,5 +1,12 @@
 package console.presentation.utils;
 
+/**
+ * The ConsoleColors class provides ANSI escape codes for coloring text and backgrounds in the console.
+ * These codes enable formatting text with different colors, boldness, and background colors.
+ *
+ * @author Miguel Cardoso
+ */
+@SuppressWarnings("unused")
 public class ConsoleColors {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset

@@ -11,12 +11,12 @@ import java.util.List;
 /**
  * Controller for listing all the Job Interviews on a Job Opening
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @UseCaseController
 public class ListJobOpeningInterviewsController {
-    final ListJobOpeningApplicationsController jobOpeningApplicationsController =  new ListJobOpeningApplicationsController();
-    final ListJobInterviewsApplicationController jobInterviewsApplicationController = new ListJobInterviewsApplicationController();
+    private final ListJobOpeningApplicationsController jobOpeningApplicationsController = new ListJobOpeningApplicationsController();
+    private final ListJobInterviewsApplicationController jobInterviewsApplicationController = new ListJobInterviewsApplicationController();
 
     /**
      * Retrieves all job interviews associated with a specific job opening.
@@ -26,7 +26,7 @@ public class ListJobOpeningInterviewsController {
      * @param jobOpening The job opening for which to retrieve job interviews.
      * @return A list of {@link JobInterview} objects associated with the given job opening.
      */
-    public List<JobInterview> allInterviewOfJobOpening(JobOpening jobOpening){
+    public List<JobInterview> allInterviewOfJobOpening(JobOpening jobOpening) {
         List<JobInterview> jobOpeningInterviews = new ArrayList<>();
 
         Iterable<Application> jobOpeningApplications = jobOpeningApplicationsController.allApplicationsOfJobOpening(jobOpening.identity());

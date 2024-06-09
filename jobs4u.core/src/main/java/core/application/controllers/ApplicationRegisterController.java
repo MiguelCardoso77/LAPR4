@@ -26,7 +26,7 @@ import java.util.Scanner;
  * This class provides methods for registering job applications and ensures authorization
  * for users with appropriate roles.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @UseCaseController
 public class ApplicationRegisterController {
@@ -45,12 +45,12 @@ public class ApplicationRegisterController {
     /**
      * Registers a new job application.
      *
-     * @param rank           The rank of the application.
-     * @param files          The files associated with the application.
-     * @param jobReference   The job opening reference for which the application is made.
-     * @param candidate      The candidate who submitted the application.
-     * @param operator       The system user who registered the application.
-     * @return               The registered application.
+     * @param rank         The rank of the application.
+     * @param files        The files associated with the application.
+     * @param jobReference The job opening reference for which the application is made.
+     * @param candidate    The candidate who submitted the application.
+     * @param operator     The system user who registered the application.
+     * @return The registered application.
      */
     public Application registerApplication(final String rank,
                                            final String files, final JobOpening jobReference,
@@ -61,17 +61,17 @@ public class ApplicationRegisterController {
     /**
      * Creates a new job application and registers it.
      *
-     * @param rank           The rank of the application.
-     * @param files          The files associated with the application.
-     * @param jobReference   The job opening reference for which the application is made.
-     * @param candidate      The candidate who submitted the application.
-     * @param operator       The system user who registered the application.
-     * @return               The registered application.
+     * @param rank         The rank of the application.
+     * @param files        The files associated with the application.
+     * @param jobReference The job opening reference for which the application is made.
+     * @param candidate    The candidate who submitted the application.
+     * @param operator     The system user who registered the application.
+     * @return The registered application.
      */
     private Application createApplication(final String rank,
                                           final String files, final JobOpening jobReference,
                                           final Candidate candidate, final SystemUser operator) {
-        Preconditions.noneNull( rank, files, jobReference, candidate, operator);
+        Preconditions.noneNull(rank, files, jobReference, candidate, operator);
 
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.ADMIN, Jobs4URoles.OPERATOR, Jobs4URoles.BOOTSTRAP);
 
@@ -91,17 +91,17 @@ public class ApplicationRegisterController {
         File[] archives = mainFile.listFiles();
         List<String> data = new ArrayList<>();
         assert archives != null;
-        for (File file: archives) {
-            if(file.getName().contains("candidate-data")){
+        for (File file : archives) {
+            if (file.getName().contains("candidate-data")) {
                 Scanner scanner = new Scanner(file);
                 int i = 0;
-                while (scanner.hasNextLine()){
+                while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
-                    if(i == 2){
+                    if (i == 2) {
                         String[] names = line.split(" ");
                         data.add(names[0]);
                         data.add(names[1]);
-                    }else{
+                    } else {
                         data.add(line);
                     }
                     i++;
@@ -112,6 +112,7 @@ public class ApplicationRegisterController {
         }
         return data;
     }
+
     /**
      * Finds the path of the CV file within a directory.
      *
@@ -132,6 +133,7 @@ public class ApplicationRegisterController {
 
         return null;
     }
+
     /**
      * Finds all files within a directory.
      *

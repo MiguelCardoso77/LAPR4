@@ -18,7 +18,7 @@ import plugin.requirements.RequirementsPlugin;
  * selecting job openings, retrieving applications for a job opening, and changing
  * the interview status of an application.
  *
- * @author tomasgoncalves
+ * @author Tomás Gonçalves
  */
 public class VerificationRequirementsController {
     private final RequirementsPlugin requirementsPlugin = new RequirementsPlugin();
@@ -53,7 +53,7 @@ public class VerificationRequirementsController {
      * Checks the candidate requirements against a set of predefined requirements
      * using the RequirementsPlugin.
      *
-     * @param path The path to the requirements file or resource.
+     * @param path               The path to the requirements file or resource.
      * @param clientRequirements A map of client requirements to be checked.
      * @return true if the candidate requirements meet the predefined requirements, false otherwise.
      */
@@ -87,7 +87,7 @@ public class VerificationRequirementsController {
      * Changes the interview status of a specified application using the
      * ChangeJobInterviewStatusController.
      *
-     * @param statusFinal The final status to be set for the application.
+     * @param statusFinal         The final status to be set for the application.
      * @param applicationToVerify The application whose interview status is to be changed.
      */
     public void changeJobInterviewStatus(Status statusFinal, Application applicationToVerify) {

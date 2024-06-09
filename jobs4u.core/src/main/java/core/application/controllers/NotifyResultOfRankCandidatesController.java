@@ -10,10 +10,9 @@ import java.util.List;
 /**
  * Controller responsible for notifying candidates of their ranking results for a job opening.
  *
- * @author tomasgoncalves
- * */
+ * @author Tomás Gonçalves
+ */
 public class NotifyResultOfRankCandidatesController {
-
     private final NotifyCandidatesController notifyCandidatesController = new NotifyCandidatesController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
@@ -23,7 +22,7 @@ public class NotifyResultOfRankCandidatesController {
      *
      * @return The selected job opening.
      */
-    public JobOpening selectJobOpening(){
+    public JobOpening selectJobOpening() {
         return selectJobOpeningController.selectJobOpening();
     }
 
@@ -33,7 +32,7 @@ public class NotifyResultOfRankCandidatesController {
      * @param jobOpening The job opening to retrieve applications for.
      * @return Iterable of applications that have been accepted for the specified job opening.
      */
-    public Iterable<Application> allApplicationsOfJobOpeningAccepted(JobOpening jobOpening){
+    public Iterable<Application> allApplicationsOfJobOpeningAccepted(JobOpening jobOpening) {
         return listJobOpeningApplicationsController.allApplicationsOfJobOpeningAccepted(jobOpening);
     }
 
@@ -43,20 +42,20 @@ public class NotifyResultOfRankCandidatesController {
      * @param application The application of the candidate.
      * @return The email address of the candidate.
      */
-    public String findCandidateEmail(Application application){
-        return  notifyCandidatesController.findCandidateEmail(application);
+    public String findCandidateEmail(Application application) {
+        return notifyCandidatesController.findCandidateEmail(application);
     }
 
     /**
      * Creates an email message.
      *
      * @param candidateEmail The email address of the candidate.
-     * @param subject The subject of the email.
-     * @param body The body content of the email.
+     * @param subject        The subject of the email.
+     * @param body           The body content of the email.
      * @return The created email.
      */
-    public Email createEmail(String candidateEmail, String subject, String body){
-        return notifyCandidatesController.createEmail(candidateEmail , subject,body);
+    public Email createEmail(String candidateEmail, String subject, String body) {
+        return notifyCandidatesController.createEmail(candidateEmail, subject, body);
     }
 
     /**

@@ -7,7 +7,7 @@ import core.services.JobRequirementsService;
  * Controller class for listing job requirements specifications.
  * Provides methods for retrieving, finding and list job requirements specifications.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 public class ListJobRequirementsSpecificationController {
     private final JobRequirementsService service = new JobRequirementsService();
@@ -17,7 +17,6 @@ public class ListJobRequirementsSpecificationController {
      *
      * @return An Iterable containing all job requirements specifications.
      */
-
     public Iterable<JobRequirementsSpecification> allJobRequirementsSpecification() {
         return service.allJobRequirementsSpecification();
     }
@@ -28,7 +27,6 @@ public class ListJobRequirementsSpecificationController {
      * @param id The ID of the job requirements specification to find.
      * @return The found JobRequirementsSpecification object, or null if not found.
      */
-
     public JobRequirementsSpecification findJobRequirementSpecification(Integer id) {
         return service.findJobRequirementsSpecification(id);
     }

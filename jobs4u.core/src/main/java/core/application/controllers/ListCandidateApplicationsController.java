@@ -10,7 +10,7 @@ import java.util.List;
  * @author Diana Neves
  */
 public class ListCandidateApplicationsController {
-    CandidateApplicationsService candidateApplicationsService = new CandidateApplicationsService();
+    private final CandidateApplicationsService candidateApplicationsService = new CandidateApplicationsService();
 
     /**
      * Sends a request to retrieve the list of applications for a candidate.

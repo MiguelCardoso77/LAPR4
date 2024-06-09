@@ -11,7 +11,7 @@ import eapli.framework.application.UseCaseController;
  * Provides methods for retrieving, finding, importing, and extracting job requirements specifications from files.
  * Acts as an intermediary between the presentation layer and the service layer.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @UseCaseController
 public class UpdateJobOpeningRequirementsController {

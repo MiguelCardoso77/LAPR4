@@ -19,6 +19,7 @@ public enum ProtocolCodes {
     NEW_NOTIFICATIONS((byte) 8),
     OLD_NOTIFICATIONS((byte) 9);
     private final byte code;
+
     /**
      * Constructs a ProtocolCodes instance with the given byte code.
      *
@@ -27,6 +28,7 @@ public enum ProtocolCodes {
     ProtocolCodes(byte code) {
         this.code = code;
     }
+
     /**
      * Returns the byte code associated with the protocol code.
      *

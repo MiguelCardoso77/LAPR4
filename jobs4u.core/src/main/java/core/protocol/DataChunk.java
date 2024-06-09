@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Represents a data chunk with a specified length and data content.
  *
  * @author Diana Neves
- * **/
+ **/
 public class DataChunk implements Serializable {
     private UnsignedInteger dataLengthL;
     private UnsignedInteger dataLengthM;

@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class GenerateRequirementsSpecificationController {
     private final JobOpeningService jobOpeningService = new JobOpeningService();
 
-    private static final Logger logger = Logger.getLogger(GenerateRequirementsSpecificationController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(GenerateRequirementsSpecificationController.class.getName());
 
     /**
      * Reads all lines from a file.
@@ -41,15 +41,15 @@ public class GenerateRequirementsSpecificationController {
     /**
      * Writes a list of strings to a file.
      *
-     * @param questionForFile    The list of strings to be written to the file
-     * @param filePath The path to the file to write to
+     * @param questionForFile The list of strings to be written to the file
+     * @param filePath        The path to the file to write to
      */
     public void writeListToFile(List<String> questionForFile, String filePath) {
         try {
             Files.write(Paths.get(filePath), questionForFile);
             System.out.println("\nFile created successfully.");
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error writing to file.", e);
+            LOGGER.log(Level.SEVERE, "Error writing to file.", e);
         }
     }
 

@@ -9,11 +9,12 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 /**
  * A controller class for listing companies.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 public class ListCompaniesController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final CompanyService companyService = new CompanyService();
+
     /**
      * Finds a company with the given company number.
      *

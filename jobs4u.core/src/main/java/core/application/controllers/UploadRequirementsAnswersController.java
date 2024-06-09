@@ -9,6 +9,7 @@ import core.repositories.ApplicationRepository;
 import core.services.ApplicationService;
 import core.services.CandidateRequirementsService;
 import plugin.requirements.RequirementsPlugin;
+
 import java.util.List;
 
 /**

@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Controller for generating answers template in the Jobs4U system.
  * This class provides methods to read a file, write a list to a file, find all interview models,
@@ -18,6 +19,7 @@ import java.util.List;
  */
 public class GenerateAnswersTemplateController {
     private final InterviewModelService interviewModelService = new InterviewModelService();
+
     /**
      * Reads a file and returns its lines.
      *
@@ -32,11 +34,12 @@ public class GenerateAnswersTemplateController {
             return null;
         }
     }
+
     /**
      * Writes a list of strings to a file.
      *
      * @param questionForFile the list of strings to write to the file
-     * @param filePath the path of the file to write to
+     * @param filePath        the path of the file to write to
      * @return true if the operation was successful, false otherwise
      */
     public boolean writeListToFile(List<String> questionForFile, String filePath) {
@@ -47,6 +50,7 @@ public class GenerateAnswersTemplateController {
             return false;
         }
     }
+
     /**
      * Retrieves all interview models.
      *
@@ -55,6 +59,7 @@ public class GenerateAnswersTemplateController {
     public Iterable<InterviewModel> findAllInterviewModels() {
         return interviewModelService.allInterviewModels();
     }
+
     /**
      * Finds an interview model by its ID.
      *
@@ -64,6 +69,7 @@ public class GenerateAnswersTemplateController {
     public InterviewModel findInterviewModelByID(int interviewModelID) {
         return interviewModelService.findById(interviewModelID);
     }
+
     /**
      * Processes lines by removing any characters after the second ">" character in each line.
      *

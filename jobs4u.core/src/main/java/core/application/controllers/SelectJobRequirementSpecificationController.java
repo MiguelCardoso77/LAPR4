@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Controller class for selecting one job requirements specifications.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @UseCaseController
 public class SelectJobRequirementSpecificationController {
-    final ListJobRequirementsSpecificationController listJobRequirementsSpecificationController = new ListJobRequirementsSpecificationController();
+    private final ListJobRequirementsSpecificationController listJobRequirementsSpecificationController = new ListJobRequirementsSpecificationController();
 
     /**
      * Lists all job requirements specifications and allows the user to select one.

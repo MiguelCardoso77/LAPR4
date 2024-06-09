@@ -9,9 +9,8 @@ import java.util.List;
  * This class coordinates the interaction between the UI and the service layer.
  * It uses the CandidateNotificationsService to fetch the notifications for a candidate.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 public class ListCandidateNotificationsController {
     private final CandidateNotificationsService candidateNotificationsService = new CandidateNotificationsService();
 
@@ -21,7 +20,6 @@ public class ListCandidateNotificationsController {
      * @param email The email of the candidate.
      * @return A list of notifications for the candidate.
      */
-
     public List<String> sendNewNotificationsRequest(String email) {
         return candidateNotificationsService.requestNewNotifications(email);
     }
@@ -32,7 +30,6 @@ public class ListCandidateNotificationsController {
      * @param email The email of the candidate.
      * @return A list of old notifications for the candidate.
      */
-
     public List<String> sendOldNotificationsRequest(String email) {
         return candidateNotificationsService.requestOldNotifications(email);
     }

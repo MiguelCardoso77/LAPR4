@@ -79,13 +79,14 @@ public class RegisterCandidateController {
 
         return candidateService.registerCandidate(newUser, telephoneNumber, curriculum);
     }
+
     /**
      * Verifies if a telephone number is already registered.
      *
      * @param telephoneNumber the telephone number to verify
      * @return true if the telephone number is already registered, false otherwise
      */
-    public boolean verifyTelephoneNumber(TelephoneNumber telephoneNumber){
+    public boolean verifyTelephoneNumber(TelephoneNumber telephoneNumber) {
         return candidateService.findCandidateByTelephoneNumber(telephoneNumber) != null;
     }
 

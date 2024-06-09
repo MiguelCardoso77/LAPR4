@@ -5,6 +5,7 @@ import core.domain.process.ProcessState;
 import core.persistence.PersistenceContext;
 import core.repositories.ProcessRepository;
 import core.services.ProcessService;
+
 /**
  * Controller for managing the state of a Process in the Jobs4U system.
  * This class provides a method to change the state of a Process.
@@ -13,13 +14,14 @@ import core.services.ProcessService;
  * @author Diana Neves
  */
 public class ChangeProcessStateController {
-    final ProcessService processService = new ProcessService();
+    private final ProcessService processService = new ProcessService();
     private final ProcessRepository processRepository = PersistenceContext.repositories().processRepository();
+
     /**
      * Changes the state of a Process.
      *
      * @param processState the new state of the Process
-     * @param process the Process for which the state is to be changed
+     * @param process      the Process for which the state is to be changed
      * @return the updated Process
      */
     public Process changeProcessState(ProcessState processState, Process process) {

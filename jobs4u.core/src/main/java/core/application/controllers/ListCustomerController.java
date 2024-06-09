@@ -6,9 +6,8 @@ import core.services.CustomerService;
 /**
  * A controller class for listing customers.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 public class ListCustomerController {
     private final CustomerService customerService = new CustomerService();
 
@@ -18,16 +17,15 @@ public class ListCustomerController {
      * @param customer the customer to search for
      * @return the found customer, or null if not found
      */
-
     public Customer findCustomer(Customer customer) {
         return customerService.findCustomer(customer);
     }
+
     /**
      * Retrieves all customers.
      *
      * @return an iterable of all customers
      */
-
     public Iterable<Customer> allCustomers() {
         return customerService.allCustomers();
     }

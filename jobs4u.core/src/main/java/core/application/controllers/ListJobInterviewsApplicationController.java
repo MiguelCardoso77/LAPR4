@@ -3,13 +3,14 @@ package core.application.controllers;
 import core.domain.application.Application;
 import core.domain.interview.JobInterview;
 import core.services.JobInterviewService;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Controller responsible for managing job interviews related to a specific application.
  *
- * @author tomasgoncalves
+ * @author Tomás Gonçalves
  */
 public class ListJobInterviewsApplicationController {
     private final JobInterviewService jobInterviewService = new JobInterviewService();
@@ -20,12 +21,12 @@ public class ListJobInterviewsApplicationController {
      * @param application The application to retrieve job interviews for.
      * @return An iterable of job interviews associated with the specified application.
      */
-    public Iterable<JobInterview> allJobInterviewsOfApplication(Application application){
+    public Iterable<JobInterview> allJobInterviewsOfApplication(Application application) {
         Iterable<JobInterview> allJobInterviews = jobInterviewService.allJobInterviews();
         List<JobInterview> allJobInterviewsApplication = new ArrayList<>();
 
-        for (JobInterview jobInterview : allJobInterviews){
-            if (jobInterview.application().equals(application)){
+        for (JobInterview jobInterview : allJobInterviews) {
+            if (jobInterview.application().equals(application)) {
                 allJobInterviewsApplication.add(jobInterview);
             }
         }
@@ -41,9 +42,9 @@ public class ListJobInterviewsApplicationController {
     public JobInterview findJobInterviewById(Integer identity) {
         Iterable<JobInterview> allJobInterviews = jobInterviewService.allJobInterviews();
 
-        for (JobInterview jobInterview : allJobInterviews){
-            if (jobInterview.identity().equals(identity)){
-               return jobInterview;
+        for (JobInterview jobInterview : allJobInterviews) {
+            if (jobInterview.identity().equals(identity)) {
+                return jobInterview;
             }
         }
         return null;

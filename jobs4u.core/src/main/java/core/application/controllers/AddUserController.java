@@ -19,14 +19,16 @@ import java.util.Set;
  * Controller for adding users.
  * This class provides methods for adding users, generating passwords, getting all roles, and getting all users.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @UseCaseController
 public class AddUserController {
+
     /**
      * Authorization service instance.
      */
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
+
     /**
      * User management service instance.
      */
@@ -40,6 +42,7 @@ public class AddUserController {
     public Role[] getAllRoles() {
         return Jobs4URoles.allValues();
     }
+
     /**
      * Get existing RoleTypes available to the user.
      *
@@ -49,6 +52,7 @@ public class AddUserController {
         Jobs4UPasswordPolicy generator = new Jobs4UPasswordPolicy();
         return generator.passwordGenerator(name);
     }
+
     /**
      * Retrieves the currently logged-in user.
      *
@@ -57,14 +61,15 @@ public class AddUserController {
     public SystemUser getLoggedInUser() {
         return authz.session().map(UserSession::authenticatedUser).orElse(null);
     }
+
     /**
      * Adds a new user with the provided details.
      *
-     * @param password The password of the new user.
+     * @param password  The password of the new user.
      * @param firstName The first name of the new user.
-     * @param lastName The last name of the new user.
-     * @param email The email of the new user.
-     * @param roles The roles of the new user.
+     * @param lastName  The last name of the new user.
+     * @param email     The email of the new user.
+     * @param roles     The roles of the new user.
      * @param createdOn The creation date of the new user.
      * @return The created user.
      */
@@ -73,19 +78,21 @@ public class AddUserController {
 
         return userSvc.registerNewUser(email, password, firstName, lastName, email, roles, createdOn);
     }
+
     /**
      * Adds a new user with the provided details.
      *
-     * @param password The password of the new user.
+     * @param password  The password of the new user.
      * @param firstName The first name of the new user.
-     * @param lastName The last name of the new user.
-     * @param email The email of the new user.
-     * @param roles The roles of the new user.
+     * @param lastName  The last name of the new user.
+     * @param email     The email of the new user.
+     * @param roles     The roles of the new user.
      * @return The created user.
      */
     public SystemUser addUser(final String password, final String firstName, final String lastName, final String email, final Set<Role> roles) {
         return addUser(password, firstName, lastName, email, roles, CurrentTimeCalendars.now());
     }
+
     /**
      * Retrieves all users.
      *

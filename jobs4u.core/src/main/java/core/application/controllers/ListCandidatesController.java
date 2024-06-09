@@ -9,6 +9,7 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 
 import java.util.List;
+
 /**
  * Controller for managing the listing of candidates in the Jobs4U system.
  * This class provides methods to retrieve all candidates and to find a candidate by telephone number.
@@ -20,6 +21,7 @@ import java.util.List;
 public class ListCandidatesController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final CandidateService candidateSvc = new CandidateService();
+
     /**
      * Retrieves all candidates.
      *
@@ -30,13 +32,14 @@ public class ListCandidatesController {
 
         return (List<Candidate>) candidateSvc.allCandidates();
     }
+
     /**
      * Finds a candidate by their telephone number.
      *
      * @param telephoneNumber the telephone number of the candidate to find
      * @return the candidate with the specified telephone number
      */
-    public Candidate findCandidateByTelephoneNumber(TelephoneNumber telephoneNumber){
+    public Candidate findCandidateByTelephoneNumber(TelephoneNumber telephoneNumber) {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN, Jobs4URoles.OPERATOR);
 
         return candidateSvc.findCandidateByTelephoneNumber(telephoneNumber);

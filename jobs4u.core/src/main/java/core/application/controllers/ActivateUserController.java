@@ -5,6 +5,7 @@ import eapli.framework.infrastructure.authz.application.AuthorizationService;
 import eapli.framework.infrastructure.authz.application.AuthzRegistry;
 import eapli.framework.infrastructure.authz.application.UserManagementService;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
+
 /**
  * Controller for managing user activation in the Jobs4U system.
  * This class provides methods to retrieve deactivated users and to activate a user.
@@ -15,6 +16,7 @@ import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 public class ActivateUserController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final UserManagementService userSvc = AuthzRegistry.userService();
+
     /**
      * Retrieves all deactivated users.
      *
@@ -25,6 +27,7 @@ public class ActivateUserController {
 
         return userSvc.deactivatedUsers();
     }
+
     /**
      * Activates a user.
      *

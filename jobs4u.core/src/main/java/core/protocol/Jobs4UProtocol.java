@@ -11,7 +11,6 @@ import java.util.List;
  * @author Miguel Cardoso
  */
 public class Jobs4UProtocol {
-    private final DataInputStream inData;
     private final DataOutputStream outData;
     private final byte VERSION = 0;
 
@@ -22,7 +21,6 @@ public class Jobs4UProtocol {
      * @throws IOException If an I/O error occurs when creating the input or output stream
      */
     public Jobs4UProtocol(Socket connection) throws IOException {
-        inData = new DataInputStream(connection.getInputStream());
         outData = new DataOutputStream(connection.getOutputStream());
     }
 

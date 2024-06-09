@@ -11,10 +11,11 @@ import core.services.JobOpeningService;
  * to show all job openings in the analysis phase, and to find a job opening by its reference.
  * It uses the JobOpeningService from the core services.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 public class ListJobOpeningController {
     private final JobOpeningService jobOpeningService = new JobOpeningService();
+
     /**
      * Displays all job openings.
      *
@@ -35,6 +36,7 @@ public class ListJobOpeningController {
         }
         return iterable;
     }
+
     /**
      * Displays all job openings in the analysis phase.
      *
@@ -57,6 +59,7 @@ public class ListJobOpeningController {
         }
         return iterable;
     }
+
     /**
      * Retrieves all job openings.
      *
@@ -65,6 +68,7 @@ public class ListJobOpeningController {
     public Iterable<JobOpening> allJobOpenings() {
         return jobOpeningService.allJobOpenings();
     }
+
     /**
      * Finds a job opening by its reference.
      *

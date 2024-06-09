@@ -27,13 +27,13 @@ public class OrderedListOfCandidatesController {
      * @param applicationList An iterable of applications for a job opening.
      * @return A list of job interviews ordered by their scores in descending order.
      */
-    public List<JobInterview> orderedList(Iterable<Application> applicationList){
+    public List<JobInterview> orderedList(Iterable<Application> applicationList) {
         List<JobInterview> orderedList = new ArrayList<>();
 
-        for(Application application : applicationList){
+        for (Application application : applicationList) {
             Iterable<JobInterview> list = listJobInterviewsApplicationController.allJobInterviewsOfApplication(application);
-            for(JobInterview jobInterview : list){
-                 orderedList.add(jobInterview);
+            for (JobInterview jobInterview : list) {
+                orderedList.add(jobInterview);
             }
         }
 
@@ -48,21 +48,23 @@ public class OrderedListOfCandidatesController {
      * @param orderedList A list of job interviews ordered by their scores.
      * @return A list of applications corresponding to the ordered job interviews.
      */
-    public List<Application> applicationList (List<JobInterview> orderedList){
+    public List<Application> applicationList(List<JobInterview> orderedList) {
         List<Application> applicationsList = new ArrayList<>();
 
-        for(JobInterview jobInterview : orderedList){
+        for (JobInterview jobInterview : orderedList) {
             Application application = jobInterview.application();
-            applicationsList.add(application);}
+            applicationsList.add(application);
+        }
 
         return applicationsList;
     }
+
     /**
      * Allows the user to select a job opening.
      *
      * @return The selected JobOpening object.
      */
-    public JobOpening selectJobOpening(){
+    public JobOpening selectJobOpening() {
         return selectJobOpeningController.selectJobOpening();
     }
 
@@ -72,7 +74,7 @@ public class OrderedListOfCandidatesController {
      * @param jobReference The reference to the job opening.
      * @return An iterable of applications associated with the specified job opening.
      */
-    public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference){
+    public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference) {
         return listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
     }
 }

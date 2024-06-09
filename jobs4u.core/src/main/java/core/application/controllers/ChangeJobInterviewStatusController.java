@@ -11,7 +11,7 @@ import core.services.NotificationService;
  * It uses the ApplicationService and NotificationService to update the status of an application
  * and create a notification for the candidate respectively.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 public class ChangeJobInterviewStatusController {
     private final ApplicationService applicationService = new ApplicationService();
@@ -23,13 +23,13 @@ public class ChangeJobInterviewStatusController {
      * If the status is not ACCEPTED, a notification is created for the candidate indicating they have been declined for the job opening.
      *
      * @param applicationStatus The new status of the application.
-     * @param application The application for which the status is to be changed.
+     * @param application       The application for which the status is to be changed.
      */
     public void changeJobInterviewStatus(Status applicationStatus, Application application) {
         applicationService.updateStatus(applicationStatus, application);
-        if(applicationStatus == Status.ACCEPTED){
+        if (applicationStatus == Status.ACCEPTED) {
             notificationService.createNotification(application, "You have been accepted for the job opening", application.candidate());
-        } else{
+        } else {
             notificationService.createNotification(application, "You have been declined for the job opening", application.candidate());
         }
     }

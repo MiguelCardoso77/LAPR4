@@ -7,6 +7,7 @@ import core.domain.process.ProcessStatus;
 import core.persistence.PersistenceContext;
 import core.repositories.ProcessRepository;
 import core.services.ProcessService;
+
 /**
  * Controller for managing the status of a Process in the Jobs4U system.
  * This class provides methods to change the status of a Process, select a JobOpening, and change the state of a Process.
@@ -15,34 +16,37 @@ import core.services.ProcessService;
  * @author Diana Neves
  */
 public class ChangeProcessStatusController {
-    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
-    final ChangeProcessStateController changeProcessStateController = new ChangeProcessStateController();
-    final ProcessService processService = new ProcessService();
+    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
+    private final ChangeProcessStateController changeProcessStateController = new ChangeProcessStateController();
+    private final ProcessService processService = new ProcessService();
     private final ProcessRepository processRepository = PersistenceContext.repositories().processRepository();
+
     /**
      * Changes the status of a Process.
      *
      * @param processStatus the new status of the Process
-     * @param process the Process for which the status is to be changed
+     * @param process       the Process for which the status is to be changed
      * @return the updated Process
      */
     public Process changeProcessStatus(ProcessStatus processStatus, Process process) {
         processService.changeProcessStatus(processStatus, process);
         return processRepository.save(process);
     }
+
     /**
      * Selects a JobOpening.
      *
      * @return the selected JobOpening
      */
-    public JobOpening selectJobOpening(){
+    public JobOpening selectJobOpening() {
         return selectJobOpeningController.selectJobOpening();
     }
+
     /**
      * Changes the state of a Process.
      *
      * @param processState the new state of the Process
-     * @param process the Process for which the state is to be changed
+     * @param process      the Process for which the state is to be changed
      * @return the updated Process
      */
     public Process changeProcessState(ProcessState processState, Process process) {

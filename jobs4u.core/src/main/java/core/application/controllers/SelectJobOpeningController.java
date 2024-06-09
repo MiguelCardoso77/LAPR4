@@ -7,7 +7,6 @@ import eapli.framework.io.util.Console;
 
 import java.util.List;
 
-
 /**
  * The SelectJobOpeningController class provides methods to select a job opening
  * from a list of job openings. It interacts with the ListJobOpeningController
@@ -16,7 +15,7 @@ import java.util.List;
  * @author Diana Neves
  */
 public class SelectJobOpeningController {
-    final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
+    private final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
 
     /**
      * Displays a list of job openings and allows the user to select one.

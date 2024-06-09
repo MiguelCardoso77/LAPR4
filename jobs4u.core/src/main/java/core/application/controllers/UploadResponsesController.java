@@ -8,6 +8,7 @@ import plugin.interviewModule.InterviewPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Controller for uploading responses in the Jobs4U system.
  * This class provides methods to find an interview by ID, upload responses, retrieve responses,
@@ -19,6 +20,7 @@ import java.util.List;
 @UseCaseController
 public class UploadResponsesController {
     private final JobInterviewService jobInterviewService = new JobInterviewService();
+
     /**
      * Finds an interview by its ID.
      *
@@ -28,16 +30,18 @@ public class UploadResponsesController {
     public JobInterview findInterviewByID(int jobInterviewID) {
         return jobInterviewService.findById(jobInterviewID);
     }
+
     /**
      * Uploads responses to an interview.
      *
-     * @param responses the responses to upload
+     * @param responses    the responses to upload
      * @param jobInterview the interview to upload the responses to
      */
     public void uploadResponses(List<String> responses, JobInterview jobInterview) {
         InterviewAnswers interviewAnswers = new InterviewAnswers(responses);
         jobInterviewService.uploadResponses(interviewAnswers, jobInterview);
     }
+
     /**
      * Retrieves responses from a file.
      *
@@ -48,6 +52,7 @@ public class UploadResponsesController {
         InterviewPlugin plugin = new InterviewPlugin();
         return plugin.retrieveAnswers(path);
     }
+
     /**
      * Finds all interviews with a model assigned.
      *

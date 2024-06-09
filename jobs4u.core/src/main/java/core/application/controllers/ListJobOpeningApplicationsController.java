@@ -19,7 +19,7 @@ import java.util.List;
  * Provides methods to retrieve applications based on different criteria
  * and allows selecting specific applications or job openings.
  *
- * @author tomasgoncalves
+ * @author Tomás Gonçalves
  */
 public class ListJobOpeningApplicationsController {
     private final JobOpeningService jobOpeningService = new JobOpeningService();

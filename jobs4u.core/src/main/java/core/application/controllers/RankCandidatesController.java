@@ -9,6 +9,7 @@ import eapli.framework.application.UseCaseController;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Controller for ranking candidates in the Jobs4U system.
  * This class provides methods to find applications for a job opening, find interviews for an application,
@@ -23,6 +24,7 @@ public class RankCandidatesController {
     private final ApplicationService applicationService = new ApplicationService();
     private final JobInterviewService jobInterviewService = new JobInterviewService();
     private final List<Integer> assignedRanks = new ArrayList<>();
+
     /**
      * Finds the applications for a job opening.
      *
@@ -32,6 +34,7 @@ public class RankCandidatesController {
     public List<Application> findApplicationsForJobOpening(JobOpening jobOpening) {
         return applicationService.findApplicationsForJobOpening(jobOpening);
     }
+
     /**
      * Finds the interviews for an application.
      *
@@ -41,10 +44,11 @@ public class RankCandidatesController {
     public List<JobInterview> findInterviewsForApplication(Application application) {
         return jobInterviewService.findInterviewsForApplication(application);
     }
+
     /**
      * Updates the rank of an application.
      *
-     * @param rank the rank to update the application with
+     * @param rank        the rank to update the application with
      * @param application the application to update the rank of
      * @return the application with the updated rank
      */
@@ -52,12 +56,14 @@ public class RankCandidatesController {
         assignedRanks.add(rank);
         return applicationService.updateRank(rank, application);
     }
+
     /**
      * Clears the assigned ranks.
      */
     public void clearAssignedRanks() {
         assignedRanks.clear();
     }
+
     /**
      * Filters by non-ranked applications.
      *
@@ -75,6 +81,7 @@ public class RankCandidatesController {
 
         return filteredApplications;
     }
+
     /**
      * Checks if a rank is already assigned.
      *

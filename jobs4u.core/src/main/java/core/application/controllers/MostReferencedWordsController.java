@@ -16,6 +16,7 @@ import eapli.framework.infrastructure.authz.application.UserSession;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * Controller for finding the most referenced words in the Jobs4U system.
  * This class provides methods to find the most referenced words, count words in a file,
@@ -24,12 +25,12 @@ import org.slf4j.LoggerFactory;
  * It uses the ApplicationService and AuthorizationService from the eapli framework.
  *
  * @author Miguel Cardoso
- * 
  */
 public class MostReferencedWordsController {
     private final ApplicationService applicationService = new ApplicationService();
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private static final Logger LOGGER = LoggerFactory.getLogger(MostReferencedWordsController.class);
+
     /**
      * Finds the most referenced words in a list of files.
      *
@@ -72,10 +73,11 @@ public class MostReferencedWordsController {
 
         return sortMap(totalWordCount);
     }
+
     /**
      * Counts the words in a file.
      *
-     * @param file the file to count the words in
+     * @param file      the file to count the words in
      * @param fileLines the lines of the file
      * @return a map of the words and their counts
      */
@@ -96,6 +98,7 @@ public class MostReferencedWordsController {
 
         return wordsCounter;
     }
+
     /**
      * Checks if a string is a word.
      *
@@ -105,6 +108,7 @@ public class MostReferencedWordsController {
     private boolean isWord(String possibleWord) {
         return possibleWord.matches("^[a-zA-Z]+$");
     }
+
     /**
      * Reads a file and returns its lines.
      *
@@ -119,6 +123,7 @@ public class MostReferencedWordsController {
             return Collections.emptyList();
         }
     }
+
     /**
      * Sorts a map by its values in descending order and limits the map to the top 20 entries.
      *
@@ -139,6 +144,7 @@ public class MostReferencedWordsController {
                         (oldValue, newValue) -> oldValue,
                         LinkedHashMap::new));
     }
+
     /**
      * Finds the applications by a customer manager.
      *
@@ -149,6 +155,7 @@ public class MostReferencedWordsController {
 
         return applicationService.applicationsByCM(customerManager);
     }
+
     /**
      * Gets the candidate files from a curriculum.
      *

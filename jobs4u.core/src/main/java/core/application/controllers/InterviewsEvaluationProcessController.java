@@ -12,17 +12,12 @@ import java.util.List;
 /**
  * Controller for managing the interview evaluation process.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 @UseCaseController
 public class InterviewsEvaluationProcessController {
     private final JobInterviewService jobInterviewModelService = new JobInterviewService();
     private final InterviewPlugin interviewPlugin = new InterviewPlugin();
-
-    final String RED = "\u001B[31m";
-    final String GREEN = "\u001B[32m";
-    final String RESET = "\u001B[0m";
 
     /**
      * Updates the score of a given job interview.
@@ -57,17 +52,16 @@ public class InterviewsEvaluationProcessController {
      *
      * @param jobOpeningInterviews list of job interviews to be evaluated
      */
-
     public void evaluationProcessExecution(List<JobInterview> jobOpeningInterviews, InterviewModel interviewModel) {
         for (JobInterview interview : jobOpeningInterviews) {
             if (interview.interviewAnswers() == null) {
                 System.out.println();
-                System.out.println(RED + "Interview answers not found for the interview " + interview.identity() + "." + RESET);
+                System.out.println("Interview answers not found for the interview " + interview.identity() + ".");
                 System.out.println("=======================================================");
             } else {
                 Score score = interviewEvaluation(interview, interviewModel);
                 interviewScoreUpdate(score, interview);
-                System.out.println(GREEN + "Success: Interview " + interview.identity() + " evaluated successfully." + RESET);
+                System.out.println("Success: Interview " + interview.identity() + " evaluated successfully.");
                 System.out.println("=======================================================");
             }
         }

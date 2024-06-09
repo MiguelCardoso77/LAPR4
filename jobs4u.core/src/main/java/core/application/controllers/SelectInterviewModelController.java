@@ -19,8 +19,9 @@ import java.util.List;
  */
 @UseCaseController
 public class SelectInterviewModelController {
-    final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
-    final JobOpeningService jobOpeningService = new JobOpeningService();
+    private final InterviewModelRepository interviewModelRepository = PersistenceContext.repositories().interviewModelRepository();
+    private final JobOpeningService jobOpeningService = new JobOpeningService();
+
     /**
      * Lists all interview models and allows the user to select one.
      *
@@ -44,10 +45,11 @@ public class SelectInterviewModelController {
 
         return (option == 0) ? null : interviewModels.get(option - 1);
     }
+
     /**
      * Updates the interview model of a job opening.
      *
-     * @param jobReference the reference of the job opening
+     * @param jobReference   the reference of the job opening
      * @param interviewModel the new interview model
      */
     public void updateInterviewModel(JobReference jobReference, InterviewModel interviewModel) {

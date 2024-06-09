@@ -39,31 +39,29 @@ public class VerificationRequirementsUI extends AbstractUI {
             System.out.println(RED + "No applications for this job opening" + RESET);
         } else {
             for (Application applicationToVerify : jobOpeningApplications) {
-                if (applicationToVerify != null) {
-
                     CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
                     String path = jobOpening.jobRequirementsSpecification().jobRequirementsPath();
 
+                    if (candidateRequirements.toString() != null ) {
+                        Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
 
-                    Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
+                        boolean result = verificationRequirementsController.pluginRequirements(path, clientRequirements);
 
-                    boolean result = verificationRequirementsController.pluginRequirements(path, clientRequirements);
+                        Status statusFinal;
 
-                    Status statusFinal;
-
-                    if (result) {
-                        statusFinal = Status.ACCEPTED;
-                        verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
-                        System.out.println(GREEN + "The candidate is valid for this job opening" + RESET);
-                    } else {
-                        statusFinal = Status.DECLINED;
-                        verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
-                        System.out.println(RED + "This candidate isn't valid for this job opening" + RESET);
+                        if (result) {
+                            statusFinal = Status.ACCEPTED;
+                            verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+                            System.out.println(GREEN + "The candidate is valid for this job opening" + RESET);
+                        } else {
+                            statusFinal = Status.DECLINED;
+                            verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+                            System.out.println(RED + "This candidate isn't valid for this job opening" + RESET);
+                        }
+                        System.out.println("=========================================================================================================");
                     }
-                    System.out.println("=========================================================================================================");
                 }
             }
-        }
         return true;
     }
 

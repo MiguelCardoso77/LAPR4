@@ -151,8 +151,73 @@ protected boolean doShow() {
     }
     return true;
 }
-
 ```
+```java
+    public boolean checkRequirements(String path, Map<String, String> cResponses) {
+        try {
+            String input = new String(Files.readAllBytes(Paths.get(path)));
+
+            System.out.println("Requirements Used:");
+            System.out.println(input);
+            System.out.println();
+
+            RequirementsGrammarLexer lexer = new RequirementsGrammarLexer(CharStreams.fromString(input));
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            RequirementsGrammarParser parser = new RequirementsGrammarParser(tokens);
+
+            ParseTree tree = parser.start();
+
+            RequirementsVisitor visitor = new RequirementsVisitor(cResponses);
+            visitor.visit(tree);
+
+            System.out.println("-------------------------------------------");
+            boolean requirementsMet = visitor.checkRequirements();
+            System.out.println("Requirements met: " + requirementsMet);
+
+            return requirementsMet;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+```    
+```java
+@Override
+public Object visitAcademicDegreeType(RequirementsGrammarParser.AcademicDegreeTypeContext ctx) {
+    String candidateRequirement = candidateResponses.get("Academic Degree");
+    if (candidateRequirement == null) {
+        requirementsMet = false;
+    }else {
+        System.out.println("Required Degree -> " + ctx.getText());
+        System.out.println("Candidate Degree -> " + candidateRequirement);
+
+        switch (ctx.getText()){
+            case ("Bachelor"):
+                requirementsMet = candidateRequirement.equals("Bachelor") || candidateRequirement.equals("Master") || candidateRequirement.equals("Doctorate");
+                break;
+            case ("Master"):
+                if(candidateRequirement.equals("Master") ||candidateRequirement.equals("Doctorate") ){
+                    requirementsMet = true;
+                }else {
+                    requirementsMet = false;
+                }
+                break;
+            case ("Doctorate"):
+                if(candidateRequirement.equals("Doctorate") ){
+                    requirementsMet = true;
+                }else {
+                    requirementsMet = false;
+                }
+                break;
+        }
+    }
+
+    return visitChildren(ctx);
+}    
+```
+
 
 ## 4. Testing
 

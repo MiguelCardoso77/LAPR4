@@ -71,6 +71,9 @@ public class ApplicationsBootstrapper implements Action {
         insertRequirementsResponses(("jobs4u.core/src/main/resources/answered/requirements/requirements2.txt"), applications.get(7));
         insertRequirementsResponses(("jobs4u.core/src/main/resources/answered/requirements/requirements2.txt"), applications.get(8));
 
+        insertRequirementsResponses(("jobs4u.core/src/main/resources/answered/requirements/requirements2.txt"), applications.get(9));
+        insertRequirementsResponses(("jobs4u.core/src/main/resources/answered/requirements/requirements2.txt"), applications.get(10));
+
 
         changeApplicationStatus(applications.get(0), Status.DECLINED);
         changeApplicationStatus(applications.get(1), Status.ACCEPTED);

@@ -13,7 +13,6 @@ import java.util.List;
  *
  * @author 1220812@isep.ipp.pt
  */
-
 @UseCaseController
 public class ListJobOpeningInterviewsController {
     final ListJobOpeningApplicationsController jobOpeningApplicationsController =  new ListJobOpeningApplicationsController();
@@ -27,7 +26,6 @@ public class ListJobOpeningInterviewsController {
      * @param jobOpening The job opening for which to retrieve job interviews.
      * @return A list of {@link JobInterview} objects associated with the given job opening.
      */
-
     public List<JobInterview> allInterviewOfJobOpening(JobOpening jobOpening){
         List<JobInterview> jobOpeningInterviews = new ArrayList<>();
 

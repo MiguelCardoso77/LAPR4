@@ -9,6 +9,8 @@ import java.util.Calendar;
 
 /**
  * Builder class for creating instances of {@link Process}.
+ *
+ * @author Diana Neves
  */
 public class ProcessBuilder implements DomainFactory<Process> {
     private static final Logger LOGGER = LogManager.getLogger(JobOpening.class);

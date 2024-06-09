@@ -12,6 +12,8 @@ import java.util.List;
  * The SelectJobOpeningController class provides methods to select a job opening
  * from a list of job openings. It interacts with the ListJobOpeningController
  * to fetch job openings and allows the user to choose one based on its index.
+ *
+ * @author Diana Neves
  */
 public class SelectJobOpeningController {
     final ListJobOpeningController jobOpeningController = new ListJobOpeningController();
@@ -55,8 +57,6 @@ public class SelectJobOpeningController {
                 System.out.println("There was an unexpected error in the application. Please try again and if the problem persists, contact your system administrator.");
             }
         }
-
         return jobOpening;
     }
-
 }

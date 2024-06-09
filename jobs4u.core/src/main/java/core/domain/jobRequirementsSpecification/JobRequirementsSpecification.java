@@ -11,7 +11,6 @@ import java.util.Objects;
  *
  * @author 1220812@isep.ipp.pt
  */
-
 @Entity
 @Table(name = "JOB_REQUIREMENTS")
 public class JobRequirementsSpecification implements AggregateRoot<Integer> {
@@ -116,7 +115,11 @@ public class JobRequirementsSpecification implements AggregateRoot<Integer> {
     public boolean hasIdentity(Integer idRequirements) {
         return AggregateRoot.super.hasIdentity(idRequirements);
     }
-
+    /**
+     * Returns a string representation of this JobRequirementsSpecification.
+     *
+     * @return A string representation of this object.
+     */
     @Override
     public String toString() {
         return "id = " + idRequirements +

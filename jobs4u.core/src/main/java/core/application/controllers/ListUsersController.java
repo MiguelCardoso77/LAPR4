@@ -36,21 +36,31 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Controller for managing the listing of users in the Jobs4U system.
+ * This class provides methods to retrieve all users, all backoffice users, and to find a user by username.
+ * It uses the AuthorizationService and UserManagementService from the eapli framework.
  *
- * @author losa
+ * @author Miguel Cardoso
  */
 @UseCaseController
 public class ListUsersController{
-
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
     private final UserManagementService userSvc = AuthzRegistry.userService();
-
+    /**
+     * Retrieves all users.
+     *
+     * @return an iterable collection of all users
+     */
     public Iterable<SystemUser> allUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
 
         return userSvc.allUsers();
     }
-
+    /**
+     * Retrieves all backoffice users.
+     *
+     * @return an iterable collection of all backoffice users
+     */
     public Iterable<SystemUser> allBackofficeUsers() {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN);
         List<SystemUser> backofficeUsers = new ArrayList<>();
@@ -63,7 +73,12 @@ public class ListUsersController{
 
         return backofficeUsers;
     }
-
+    /**
+     * Finds a user by their username.
+     *
+     * @param u the username of the user to find
+     * @return the user with the specified username
+     */
     public Optional<SystemUser> find(final Username u) {
         return userSvc.userOfIdentity(u);
     }

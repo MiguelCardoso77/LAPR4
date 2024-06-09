@@ -6,9 +6,10 @@ import eapli.framework.domain.model.DomainFactory;
 import java.util.Calendar;
 /**
  * Builder class for creating instances of {@link JobInterview}.
+ *
+ * @author Diana Neves
  */
 public class JobInterviewBuilder implements DomainFactory<JobInterview> {
-
     private Calendar createdOn;
     private Time time;
     private Score score;
@@ -43,5 +44,4 @@ public class JobInterviewBuilder implements DomainFactory<JobInterview> {
     public JobInterview build() {
         return new JobInterview(createdOn, time, score, result, application, null);
     }
-
 }

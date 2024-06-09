@@ -4,6 +4,8 @@ import eapli.framework.domain.model.AggregateRoot;
 import jakarta.persistence.*;
 /**
  * Represents an interview model, which is a value object.
+ *
+ * @author Diana Neves
  */
 @Entity
 @Table(name = "INTERVIEW_MODEL")
@@ -111,5 +113,4 @@ public class InterviewModel implements AggregateRoot<Integer> {
     public String model() {
         return interviewModel;
     }
-
 }

@@ -14,7 +14,6 @@ import eapli.framework.validations.Preconditions;
  */
 
 public class JobRequirementsSpecificationBuilder {
-
     private Integer idRequirements;
     private String jobRequirementsFile;
 

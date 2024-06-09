@@ -16,8 +16,6 @@ import java.util.List;
  * @author Tomás Gonçalves
  */
 public class OrderedListOfCandidatesController {
-
-
     private final ListJobInterviewsApplicationController listJobInterviewsApplicationController = new ListJobInterviewsApplicationController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
     private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
@@ -77,5 +75,4 @@ public class OrderedListOfCandidatesController {
     public Iterable<Application> allApplicationsOfJobOpening(JobReference jobReference){
         return listJobOpeningApplicationsController.allApplicationsOfJobOpening(jobReference);
     }
-
 }

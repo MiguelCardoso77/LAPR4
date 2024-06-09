@@ -11,12 +11,11 @@ import eapli.framework.domain.model.DomainFactory;
  *
  * @author 1220812@isep.ipp.pt
  */
-
 public class NotificationBuilder implements DomainFactory<Notification> {
     private Message message;
     private Application application;
     private Candidate candidate;
-    private boolean read;
+
     /**
      * Sets all attributes of the notification.
      *
@@ -29,7 +28,6 @@ public class NotificationBuilder implements DomainFactory<Notification> {
         this.message = message;
         this.application = application;
         this.candidate = candidate;
-        this.read = false;
         return this;
     }
     /**

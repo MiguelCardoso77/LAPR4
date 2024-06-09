@@ -6,12 +6,13 @@ import eapli.framework.domain.repositories.DomainRepository;
 import java.util.Optional;
 
 /**
- * The repository for applications.
+ * Represents a repository for managing Application entities in the Jobs4U system.
+ * This interface provides methods to find an application by its ID and to retrieve all applications.
+ * It extends the DomainRepository interface from the eapli framework.
  *
- * @author Diogo Ribeiro
+ * @author 1220812@isep.ipp.pt
  */
-public interface ApplicationRepository extends DomainRepository<Integer, Application> {
-
+public interface ApplicationRepository extends DomainRepository<Integer ,Application> {
     /**
      * Find an application by its ID.
      *

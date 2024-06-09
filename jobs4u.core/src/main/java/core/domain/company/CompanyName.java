@@ -13,7 +13,7 @@ import java.util.Objects;
  * This class is a value object and is embeddable.
  */
 @Embeddable
-public final class CompanyName implements ValueObject, Serializable, Comparable<CompanyName> {
+public class CompanyName implements ValueObject, Serializable, Comparable<CompanyName> {
 
     @Column(name = "COMPANY_NAME")
     private String designation;

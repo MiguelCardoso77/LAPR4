@@ -12,6 +12,13 @@ import java.io.InputStream;
 import java.util.Properties;
 import javax.mail.*;
 
+/**
+ * Handles the sending of emails.
+ * This class provides methods for sending emails with a specified recipient, subject, and body.
+ *
+ * @author Miguel Cardoso
+ */
+
 public class EmailHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailHandler.class);
     private final Session session;

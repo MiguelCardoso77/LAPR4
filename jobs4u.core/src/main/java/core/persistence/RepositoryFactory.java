@@ -80,7 +80,6 @@ public interface RepositoryFactory {
      * Notification repository.
      */
     NotificationRepository notifications(TransactionalContext autoTx);
-
     NotificationRepository notifications();
 
 }

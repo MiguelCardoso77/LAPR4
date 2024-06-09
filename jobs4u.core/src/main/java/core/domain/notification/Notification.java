@@ -19,7 +19,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "NOTIFICATION")
 public class Notification implements AggregateRoot<Integer> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -31,7 +30,6 @@ public class Notification implements AggregateRoot<Integer> {
     @JoinColumn(name = "CANDIDATE_ID")
     @ManyToOne
     private Candidate candidate;
-
     private boolean read;
 
     /**

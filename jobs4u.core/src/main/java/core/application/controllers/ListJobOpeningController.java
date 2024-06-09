@@ -5,10 +5,21 @@ import core.domain.jobOpening.JobReference;
 import core.domain.process.ProcessState;
 import core.services.JobOpeningService;
 
-
+/**
+ * Controller for managing the listing of job openings in the Jobs4U system.
+ * This class provides methods to retrieve all job openings, to show all job openings,
+ * to show all job openings in the analysis phase, and to find a job opening by its reference.
+ * It uses the JobOpeningService from the core services.
+ *
+ * @author 1220812@isep.ipp.pt
+ */
 public class ListJobOpeningController {
     private final JobOpeningService jobOpeningService = new JobOpeningService();
-
+    /**
+     * Displays all job openings.
+     *
+     * @return an iterable collection of all job openings
+     */
     public Iterable<JobOpening> showJobOpenings() {
         Iterable<JobOpening> iterable = allJobOpenings();
 
@@ -24,7 +35,11 @@ public class ListJobOpeningController {
         }
         return iterable;
     }
-
+    /**
+     * Displays all job openings in the analysis phase.
+     *
+     * @return an iterable collection of all job openings in the analysis phase
+     */
     public Iterable<JobOpening> showJobOpeningsAnalysis() {
         Iterable<JobOpening> iterable = allJobOpenings();
 
@@ -42,11 +57,20 @@ public class ListJobOpeningController {
         }
         return iterable;
     }
-
+    /**
+     * Retrieves all job openings.
+     *
+     * @return an iterable collection of all job openings
+     */
     public Iterable<JobOpening> allJobOpenings() {
         return jobOpeningService.allJobOpenings();
     }
-
+    /**
+     * Finds a job opening by its reference.
+     *
+     * @param jobReference the reference of the job opening to find
+     * @return the job opening with the specified reference
+     */
     public JobOpening findJobOpeningByJobReference(JobReference jobReference) {
         return jobOpeningService.findJobOpening(jobReference);
     }

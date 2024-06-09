@@ -57,7 +57,7 @@ class JobOpeningBuilderTest {
 
     @Test
     void testWithAll() {
-        jobOpeningBuilder.withAll(jobReference, description.toString(), vacanciesNumber.number(), address.toString(), mode, contractType, titleOrFunction.toString(), customer, jobRequirementsSpecification, process, interviewModel);
+        jobOpeningBuilder.withAll(jobReference, description.toString(), vacanciesNumber.number(), address.toString(), mode, contractType, titleOrFunction.toString(), customer, process);
         JobOpening jobOpening = jobOpeningBuilder.build();
 
         assertEquals(jobReference, jobOpening.jobReference());
@@ -72,7 +72,7 @@ class JobOpeningBuilderTest {
 
     @Test
     void testBuild() {
-        jobOpeningBuilder.withAll(jobReference, description.toString(), vacanciesNumber.number(), address.toString(), mode, contractType, titleOrFunction.toString(), customer, jobRequirementsSpecification, process, interviewModel);
+        jobOpeningBuilder.withAll(jobReference, description.toString(), vacanciesNumber.number(), address.toString(), mode, contractType, titleOrFunction.toString(), customer, process);
         JobOpening jobOpening = jobOpeningBuilder.build();
 
         assertNotNull(jobOpening);

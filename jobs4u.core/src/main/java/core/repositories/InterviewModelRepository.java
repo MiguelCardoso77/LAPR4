@@ -4,21 +4,20 @@ import core.domain.interviewModel.InterviewModel;
 import eapli.framework.domain.repositories.DomainRepository;
 
 import java.util.Optional;
-
 /**
- * The repository for the InterviewModel entity.
+ * Represents a repository for managing InterviewModel entities in the Jobs4U system.
+ * This interface provides methods to find an InterviewModel by its ID and to retrieve all InterviewModels.
+ * It extends the DomainRepository interface from the eapli framework.
  *
- * @author Miguel Cardoso
+ * @author Diana Neves
  */
 public interface InterviewModelRepository extends DomainRepository<Integer , InterviewModel> {
-
     /**
      * Returns all the InterviewModels in the repository.
      *
      * @return an iterable with all the InterviewModels
      */
     Iterable<InterviewModel> allInterviewModels();
-
     /**
      * Returns the InterviewModel with the given id.
      *

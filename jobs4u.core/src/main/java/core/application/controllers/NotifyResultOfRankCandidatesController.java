@@ -78,5 +78,4 @@ public class NotifyResultOfRankCandidatesController {
         emailsToSend.add(emailsToSendCostumer);
         notifyCandidatesController.sendEmails(emailsToSend);
     }
-
 }

@@ -1,8 +1,6 @@
 package core.domain.jobOpening;
 
 import core.domain.customer.Customer;
-import core.domain.interviewModel.InterviewModel;
-import core.domain.jobRequirementsSpecification.JobRequirementsSpecification;
 import core.domain.process.Process;
 import eapli.framework.domain.model.DomainFactory;
 import org.apache.logging.log4j.LogManager;
@@ -25,9 +23,7 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
     private ContractType contractType;
     private TitleOrFunction titleOrFunction;
     private Customer customer;
-    private JobRequirementsSpecification jobRequirementsSpecification;
     private Process process;
-    private InterviewModel interviewModel;
 
     /**
      * Sets all attributes of the job opening.
@@ -40,14 +36,12 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
      * @param contractType               The contract type of the job opening.
      * @param titleOrFunction            The title or function of the job opening.
      * @param customer                    The customer associated to the job opening.
-     * @param jobRequirementsSpecification The job requirements specification of the job opening.
      * @param process                    The process for the job opening.
-     * @param interviewModel             The interview model of the job opening
      * @return This builder instance.
      */
     public JobOpeningBuilder withAll(JobReference jobReference, String description, int vacanciesNumber,
                                      String address, Mode mode, ContractType contractType, String titleOrFunction,
-                                    Customer customer, JobRequirementsSpecification jobRequirementsSpecification, Process process, InterviewModel interviewModel) {
+                                     Customer customer, Process process) {
         this.jobReference = jobReference;
         this.description = new Description(description);
         this.vacanciesNumber = new VacanciesNumber(vacanciesNumber);
@@ -56,9 +50,7 @@ public class JobOpeningBuilder implements DomainFactory<JobOpening> {
         this.contractType = contractType;
         this.titleOrFunction = new TitleOrFunction(titleOrFunction);
         this.customer = customer;
-        this.jobRequirementsSpecification = null;
         this.process = process;
-        this.interviewModel = null;
         return this;
     }
     /**

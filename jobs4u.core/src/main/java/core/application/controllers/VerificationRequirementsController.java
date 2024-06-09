@@ -21,7 +21,6 @@ import plugin.requirements.RequirementsPlugin;
  * @author tomasgoncalves
  */
 public class VerificationRequirementsController {
-
     private final RequirementsPlugin requirementsPlugin = new RequirementsPlugin();
     private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final ListJobOpeningApplicationsController listJobOpeningApplicationsController = new ListJobOpeningApplicationsController();
@@ -94,5 +93,4 @@ public class VerificationRequirementsController {
     public void changeJobInterviewStatus(Status statusFinal, Application applicationToVerify) {
         changeJobInterviewStatusController.changeJobInterviewStatus(statusFinal, applicationToVerify);
     }
-
 }

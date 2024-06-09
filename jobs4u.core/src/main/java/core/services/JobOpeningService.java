@@ -42,7 +42,7 @@ public class JobOpeningService {
                                          Mode mode, ContractType contractType, String titleOrFunction, Customer customer) {
         JobOpeningBuilder jobOpeningBuilder = new JobOpeningBuilder();
         Process process = processService.registerProcess(ProcessState.APPLICATION);
-        jobOpeningBuilder.withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer, null, process, null);
+        jobOpeningBuilder.withAll(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer, process);
         JobOpening jobOpening = jobOpeningBuilder.build();
         return jobOpeningRepository.save(jobOpening);
     }

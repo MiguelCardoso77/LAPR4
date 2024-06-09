@@ -15,19 +15,15 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "CUSTOMER")
 public class Customer implements AggregateRoot<EmailAddress> {
-
     @EmbeddedId
     @Column(name = "EMAIL_ADDRESS")
     private EmailAddress emailAddress;
-
     @ManyToOne
     @JoinColumn(name = "COMPANY_NUMBER")
     private Company company;
-
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_MANAGER_EMAIL")
     private SystemUser customerManager;
-
     @OneToOne
     @JoinColumn(name = "CUSTOMER_EMAIL")
     private SystemUser systemUser;

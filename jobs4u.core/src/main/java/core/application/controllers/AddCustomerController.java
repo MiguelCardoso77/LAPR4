@@ -22,11 +22,8 @@ import java.util.Set;
  */
 @UseCaseController
 public class AddCustomerController {
-
     private final Jobs4UPasswordPolicy passwordPolicy = new Jobs4UPasswordPolicy();
-
     private final UserManagementService user = AuthzRegistry.userService();
-
     private final CustomerService customerService = new CustomerService();
     /**
      * Registers a new customer with the specified information.

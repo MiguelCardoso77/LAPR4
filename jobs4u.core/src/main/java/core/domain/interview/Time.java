@@ -6,7 +6,7 @@ import jakarta.persistence.Embeddable;
 /**
  * Represents a time value, which is a value object.
  *
- * @author tomasgoncalves
+ * @author Tomás Gonçalves
  */
 @Embeddable
 public class Time implements ValueObject {

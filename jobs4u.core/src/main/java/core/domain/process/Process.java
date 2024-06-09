@@ -17,7 +17,6 @@ public class Process implements AggregateRoot<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idProcess;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "PROCESS_STATE")
     private ProcessState processState;

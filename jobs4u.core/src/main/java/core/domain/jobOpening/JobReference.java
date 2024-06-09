@@ -9,12 +9,9 @@ import jakarta.persistence.Transient;
  * @author Diana Neves
  */
 public class JobReference implements ValueObject, Comparable<JobReference> {
-
     private String jobReference;
-
     @Transient
     private static int lastSequentialNumber = 0;
-
     @Transient
     private int sequentialNumber;
 
@@ -145,6 +142,4 @@ public class JobReference implements ValueObject, Comparable<JobReference> {
         JobReference other = (JobReference) obj;
         return jobReference.equals(other.jobReference);
     }
-
-
 }

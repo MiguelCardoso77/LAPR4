@@ -8,31 +8,29 @@ import jakarta.persistence.*;
 
 import java.util.Calendar;
 import java.util.Objects;
-
+/**
+ * Represents a job interview.
+ * This class provides methods for getting and setting the attributes of a job interview, checking equality, generating hashcode, and getting a string representation of the job interview.
+ *
+ * @author Diana Neves
+ */
 @Entity
 @Table(name = "JOB_INTERVIEW")
 public class JobInterview implements AggregateRoot<Integer> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     @Temporal(TemporalType.DATE)
     private Calendar createdOn;
-
     @Column(name = "INTERVIEW_TIME")
     private Time time;
-
     @Column(name = "SCORE")
     private  Score score;
-
     @Column(name = "RESULT")
     private Result result;
-
     @ManyToOne
     @JoinColumn(name = "APPLICATION_ID")
     private Application application;
-
     @Column(name = "INTERVIEW_ANSWERS")
     private InterviewAnswers interviewAnswers;
 
@@ -53,7 +51,6 @@ public class JobInterview implements AggregateRoot<Integer> {
         this.application = application;
         this.interviewAnswers = interviewAnswers;
     }
-
     /**
      * Default constructor required by the ORM framework.
      */
@@ -199,14 +196,12 @@ public class JobInterview implements AggregateRoot<Integer> {
     public void updateScore(Score newScore){
         score = newScore;
     }
-
-    public Score score1(Object o) {
-        return score;
-    }
-
+    /**
+     * Returns the score of the interview.
+     *
+     * @return The score of the interview.
+     */
     public  int returnScore() {
         return score.score();
     }
-
-
 }

@@ -22,11 +22,9 @@ import java.util.List;
  * @author tomasgoncalves
  */
 public class ListJobOpeningApplicationsController {
-
     private final JobOpeningService jobOpeningService = new JobOpeningService();
     private final ApplicationService appServ = new ApplicationService();
     private final NotificationService notificationService = new NotificationService();
-
 
     /**
      * Retrieves all applications associated with a specific job opening.

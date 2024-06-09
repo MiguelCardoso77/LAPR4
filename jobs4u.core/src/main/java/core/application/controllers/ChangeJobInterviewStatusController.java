@@ -13,7 +13,6 @@ import core.services.NotificationService;
  *
  * @author 1220812@isep.ipp.pt
  */
-
 public class ChangeJobInterviewStatusController {
     private final ApplicationService applicationService = new ApplicationService();
     private final NotificationService notificationService = new NotificationService();

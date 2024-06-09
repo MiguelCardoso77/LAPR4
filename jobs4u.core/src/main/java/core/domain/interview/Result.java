@@ -6,7 +6,7 @@ import jakarta.persistence.Embeddable;
 /**
  * Represents the result of an interview, which is a value object.
  *
- * @author tomasgoncalves
+ * @author Tomás Gonçalves
  */
 @Embeddable
 public class Result implements ValueObject {
@@ -67,6 +67,4 @@ public class Result implements ValueObject {
     public String toString() {
         return result;
     }
-
-
 }

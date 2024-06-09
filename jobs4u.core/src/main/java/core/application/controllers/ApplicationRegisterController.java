@@ -31,7 +31,6 @@ import java.util.Scanner;
 @UseCaseController
 public class ApplicationRegisterController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-
     private final ApplicationService applicationService = new ApplicationService();
 
     /**
@@ -91,6 +90,7 @@ public class ApplicationRegisterController {
         File mainFile = new File(stringPath);
         File[] archives = mainFile.listFiles();
         List<String> data = new ArrayList<>();
+        assert archives != null;
         for (File file: archives) {
             if(file.getName().contains("candidate-data")){
                 Scanner scanner = new Scanner(file);

@@ -32,8 +32,6 @@ public class ListJobInterviewsApplicationController {
         return allJobInterviewsApplication;
     }
 
-
-
     /**
      * Finds a job interview by its identity.
      *

@@ -34,7 +34,7 @@ public class Curriculum implements ValueObject {
 
     /**
      * Equality is based on the curriculum path.
-     * @param object object
+     * @param o object
      * @return true if the curriculum paths are equal, false otherwise
      */
     @Override

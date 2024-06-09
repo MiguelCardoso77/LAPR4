@@ -33,8 +33,8 @@ public class ProcessService {
     /**
      * Finds a process by its ID.
      *
-     * @param id the ID of the process to find
-     * @return the found process, or null if not found
+     * @param id the ID of the process to find.
+     * @return the process with the given ID, or null if not found.
      */
     public Process findProcessByID(Integer id){
         Iterable<Process> processes = processRepository.allProcesses();
@@ -64,10 +64,10 @@ public class ProcessService {
     }
 
     /**
-     * Changes the state of a process.
+     * Changes the state of the process.
      *
-     * @param processState the new state of the process
-     * @param process the process to update
+     * @param processState the new state for the process.
+     * @param process the process whose state is to be changed.
      */
     public void changeProcessState(ProcessState processState, Process process){
         process.changeProcessState(processState);

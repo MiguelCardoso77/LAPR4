@@ -69,6 +69,12 @@ public class ApplicationService {
         return applicationRepository.allApplications();
     }
 
+    /**
+     * Finds all applications submitted for a specific job opening.
+     *
+     * @param jobOpening the job opening for which to find applications.
+     * @return a list of applications submitted for the specified job opening.
+     */
     public List<Application> findApplicationsForJobOpening(JobOpening jobOpening) {
         List<Application> applications = new ArrayList<>();
 
@@ -82,11 +88,11 @@ public class ApplicationService {
     }
 
     /**
-     * Updates the rank of an application.
+     * Updates the rank of an application and saves the changes.
      *
-     * @param rank         The new rank of the application.
-     * @param application  The application to update.
-     * @return The updated application.
+     * @param rank the new rank to be assigned.
+     * @param application the application to be updated.
+     * @return the updated application.
      */
     public Application updateRank(int rank, Application application) {
         application.updateRank(rank);
@@ -94,11 +100,10 @@ public class ApplicationService {
     }
 
     /**
-     * Updates the files associated with an application.
+     * Retrieves a list of applications managed by a specific customer manager.
      *
-     * @param applicationFiles The new files associated with the application.
-     * @param application      The application to update.
-     * @return The updated application.
+     * @param cm the customer manager.
+     * @return a list of applications managed by the specified customer manager.
      */
     public List<Application> applicationsByCM(SystemUser cm) {
         List<Application> applications = new ArrayList<>();
@@ -120,10 +125,10 @@ public class ApplicationService {
     }
 
     /**
-     * Retrieves all applications for a given candidate.
+     * Retrieves a list of applications submitted by a specific candidate.
      *
-     * @param candidate The candidate for which to retrieve applications.
-     * @return A list of applications for the given candidate.
+     * @param candidate the candidate.
+     * @return a list of applications submitted by the specified candidate.
      */
     public List<Application> applicationsByCandidate(Candidate candidate) {
         List<Application> applications = new ArrayList<>();
@@ -138,10 +143,10 @@ public class ApplicationService {
     }
 
     /**
-     * Retrieves all applications for a given job opening.
+     * Counts the number of applications submitted for a specific job opening.
      *
-     * @param jobOpening The job opening for which to retrieve applications.
-     * @return A list of applications for the given job opening.
+     * @param jobOpening the job opening.
+     * @return the number of applications submitted for the job opening.
      */
     public int numberOfApplicationsForJobOpening(JobOpening jobOpening) {
         int count = 0;
@@ -154,11 +159,11 @@ public class ApplicationService {
     }
 
     /**
-     * Updates the status of an application.
-     * @param status The new status of the application.
-     * @param application The application to update.
+     * Updates the status of an application and saves the changes.
      *
-     * @return The updated application.
+     * @param status the new status to be assigned.
+     * @param application the application to be updated.
+     * @return the updated application.
      */
     public Application updateStatus(Status status, Application application) {
         application.changeStatus(status);
@@ -166,9 +171,10 @@ public class ApplicationService {
     }
 
     /**
-     * Uploads the candidate requirements for an application.
-     * @param application The application for which to upload the candidate requirements.
-     * @param candidateRequirements The candidate requirements to upload.
+     * Uploads candidate requirements for an application.
+     *
+     * @param application the application to be updated.
+     * @param candidateRequirements the candidate requirements to be uploaded.
      */
     public void uploadCandidateRequirements(Application application, CandidateRequirements candidateRequirements) {
         application.uploadCandidateRequirements(candidateRequirements);

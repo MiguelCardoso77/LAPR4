@@ -70,11 +70,11 @@ public class JobInterviewService {
     }
 
     /**
-     * Uploads the responses for a specific job interview.
+     * Uploads the responses to a job interview and saves the updated interview.
      *
-     * @param interviewAnswers The interview answers to be uploaded.
-     * @param jobInterview     The job interview to which the answers are to be uploaded.
-     * @return The updated job interview.
+     * @param interviewAnswers the answers to be uploaded.
+     * @param jobInterview     the job interview to which the answers will be uploaded.
+     * @return the updated job interview after saving.
      */
     @Transactional
     public JobInterview uploadResponses(InterviewAnswers interviewAnswers, JobInterview jobInterview) {
@@ -83,10 +83,10 @@ public class JobInterviewService {
     }
 
     /**
-     * Retrieves all job interviews associated with a specific application.
+     * Finds all job interviews associated with a specific application.
      *
-     * @param application The application for which to retrieve the job interviews.
-     * @return A list of job interviews associated with the given application.
+     * @param application the application for which the interviews are to be found.
+     * @return a list of job interviews associated with the given application.
      */
     public List<JobInterview> findInterviewsForApplication(Application application) {
         List<JobInterview> interviews = new ArrayList<>();
@@ -101,12 +101,13 @@ public class JobInterviewService {
     }
 
     /**
-     * Retrieves a job interview by its ID.
+     * Finds a job interview by its ID.
      *
-     * @param id The ID of the job interview to be retrieved.
-     * @return The job interview with the given ID, or null if no job interview with the given ID is found.
+     * @param id the ID of the job interview to be found.
+     * @return the job interview with the given ID, or null if no interview is found.
      */
     public JobInterview findById(int id) {
         return jobInterviewRepository.ofIdentity(id).orElse(null);
     }
+
 }

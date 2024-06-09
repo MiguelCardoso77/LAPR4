@@ -220,12 +220,27 @@ public class Application implements AggregateRoot<Integer> {
         return this.jobReference;
     }
 
+    /**
+     * Retrieves the candidate requirements associated with this application.
+     *
+     * @return the candidate requirements.
+     */
     public CandidateRequirements candidateRequirements() { return this.candidateRequirements; }
 
+    /**
+     * Updates the rank of the application.
+     *
+     * @param rank the new rank to be assigned.
+     */
     public void updateRank(int rank) {
         this.rank = new Rank(rank);
     }
 
+    /**
+     * Changes the status of the application.
+     *
+     * @param status the new status to be assigned.
+     */
     public void changeStatus(Status status) {
         this.status = status;
     }
@@ -246,16 +261,32 @@ public class Application implements AggregateRoot<Integer> {
                 ", registered by " + operator;
     }
 
+    /**
+     * Returns a string representation of the application for server logging or display.
+     *
+     * @return a formatted string containing the application ID, status, and associated job reference.
+     */
     public String toStringServer() {
         return "Application: " + applicationID +
                 " with status: " + status +
                 " submitted for the job opening: " + jobReference.identity() + " ";
     }
 
+    /**
+     * Returns a notification message for the applicant regarding the status of their application.
+     *
+     * @return a formatted notification string containing the job reference and application status.
+     */
     public String notificationServer(){
         return "Your application on the Job Opening " + jobReference.identity() + " has been " + status + "!";
     }
 
+    /**
+     * Uploads the candidate's requirements for the application.
+     *
+     * @param candidateRequirements the candidate requirements to be uploaded
+     * @throws NullPointerException if the candidate requirements are null
+     */
     public void uploadCandidateRequirements(CandidateRequirements candidateRequirements) {
         Preconditions.nonNull(candidateRequirements, "Candidate Requirements answers cannot be null");
         this.candidateRequirements = candidateRequirements;

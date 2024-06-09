@@ -7,7 +7,7 @@ import eapli.framework.representations.dto.DTO;
  * This class serves as a simple container for transferring application data between different layers of the application.
  * It includes the name of the application and the number of applicants.
  * The class also provides methods to access these properties and a custom string representation.
- * The {@code ApplicationsDTO} class is annotated with {@code @DTO} to indicate its role as a Data Transfer Object.
+ * The ApplicationsDTO class is annotated with @DTO to indicate its role as a Data Transfer Object.
  *
  * @author Diana Neves
  */

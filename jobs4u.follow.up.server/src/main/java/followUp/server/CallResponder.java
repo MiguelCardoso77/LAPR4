@@ -23,6 +23,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class responsible for handling various types of requests from clients.
+ * Extends BaseResponder to use common response functionalities.
+ *
+ * @author Miguel Cardoso
+ */
 public class CallResponder extends BaseResponder {
     private final ApplicationService applicationService = new ApplicationService();
     private final CandidateService candidateService = new CandidateService();
@@ -32,10 +38,19 @@ public class CallResponder extends BaseResponder {
     private final ApplicationsDTOService applicationsDTOService = new ApplicationsDTOService();
     private final NotificationService notificationService = new NotificationService();
 
+    /**
+     * Constructor that initializes CallResponder with a client socket.
+     *
+     * @param socket The client socket
+     * @throws IOException If an I/O error occurs when creating the CallResponder
+     */
     public CallResponder(Socket socket) throws IOException {
         super(socket);
     }
 
+    /**
+     * Starts handling the incoming client requests.
+     */
     @Override
     public void startHandler() {
         System.out.println("Connection established!");
@@ -87,23 +102,49 @@ public class CallResponder extends BaseResponder {
         }
     }
 
+    /**
+     * Handles communication test (COMMTEST) request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode0() throws IOException {
         System.out.println("Code 0 received! -> COMMTEST\n");
         protocol.sendAck();
     }
 
+    /**
+     * Handles disconnect request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode1() throws IOException {
         System.out.println("Code 1 received! -> DISCONNECT\n");
     }
 
+    /**
+     * Handles acknowledgment (ACK) request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode2() throws IOException {
         System.out.println("Code 2 received! -> ACK\n");
     }
 
+    /**
+     * Handles error (ERR) request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode3() throws IOException {
         System.out.println("Code 3 received! -> ERR\n");
     }
 
+    /**
+     * Handles authentication request.
+     *
+     * @throws IOException If an I/O error occurs
+     * @throws ClassNotFoundException If the class of a serialized object cannot be found
+     */
     private void handleCode4() throws IOException, ClassNotFoundException {
         System.out.println("Code 4 received! -> Authentication Request\n");
 
@@ -132,6 +173,11 @@ public class CallResponder extends BaseResponder {
         }
     }
 
+    /**
+     * Handles email request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode5() throws IOException {
         System.out.println("Code 5 received! -> Email Request\n");
 
@@ -164,6 +210,11 @@ public class CallResponder extends BaseResponder {
         }
     }
 
+    /**
+     * Handles list candidate applications request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode6() throws IOException {
         System.out.println("Code 6 received! -> List Candidate Applications Request\n");
 
@@ -176,14 +227,12 @@ public class CallResponder extends BaseResponder {
         Iterable<Application> allApplications = applicationService.allApplications();
         List<Application> candidateApplications = new ArrayList<>();
         List<String> candidateApplicationsDTO = new ArrayList<>();
-        List<Integer> numberApplicants = new ArrayList<>();
 
         Candidate candidate = candidateService.findCandidateByEmail(email);
 
         for (Application application : allApplications) {
             if (application.candidate().equals(candidate)) {
                 candidateApplications.add(application);
-                numberApplicants.add(applicationService.numberOfApplicationsForJobOpening(application.jobReference()));
             }
         }
 
@@ -193,7 +242,6 @@ public class CallResponder extends BaseResponder {
             String string = applicationDTO.toString();
             candidateApplicationsDTO.add(string);
         }
-
 
         if (candidateApplications.isEmpty() || candidateApplicationsDTO.isEmpty()) {
             protocol.sendErr();
@@ -212,6 +260,11 @@ public class CallResponder extends BaseResponder {
 
     }
 
+    /**
+     * Handles list customer job openings request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode7() throws IOException {
         System.out.println("Code 7 received! -> List Customer Job Openings request\n");
 
@@ -256,6 +309,11 @@ public class CallResponder extends BaseResponder {
 
     }
 
+    /**
+     * Handles list candidate new notifications request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode8() throws IOException {
         System.out.println("Code 8 received! -> List Candidate new notifications request\n");
 
@@ -278,6 +336,11 @@ public class CallResponder extends BaseResponder {
         }).start();
     }
 
+    /**
+     * Handles list candidate old notifications request.
+     *
+     * @throws IOException If an I/O error occurs
+     */
     private void handleCode9() throws IOException {
         System.out.println("Code 9 received! -> List Candidate old notifications request\n");
 
@@ -292,8 +355,12 @@ public class CallResponder extends BaseResponder {
         listOldCandidateNotifications(candidate);
     }
 
-
-
+    /**
+     * Lists new notifications for the given candidate.
+     *
+     * @param candidate The candidate whose notifications are to be listed
+     * @throws IOException If an I/O error occurs
+     */
     private void listNewCandidateNotifications(Candidate candidate) throws IOException {
         List<Notification> allNotifications = (List<Notification>) notificationService.allNotifications();
 
@@ -320,6 +387,12 @@ public class CallResponder extends BaseResponder {
         }
     }
 
+    /**
+     * Lists old notifications for the given candidate.
+     *
+     * @param candidate The candidate whose notifications are to be listed
+     * @throws IOException If an I/O error occurs
+     */
     private void listOldCandidateNotifications(Candidate candidate) throws IOException {
         List<Notification> allNotifications = (List<Notification>) notificationService.allNotifications();
 
@@ -345,6 +418,12 @@ public class CallResponder extends BaseResponder {
         }
     }
 
+    /**
+     * Checks for new notifications periodically and sends them to the candidate.
+     *
+     * @param candidate The candidate whose notifications are to be checked
+     * @throws IOException If an I/O error occurs
+     */
     private void checkForNewNotifications(Candidate candidate) throws IOException {
         while (true) {
             try {
@@ -376,6 +455,12 @@ public class CallResponder extends BaseResponder {
         }
     }
 
+    /**
+     * Reads the length of the data from the input stream.
+     *
+     * @return The length of the data
+     * @throws IOException If an I/O error occurs
+     */
     private int readLenght() throws IOException {
         int dataLenL = new UnsignedInteger(inData.readByte()).positiveValue();
         int dataLenM = new UnsignedInteger(inData.readByte()).positiveValue();
@@ -383,6 +468,12 @@ public class CallResponder extends BaseResponder {
         return 256 * dataLenM + dataLenL;
     }
 
+    /**
+     * Converts a list of applications to a list of ApplicationsDTOs.
+     *
+     * @param applications The list of applications
+     * @return The list of ApplicationsDTOs
+     */
     public List<ApplicationsDTO> applicationsDTOS(List<Application> applications) {
         List<ApplicationsDTO> applicationsDTOS = new ArrayList<>();
         for (Application application : applications) {

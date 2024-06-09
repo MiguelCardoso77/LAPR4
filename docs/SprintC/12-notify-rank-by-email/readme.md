@@ -172,3 +172,11 @@ public void sendAllEmails(List<Email> emailsToSend) {
 
 
 ## 5. Demonstration
+
+### Confirmation 
+![Confirmation](confirmation.png)
+
+### Email
+![Email](email_received.png)
+
+

@@ -11,7 +11,6 @@ set of candidates for job offers (from its clients). At the end of the process, 
 to its client an ordered list of candidates for each job offer. The final recruitment decision is
 the responsibility of the client.
 
-
 ## 2. Planning and Technical Documentation
 
 [Planning and Technical Documentation](docs/readme.md)
@@ -23,6 +22,7 @@ To build the Jobs4U program, follow these steps:
 - a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
 - b) Navigate to the root directory of the project in the terminal.
 - c) Execute the one of the scripts (currently available for Linux/Unix/macOS system):
+
 
     ./rebuild-all.bat
             or
@@ -36,10 +36,19 @@ To execute the project Jobs4U tests, follow these steps:
 - b) Navigate to the root directory of the project in the terminal.
 - c) Execute the one of the scripts (currently available for Linux/Unix/macOS system):
 
+
     ./run-tests.sh
             or
     ./run-tests.bat
 
+### 4.1. How to generate coverage report
+
+- Execute the one of the scripts (currently available for Linux/Unix/macOS system):
+
+
+    ./generate-coverage-report.sh
+            or
+    ./generate-coverage-report.bat
 
 ## 5. How to Run
 
@@ -48,6 +57,7 @@ To run the Jobs4U program, follow these steps:
 - a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
 - b) Navigate to the root directory of the project in the terminal.
 - c) Execute the script (currently available for Linux/Unix/macOS system):
+
 
     ./run-all.sh
         or
@@ -61,6 +71,7 @@ To run the Customer app, follow these steps:
 - b) Navigate to the root directory of the project in the terminal.
 - c) Execute the script (currently available for Linux/Unix/macOS system):
     
+
     ./run-customer-app.sh
         or
     ./run-customer-app.bat
@@ -72,6 +83,7 @@ To run the Candidate app, follow these steps:
 - a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
 - b) Navigate to the root directory of the project in the terminal.
 - c) Execute the script (currently available for Linux/Unix/macOS system):
+
 
     ./run-candidate-app.sh
         or
@@ -85,9 +97,24 @@ To run the Candidate app, follow these steps:
 - b) Navigate to the root directory of the project in the terminal.
 - c) Execute the script (currently available for Linux/Unix/macOS system):
 
+
     ./run-backoffice-app.sh
         or
     ./run-backoffice-app.bat
+
+### 5.4. How to Run the Follow-Up Server
+
+To run the Follow-Up Server, follow these steps:
+
+- a) Connect to the DEI VPN, instructions at https://rede.dei.isep.ipp.pt/usermanual/vpn.html
+- b) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
+- c) Navigate to the root directory of the project in the terminal.
+- d) Execute the script (currently available for Linux/Unix/macOS system):
+
+
+    ./run-follow-up-server.sh
+        or
+    ./run-follow-up-server.bat
 
 ## 6. How to Install/Deploy into Another Machine (or Virtual Machine)
 
@@ -96,6 +123,7 @@ To install/deploy the Jobs4U program, follow these steps:
 - a) Ensure that Maven is installed on your system. If not, you can install it by following the instructions at https://maven.apache.org/install.html.
 - b) Navigate to the root directory of the project in the terminal.
 - c) Execute the script (currently available for Linux/Unix/macOS system):
+
 
     ./deploy.sh
         or

@@ -20,6 +20,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * Bootstraps job opening data.
+ * This bootstrapper registers sample job openings using the AddJobOpeningController.
+ * Requires the CustomerRepository, InterviewModelRepository, JobRequirementsSpecificationRepository,
+ * ProcessRepository, AddJobOpeningController, ChangeProcessStateController, SelectInterviewModelController,
+ * and UpdateJobOpeningRequirementsController to execute.
+ * This class is an Action to be used in the bootstrapping process.
+ *
+ * @author Diogo Ribeiro
+ */
 public class JobOpeningsBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(JobOpeningsBootstrapper.class);
 
@@ -33,6 +43,11 @@ public class JobOpeningsBootstrapper implements Action {
     private final SelectInterviewModelController selectInterviewModelController = new SelectInterviewModelController();
     private final UpdateJobOpeningRequirementsController updateJobOpeningRequirementsController = new UpdateJobOpeningRequirementsController();
 
+    /**
+     * Executes the bootstrapping process for job opening data.
+     * Registers sample job openings using the AddJobOpeningController.
+     * @return true if bootstrapping is successful, false otherwise
+     */
     @Override
     public boolean execute() {
         List<Customer> customers = (List<Customer>) customerRepository.findAllActive();
@@ -64,6 +79,16 @@ public class JobOpeningsBootstrapper implements Action {
         return true;
     }
 
+    /**
+     * Registers a job opening using the AddJobOpeningController.
+     * @param description the job opening description
+     * @param vacanciesNumber the number of vacancies
+     * @param address the job opening address
+     * @param mode the job opening mode
+     * @param contractType the job opening contract type
+     * @param titleOrFunction the job opening title or function
+     * @param customer the customer that owns the job opening
+     */
     private void registerJobOpening(String description, int vacanciesNumber, String address, Mode mode, ContractType contractType, String titleOrFunction, Customer customer) {
         JobReference jobReference = new JobReference(customer.company().companyName().toString(), true);
         addJobController.addJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, customer);

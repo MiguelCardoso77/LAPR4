@@ -20,6 +20,16 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Bootstraps applications data.
+ * This bootstrapper initializes sample applications, assigns ranks, and uploads requirements responses.
+ * It also changes the status of the applications for testing purposes.
+ * The applications are associated with job openings and candidates.
+ * Requires a registered operator user to execute.
+ * This class is an Action to be used in the bootstrapping process.
+ *
+ * @author Tomás Gonçalves
+ */
 public class ApplicationsBootstrapper implements Action {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationsBootstrapper.class);
 
@@ -30,6 +40,11 @@ public class ApplicationsBootstrapper implements Action {
     private final ApplicationRepository applicationRepository = PersistenceContext.repositories().applications();
     private final UploadRequirementsAnswersController uploadRequirementsAnswersController = new UploadRequirementsAnswersController();
 
+    /**
+     * Executes the bootstrapping process for applications data.
+     * Initializes sample applications, assigns ranks, uploads requirements responses, and changes application statuses.
+     * @return true if bootstrapping is successful, false otherwise
+     */
     @Override
     public boolean execute() {
         List<JobOpening> jobOpenings = (List<JobOpening>) jobOpeningRepository.allJobOpenings();
@@ -88,17 +103,35 @@ public class ApplicationsBootstrapper implements Action {
         return true;
     }
 
+    /**
+     * Registers an application with the given rank, application files, job reference, candidate, and operator.
+     * @param rank the rank of the application
+     * @param applicationFiles the application files
+     * @param jobReference the job opening reference
+     * @param candidate the candidate applying
+     * @param operator the operator registering the application
+     */
     private void registerApplication(String rank, String applicationFiles, JobOpening jobReference, Candidate candidate, SystemUser operator) {
         controller.registerApplication(rank, applicationFiles, jobReference, candidate, operator);
         LOGGER.debug("»»» Registering application {}", applicationFiles);
     }
 
+    /**
+     * Inserts the requirements responses for the given candidate requirements path and application.
+     * @param candidateRequirementsPath the path to the candidate requirements file
+     * @param application the application to insert the requirements responses
+     */
     private void insertRequirementsResponses(String candidateRequirementsPath, Application application) {
         List<String> requirements = uploadRequirementsAnswersController.retrieveResponseRequirements(candidateRequirementsPath);
         uploadRequirementsAnswersController.uploadRequirements(requirements, application);
         LOGGER.debug("»»» Changing requirements responses {}", candidateRequirementsPath);
     }
 
+    /**
+     * Changes the status of the given application to the given status.
+     * @param application the application to change the status
+     * @param status the status to change the application to
+     */
     private void changeApplicationStatus(Application application, Status status) {
         application.changeStatus(status);
         applicationRepository.save(application);

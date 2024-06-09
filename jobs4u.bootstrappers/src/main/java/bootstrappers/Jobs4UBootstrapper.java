@@ -19,9 +19,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base Bootstrapping data app
+ * Bootstraps the core data required for the application.
+ * This includes initializing essential entities and setting up initial user accounts.
+ * The bootstrapper creates a master user account with administrative privileges.
  *
- * @author Paulo Gandra de Sousa
+ * @author Miguel Cardoso
  */
 @SuppressWarnings("squid:S106")
 public class Jobs4UBootstrapper implements Action {
@@ -33,6 +35,12 @@ public class Jobs4UBootstrapper implements Action {
     private final AuthenticationService authenticationService = AuthzRegistry.authenticationService();
     private final UserRepository userRepository = PersistenceContext.repositories().users();
 
+    /**
+     * Executes the bootstrapping process.
+     * This method initializes the core data and sets up initial user accounts.
+     *
+     * @return true if bootstrapping is successful, false otherwise
+     */
     @Override
     public boolean execute() {
         System.out.println("Bootstrapping MasterUser...");
@@ -50,18 +58,18 @@ public class Jobs4UBootstrapper implements Action {
                 new NotificationsBootstrapper(),
         };
 
-        // execute all bootstrapping
         boolean ret = true;
         for (final Action boot : actions) {
-            System.out.println("\nBootstrapping " + nameOfEntity(boot) + "...");
+            System.out.println("\nBootstrapping " + entityName(boot) + "...");
             ret &= boot.execute();
         }
+
         return ret;
     }
 
     /**
-     * register a power user directly in the persistence layer as we need to
-     * circumvent authorisations in the Application Layer
+     * Registers a master user account.
+     * This method creates a system user with administrative privileges.
      */
     private void registerBootstrapAccount() {
         final SystemUserBuilder userBuilder = UserBuilderHelper.builder();
@@ -79,15 +87,21 @@ public class Jobs4UBootstrapper implements Action {
     }
 
     /**
-     * authenticate a super user to be able to register new users
-     *
+     * Authenticates the master user for bootstrapping.
+     * This method ensures that the master user has a valid session to perform bootstrapping actions.
      */
     protected void authenticateForBootstrapping() {
         authenticationService.authenticate(BOOTSTRAP, BOOTSTRAP_PWD);
         Invariants.ensure(authz.hasSession());
     }
 
-    private String nameOfEntity(final Action boot) {
+    /**
+     * Extracts the name of the entity from the bootstrapping action class name.
+     *
+     * @param boot the bootstrapping action
+     * @return the name of the entity being bootstrapped
+     */
+    private String entityName(final Action boot) {
         final String name = boot.getClass().getSimpleName();
         return Strings.left(name, name.length() - "Bootstrapper".length());
     }

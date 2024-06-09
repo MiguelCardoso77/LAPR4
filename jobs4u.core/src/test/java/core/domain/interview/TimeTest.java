@@ -9,7 +9,7 @@ public class TimeTest {
     @Test
     public void testConstructorAndGetters() {
         Time time = new Time(60);
-        assertEquals(60, time.getTime());
+        assertEquals(60, time.time());
     }
 
     @Test

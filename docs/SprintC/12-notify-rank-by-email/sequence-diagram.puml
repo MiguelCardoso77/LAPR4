@@ -1,7 +1,7 @@
 @startuml
 autonumber
 
-actor CustomerManager as CM
+actor CustomerManager
 
 participant NotifyResultOfRankCandidatesUI <<presentation>>
 
@@ -9,6 +9,7 @@ participant NotifyResultOfRankCandidatesController <<controller>>
 participant NotifyCandidatesController <<controller>>
 participant ListJobOpeningApplicationsController <<controller>>
 participant SelectJobOpeningController <<controller>>
+participant ListJobOpeningController <<controller>>
 
 participant ApplicationService <<service>>
 participant EmailService <<service>>
@@ -20,50 +21,68 @@ database JobOpeningRepository <<repository>>
 
 participant Jobs4UProtocol <<protocol>>
 
-activate CM
+activate CustomerManager
 
-        CM -> NotifyResultOfRankCandidatesUI : asks to notify the result of the selection
-
-        activate NotifyResultOfRankCandidatesUI
-
+        CustomerManager -> NotifyResultOfRankCandidatesUI : asks to notify the result of selection
+            activate NotifyResultOfRankCandidatesUI
+        
                 NotifyResultOfRankCandidatesUI -> NotifyResultOfRankCandidatesController : selectJobOpening()
-
                 activate NotifyResultOfRankCandidatesController
-
-
-                NotifyResultOfRankCandidatesController -> SelectJobOpeningController : selectJobOpening()
-
-                activate SelectJobOpeningController
-
-                    SelectJobOpeningController --> JobOpeningService : allJobOpenings()
-
-                activate JobOpeningService
-
-                JobOpeningService -> JobOpeningRepository : findAll()
-
-                activate JobOpeningRepository
-
-                JobOpeningRepository --> JobOpeningService  : list of all job openings
-
-                deactivate JobOpeningRepository
-
-                JobOpeningService --> SelectJobOpeningController : list of all job openings
-
-                deactivate JobOpeningService
-
-                SelectJobOpeningController --> NotifyResultOfRankCandidatesController : list of all job openings
-
-                deactivate SelectJobOpeningController
-
-                NotifyResultOfRankCandidatesController --> NotifyResultOfRankCandidatesUI : list of all job openings
-
+        
+                    NotifyResultOfRankCandidatesController -> SelectJobOpeningController : selectJobOpening()
+                    activate SelectJobOpeningController
+        
+                        SelectJobOpeningController -> ListJobOpeningController : showJobOpenings()
+                        activate ListJobOpeningController
+        
+                            ListJobOpeningController -> JobOpeningService : allJobOpenings()
+                            activate JobOpeningService
+        
+                                JobOpeningService -> JobOpeningRepository : findAll()
+                                activate JobOpeningRepository
+        
+                                    JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
+                                deactivate JobOpeningRepository
+        
+                                JobOpeningService --> ListJobOpeningController : Iterable<JobOpening> jobOpenings
+                            deactivate JobOpeningService
+        
+                            ListJobOpeningController --> SelectJobOpeningController : Iterable<JobOpening> jobOpenings
+                        deactivate ListJobOpeningController
+        
+                        SelectJobOpeningController -> SelectJobOpeningController : selectorPart(List<JobOpening> list)
+                        activate SelectJobOpeningController
+        
+                            SelectJobOpeningController -> ListJobOpeningController : findJobOpeningByJobReference(jobReference)
+                            activate ListJobOpeningController
+        
+                                ListJobOpeningController -> JobOpeningService : findJobOpening(jobReference)
+                                activate JobOpeningService
+        
+                                    JobOpeningService -> JobOpeningRepository : findAll()
+                                    activate JobOpeningRepository
+        
+                                        JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
+                                    deactivate JobOpeningRepository
+        
+                                    JobOpeningService --> ListJobOpeningController : job opening
+                                deactivate JobOpeningService
+        
+                                ListJobOpeningController --> SelectJobOpeningController : job opening
+                            deactivate ListJobOpeningController
+                        deactivate SelectJobOpeningController
+        
+                        SelectJobOpeningController --> NotifyResultOfRankCandidatesController : job opening
+                    deactivate SelectJobOpeningController
+        
+                    NotifyResultOfRankCandidatesController --> NotifyResultOfRankCandidatesUI : job opening
                 deactivate NotifyResultOfRankCandidatesController
-
-                NotifyResultOfRankCandidatesUI --> CM : lists job opening and asks to select one
+        
+                NotifyResultOfRankCandidatesUI --> CustomerManager : lists job opening and asks to select one
 
                 deactivate NotifyResultOfRankCandidatesUI
 
-                CM -> NotifyResultOfRankCandidatesUI : selects a job opening
+                CustomerManager -> NotifyResultOfRankCandidatesUI : selects a job opening
 
                 activate NotifyResultOfRankCandidatesUI
 
@@ -199,7 +218,7 @@ alt return is ACK code
 
         NotifyResultOfRankCandidatesController --> NotifyResultOfRankCandidatesUI : successfull operation
 
-        NotifyResultOfRankCandidatesUI --> CM : shows operation success
+        NotifyResultOfRankCandidatesUI --> CustomerManager : shows operation success
 
 else return is ERR code
 
@@ -215,7 +234,7 @@ else return is ERR code
 
             NotifyResultOfRankCandidatesController --> NotifyResultOfRankCandidatesUI : could not send emails
 
-        NotifyResultOfRankCandidatesUI --> CM : shows operation error
+        NotifyResultOfRankCandidatesUI --> CustomerManager : shows operation error
     deactivate NotifyResultOfRankCandidatesUI
 
 end alt

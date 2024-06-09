@@ -1,5 +1,6 @@
 package backoffice.presentation.application;
 
+import console.presentation.utils.ConsoleColors;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.candidate.Candidate;
@@ -21,11 +22,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author  1220812@isep.ipp.pt
+ * UI class responsible for handling the registration of applications for a job opening.
+ * It interacts with various controllers to carry out the necessary actions.
+ *
+ * @author Diogo Ribeiro
  */
-
 public class RegisterApplicationUI extends AbstractUI {
-
     private final RegisterCandidateController registerCandidateController = new RegisterCandidateController();
     private final ApplicationRegisterController applicationRegisterController = new ApplicationRegisterController();
     private final AddJobOpeningController jobOpeningController = new AddJobOpeningController();
@@ -34,17 +36,17 @@ public class RegisterApplicationUI extends AbstractUI {
     private final AddUserController addUserController = new AddUserController();
     private final Calendar createdOn = Calendar.getInstance();
 
-    @Override
-    public String headline() {
-        return "Register Applications for a Job Opening";
-    }
-
+    /**
+     * Executes the UI for registering applications for a job opening.
+     *
+     * @return true if the registration process is successful, false otherwise.
+     */
     @Override
     public boolean doShow() {
         Path path = selectSubfolder();
 
         if (path == null) {
-            System.out.println("No valid subfolder selected.");
+            System.out.println(ConsoleColors.RED + "No valid subfolder selected." + ConsoleColors.RESET);
             return false;
         }
 
@@ -94,6 +96,16 @@ public class RegisterApplicationUI extends AbstractUI {
         return true;
     }
 
+    /**
+     * Registers a candidate in the system.
+     *
+     * @param emailAddress     the candidate's email address.
+     * @param firstName        the candidate's first name.
+     * @param lastName         the candidate's last name.
+     * @param telephoneNumber  the candidate's telephone number.
+     * @param cvPath           the path to the candidate's CV file.
+     * @return the candidate object if the registration is successful, null otherwise.
+     */
     private Candidate candidate(String emailAddress, String firstName, String lastName, String telephoneNumber, String cvPath) {
         TelephoneNumber telephoneNumber1 = TelephoneNumber.valueOf(telephoneNumber);
         if (!registerCandidateController.verifyTelephoneNumber(telephoneNumber1)) {
@@ -105,6 +117,11 @@ public class RegisterApplicationUI extends AbstractUI {
         return listCandidatesController.findCandidateByTelephoneNumber(telephoneNumber1);
     }
 
+    /**
+     * Allows the user to select a subfolder for processing.
+     *
+     * @return the path of the selected subfolder, or null if no valid selection is made.
+     */
     public Path selectSubfolder() {
         Scanner scanner = new Scanner(System.in);
         Path outputDirectory = Paths.get("SCOMP/2001/applicationEmailBot");
@@ -163,5 +180,15 @@ public class RegisterApplicationUI extends AbstractUI {
         }
 
         return null;
+    }
+
+    /**
+     * The description of the UI.
+     *
+     * @return the description of the UI.
+     */
+    @Override
+    public String headline() {
+        return "Register Applications for a Job Opening";
     }
 }

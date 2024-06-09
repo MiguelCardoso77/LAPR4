@@ -7,7 +7,6 @@ import eapli.framework.actions.Action;
  *
  * @author Tomás Gonçalves
  */
-
 public class ListJobOpeningApplicationsAction implements Action {
 
     /**

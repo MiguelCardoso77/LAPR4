@@ -20,18 +20,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * UI for adding a user to the application.
+ * UI class responsible for adding a new user to the application.
  * <p>
- * Created by nuno on 22/03/16.
+ * This class provides functionality to interactively add a new user by
+ * specifying their first name, last name, email, and roles.
+ * It handles user input, generates a password, and delegates user addition
+ * to the AddUserController.
+ *
+ * @author Diana Neves
  */
 public class AddUserUI extends AbstractUI {
-
     private final AddUserController theController = new AddUserController();
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
+    /**
+     * Displays the UI for adding a new user.
+     *
+     * @return false indicating that the operation is finished
+     */
     @Override
     protected boolean doShow() {
-
         final String firstName = Console.readLine("First Name");
         final String lastName = Console.readLine("Last Name");
         final String email = Console.readLine("E-Mail");
@@ -53,6 +61,12 @@ public class AddUserUI extends AbstractUI {
         return false;
     }
 
+    /**
+     * Displays the available roles based on the current user's authorization.
+     *
+     * @param roleTypes a set to store selected roles
+     * @return true if the roles are shown successfully, false otherwise
+     */
     private boolean showRoles(final Set<Role> roleTypes) {
         final Menu rolesMenu;
 
@@ -68,6 +82,12 @@ public class AddUserUI extends AbstractUI {
         return renderer.render();
     }
 
+    /**
+     * Builds the menu for selecting roles based on available roles in the system.
+     *
+     * @param roleTypes a set to store selected roles
+     * @return the constructed menu
+     */
     private Menu buildRolesMenu(final Set<Role> roleTypes) {
         final Menu rolesMenu = new Menu();
         int counter = 0;
@@ -80,6 +100,12 @@ public class AddUserUI extends AbstractUI {
         return rolesMenu;
     }
 
+    /**
+     * Builds the menu for selecting roles available to customer managers.
+     *
+     * @param roleTypes a set to store selected roles
+     * @return the constructed menu
+     */
     private Menu buildCustomerManagerAvailableRoles(final Set<Role> roleTypes) {
         final Menu rolesMenu = new Menu();
         int counter = 0;
@@ -90,6 +116,12 @@ public class AddUserUI extends AbstractUI {
         return rolesMenu;
     }
 
+    /**
+     * Builds the menu for selecting roles available to operators.
+     *
+     * @param roleTypes a set to store selected roles
+     * @return the constructed menu
+     */
     private Menu buildOperatorAvailableRoles(final Set<Role> roleTypes) {
         final Menu rolesMenu = new Menu();
         int counter = 0;
@@ -100,6 +132,11 @@ public class AddUserUI extends AbstractUI {
         return rolesMenu;
     }
 
+    /**
+     * Returns the headline for this UI.
+     *
+     * @return the headline for this UI
+     */
     @Override
     public String headline() {
         return "Add User";

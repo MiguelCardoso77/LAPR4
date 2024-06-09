@@ -8,28 +8,23 @@ import core.domain.jobOpening.JobReference;
 import eapli.framework.domain.repositories.ConcurrencyException;
 import eapli.framework.domain.repositories.IntegrityViolationException;
 import eapli.framework.io.util.Console;
-import eapli.framework.presentation.console.AbstractListUI;
-import eapli.framework.visitor.Visitor;
+import eapli.framework.presentation.console.AbstractUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * User interface for listing all applications of a job opening.
  *
  * @author Tomás Gonçalves
  */
-
-public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
-    private final ListJobOpeningApplicationsController theController = new ListJobOpeningApplicationsController();
-
-    private final ListJobOpeningController theController1 = new ListJobOpeningController();
-
-
+public class ListJobOpeningApplicationsUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(ListJobOpeningApplicationsUI.class);
+
+    private final ListJobOpeningApplicationsController theController = new ListJobOpeningApplicationsController();
+    private final ListJobOpeningController theController1 = new ListJobOpeningController();
 
     /**
      * Generates the headline for this UI.
@@ -42,17 +37,6 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
     }
 
     /**
-     * Provides the message to display when no applications are found.
-     *
-     * @return The message indicating no applications found.
-     */
-    @Override
-    protected String emptyMessage() {
-        return "No applications found for this job opening.";
-    }
-
-
-    /**
      * Retrieves all applications for a specific job opening.
      *
      * @param jobReference The reference to the job opening.
@@ -62,38 +46,14 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         return theController.allApplicationsOfJobOpening(jobReference);
     }
 
-
     /**
      * Retrieves all job openings.
      *
      * @return Iterable of all job openings.
      */
-    @Override
     protected Iterable<JobOpening> elements() {
         return theController1.allJobOpenings();
     }
-
-    @Override
-    protected Visitor<JobOpening> elementPrinter() {
-        return null;
-    }
-
-
-    /**
-     * Specifies the name of the elements being listed.
-     *
-     * @return The name of the elements being listed.
-     */
-    @Override
-    protected String elementName() {
-        return "Application";
-    }
-
-    @Override
-    protected String listHeader() {
-        return String.format("#  %-30s%-30s%-30s", "ID", "Submission Date", "Rank");
-    }
-
 
     /**
      * Displays all applications of a selected job opening.
@@ -105,6 +65,7 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
         final List<JobOpening> list = new ArrayList<>();
         final Iterable<JobOpening> iterable = elements();
         JobOpening jobOpeningApplication = null;
+
         if (!iterable.iterator().hasNext()) {
             System.out.println("There is no job openings ");
         } else {
@@ -129,9 +90,11 @@ public class ListJobOpeningApplicationsUI extends AbstractListUI<JobOpening> {
                 }
             }
         }
+
         if (jobOpeningApplication != null) {
             theController.showApplicationsOfJobOpening(jobOpeningApplication.jobReference());
         }
+
         return true;
     }
 }

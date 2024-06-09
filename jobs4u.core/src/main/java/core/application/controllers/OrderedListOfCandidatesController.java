@@ -13,7 +13,7 @@ import java.util.List;
  * Controller responsible for generating ordered lists of job interviews and applications
  * based on interview scores for a specific job opening.
  *
- * @autor Tomás Gonçalves
+ * @author Tomás Gonçalves
  */
 public class OrderedListOfCandidatesController {
 

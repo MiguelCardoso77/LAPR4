@@ -13,16 +13,16 @@ import java.util.List;
 @UseCaseController
 public class ListCandidatesController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final CandidateService candSvc = new CandidateService();
+    private final CandidateService candidateSvc = new CandidateService();
 
     public List<Candidate> allCandidates() {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.OPERATOR);
 
-        return (List<Candidate>) candSvc.allCandidates();
+        return (List<Candidate>) candidateSvc.allCandidates();
     }
     public Candidate findCandidateByTelephoneNumber(TelephoneNumber telephoneNumber){
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.ADMIN, Jobs4URoles.OPERATOR);
 
-        return candSvc.findCandidateByTelephoneNumber(telephoneNumber);
+        return candidateSvc.findCandidateByTelephoneNumber(telephoneNumber);
     }
 }

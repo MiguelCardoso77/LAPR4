@@ -13,7 +13,7 @@ import eapli.framework.infrastructure.authz.application.AuthzRegistry;
  */
 public class DisplayCandidateDataController {
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
-    private final CandidateService candServ = new CandidateService();
+    private final CandidateService candidateService = new CandidateService();
 
     /**
      * Retrieves all candidates.
@@ -22,7 +22,7 @@ public class DisplayCandidateDataController {
      */
     public Iterable<Candidate> allCandidates() {
         authz.ensureAuthenticatedUserHasAnyOf(Jobs4URoles.BOOTSTRAP, Jobs4URoles.CUSTOMER_MANAGER, Jobs4URoles.ADMIN);
-        return candServ.allCandidates();
+        return candidateService.allCandidates();
     }
 
 }

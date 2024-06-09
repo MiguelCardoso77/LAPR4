@@ -156,12 +156,12 @@ class JobInterviewTest {
 
     @Test
     void testGetScore() {
-        assertEquals(score, jobInterview.getScore(null));
+        assertEquals(score, jobInterview.score1(null));
     }
 
     @Test
     void testReturnScore() {
-        assertEquals(score.getScore(), jobInterview.returnScore());
+        assertEquals(score.score(), jobInterview.returnScore());
     }
 
 }

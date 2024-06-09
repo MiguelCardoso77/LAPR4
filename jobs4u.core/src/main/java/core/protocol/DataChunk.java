@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class DataChunk implements Serializable {
     private UnsignedInteger dataLengthL;
-    private UnsignedInteger dataLenghtM;
+    private UnsignedInteger dataLengthM;
     private final byte[] data;
 
-    public DataChunk(UnsignedInteger dataLengthL, UnsignedInteger dataLenghtM, byte[] data) {
+    public DataChunk(UnsignedInteger dataLengthL, UnsignedInteger dataLengthM, byte[] data) {
         this.dataLengthL = dataLengthL;
-        this.dataLenghtM = dataLenghtM;
+        this.dataLengthM = dataLengthM;
         this.data = data;
     }
 
@@ -22,7 +22,7 @@ public class DataChunk implements Serializable {
     }
 
     public UnsignedInteger dataLenM() {
-        return dataLenghtM;
+        return dataLengthM;
     }
 
     public byte[] data() {

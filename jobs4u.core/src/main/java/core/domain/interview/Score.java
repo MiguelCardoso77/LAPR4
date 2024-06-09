@@ -76,7 +76,7 @@ public class Score implements ValueObject {
      *
      * @return The score value.
      */
-    public Integer getScore() {
+    public Integer score() {
         return score;
     }
 }

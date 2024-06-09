@@ -6,7 +6,6 @@ import eapli.framework.validations.Preconditions;
 /**
  * Builder class for creating instances of JobRequirementsSpecification.
  * Allows for fluent construction of JobRequirementsSpecification objects with specified attributes.
- *
  * Usage:
  * JobRequirementsSpecificationBuilder builder = new JobRequirementsSpecificationBuilder();
  * JobRequirementsSpecification requirements = builder.withAll(1, "Bachelor's Degree", 2, "Java programming").build();

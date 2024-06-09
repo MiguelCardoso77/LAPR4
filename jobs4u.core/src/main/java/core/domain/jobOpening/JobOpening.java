@@ -108,14 +108,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        JobReference otherJobReference = (JobReference) obj;
-        return jobReference.equals(otherJobReference);
+        return obj != null && getClass() == obj.getClass();
     }
 
     /**
@@ -244,10 +237,7 @@ public class JobOpening implements AggregateRoot<JobReference> {
     public boolean sameReference(JobReference jobReference){
         String jobReference1 = String.valueOf(jobReference);
         String jobOpeningReference = String.valueOf(this.jobReference);
-        if(jobOpeningReference.equals(jobReference1)){
-            return true;
-        }
-        return false;
+        return jobOpeningReference.equals(jobReference1);
     }
     /**
      * Returns a string representation of this job opening.

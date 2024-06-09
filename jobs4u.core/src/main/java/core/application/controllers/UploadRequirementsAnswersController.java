@@ -62,10 +62,9 @@ public class UploadRequirementsAnswersController {
      * Shows the applications associated with a specific job opening.
      *
      * @param jobReference The reference of the job opening
-     * @return The iterable collection of applications associated with the job opening
      */
-    public Iterable<Application> showApplicationsOfJobOpening(JobReference jobReference) {
-        return listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobReference);
+    public void showApplicationsOfJobOpening(JobReference jobReference) {
+        listJobOpeningApplicationsController.showApplicationsOfJobOpening(jobReference);
     }
 
     /**

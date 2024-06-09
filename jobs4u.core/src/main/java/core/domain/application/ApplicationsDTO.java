@@ -13,14 +13,6 @@ public class ApplicationsDTO {
         this.applicants = applicants;
     }
 
-    public String myApplication() {
-        return application;
-    }
-
-    public Integer myApplicants() {
-        return applicants;
-    }
-
     @Override
     public String toString() {
         return application + "Number of Applicants: " + applicants;

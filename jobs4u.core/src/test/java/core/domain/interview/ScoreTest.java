@@ -9,7 +9,7 @@ public class ScoreTest {
     @Test
     public void testConstructorAndGetters() {
         Score score = new Score(75);
-        assertEquals(75, score.getScore());
+        assertEquals(75, score.score());
     }
 
     @Test

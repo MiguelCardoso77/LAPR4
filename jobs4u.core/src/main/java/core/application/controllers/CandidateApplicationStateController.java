@@ -2,8 +2,7 @@ package core.application.controllers;
 
 import core.domain.application.Application;
 import core.domain.application.Status;
-import core.domain.candidate.Candidate;
-import core.domain.notification.Notification;
+
 import core.services.ApplicationService;
 import core.services.NotificationService;
 
@@ -135,16 +134,4 @@ public class CandidateApplicationStateController {
             notificationService.createNotification(application, "Your application has been received!", application.candidate());
         }
     }
-
-    /**
-     * Retrieves all notifications for a specific candidate.
-     *
-     * @param candidate The candidate to retrieve notifications for.
-     * @return A list of notifications for the candidate.
-     */
-
-    public List<Notification> candidateNotifications(Candidate candidate){
-        return notificationService.findNotificationsByCandidate(candidate);
-    }
-
 }

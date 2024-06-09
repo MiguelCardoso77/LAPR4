@@ -200,12 +200,12 @@ public class JobInterview implements AggregateRoot<Integer> {
         score = newScore;
     }
 
-    public Score getScore(Object o) {
+    public Score score1(Object o) {
         return score;
     }
 
     public  int returnScore() {
-        return score.getScore();
+        return score.score();
     }
 
 

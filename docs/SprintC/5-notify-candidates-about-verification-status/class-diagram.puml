@@ -13,18 +13,18 @@ package "presentation" {
     class NotifyCandidatesUI {
         + doShow()
         + headline()
-        + selectJobOpening()
-        + selectApplication(selectedJobOpening)
-        + getLastJobInterview(selectedApplication)
-        + updateRank(rank, selectedApplication)
+        + buildSubject(application)
+        + buildBody(application, status)
     }
 }
 
 package "application" {
     class NotifyCandidatesController {
-        + showJobOpenings()
-        + allJobOpening()
-        + findJobOpeningByJobReference(jobReference)
+        + findApplicationsToNotify()
+        + findCandidateEmail(application)
+        + checkApplicationStatus(application)
+        + createEmail(candidateEmail, subject, body)
+        + sendEmails(emails)
     }
 }
 
@@ -38,11 +38,8 @@ package "services" {
     }
 
     class EmailService {
-        + registerJobOpening(jobReference, description, vacanciesNumber, address, mode, contractType, titleOrFunction, company)
-        + findJobOpening(jobReference)
-        + updateJobRequirements(jobReference, jobRequirementsSpecification)
-        + verifyJobReference(jobReference)
-        + allJobOpenings()
+        + createEmail(candidateEmail, subject, body)
+        + sendAllEmails(emails)
     }
 }
 
@@ -71,6 +68,24 @@ package "domain" {
         + updateRank(rank)
         + toString()
     }
+
+    class Email {
+        + Email(candidateEmail, subject, body)
+        + candidateEmail()
+        + subject()
+        + body()
+    }
+}
+
+package "protocol" {
+    class Jobs4UProtocol {
+        + sendCommTest()
+        + sendAck()
+        + sendErr()
+        + sendDisconnect()
+        + sendAuth(email, password)
+        + sendEmail(toWho, subject, body)
+    }
 }
 
 NotifyCandidatesUI --> NotifyCandidatesController
@@ -79,6 +94,8 @@ NotifyCandidatesController --> ApplicationService
 NotifyCandidatesController --> EmailService
 
 ApplicationService --> ApplicationRepository
+EmailService --> Email : creates
+EmailService --> Jobs4UProtocol
 
 ApplicationRepository --> Application : stores
 

@@ -188,6 +188,39 @@ that follows the rules set by the protocol.
 ```
 
 ## 4. Testing
+All Protocol codes were tested to assure they were sending the correct signals to the server.
+
+```java
+    @Test
+    void testCommtestCode() {
+        assertEquals((byte) 0, ProtocolCodes.COMMTEST.code());
+    }
+
+    @Test
+    void testDisconnectCode() {
+        assertEquals((byte) 1, ProtocolCodes.DISCONNECT.code());
+    }
+
+    @Test
+    void testAckCode() {
+        assertEquals((byte) 2, ProtocolCodes.ACK.code());
+    }
+
+    @Test
+    void testErrCode() {
+        assertEquals((byte) 3, ProtocolCodes.ERR.code());
+    }
+
+    @Test
+    void testAuthCode() {
+        assertEquals((byte) 4, ProtocolCodes.AUTH.code());
+    }
+
+    @Test
+    void testEmailCode() {
+        assertEquals((byte) 5, ProtocolCodes.EMAIL.code());
+    }
+```
 
 ## 5. Demonstration
 ![demonstration.png](demonstration.png)

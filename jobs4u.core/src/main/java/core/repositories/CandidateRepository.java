@@ -14,6 +14,7 @@ import java.util.Optional;
  * @author Miguel Cardoso
  */
 public interface CandidateRepository extends DomainRepository<TelephoneNumber, Candidate> {
+
     /**
      * Retrieves all candidates from the repository.
      *
@@ -27,6 +28,5 @@ public interface CandidateRepository extends DomainRepository<TelephoneNumber, C
      * @param telephoneNumber candidate´s telephone number
      * @return candidate
      */
-
     Optional<Candidate> findByTelephoneNumber(TelephoneNumber telephoneNumber);
 }

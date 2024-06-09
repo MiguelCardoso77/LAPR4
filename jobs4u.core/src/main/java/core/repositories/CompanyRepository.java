@@ -6,10 +6,10 @@ import eapli.framework.domain.repositories.DomainRepository;
 import java.util.Optional;
 
 /**
+ * A repository for companies.
  *
- *  @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 public interface CompanyRepository extends DomainRepository<Integer, Company> {
 
     /**
@@ -19,6 +19,7 @@ public interface CompanyRepository extends DomainRepository<Integer, Company> {
      * @return an {@link Optional} containing the company if found, or empty if not found
      */
     Optional<Company> findByCompanyID(Integer id);
+
     /**
      * Retrieve all companies.
      *

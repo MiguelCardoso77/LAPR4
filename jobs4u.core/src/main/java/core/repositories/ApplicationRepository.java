@@ -6,10 +6,12 @@ import eapli.framework.domain.repositories.DomainRepository;
 import java.util.Optional;
 
 /**
- * @author 1220812@isep.ipp.pt
+ * The repository for applications.
+ *
+ * @author Diogo Ribeiro
  */
+public interface ApplicationRepository extends DomainRepository<Integer, Application> {
 
-public interface ApplicationRepository extends DomainRepository<Integer ,Application> {
     /**
      * Find an application by its ID.
      *

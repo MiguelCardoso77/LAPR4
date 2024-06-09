@@ -4,13 +4,15 @@ import core.domain.notification.Notification;
 import eapli.framework.domain.repositories.DomainRepository;
 
 import java.util.Optional;
+
 /**
  * Repository interface for managing {@link Notification} persistence.
  * This interface provides methods for retrieving a notification by its ID and retrieving all notifications.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 public interface NotificationRepository extends DomainRepository<Integer, Notification> {
+
     /**
      * Retrieves a notification by its ID.
      *
@@ -19,11 +21,11 @@ public interface NotificationRepository extends DomainRepository<Integer, Notifi
      */
     @Override
     Optional<Notification> ofIdentity(Integer id);
+
     /**
      * Retrieves all notifications.
      *
      * @return An Iterable containing all notifications.
      */
-
     Iterable<Notification> allNotifications();
 }

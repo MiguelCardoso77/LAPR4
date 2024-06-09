@@ -10,8 +10,8 @@ import eapli.framework.domain.repositories.DomainRepository;
  *
  * @author Diana Neves
  */
-
 public interface JobInterviewRepository extends DomainRepository<Integer, JobInterview> {
+
     /**
      * Retrieves all job interviews from the repository.
      *

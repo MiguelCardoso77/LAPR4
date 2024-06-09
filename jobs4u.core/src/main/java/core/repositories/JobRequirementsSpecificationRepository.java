@@ -6,10 +6,10 @@ import eapli.framework.domain.repositories.DomainRepository;
 /**
  * Repository interface for managing JobRequirementsSpecification entities.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 public interface JobRequirementsSpecificationRepository extends DomainRepository<Integer , JobRequirementsSpecification> {
+
     /**
      * Retrieves all JobRequirementsSpecification entities.
      *

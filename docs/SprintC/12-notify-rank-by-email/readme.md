@@ -78,6 +78,10 @@ candidatos selecionados que deve incluir o nome e dados de contacto do candidato
 ### 1.6. System Sequence Diagram (SSD)
 ![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
+### 1.7. Sequence Diagram (SD)
+![sequence-diagram.svg](sequence-diagram.svg)
+
+
 ## 2. Analysis and Design
 
 ### Analysis

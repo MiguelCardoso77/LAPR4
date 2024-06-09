@@ -159,6 +159,6 @@ public class ChangeProcessStatusUI extends AbstractUI {
      */
     @Override
     public String headline() {
-        return "change status of a phase of a job opening";
+        return "Change Phase Status of a Job Opening";
     }
 }

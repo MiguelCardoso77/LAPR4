@@ -12,7 +12,7 @@ import eapli.framework.presentation.console.AbstractUI;
 /**
  * This class represents the user interface for selecting job requirements specifications and associating them with a job opening.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 public class SelectRequirementsSpecificationUI extends AbstractUI {
     private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();

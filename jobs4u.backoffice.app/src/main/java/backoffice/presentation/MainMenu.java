@@ -16,22 +16,44 @@ import eapli.framework.presentation.console.menu.VerticalMenuRenderer;
 import infrastructure.Application;
 
 /**
+ * The MainMenu class represents the main menu of the Jobs4u Back Office application.
+ * It extends the AbstractUI class and provides the structure for rendering the main menu.
+ * The menu includes options for user management, based on the roles of the authenticated user.
  *
- * @author Paulo Gandra Sousa
+ * <p>This class interacts with various sub-menus such as MyUserMenu, AdminMenu,
+ * CustomerManagerMenu, LanguageEngineerMenu, and OperatorMenu to build a comprehensive
+ * user interface.</p>
+ *
+ * @author Miguel Cardoso
+ * @see AbstractUI
+ * @see MyUserMenu
+ * @see AdminMenu
+ * @see CustomerManagerMenu
+ * @see LanguageEngineerMenu
+ * @see OperatorMenu
+ * @see AuthorizationService
+ * @see AuthzRegistry
+ * @see Menu
+ * @see MenuItem
+ * @see MenuRenderer
+ * @see HorizontalMenuRenderer
+ * @see VerticalMenuRenderer
+ * @see ExitWithMessageAction
+ * @see Application
  */
 public class MainMenu extends AbstractUI {
-
-    private static final String RETURN_LABEL = "Return ";
     private static final int EXIT_OPTION = 0;
-
-    // MENU OPTIONS
     private static final int MY_USER_OPTION = 1;
     private static final int USER_MANAGEMENT_OPTION = 2;
 
     private static final String SEPARATOR_LABEL = "--------------";
-
     private final AuthorizationService authz = AuthzRegistry.authorizationService();
 
+    /**
+     * Displays the main menu.
+     *
+     * @return true if the user selected the exit option, false otherwise
+     */
     @Override
     public boolean show() {
         drawFormTitle();
@@ -39,7 +61,9 @@ public class MainMenu extends AbstractUI {
     }
 
     /**
-     * @return true if the user selected the exit option
+     * Executes the main logic of displaying the menu and handling user input.
+     *
+     * @return true if the user selected the exit option, false otherwise
      */
     @Override
     public boolean doShow() {
@@ -53,11 +77,21 @@ public class MainMenu extends AbstractUI {
         return renderer.render();
     }
 
+    /**
+     * Returns the headline of the menu, indicating the authenticated user or anonymous state.
+     *
+     * @return the headline string
+     */
     @Override
     public String headline() {
         return authz.session().map(s -> "BackOffice [ @" + s.authenticatedUser().identity() + " ]").orElse("BackOffice [ ==Anonymous== ]");
     }
 
+    /**
+     * Builds the main menu structure, including sub-menus based on the roles of the authenticated user.
+     *
+     * @return the constructed main menu
+     */
     private Menu buildMainMenu() {
         final Menu mainMenu = new Menu();
 
@@ -84,7 +118,7 @@ public class MainMenu extends AbstractUI {
         }
 
         if (authz.isAuthenticatedUserAuthorizedTo(Jobs4URoles.LANGUAGE_ENGINEER)) {
-            final Menu languageEngineerMenu = buildLanguageEnginnerMenu();
+            final Menu languageEngineerMenu = buildLanguageEngineerMenu();
             mainMenu.addSubMenu(USER_MANAGEMENT_OPTION, languageEngineerMenu);
         }
 
@@ -93,21 +127,41 @@ public class MainMenu extends AbstractUI {
         return mainMenu;
     }
 
+    /**
+     * Builds the admin menu.
+     *
+     * @return the constructed admin menu
+     */
     private Menu buildAdminMenu() {
         AdminMenu admin = new AdminMenu();
         return admin.build();
     }
 
+    /**
+     * Builds the customer manager menu.
+     *
+     * @return the constructed customer manager menu
+     */
     private Menu buildCustomerManagerMenu() {
         CustomerManagerMenu customerManager = new CustomerManagerMenu();
         return customerManager.build();
     }
 
-    private Menu buildLanguageEnginnerMenu() {
+    /**
+     * Builds the language engineer menu.
+     *
+     * @return the constructed language engineer menu
+     */
+    private Menu buildLanguageEngineerMenu() {
         LanguageEngineerMenu languageEngineerMenu = new LanguageEngineerMenu();
         return languageEngineerMenu.build();
     }
 
+    /**
+     * Builds the operator menu.
+     *
+     * @return the constructed operator menu
+     */
     private Menu buildOperatorMenu() {
         OperatorMenu operator = new OperatorMenu();
         return operator.build();

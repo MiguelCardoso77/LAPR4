@@ -15,11 +15,24 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * User interface for adding a new job opening.
+ * Allows users to input details such as description, vacancies number, address, mode, contract type, title or function, and customer.
+ * Displays a list of customers to choose from when selecting a customer.
+ * Utilizes controllers to interact with the domain layer.
+ *
+ * @author Miguel Cardoso
+ */
 public class AddJobOpeningUI extends AbstractUI {
     private static final Logger LOGGER = LoggerFactory.getLogger(AddJobOpeningUI.class);
     private final AddJobOpeningController theController = new AddJobOpeningController();
     private final ListCustomerController customerController = new ListCustomerController();
 
+    /**
+     * Displays the UI for adding a new job opening and handles user input.
+     *
+     * @return false indicating that the UI should exit after execution
+     */
     @Override
     protected boolean doShow() {
         final String description = Console.readLine("Description");
@@ -48,6 +61,11 @@ public class AddJobOpeningUI extends AbstractUI {
         return false;
     }
 
+    /**
+     * Displays a list of modes.
+     *
+     * @return the selected mode
+     */
     private Mode showModes() {
         System.out.println("Select Mode:");
         System.out.println("1. HYBRID");
@@ -69,6 +87,11 @@ public class AddJobOpeningUI extends AbstractUI {
         }
     }
 
+    /**
+     * Displays a list of contract types.
+     *
+     * @return the selected contract type
+     */
     private ContractType showContractTypes() {
         System.out.println("Select Contract Type:");
         System.out.println("1. FULL_TIME");
@@ -87,6 +110,9 @@ public class AddJobOpeningUI extends AbstractUI {
         }
     }
 
+    /**
+     * Displays a list of customers.
+     */
     private void showCustomer(){
         final Iterable<Customer> iterable = customerController.allCustomers();
 
@@ -102,6 +128,11 @@ public class AddJobOpeningUI extends AbstractUI {
         }
     }
 
+    /**
+     * Displays a list of customers and allows the user to select one.
+     *
+     * @return the selected customer
+     */
     private Customer selectCustomer(){
         final List<Customer> list = new ArrayList<>();
         for (Customer customer : customerController.allCustomers()) {
@@ -125,6 +156,11 @@ public class AddJobOpeningUI extends AbstractUI {
         return customer;
     }
 
+    /**
+     * Returns the headline for the UI.
+     *
+     * @return the headline for the UI
+     */
     @Override
     public String headline() {
         return "Add Job Opening";

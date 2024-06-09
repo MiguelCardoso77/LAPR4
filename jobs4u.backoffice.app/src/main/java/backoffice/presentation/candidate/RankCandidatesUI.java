@@ -13,11 +13,24 @@ import eapli.framework.presentation.console.AbstractUI;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * User interface for ranking candidates for a job opening.
+ * This class allows the user to rank candidates based on their interview scores.
+ * The user can choose to rank all applications or only those that have not been ranked yet.
+ * The user is prompted to input the new rank for each candidate and the rank is updated accordingly.
+ *
+ * @author Miguel Cardoso
+ */
 public class RankCandidatesUI extends AbstractUI {
     private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
     private final RankCandidatesController theController = new RankCandidatesController();
     private final boolean RANK_ONLY_NOT_RANKED = false;
 
+    /**
+     * Displays the UI for ranking candidates.
+     *
+     * @return true indicating the successful execution of the action.
+     */
     @Override
     protected boolean doShow() {
         JobOpening selectedJob = selectJobOpeningController.selectJobOpeningAnalysis();
@@ -55,6 +68,12 @@ public class RankCandidatesUI extends AbstractUI {
         return true;
     }
 
+    /**
+     * Ranks the given application based on its interview scores.
+     *
+     * @param application The application to be ranked.
+     * @param listSize The total number of applications to be ranked.
+     */
     private void rankApplication(Application application, int listSize) {
         System.out.println("\nNow ranking, Application: " + application.dataFile());
 
@@ -82,6 +101,12 @@ public class RankCandidatesUI extends AbstractUI {
         updateRank(rank, application);
     }
 
+    /**
+     * Retrieves the score of the last job interview for the given application.
+     *
+     * @param selectedApplication The application for which to retrieve the score.
+     * @return The score of the last job interview, or null if no interviews are found.
+     */
     private Score getLastJobInterview(Application selectedApplication) {
         List<JobInterview> interviews = theController.findInterviewsForApplication(selectedApplication);
 
@@ -97,11 +122,22 @@ public class RankCandidatesUI extends AbstractUI {
         return mostRecentInterview.score();
     }
 
+    /**
+     * Updates the rank of the given application.
+     *
+     * @param rank The new rank for the application.
+     * @param selectedApplication The application to update.
+     */
     private void updateRank(int rank, Application selectedApplication) {
         Application newApplication = theController.updateRank(rank, selectedApplication);
         System.out.println(ConsoleColors.GREEN + "Success:" + ConsoleColors.RESET + " Rank was updated to " + newApplication.rank() + " for the application " + newApplication.dataFile());
     }
 
+    /**
+     * Returns the headline for the UI.
+     *
+     * @return The headline for the UI.
+     */
     @Override
     public String headline() {
         return "Rank Candidates, (Ranking Only Not Ranked: " + RANK_ONLY_NOT_RANKED + ")";

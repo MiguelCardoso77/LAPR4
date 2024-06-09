@@ -6,6 +6,8 @@ import eapli.framework.actions.Action;
  * This class represents an action to generate an interview model.
  * It implements the {@link eapli.framework.actions.Action} interface
  * to define the execution behavior.
+ *
+ * @author Miguel Cardoso
  */
 public class GenerateAnswersTemplateAction implements Action {
 

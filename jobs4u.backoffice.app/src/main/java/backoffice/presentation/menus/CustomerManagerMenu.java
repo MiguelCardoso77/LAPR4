@@ -18,6 +18,18 @@ import eapli.framework.actions.Actions;
 import eapli.framework.actions.menu.Menu;
 import eapli.framework.presentation.console.AbstractUI;
 
+/**
+ * The CustomerManagerMenu class represents the menu for customer manager actions
+ * in the Jobs4u Back Office application.
+ * It extends the AbstractUI class and provides a menu with various options
+ * specific to the customer manager role.
+ *
+ * @see AbstractUI
+ * @see Menu
+ * @see Actions
+ *
+ * @author Miguel Cardoso
+ */
 public class CustomerManagerMenu extends AbstractUI {
     private static final String RETURN_LABEL = "Return ";
     private static final int EXIT_OPTION = 0;
@@ -41,13 +53,21 @@ public class CustomerManagerMenu extends AbstractUI {
     private static final int ORDERED_CANDIDATES = 18;
     private static final int NOTIFY_RANK = 19;
 
-
-
+    /**
+     * This method is overridden to always return true as this UI does not perform any specific actions.
+     *
+     * @return true
+     */
     @Override
     protected boolean doShow() {
         return true;
     }
 
+    /**
+     * Builds the menu for customer manager actions.
+     *
+     * @return the constructed menu with customer manager actions
+     */
     public Menu build() {
         final Menu menu = new Menu("Customer Manager Actions >");
 
@@ -68,15 +88,19 @@ public class CustomerManagerMenu extends AbstractUI {
         menu.addItem(UPLOAD_CANDIDATE_REQUIREMENTS, "Upload the requirements of a candidate ", new UploadRequirementsAnswersAction());
         menu.addItem(NOTIFY_CANDIDATES, "Notify Candidates", new NotifyCandidatesAction());
         menu.addItem(MOST_REFERENCED_WORDS, "Most Referenced Words", new MostReferencedWordsAction());
-        menu.addItem(ORDERED_CANDIDATES, "Order a list of candidates by job interview points (grades)", new OrderedListOfCandidatesAction());
-        menu.addItem(NOTIFY_RANK, "Notify Candidates of their rank", new NotifyResultOfRankCandidateAction());
-
+        menu.addItem(ORDERED_CANDIDATES, "Order List of Candidates by Interview Grade", new OrderedListOfCandidatesAction());
+        menu.addItem(NOTIFY_RANK, "Notify Candidates of their Rank", new NotifyResultOfRankCandidateAction());
 
         menu.addItem(EXIT_OPTION, RETURN_LABEL, Actions.SUCCESS);
 
         return menu;
     }
 
+    /**
+     * Returns the headline for the customer manager menu.
+     *
+     * @return the headline string
+     */
     @Override
     public String headline() {
         return "Customer Manager Menu";

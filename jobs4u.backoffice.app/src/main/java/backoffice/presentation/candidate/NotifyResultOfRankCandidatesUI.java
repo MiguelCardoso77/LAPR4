@@ -16,13 +16,22 @@ import java.util.List;
 
 /**
  * User interface for notifying candidates of their ranking results for a job opening.
+ * This UI class facilitates the process of notifying candidates about their application's ranking and status.
+ * It interacts with the {@link NotifyResultOfRankCandidatesController} to retrieve necessary data and send emails.
+ * After selecting a job opening and fetching the applications accepted for it, it constructs and sends notification emails to both candidates and the respective customer.
+ * It provides methods to build the email subjects and bodies for candidates and the customer.
  *
- * @author tomasgoncalves
+ * @author Tomás Gonçalves
  */
 public class NotifyResultOfRankCandidatesUI extends AbstractUI {
-
     private final NotifyResultOfRankCandidatesController notifyResultOfRankCandidatesController = new NotifyResultOfRankCandidatesController();
 
+    /**
+     * Displays the UI for notifying candidates of their ranking results.
+     * It selects a job opening, retrieves the accepted applications, constructs notification emails for candidates and the customer, and sends them.
+     *
+     * @return true indicating the successful execution of the notification process.
+     */
     @Override
     protected boolean doShow() {
 
@@ -63,16 +72,34 @@ public class NotifyResultOfRankCandidatesUI extends AbstractUI {
         return true;
     }
 
+    /**
+     * Returns the headline for the UI.
+     *
+     * @return the headline for the UI.
+     */
     @Override
     public String headline() {
         return "Notify Result of Ranking";
     }
 
+    /**
+     * Builds the subject for the email to be sent to the candidate.
+     *
+     * @param application the application to be notified.
+     * @return the subject for the email to be sent to the candidate.
+     */
     private String buildSubject(Application application) {
         return "Verification of Candidates - " + application.dataFile();
     }
 
-
+    /**
+     * Builds the body for the email to be sent to the candidate.
+     *
+     * @param application the application to be notified.
+     * @param rank the rank of the application.
+     * @param status the status of the application.
+     * @return the body for the email to be sent to the candidate.
+     */
     private String buildBody1(Application application, Rank rank, Status status) {
         return "Dear Candidate,\n\n" +
                 "We hope this message finds you well.\n\n" +
@@ -82,10 +109,22 @@ public class NotifyResultOfRankCandidatesUI extends AbstractUI {
                 "Jobs4U\n";
     }
 
+    /**
+     * Builds the body for the email to be sent to the customer.
+     *
+     * @param candidate the candidate to be notified.
+     * @return the body for the email to be sent to the customer.
+     */
     private String buildBody2(Candidate candidate) {
         return "Candidate: " + candidate.user().email() + ", Telephone number: " + candidate.identity();
     }
 
+    /**
+     * Builds the subject for the email to be sent to the customer.
+     *
+     * @param jobReference the job reference of the job opening.
+     * @return the subject for the email to be sent to the customer.
+     */
     private String buildSubject1(JobReference jobReference) {
         return "Verification Process - " + jobReference.toString();
     }

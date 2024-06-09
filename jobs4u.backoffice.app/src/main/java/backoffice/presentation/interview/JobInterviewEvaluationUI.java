@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * User Interface for evaluating job interview answers.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 
 public class JobInterviewEvaluationUI extends AbstractUI {
-    final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
-    final InterviewsEvaluationProcessController evaluationProcessController = new InterviewsEvaluationProcessController();
-    final ListJobOpeningInterviewsController listJobOpeningInterviewsController = new ListJobOpeningInterviewsController();
+    private final SelectJobOpeningController selectJobOpeningController = new SelectJobOpeningController();
+    private final InterviewsEvaluationProcessController evaluationProcessController = new InterviewsEvaluationProcessController();
+    private final ListJobOpeningInterviewsController listJobOpeningInterviewsController = new ListJobOpeningInterviewsController();
 
     /**
      *
@@ -29,7 +29,6 @@ public class JobInterviewEvaluationUI extends AbstractUI {
      */
     @Override
     protected boolean doShow() {
-
         JobOpening jobOpening = selectJobOpeningController.selectJobOpeningAnalysis();
 
         List<JobInterview> interviews = listJobOpeningInterviewsController.allInterviewOfJobOpening(jobOpening);
@@ -44,10 +43,10 @@ public class JobInterviewEvaluationUI extends AbstractUI {
     /**
      * This method returns the headline for this UI, which is “Job interview answers evaluation process”.
      *
-     * @return “Job interview answers evaluation process”
+     * @return “Job Interview Evaluation Process”
      */
     @Override
     public String headline() {
-        return "Job interview answers evaluation process";
+        return "Job Interview Evaluation Process";
     }
 }

@@ -10,9 +10,21 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * User interface for registering a new candidate.
+ * It prompts the user to input the candidate's information such as first name, last name, email, telephone number,
+ * and curriculum path. Then, it calls the controller to register the candidate.
+ *
+ * @author Miguel Cardoso
+ */
 public class RegisterCandidateUI extends AbstractUI {
     private final RegisterCandidateController theController = new RegisterCandidateController();
 
+    /**
+     * Shows the UI for registering a candidate.
+     *
+     * @return true if the action is successfully executed, false otherwise.
+     */
     @Override
     protected boolean doShow() {
         final String firstName = Console.readLine("First Name");
@@ -41,6 +53,11 @@ public class RegisterCandidateUI extends AbstractUI {
         return true;
     }
 
+    /**
+     * The headline for this UI.
+     *
+     * @return the headline for this UI
+     */
     @Override
     public String headline() {
         return "Register Candidate";

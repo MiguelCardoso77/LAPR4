@@ -16,5 +16,7 @@ public class ChangeProcessStatusAction implements Action {
      * @return true if the process status was successfully changed, false otherwise
      */
     @Override
-    public boolean execute() { return  new ChangeProcessStatusUI().show(); }
+    public boolean execute() {
+        return new ChangeProcessStatusUI().show();
+    }
 }

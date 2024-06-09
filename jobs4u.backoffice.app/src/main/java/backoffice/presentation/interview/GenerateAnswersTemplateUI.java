@@ -6,16 +6,15 @@ import core.domain.interviewModel.InterviewModel;
 import eapli.framework.io.util.Console;
 import eapli.framework.presentation.console.AbstractUI;
 
-
 import java.util.List;
 
 /**
- * This class is responsible for generating an answers template.
- * It allows the user to select a job opening that has an interview model assigned.
- * After the user selects a job opening, the corresponding interview model is retrieved.
- * The interview model is then processed to create an answers template, where everything after the second occurrence of ">" in each line is removed.
- * The answers template is saved to a file in the 'answeringTemplates' directory. The file name is based on the ID of the selected job interview.
- * This class does not handle the scoring of the questions or the total score of the interview model.
+ * UI class responsible for generating an answers template for an interview model.
+ * This class allows the user to select an interview model associated with a job opening.
+ * It retrieves the selected interview model and processes it to create an answers template.
+ * The answers template is then saved to a file in the 'answeringTemplates' directory.
+ * The file name is based on the ID of the selected interview model.
+ * This class does not handle the scoring of questions or the total score of the interview model.
  *
  * @author Miguel Cardoso
  */
@@ -23,9 +22,9 @@ public class GenerateAnswersTemplateUI extends AbstractUI {
     private final GenerateAnswersTemplateController theController = new GenerateAnswersTemplateController();
 
     /**
-     * Method responsible for displaying the UI for generating an answers template.
+     * Displays the UI for generating an answers template.
      * It first retrieves all job openings that have an interview model assigned and displays them.
-     * The user is then prompted to choose an interview model by entering its ID.
+     * The user is prompted to choose an interview model by entering its ID.
      * The corresponding interview model for the chosen job interview is retrieved.
      *
      * @return true if the answers template is successfully generated and saved, false otherwise.
@@ -59,7 +58,7 @@ public class GenerateAnswersTemplateUI extends AbstractUI {
     }
 
     /**
-     * Method to provide the headline for the UI.
+     * Provides the headline for the UI.
      *
      * @return a string representing the headline for the UI.
      */

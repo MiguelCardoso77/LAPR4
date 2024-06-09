@@ -1,21 +1,22 @@
 package backoffice.presentation.interview;
 
+import console.presentation.utils.ConsoleColors;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.candidate.Candidate;
 import core.domain.interview.JobInterview;
-import core.domain.jobOpening.JobOpening;import eapli.framework.presentation.console.AbstractUI;
+import core.domain.jobOpening.JobOpening;
+import eapli.framework.presentation.console.AbstractUI;
 
-import java.util.AbstractList;import java.util.List;
+import java.util.List;
 
 /**
  * User Interface for displaying an ordered list of candidates based on their interview scores
  * for a selected job opening.
  *
- * @autor Tomás Gonçalves
+ * @author Tomás Gonçalves
  */
 public class OrderedListOfCandidatesUI extends AbstractUI {
-
     private final OrderedListOfCandidatesController orderedListOfCandidatesController = new OrderedListOfCandidatesController();
 
     /**
@@ -24,7 +25,6 @@ public class OrderedListOfCandidatesUI extends AbstractUI {
      * @return true if the process was successful.
      */
     public boolean doShow() {
-
         JobOpening jobOpening = orderedListOfCandidatesController.selectJobOpening();
 
         Iterable<Application> applicationList = orderedListOfCandidatesController.allApplicationsOfJobOpening(jobOpening.jobReference());
@@ -35,25 +35,23 @@ public class OrderedListOfCandidatesUI extends AbstractUI {
 
         displayList(finalList, orderedList);
 
-
         return true;
     }
 
     /**
      * Displays the final list of applications along with their corresponding job interviews.
      *
-     * @param finalList A list of applications corresponding to the ordered job interviews.
+     * @param finalList   A list of applications corresponding to the ordered job interviews.
      * @param orderedList A list of job interviews ordered by their scores.
      */
-    public void  displayList(List<Application> finalList, List<JobInterview> orderedList) {
+    public void displayList(List<Application> finalList, List<JobInterview> orderedList) {
+        int count = 0;
 
-    int count= 0;
-
-        if(orderedList != null && finalList!= null)  {
+        if (orderedList != null && finalList != null) {
             for (JobInterview jobInterview : orderedList) {
                 if (finalList.contains(jobInterview.application())) {
                     count++;
-                    if(count == 1) {
+                    if (count == 1) {
                         System.out.printf("%-50s | %-50s | %-30s | \n", "Telephone Number", "Curriculum", "Grade");
                     }
                     Candidate candidate = jobInterview.application().candidate();
@@ -61,14 +59,20 @@ public class OrderedListOfCandidatesUI extends AbstractUI {
                 }
             }
         }
-        if(count == 0 ){
-            System.out.println("There are no candidates with grade for this job opening.");
+
+        if (count == 0) {
+            System.out.println(ConsoleColors.RED + "There are no candidates with grade for this job opening." + ConsoleColors.RESET);
         }
     }
 
+    /**
+     * The headline for the UI.
+     *
+     * @return The headline for the UI.
+     */
     @Override
     public String headline() {
-        return "Order list of candidates";
+        return "Order List of Candidates";
     }
 }
 

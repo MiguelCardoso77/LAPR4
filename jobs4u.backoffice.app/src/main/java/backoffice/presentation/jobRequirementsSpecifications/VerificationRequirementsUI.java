@@ -1,5 +1,6 @@
 package backoffice.presentation.jobRequirementsSpecifications;
 
+import console.presentation.utils.ConsoleColors;
 import core.application.controllers.*;
 import core.domain.application.Application;
 import core.domain.application.CandidateRequirements;
@@ -7,6 +8,7 @@ import core.domain.application.Status;
 import core.domain.jobOpening.JobOpening;
 import core.domain.jobOpening.JobReference;
 import eapli.framework.presentation.console.AbstractUI;
+
 import java.util.Map;
 
 /**
@@ -14,14 +16,12 @@ import java.util.Map;
  * user interface related to the verification of job requirements. It interacts
  * with the VerificationRequirementsController to fetch job openings, retrieve
  * applications, and verify candidate requirements.
+ *
+ * @author Tomás Gonçalves
  */
 public class VerificationRequirementsUI extends AbstractUI {
 
     private final VerificationRequirementsController verificationRequirementsController = new VerificationRequirementsController();
-
-    final String RED = "\u001B[31m";
-    final String GREEN = "\u001B[32m";
-    final String RESET = "\u001B[0m";
 
     /**
      * Displays the UI and handles the logic for verifying job requirements.
@@ -36,32 +36,34 @@ public class VerificationRequirementsUI extends AbstractUI {
         Iterable<Application> jobOpeningApplications = verificationRequirementsController.allApplicationsOfJobOpeningReceived(jobReference);
 
         if (jobOpeningApplications == null) {
-            System.out.println(RED + "No applications for this job opening" + RESET);
+            System.out.println(ConsoleColors.RED + "No applications for this job opening" + ConsoleColors.RESET);
         } else {
             for (Application applicationToVerify : jobOpeningApplications) {
-                    CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
-                    String path = jobOpening.jobRequirementsSpecification().jobRequirementsPath();
+                CandidateRequirements candidateRequirements = applicationToVerify.candidateRequirements();
+                String path = jobOpening.jobRequirementsSpecification().jobRequirementsPath();
 
-                    if (candidateRequirements.toString() != null ) {
-                        Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
+                if (candidateRequirements.toString() != null) {
+                    Map<String, String> clientRequirements = verificationRequirementsController.mapCandidate(candidateRequirements.candidateRequirements());
 
-                        boolean result = verificationRequirementsController.pluginRequirements(path, clientRequirements);
+                    boolean result = verificationRequirementsController.pluginRequirements(path, clientRequirements);
 
-                        Status statusFinal;
+                    Status statusFinal;
 
-                        if (result) {
-                            statusFinal = Status.ACCEPTED;
-                            verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
-                            System.out.println(GREEN + "The candidate is valid for this job opening" + RESET);
-                        } else {
-                            statusFinal = Status.DECLINED;
-                            verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
-                            System.out.println(RED + "This candidate isn't valid for this job opening" + RESET);
-                        }
-                        System.out.println("=========================================================================================================");
+                    if (result) {
+                        statusFinal = Status.ACCEPTED;
+                        verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+                        System.out.println(ConsoleColors.GREEN + "The candidate is valid for this job opening" + ConsoleColors.RESET);
+                    } else {
+                        statusFinal = Status.DECLINED;
+                        verificationRequirementsController.changeJobInterviewStatus(statusFinal, applicationToVerify);
+                        System.out.println(ConsoleColors.RED + "This candidate isn't valid for this job opening" + ConsoleColors.RESET);
                     }
+
+                    System.out.println("=========================================================================================================");
                 }
             }
+        }
+
         return true;
     }
 
@@ -72,8 +74,7 @@ public class VerificationRequirementsUI extends AbstractUI {
      */
     @Override
     public String headline() {
-        return "Verification of requirements";
+        return "Verification of Requirements";
     }
-
 
 }

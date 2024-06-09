@@ -8,9 +8,21 @@ import eapli.framework.presentation.console.AbstractUI;
 
 import java.util.List;
 
+/**
+ * UI class responsible for uploading text files with interview responses.
+ * It allows the user to select a job interview from a list and enter the path to the file containing the responses.
+ * The responses are then retrieved from the file and uploaded for the selected job interview.
+ *
+ * @author Miguel Cardoso
+ */
 public class UploadResponsesUI extends AbstractUI {
     private final UploadResponsesController theController = new UploadResponsesController();
 
+    /**
+     * Method to display the UI for uploading responses.
+     *
+     * @return true if the responses are uploaded successfully, false otherwise.
+     */
     @Override
     protected boolean doShow() {
         List<JobInterview> interviews = theController.findAllInterviewsWithModelAssigned();
@@ -32,6 +44,11 @@ public class UploadResponsesUI extends AbstractUI {
         return true;
     }
 
+    /**
+     * Method to provide the headline for the UI.
+     *
+     * @return a string representing the headline for the UI.
+     */
     @Override
     public String headline() {
         return "Upload Text File with Responses";

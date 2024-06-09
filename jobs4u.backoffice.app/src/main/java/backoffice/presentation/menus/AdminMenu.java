@@ -1,9 +1,7 @@
 package backoffice.presentation.menus;
 
-//import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 import backoffice.presentation.application.ListJobOpeningApplicationsAction;
 import backoffice.presentation.authz.*;
-//import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.candidate.DisplayCandidateDataAction;
 import backoffice.presentation.candidate.RegisterCandidateAction;
 import backoffice.presentation.customer.RegisterCustomerAction;
@@ -26,11 +24,21 @@ public class AdminMenu extends AbstractUI {
     private static final int REGISTER_CANDIDATE = 9;
     private static final int ADD_JOB_OPENING = 10;
 
+    /**
+     * This method is overridden to always return true as this UI does not perform any specific actions.
+     *
+     * @return true
+     */
     @Override
     protected boolean doShow() {
         return true;
     }
 
+    /**
+     * Builds the menu for admin actions.
+     *
+     * @return the constructed menu with admin actions
+     */
     public Menu build() {
         final Menu menu = new Menu("Admin Actions >");
 
@@ -52,6 +60,11 @@ public class AdminMenu extends AbstractUI {
         return menu;
     }
 
+    /**
+     * Returns the headline for the admin menu.
+     *
+     * @return the headline string
+     */
     @Override
     public String headline() {
         return "Admin Menu";

@@ -10,10 +10,11 @@ import eapli.framework.actions.Action;
  * of the {@link JobInterviewEvaluationUI} user interface for evaluating
  * job interviews.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 
 public class JobInterviewEvaluationAction implements Action {
+
     /**
      * Executes the action to show the job interview evaluation user interface.
      *

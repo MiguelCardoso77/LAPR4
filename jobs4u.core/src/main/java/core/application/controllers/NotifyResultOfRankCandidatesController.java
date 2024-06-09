@@ -4,6 +4,7 @@ import core.domain.application.Application;
 import core.domain.email.Email;
 import core.domain.jobOpening.JobOpening;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,8 +74,9 @@ public class NotifyResultOfRankCandidatesController {
      * @param emailsToSendCostumer The email to send.
      */
     public void sendEmailCostumer(Email emailsToSendCostumer) {
-        notifyCandidatesController.sendEmailCostumer(emailsToSendCostumer);
+        List<Email> emailsToSend = new ArrayList<>();
+        emailsToSend.add(emailsToSendCostumer);
+        notifyCandidatesController.sendEmails(emailsToSend);
     }
-
 
 }

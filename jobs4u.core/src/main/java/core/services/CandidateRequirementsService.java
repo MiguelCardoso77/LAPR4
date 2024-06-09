@@ -1,6 +1,7 @@
 package core.services;
 
 import core.domain.application.CandidateRequirements;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  *
  * @author Diana Neves
  */
+@Service
 public class CandidateRequirementsService {
 
     /**

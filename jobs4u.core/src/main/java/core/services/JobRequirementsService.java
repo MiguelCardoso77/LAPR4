@@ -6,15 +6,16 @@ import core.persistence.PersistenceContext;
 import core.repositories.JobRequirementsSpecificationRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
 /**
+ * Service for job requirements specifications.
  *
- * @author 1220812@isep.ipp.pt
- *
+ * @author Diogo Ribeiro
  */
 @Service
 public class JobRequirementsService {
-
     private final JobRequirementsSpecificationRepository jobRequirementsSpecificationRepository = PersistenceContext.repositories().jobRequirements();
+
     /**
      * Registers a new job requirement specification.
      *
@@ -23,7 +24,7 @@ public class JobRequirementsService {
      */
     @Transactional
     public JobRequirementsSpecification registerJobRequirement(String jobRequirementsPath) {
-        JobRequirementsSpecificationBuilder jobRequirementsSpecificationBuilder= new JobRequirementsSpecificationBuilder();
+        JobRequirementsSpecificationBuilder jobRequirementsSpecificationBuilder = new JobRequirementsSpecificationBuilder();
         jobRequirementsSpecificationBuilder.withoutId(jobRequirementsPath);
         JobRequirementsSpecification jobRequirementsSpecification = jobRequirementsSpecificationBuilder.build();
         return jobRequirementsSpecificationRepository.save(jobRequirementsSpecification);
@@ -37,32 +38,31 @@ public class JobRequirementsService {
     public Iterable<JobRequirementsSpecification> allJobRequirementsSpecification() {
         return jobRequirementsSpecificationRepository.allJobRequirementsSpecification();
     }
+
     /**
      * Finds a job requirements specification by its ID.
      *
      * @param id The ID of the job requirements specification to find.
      * @return The found job requirements specification, or null if not found.
      */
-    public JobRequirementsSpecification findJobRequirementsSpecification(Integer id){
+    public JobRequirementsSpecification findJobRequirementsSpecification(Integer id) {
         Iterable<JobRequirementsSpecification> jobRequirementsSpecifications = jobRequirementsSpecificationRepository.allJobRequirementsSpecification();
         for (JobRequirementsSpecification jobRequirementsSpecification : jobRequirementsSpecifications) {
-            if(id.equals(jobRequirementsSpecification.identity())){
+            if (id.equals(jobRequirementsSpecification.identity())) {
                 return jobRequirementsSpecification;
             }
         }
         return null;
     }
+
     /**
      * Verifies if a job requirements specification exists.
      *
      * @param jobRequirementsSpecification The job requirements specification to verify.
      * @return True if the job requirements specification exists, otherwise false.
      */
-    public boolean verifyJobRequirementsSpecification(Integer jobRequirementsSpecification){
-        if(jobRequirementsSpecificationRepository.ofIdentity(jobRequirementsSpecification).isPresent()){
-            return true;
-        }
-        return false;
+    public boolean verifyJobRequirementsSpecification(Integer jobRequirementsSpecification) {
+        return jobRequirementsSpecificationRepository.ofIdentity(jobRequirementsSpecification).isPresent();
     }
 
 }

@@ -19,7 +19,7 @@ import java.util.List;
  * Service class for managing job applications.
  * This class provides methods for registering, retrieving, and listing job applications.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @Service
 public class ApplicationService {
@@ -81,11 +81,25 @@ public class ApplicationService {
         return applications;
     }
 
+    /**
+     * Updates the rank of an application.
+     *
+     * @param rank         The new rank of the application.
+     * @param application  The application to update.
+     * @return The updated application.
+     */
     public Application updateRank(int rank, Application application) {
         application.updateRank(rank);
         return applicationRepository.save(application);
     }
 
+    /**
+     * Updates the files associated with an application.
+     *
+     * @param applicationFiles The new files associated with the application.
+     * @param application      The application to update.
+     * @return The updated application.
+     */
     public List<Application> applicationsByCM(SystemUser cm) {
         List<Application> applications = new ArrayList<>();
         List<Customer> customers = (List<Customer>) customerRepository.findAll();
@@ -105,6 +119,12 @@ public class ApplicationService {
         return applications;
     }
 
+    /**
+     * Retrieves all applications for a given candidate.
+     *
+     * @param candidate The candidate for which to retrieve applications.
+     * @return A list of applications for the given candidate.
+     */
     public List<Application> applicationsByCandidate(Candidate candidate) {
         List<Application> applications = new ArrayList<>();
 
@@ -117,6 +137,12 @@ public class ApplicationService {
         return applications;
     }
 
+    /**
+     * Retrieves all applications for a given job opening.
+     *
+     * @param jobOpening The job opening for which to retrieve applications.
+     * @return A list of applications for the given job opening.
+     */
     public int numberOfApplicationsForJobOpening(JobOpening jobOpening) {
         int count = 0;
         for (Application application : applicationRepository.allApplications()) {
@@ -127,11 +153,23 @@ public class ApplicationService {
         return count;
     }
 
+    /**
+     * Updates the status of an application.
+     * @param status The new status of the application.
+     * @param application The application to update.
+     *
+     * @return The updated application.
+     */
     public Application updateStatus(Status status, Application application) {
         application.changeStatus(status);
         return applicationRepository.save(application);
     }
 
+    /**
+     * Uploads the candidate requirements for an application.
+     * @param application The application for which to upload the candidate requirements.
+     * @param candidateRequirements The candidate requirements to upload.
+     */
     public void uploadCandidateRequirements(Application application, CandidateRequirements candidateRequirements) {
         application.uploadCandidateRequirements(candidateRequirements);
     }

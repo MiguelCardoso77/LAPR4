@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Service class for managing notifications.
@@ -24,6 +22,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 @Service
 public class NotificationService {
+
     /**
      * The repository for accessing notifications.
      */
@@ -127,6 +126,5 @@ public class NotificationService {
     public Iterable<Notification> allNotifications() {
         return notificationRepository.allNotifications();
     }
-
 
 }

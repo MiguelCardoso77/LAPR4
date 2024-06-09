@@ -9,6 +9,7 @@ import core.repositories.CandidateRepository;
 import eapli.framework.general.domain.model.EmailAddress;
 import eapli.framework.infrastructure.authz.domain.model.SystemUser;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
  *
  * @author Miguel Cardoso
  */
+@Service
 public class CandidateService {
     private final CandidateRepository candidateRepository = PersistenceContext.repositories().candidates();
 
@@ -93,6 +95,12 @@ public class CandidateService {
         return candidateOptional.orElse(null);
     }
 
+    /**
+     * Finds candidate by email.
+     * @param email email of the candidate
+     *
+     * @return candidate if found, otherwise null
+     */
     public Candidate findCandidateByEmail(String email) {
         EmailAddress emailAddress = EmailAddress.valueOf(email);
 

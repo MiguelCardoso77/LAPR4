@@ -43,9 +43,4 @@ public class NotifyCandidatesController {
         emailService.sendAllEmails(emailsToSend);
     }
 
-    public void sendEmailCostumer(Email emailsToSend) {
-        emailService.sendEmailCostumer(emailsToSend);
-    }
-
-
 }

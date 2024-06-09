@@ -13,9 +13,8 @@ import java.util.List;
  * Service class to handle operations related to job openings for customers.
  * This service provides functionality to list all job openings for a specific customer.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 public class JobOpeningDTOService {
     private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
     private final ApplicationService applicationService = new ApplicationService();
@@ -37,6 +36,7 @@ public class JobOpeningDTOService {
                 numberOfApplicants
         );
     }
+
     /**
      * Retrieves all job openings for a specific customer.
      *
@@ -54,6 +54,7 @@ public class JobOpeningDTOService {
         }
         return jobOpeningsDTO;
     }
+
     /**
      * Converts a list of JobOpening entities to a list of JobOpeningDTOs.
      *

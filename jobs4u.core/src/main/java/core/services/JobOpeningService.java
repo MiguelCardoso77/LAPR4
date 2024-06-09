@@ -17,9 +17,8 @@ import java.util.List;
 /**
  * Service class for managing job openings.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
-
 @Service
 public class JobOpeningService {
     private final JobOpeningRepository jobOpeningRepository = PersistenceContext.repositories().jobOpenings();
@@ -107,10 +106,7 @@ public class JobOpeningService {
      * @return True if the job opening exists, false otherwise.
      */
     public boolean verifyJobReference(JobReference jobReference){
-        if(jobOpeningRepository.ofIdentity(jobReference).isPresent()){
-            return true;
-        }
-        return false;
+        return jobOpeningRepository.ofIdentity(jobReference).isPresent();
     }
 
     /**
@@ -119,7 +115,6 @@ public class JobOpeningService {
      * @param customer The customer to verify
      * @return list of the job openings associated to the customer
      */
-
     public List<JobOpening> findByCustomer(Customer customer){
         Iterable<JobOpening> jobOpenings = allJobOpenings();
 
@@ -131,7 +126,6 @@ public class JobOpeningService {
         }
         return customerJobOpenings;
     }
-
 
     /**
      * Retrieves all job openings.

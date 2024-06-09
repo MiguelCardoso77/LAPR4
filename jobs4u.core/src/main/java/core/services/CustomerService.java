@@ -17,12 +17,13 @@ import java.util.Optional;
 /**
  * A service class for managing operations related to customers.
  *
- * @author 1220812@isep.ipp.pt
+ * @author Diogo Ribeiro
  */
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository = PersistenceContext.repositories().customerUsers();
     private final AddUserController addUserController = new AddUserController();
+
     /**
      * Registers a new customer with the specified system user, company, customer manager, and customer ID.
      *
@@ -38,6 +39,7 @@ public class CustomerService {
         Customer customer = customerBuilder.build();
         return customerRepository.save(customer);
     }
+
     /**
      * Retrieves all customers.
      *

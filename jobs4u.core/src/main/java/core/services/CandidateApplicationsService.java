@@ -3,6 +3,7 @@ package core.services;
 import core.protocol.Jobs4UProtocol;
 import core.protocol.ProtocolCodes;
 import core.protocol.UnsignedInteger;
+import org.springframework.stereotype.Service;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.List;
  *
  * @author Diana Neves
  */
+@Service
 public class CandidateApplicationsService {
 
     /**

@@ -8,10 +8,20 @@ import core.persistence.PersistenceContext;
 import core.repositories.ProcessRepository;
 import jakarta.transaction.Transactional;
 
+/**
+ * Service class for managing processes.
+ *
+ * @author Diana Neves
+ */
 public class ProcessService {
-
     private final ProcessRepository processRepository = PersistenceContext.repositories().processRepository();
 
+    /**
+     * Registers a new process with the given initial state.
+     *
+     * @param processState the initial state of the process
+     * @return the registered process
+     */
     @Transactional
     public Process registerProcess(ProcessState processState){
         ProcessBuilder processBuilder = new ProcessBuilder();
@@ -20,6 +30,12 @@ public class ProcessService {
         return processRepository.save(process);
     }
 
+    /**
+     * Finds a process by its ID.
+     *
+     * @param id the ID of the process to find
+     * @return the found process, or null if not found
+     */
     public Process findProcessByID(Integer id){
         Iterable<Process> processes = processRepository.allProcesses();
         for (Process process : processes){
@@ -30,12 +46,29 @@ public class ProcessService {
         return null;
     }
 
+    /**
+     * Retrieves all processes.
+     *
+     * @return an iterable collection of all processes
+     */
     public Iterable<Process> allProcesses() { return processRepository.findAll(); }
 
+    /**
+     * Changes the status of a process.
+     *
+     * @param processStatus the new status of the process
+     * @param process the process to update
+     */
     public void changeProcessStatus(ProcessStatus processStatus, Process process){
         process.changeProcessStatus(processStatus);
     }
 
+    /**
+     * Changes the state of a process.
+     *
+     * @param processState the new state of the process
+     * @param process the process to update
+     */
     public void changeProcessState(ProcessState processState, Process process){
         process.changeProcessState(processState);
     }

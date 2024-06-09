@@ -91,6 +91,9 @@ the requirements. The user should fix the error and submit again. Only US 1015 r
 ### 1.6. System Sequence Diagram (SSD)
 ![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
+### 1.7. Sequence Diagram (SD)
+![sequence-diagram.svg](sequence-diagram.svg)
+
 ## 2. Analysis and Design
 
 ### Analysis
@@ -103,8 +106,6 @@ the requirements. The user should fix the error and submit again. Only US 1015 r
 ### 2.2. Class Diagram
 ![class-diagram.svg](class-diagram.svg)
 
-### 2.3. Sequence Diagram (SD)
-![sequence-diagram.svg](sequence-diagram.svg)
 
 
 ## 3. Implementation
@@ -273,13 +274,13 @@ The classes `Application`, `JobOpening` and `Candidate`  are fully tested to ens
 
 ## 5. Demonstration
 
-    *Requirements Accepted**
+### Requirements Accepted
 ![requirements_accepted.png](requirements_accepted.png)
 
-    *Requirements Declined**
+### Requirements Declined
 ![requirements_declined.png](requirements_declined.png)
 
-    *No applications**
+### No applications
 ![no_applications.png](no_applications.png)
 
 

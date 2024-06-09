@@ -87,6 +87,9 @@ As Customer Manager, I want to get an ordered list of candidates, using the job 
 ### 1.6. System Sequence Diagram (SSD)
 ![system-sequence-diagram.svg](system-sequence-diagram.svg)
 
+### 1.7. Sequence Diagram (SD)
+![sequence-diagram.svg](sequence-diagram.svg)
+
 ## 2. Analysis and Design
 
 ### Analysis
@@ -98,9 +101,6 @@ As Customer Manager, I want to get an ordered list of candidates, using the job 
 
 ### 2.2. Class Diagram
 ![class-diagram.svg](class-diagram.svg)
-
-### 2.3. Sequence Diagram (SD)
-![sequence-diagram.svg](sequence-diagram.svg)
 
 
 ## 3. Implementation
@@ -207,11 +207,11 @@ Classes `Application` ,`JobInterview` and the `Candidate` are fully tested to en
 
 ## 5. Demonstration
 
-    **job_opening_with_interviews**
+### job pening with interviews
 
 ![with_interview.png](with_interview.png)
 
-    **job_opening_with_no_interviews**
+### job opening without interviews
 
 ![no_interview.png](no_interviews.png)
 

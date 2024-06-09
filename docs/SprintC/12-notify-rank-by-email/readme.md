@@ -169,8 +169,39 @@ public void sendAllEmails(List<Email> emailsToSend) {
 
 ## 4. Testing
 
+Classes `Application` ,`JobOpening` and the `Candidate` are fully tested to ensure the score and all other attributes are correctly updated and retrieved:
 
 
+```java
+    @Test
+    void testJobReference() {
+        assertEquals(jobReference, application.jobReference());
+    }
+        
+    @Test
+    void testIdentity() {
+        assertEquals(jobReference, jobOpening.identity());
+    }
+
+    @Test
+    void testRank() {
+        assertEquals(rank, application.rank());
+    }
+
+    @Test
+    void testStatus() {
+        application.changeStatus(Status.CHOSEN);
+        assertEquals(Status.CHOSEN, application.status()); // assuming the initial status is PENDING
+    }
+
+    @Test
+    void testChangeStatus() {
+        Status newStatus = Status.ACCEPTED; // replace with actual Status
+        application.changeStatus(newStatus);
+        assertEquals(newStatus, application.status());
+    }
+    
+```
 ## 5. Demonstration
 
 ### Confirmation 

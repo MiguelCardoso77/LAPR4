@@ -8,6 +8,7 @@ participant OrderedListOfCandidatesController <<controller>>
 participant SelectJobOpeningController <<controller>>
 participant ListJobOpeningApplicationsController <<controller>>
 participant ListJobInterviewsApplicationController <<controller>>
+participant ListJobOpeningController <<controller>>
 
 
 
@@ -21,45 +22,61 @@ database JobInterviewRepository <<repository>>
 
 activate CustomerManager
 
-    CustomerManager -> OrderedListOfCandidatesUI : asks to list candidates by grades
-    activate OrderedListOfCandidatesUI
+       CustomerManager -> OrderedListOfCandidatesUI : asks to order the candidates of a job opening
+           activate OrderedListOfCandidatesUI
+       
+               OrderedListOfCandidatesUI -> OrderedListOfCandidatesController : selectJobOpening()
+               activate OrderedListOfCandidatesController
+       
+                   OrderedListOfCandidatesController -> SelectJobOpeningController : selectJobOpening()
+                   activate SelectJobOpeningController
+       
+                       SelectJobOpeningController -> ListJobOpeningController : showJobOpenings()
+                       activate ListJobOpeningController
+       
+                           ListJobOpeningController -> JobOpeningService : allJobOpenings()
+                           activate JobOpeningService
+       
+                               JobOpeningService -> JobOpeningRepository : findAll()
+                               activate JobOpeningRepository
+       
+                                   JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
+                               deactivate JobOpeningRepository
+       
+                               JobOpeningService --> ListJobOpeningController : Iterable<JobOpening> jobOpenings
+                           deactivate JobOpeningService
+       
+                           ListJobOpeningController --> SelectJobOpeningController : Iterable<JobOpening> jobOpenings
+                       deactivate ListJobOpeningController
+       
+                       SelectJobOpeningController -> SelectJobOpeningController : selectorPart(List<JobOpening> list)
 
-        OrderedListOfCandidatesUI -> OrderedListOfCandidatesController : selects a job opening
-        activate OrderedListOfCandidatesController
+                           SelectJobOpeningController -> ListJobOpeningController : findJobOpeningByJobReference(jobReference)
+                           activate ListJobOpeningController
+       
+                               ListJobOpeningController -> JobOpeningService : findJobOpening(jobReference)
+                               activate JobOpeningService
+       
+                                   JobOpeningService -> JobOpeningRepository : findAll()
+                                   activate JobOpeningRepository
+       
+                                       JobOpeningRepository --> JobOpeningService : Iterable<JobOpening> jobOpenings
+                                   deactivate JobOpeningRepository
+       
+                                   JobOpeningService --> ListJobOpeningController : job opening
+                               deactivate JobOpeningService
+       
+                               ListJobOpeningController --> SelectJobOpeningController : job opening
+                           deactivate ListJobOpeningController
 
-        OrderedListOfCandidatesController-> SelectJobOpeningController: selectJobOpening()
-
-        activate SelectJobOpeningController
-
-
-
-            SelectJobOpeningController --> JobOpeningService : allJobOpenings()
-
-        activate JobOpeningService
-
-        JobOpeningService -> JobOpeningRepository : findAll()
-
-        activate JobOpeningRepository
-
-        JobOpeningRepository --> JobOpeningService  : list of all job openings
-
-        deactivate JobOpeningRepository
-
-        JobOpeningService --> SelectJobOpeningController : list of all job openings
-
-        deactivate JobOpeningService
-
-        SelectJobOpeningController --> OrderedListOfCandidatesController : list of all job openings
-
-        deactivate SelectJobOpeningController
-
-        OrderedListOfCandidatesController --> OrderedListOfCandidatesUI : list of all job openings
-
-        deactivate OrderedListOfCandidatesController
-
-        OrderedListOfCandidatesUI -> CustomerManager : lists job opening and asks to select one
-
-    deactivate OrderedListOfCandidatesUI
+                       SelectJobOpeningController --> OrderedListOfCandidatesController : job opening
+                   deactivate SelectJobOpeningController
+       
+                   OrderedListOfCandidatesController --> OrderedListOfCandidatesUI : job opening
+               deactivate OrderedListOfCandidatesController
+       
+               OrderedListOfCandidatesUI -> CustomerManager : shows all job opening and asks to select one
+           deactivate OrderedListOfCandidatesUI
 
     CustomerManager -> OrderedListOfCandidatesUI : selects job opening
 

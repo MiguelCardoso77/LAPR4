@@ -11,11 +11,21 @@ set of candidates for job offers (from its clients). At the end of the process, 
 to its client an ordered list of candidates for each job offer. The final recruitment decision is
 the responsibility of the client.
 
-## 2. Planning and Technical Documentation
+## 2. Grades
+
+Here are the grades obtained in the courses related to the development of this project:
+
+- **LAPR4**: 18/20 — Graded on the overall project, including all features and final integration.
+- **EAPLI**: 13/20 — Graded on documentation and testing.
+- **LPROG**: 18/20 — Graded on ANTLR4 grammars and related features.
+- **RCOMP**: 17/20 — Graded on the follow-up server and associated functionalities.
+- **SCOMP**: 17/20 — Graded on file bots developed in C and Java.
+
+## 3. Planning and Technical Documentation
 
 [Planning and Technical Documentation](docs/readme.md)
 
-## 3. How to Build
+## 4. How to Build
 
 To build the Jobs4U program, follow these steps:
 
@@ -28,7 +38,7 @@ To build the Jobs4U program, follow these steps:
             or
     ./rebuild-all.sh
 
-## 4. How to Execute Tests
+## 5. How to Execute Tests
 
 To execute the project Jobs4U tests, follow these steps:
 
@@ -41,7 +51,7 @@ To execute the project Jobs4U tests, follow these steps:
             or
     ./run-tests.bat
 
-### 4.1. How to generate coverage report
+### 5.1. How to generate coverage report
 
 - Execute the one of the scripts (currently available for Linux/Unix/macOS system):
 
@@ -50,7 +60,7 @@ To execute the project Jobs4U tests, follow these steps:
             or
     ./generate-coverage-report.bat
 
-## 5. How to Run
+## 6. How to Run
 
 To run the Jobs4U program, follow these steps:
 
@@ -63,7 +73,7 @@ To run the Jobs4U program, follow these steps:
         or
     ./run-all.bat
 
-### 5.1. How to Run the Customer app
+### 6.1. How to Run the Customer app
 
 To run the Customer app, follow these steps:
 
@@ -76,7 +86,7 @@ To run the Customer app, follow these steps:
         or
     ./run-customer-app.bat
 
-### 5.2. How to Run the Candidate app
+### 6.2. How to Run the Candidate app
 
 To run the Candidate app, follow these steps:
 
@@ -89,7 +99,7 @@ To run the Candidate app, follow these steps:
         or
     ./run-candidate-app.bat
 
-### 5.3. How to Run the Backoffice app
+### 6.3. How to Run the Backoffice app
 
 To run the Candidate app, follow these steps:
 
@@ -102,7 +112,7 @@ To run the Candidate app, follow these steps:
         or
     ./run-backoffice-app.bat
 
-### 5.4. How to Run the Follow-Up Server
+### 6.4. How to Run the Follow-Up Server
 
 To run the Follow-Up Server, follow these steps:
 
@@ -116,7 +126,7 @@ To run the Follow-Up Server, follow these steps:
         or
     ./run-follow-up-server.bat
 
-## 6. How to Install/Deploy into Another Machine (or Virtual Machine)
+## 7. How to Install/Deploy into Another Machine (or Virtual Machine)
 
 To install/deploy the Jobs4U program, follow these steps:
 
@@ -129,7 +139,7 @@ To install/deploy the Jobs4U program, follow these steps:
         or
     ./deploy.bat
 
-## 7. How to Generate PlantUML Diagrams
+## 8. How to Generate PlantUML Diagrams
 
 To generate plantuml diagrams for documentation execute the script (for the moment, only for linux/unix/macos):
 
